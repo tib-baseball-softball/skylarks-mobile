@@ -12,7 +12,7 @@ sealed class BottomBarScreen(
     object Home : BottomBarScreen(
         route = "home",
         title = "Home",
-        icon = Icons.Outlined.Home
+        icon = Icons.Outlined.Star
     )
     object Scores : BottomBarScreen(
         route = "scores",
