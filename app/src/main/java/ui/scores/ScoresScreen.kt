@@ -3,10 +3,8 @@ package ui.scores
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ArrowBack
-import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -32,19 +30,19 @@ fun ScoresScreen() {
                 actions = {
                     IconButton(onClick = { /*TODO*/ }) {
                         Icon(
-                            imageVector = Icons.Outlined.Favorite,
+                            imageVector = Icons.Outlined.FavoriteBorder,
                             contentDescription = "Button"
                         )
                     }
                     IconButton(onClick = { /*TODO*/ }) {
                         Icon(
-                            imageVector = Icons.Outlined.Favorite,
+                            imageVector = Icons.Outlined.Share,
                             contentDescription = "Button"
                         )
                     }
                     IconButton(onClick = { /*TODO*/ }) {
                         Icon(
-                            imageVector = Icons.Outlined.Favorite,
+                            imageVector = Icons.Outlined.MoreVert,
                             contentDescription = "Button"
                         )
                     }

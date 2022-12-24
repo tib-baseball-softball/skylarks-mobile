@@ -12,22 +12,22 @@ sealed class BottomBarScreen(
     object Home : BottomBarScreen(
         route = "home",
         title = "Home",
-        icon = Icons.Outlined.Star
+        icon = Icons.Outlined.Stars
     )
     object Scores : BottomBarScreen(
         route = "scores",
         title = "Scores",
-        icon = Icons.Outlined.Home
+        icon = Icons.Outlined.Scoreboard
     )
     object Standings : BottomBarScreen(
         route = "standings",
         title = "Standings",
-        icon = Icons.Outlined.Home
+        icon = Icons.Outlined.TableRows
     )
     object Club : BottomBarScreen(
         route = "club",
         title = "Club",
-        icon = Icons.Outlined.Home,
+        icon = Icons.Outlined.Shield,
     )
     object Settings : BottomBarScreen(
         route = "settings",
