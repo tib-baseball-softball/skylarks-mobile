@@ -8,8 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import de.davidbattefeld.berlinskylarks.R
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 
@@ -22,31 +24,34 @@ fun ScoresItem() {
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         )
     ) {
-        Column(modifier = Modifier.padding(10.dp)) {
+        Column(modifier = Modifier.padding(12.dp)) {
             Row(
                 modifier = Modifier.padding(bottom = 8.dp),
                 horizontalArrangement = Arrangement.Center
             ) {
                 Column() {
-                    Text(text = "Verbandsliga Baseball", style = MaterialTheme.typography.bodyMedium)
+                    Text(text = "Verbandsliga Baseball", style = MaterialTheme.typography.titleSmall)
                     Text(text = "21.8.2022, 12:00", style = MaterialTheme.typography.bodySmall)
                 }
                 Spacer(modifier = Modifier.weight(1.0F))
-                Text(text = "W", style = MaterialTheme.typography.headlineSmall)
+                Text(text = "W", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(end = 6.dp))
             }
             Divider()
             Column() {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
                         painter = painterResource(id = R.drawable.sluggers_logo),
-                        contentDescription = "Home Team Logo",
+                        contentDescription = "Road Team Logo",
                         modifier = Modifier
                             .padding(end = 2.dp)
                             .size(35.dp)
                     )
-                    Text(text = "Sluggers", style = MaterialTheme.typography.bodySmall)
+                    Text(text = "Sluggers", style = MaterialTheme.typography.bodyMedium)
                     Spacer(modifier = Modifier.weight(1.0F))
-                    Text(text = "4", style = MaterialTheme.typography.titleLarge)
+                    Text(text = "4", style = MaterialTheme.typography.titleMedium.copy(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp,
+                    ), modifier = Modifier.padding(end = 6.dp))
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
@@ -56,9 +61,12 @@ fun ScoresItem() {
                             .padding(end = 2.dp)
                             .size(35.dp)
                     )
-                    Text(text = "Skylarks", style = MaterialTheme.typography.bodySmall)
+                    Text(text = "Skylarks", style = MaterialTheme.typography.bodyMedium)
                     Spacer(modifier = Modifier.weight(1.0F))
-                    Text(text = "7", style = MaterialTheme.typography.titleLarge)
+                    Text(text = "7", style = MaterialTheme.typography.titleMedium.copy(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp,
+                    ), modifier = Modifier.padding(end = 6.dp))
                 }
             }
         }

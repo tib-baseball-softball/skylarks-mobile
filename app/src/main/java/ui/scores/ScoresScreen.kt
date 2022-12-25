@@ -19,14 +19,14 @@ fun ScoresScreen() {
         topBar = {
             TopAppBar(
                 title = { Text(text = "Scores") },
-                navigationIcon = {
-                    IconButton(onClick = { /*TODO*/ }) {
+                /*navigationIcon = {
+                    IconButton(onClick = { *//*TODO*//* }) {
                         Icon(
                             imageVector = Icons.Outlined.ArrowBack,
                             contentDescription = "Button"
                         )
                     }
-                },
+                },*/
                 actions = {
                     IconButton(onClick = { /*TODO*/ }) {
                         Icon(
