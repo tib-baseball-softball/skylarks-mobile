@@ -1,20 +1,24 @@
 package ui.scores
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.davidbattefeld.berlinskylarks.classes.ScoresVM
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScoresScreen() {
+    val vm = ScoresVM()
+    var gamesCount by remember { mutableStateOf(vm.gamesCount) }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -52,14 +56,23 @@ fun ScoresScreen() {
             Column(
                 modifier = Modifier.padding(padding),
                 verticalArrangement = Arrangement.spacedBy(2.dp),
-                content = {
-                    ScoresItem()
-                    ScoresItem()
-                    ScoresItem()
-                    ScoresItem()
-                    ScoresItem()
+            ) {
+                Row {
+                    Button(onClick = {
+                        val vm = ScoresVM()
+                        vm.loadGames()
+                    }) {
+                        Text(text = "Load games")
+                    }
+                    Spacer(modifier = Modifier.weight(1.0F))
+                    Text(gamesCount.toString())
                 }
-            )
+                LazyColumn {
+                    items(vm.gamescores) { gameScore ->
+                        ScoresItem(gameScore)
+                    }
+                }
+            }
         }
     )
 }

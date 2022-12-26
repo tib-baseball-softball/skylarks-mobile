@@ -1,13 +1,16 @@
 package de.davidbattefeld.berlinskylarks.classes
 
-import de.davidbattefeld.berlinskylarks.global.apiKey
+import androidx.lifecycle.ViewModel
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import java.net.URL
 
-class ContentLoader {
-    var url = "https://bsm.baseball-softball.de/clubs/485/teams.json?filters[seasons][]=2022&sort[league_sort]=desc&api_key=$apiKey"
+abstract class ContentLoader : ViewModel() { // check inheritance here
+    open var url = ""
 
-    fun fetchData() {
+    suspend fun <T> fetchBSMData(type: T): T {
         val fetchResult = URL(url).readText()
         println(fetchResult)
+        return Gson().fromJson(fetchResult, object: TypeToken<T>(){})
     }
 }

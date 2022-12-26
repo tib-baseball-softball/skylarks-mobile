@@ -13,7 +13,8 @@ data class GameScore(
     var scoresheet_url: String?,
     //
     //
-    var home_league_entry: LeagueEntry
+    var home_league_entry: LeagueEntry,
+    var away_league_entry: LeagueEntry,
 ) {
     data class LeagueEntry(
         var team: Team

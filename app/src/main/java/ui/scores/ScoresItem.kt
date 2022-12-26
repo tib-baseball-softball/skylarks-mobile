@@ -13,10 +13,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.davidbattefeld.berlinskylarks.R
+import de.davidbattefeld.berlinskylarks.testdata.testGame
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
+import model.GameScore
 
 @Composable
-fun ScoresItem() {
+fun ScoresItem(gameScore: GameScore) {
     Card(
         modifier = Modifier.padding(4.dp),
         colors = CardDefaults.cardColors(
@@ -89,7 +91,7 @@ fun ScoresItemPreview() {
         Surface(
             color = MaterialTheme.colorScheme.surface
         ) {
-            ScoresItem()
+            ScoresItem(gameScore = testGame)
         }
 
     }
