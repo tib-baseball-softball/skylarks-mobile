@@ -58,9 +58,4 @@ data class GameScore(
             }
         }
     }
-
-    //test if parameters can be modified
-    fun changeRuns() {
-        home_runs = 4
-    }
 }

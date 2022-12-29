@@ -25,7 +25,6 @@ fun ScoresItem(gameScore: GameScore) {
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         )
     ) {
-        //val logoProvider = LogoProvider()
         gameScore.setCorrectLogos()
 
         Column(modifier = Modifier.padding(12.dp)) {
@@ -34,7 +33,7 @@ fun ScoresItem(gameScore: GameScore) {
                 horizontalArrangement = Arrangement.Center
             ) {
                 Column() {
-                    // TODO: better date processing, add league data class
+                    // TODO: better date processing
                     Text(text = gameScore.league.name, style = MaterialTheme.typography.titleSmall)
                     Text(text = gameScore.time, style = MaterialTheme.typography.bodySmall)
                 }
