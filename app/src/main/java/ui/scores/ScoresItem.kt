@@ -32,11 +32,12 @@ fun ScoresItem(gameScore: GameScore) {
                 horizontalArrangement = Arrangement.Center
             ) {
                 Column() {
-                    Text(text = "Verbandsliga Baseball", style = MaterialTheme.typography.titleSmall)
-                    Text(text = "21.8.2022, 12:00", style = MaterialTheme.typography.bodySmall)
+                    // TODO: better date processing, add league data class
+                    Text(text = "LIGA BITTE FÜLLEN", style = MaterialTheme.typography.titleSmall)
+                    Text(text = gameScore.time, style = MaterialTheme.typography.bodySmall)
                 }
                 Spacer(modifier = Modifier.weight(1.0F))
-                Text(text = "W", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(end = 6.dp))
+                Text(text = "X", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(end = 6.dp))
             }
             Divider()
             Column() {
@@ -48,9 +49,9 @@ fun ScoresItem(gameScore: GameScore) {
                             .padding(end = 2.dp)
                             .size(35.dp)
                     )
-                    Text(text = "Sluggers", style = MaterialTheme.typography.bodyMedium)
+                    Text(text = gameScore.away_team_name, style = MaterialTheme.typography.bodyMedium)
                     Spacer(modifier = Modifier.weight(1.0F))
-                    Text(text = "4", style = MaterialTheme.typography.titleMedium.copy(
+                    Text(text = gameScore.away_runs.toString(), style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
                     ), modifier = Modifier.padding(end = 6.dp))
@@ -63,9 +64,9 @@ fun ScoresItem(gameScore: GameScore) {
                             .padding(end = 2.dp)
                             .size(35.dp)
                     )
-                    Text(text = "Skylarks", style = MaterialTheme.typography.bodyMedium)
+                    Text(text = gameScore.home_team_name, style = MaterialTheme.typography.bodyMedium)
                     Spacer(modifier = Modifier.weight(1.0F))
-                    Text(text = "7", style = MaterialTheme.typography.titleMedium.copy(
+                    Text(text = gameScore.home_runs.toString(), style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
                     ), modifier = Modifier.padding(end = 6.dp))

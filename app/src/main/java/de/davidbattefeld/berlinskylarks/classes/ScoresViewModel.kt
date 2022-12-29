@@ -14,7 +14,6 @@ import model.GameScore
 
 class ScoresViewModel : ContentLoader() {
     var gamescores = mutableStateListOf<GameScore>()
-    //val games =  { gamescores.toMutableStateList() }
     var gamesCount by mutableStateOf(0)
     override var url = "https://bsm.baseball-softball.de/matches.json?filters[seasons][]=2022&search=skylarks&filters[gamedays][]=any&api_key=$API_KEY"
 
