@@ -10,15 +10,16 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import de.davidbattefeld.berlinskylarks.classes.ScoresVM
+import androidx.lifecycle.viewmodel.compose.viewModel
+import de.davidbattefeld.berlinskylarks.classes.ScoresViewModel
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScoresScreen() {
-    val vm = ScoresVM()
-    var gamesCount by remember { mutableStateOf(vm.gamesCount) }
-
+fun ScoresScreen(
+    modifier: Modifier = Modifier,
+    scoresViewModel: ScoresViewModel = viewModel()
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -59,16 +60,15 @@ fun ScoresScreen() {
             ) {
                 Row {
                     Button(onClick = {
-                        val vm = ScoresVM()
-                        vm.loadGames()
+                        scoresViewModel.loadGames()
                     }) {
                         Text(text = "Load games")
                     }
                     Spacer(modifier = Modifier.weight(1.0F))
-                    Text(gamesCount.toString())
+                    Text(scoresViewModel.gamesCount.toString())
                 }
                 LazyColumn {
-                    items(vm.gamescores) { gameScore ->
+                    items(scoresViewModel.gamescores) { gameScore ->
                         ScoresItem(gameScore)
                     }
                 }
