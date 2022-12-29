@@ -1,9 +1,20 @@
 package de.davidbattefeld.berlinskylarks.testdata
 
 import model.GameScore
+import model.League
 
 val testEntry = GameScore.LeagueEntry(
     team = GameScore.Team(name = "Test Team")
+)
+
+val testLeague = League(
+    id = 420,
+    name = "Kreisliga",
+    season = 2099,
+    classification = "Kreisliga",
+    sport = "Baseball",
+    acronym = "KRL",
+    age_group = "Erwachsene"
 )
 
 val testGame = GameScore(
@@ -18,6 +29,9 @@ val testGame = GameScore(
     time = "2022-45-67 12:00",
     home_league_entry = testEntry,
     away_league_entry = testEntry,
-    scoresheet_url = null
+    scoresheet_url = null,
+    league = testLeague,
+    field = null,
+    scorer_assignments = listOf(),
+    umpire_assignments = listOf(),
 )
-

@@ -12,7 +12,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import de.davidbattefeld.berlinskylarks.R
 import de.davidbattefeld.berlinskylarks.testdata.testGame
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 import model.GameScore
@@ -26,6 +25,9 @@ fun ScoresItem(gameScore: GameScore) {
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         )
     ) {
+        //val logoProvider = LogoProvider()
+        gameScore.setCorrectLogos()
+
         Column(modifier = Modifier.padding(12.dp)) {
             Row(
                 modifier = Modifier.padding(bottom = 8.dp),
@@ -33,7 +35,7 @@ fun ScoresItem(gameScore: GameScore) {
             ) {
                 Column() {
                     // TODO: better date processing, add league data class
-                    Text(text = "LIGA BITTE FÜLLEN", style = MaterialTheme.typography.titleSmall)
+                    Text(text = gameScore.league.name, style = MaterialTheme.typography.titleSmall)
                     Text(text = gameScore.time, style = MaterialTheme.typography.bodySmall)
                 }
                 Spacer(modifier = Modifier.weight(1.0F))
@@ -43,10 +45,10 @@ fun ScoresItem(gameScore: GameScore) {
             Column() {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
-                        painter = painterResource(id = R.drawable.sluggers_logo),
+                        painter = painterResource(id = gameScore.roadLogo),
                         contentDescription = "Road Team Logo",
                         modifier = Modifier
-                            .padding(end = 2.dp)
+                            .padding(4.dp)
                             .size(35.dp)
                     )
                     Text(text = gameScore.away_team_name, style = MaterialTheme.typography.bodyMedium)
@@ -58,10 +60,10 @@ fun ScoresItem(gameScore: GameScore) {
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
-                        painter = painterResource(id = R.drawable.bird_outlined),
+                        painter = painterResource(id = gameScore.homeLogo),
                         contentDescription = "Home Team Logo",
                         modifier = Modifier
-                            .padding(end = 2.dp)
+                            .padding(4.dp)
                             .size(35.dp)
                     )
                     Text(text = gameScore.home_team_name, style = MaterialTheme.typography.bodyMedium)
