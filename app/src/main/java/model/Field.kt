@@ -1,6 +1,6 @@
 package model
 
-data class BSMField(
+data class Field(
     var id: Int,
     var club_id: Int?,
     var name: String,

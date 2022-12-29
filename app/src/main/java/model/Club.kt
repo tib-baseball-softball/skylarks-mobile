@@ -1,6 +1,6 @@
 package model
 
-data class BSMClub(
+data class Club(
     var id: Int,
     var name: String,
     var short_name: String,
