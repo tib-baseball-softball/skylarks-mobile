@@ -5,7 +5,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import ui.club.ClubScreen
+import ui.home.HomeScreen
 import ui.scores.ScoresScreen
+import ui.settings.SettingsScreen
+import ui.standings.StandingsScreen
 
 @Composable
 fun BottomNavGraph(modifier: Modifier, navController: NavHostController) {

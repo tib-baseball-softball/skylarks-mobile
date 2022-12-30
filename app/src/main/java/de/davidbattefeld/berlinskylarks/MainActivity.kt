@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
@@ -31,24 +30,10 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyApp(navController: NavHostController) {
-
     Scaffold(
         bottomBar = { NavBar(navController = navController) }
     ) { padding ->
         BottomNavGraph(navController = navController, modifier = Modifier.padding(padding))
-    }
-//    Surface(
-//        modifier = modifier,
-//        color = MaterialTheme.colorScheme.background
-//    ) {
-//        Greeting("Android")
-//    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Surface(color = MaterialTheme.colorScheme.primary) {
-        Text(text = "Hello $name!", modifier = Modifier.padding(24.dp))
     }
 }
 

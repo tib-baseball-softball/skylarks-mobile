@@ -1,4 +1,4 @@
-package ui
+package ui.club
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

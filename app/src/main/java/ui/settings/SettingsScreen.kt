@@ -1,4 +1,4 @@
-package ui
+package ui.settings
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -6,14 +6,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 
 @Composable
-fun StandingsScreen() {
-    Text(text = "Standings")
+fun SettingsScreen() {
+    Text(text="Settings")
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
-fun StandingsScreenPreview() {
+fun SettingsScreenPreview() {
     BerlinSkylarksTheme {
-        StandingsScreen()
+        SettingsScreen()
     }
 }

@@ -9,6 +9,7 @@ import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,21 +24,20 @@ fun ScoresScreen(
     modifier: Modifier = Modifier,
     scoresViewModel: ScoresViewModel = viewModel()
 ) {
+    val cardPadding = 8.dp
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(scoresViewModel.options[0]) }
+    var showExternalGames by remember { mutableStateOf(true) }
 
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            TopAppBar(
+            MediumTopAppBar(
                 title = { Text(text = "Scores") },
-                /*navigationIcon = {
-                    IconButton(onClick = { *//*TODO*//* }) {
-                        Icon(
-                            imageVector = Icons.Outlined.ArrowBack,
-                            contentDescription = "Button"
-                        )
-                    }
-                },*/
+                colors = TopAppBarDefaults.mediumTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surface
+                ),
                 actions = {
                     IconButton(onClick = { /*TODO*/ }) {
                         Icon(
@@ -45,6 +45,7 @@ fun ScoresScreen(
                             contentDescription = "Button"
                         )
                     }
+                    Spacer(modifier = Modifier.weight(1.0F))
                     ExposedDropdownMenuBox(
                         expanded = expanded,
                         onExpandedChange = { expanded = !expanded },
@@ -100,12 +101,11 @@ fun ScoresScreen(
                     modifier = Modifier
                         .padding(start = 10.dp)
                 )
-                Text("This is a placeholder for a segmented button once available in Compose", style = MaterialTheme.typography.labelSmall)
-                var showExternalGames by remember { mutableStateOf(true) }
+                Text("SEGMENTED BUTTON", style = MaterialTheme.typography.labelSmall, modifier = Modifier.fillMaxWidth(0.5F))
 
                 Card(
                     modifier = Modifier
-                        .padding(8.dp),
+                        .padding(cardPadding),
                     colors = CardDefaults.cardColors(
                         containerColor = MaterialTheme.colorScheme.tertiaryContainer
                     )
@@ -122,7 +122,6 @@ fun ScoresScreen(
                             Text(
                                 text = "Controls whether the list is filtered by just Skylarks games.",
                                 style = MaterialTheme.typography.labelSmall,
-                                //color = MaterialTheme.colorScheme.outline
                             )
                         }
                         Spacer(modifier = Modifier.weight(1.0F))
@@ -136,6 +135,7 @@ fun ScoresScreen(
                         )
                     }
                 }
+                Divider(modifier = Modifier.padding(horizontal = 12.dp))
                 LazyColumn(
                     modifier = Modifier
                         .padding(bottom = 85.dp) // height of BottomBar
@@ -144,7 +144,7 @@ fun ScoresScreen(
                         if (scoresViewModel.gamescores.isEmpty()) {
                             Card(
                                 modifier = Modifier
-                                    .padding(8.dp)
+                                    .padding(cardPadding)
                             ) {
                                 Row(
                                     modifier = Modifier
@@ -175,13 +175,13 @@ fun ScoresScreen(
 
 @Preview(
     showBackground = true,
-    widthDp = 320,
+    widthDp = 400,
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     name = "Dark"
 )
 @Preview(
     showBackground = true,
-    widthDp = 320
+    widthDp = 400
 )
 @Composable
 fun ScoresScreenPreview() {
