@@ -17,6 +17,8 @@ class ScoresViewModel : ContentLoader() {
     var gamesCount by mutableStateOf(0)
     override var url = "https://bsm.baseball-softball.de/matches.json?filters[seasons][]=2022&search=skylarks&filters[gamedays][]=any&api_key=$API_KEY"
 
+    val options = listOf("Option 1", "Option 2", "Option 3", "Option 4", "Option 5")
+
     fun loadGames() = runBlocking {
         launch {
             var json: String

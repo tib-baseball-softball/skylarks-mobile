@@ -19,7 +19,7 @@ import model.GameScore
 @Composable
 fun ScoresItem(gameScore: GameScore) {
     Card(
-        modifier = Modifier.padding(4.dp),
+        modifier = Modifier.padding(8.dp),
         colors = CardDefaults.cardColors(
             // TODO: check theming
             containerColor = MaterialTheme.colorScheme.surfaceVariant
