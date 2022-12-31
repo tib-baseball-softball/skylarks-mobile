@@ -1,11 +1,12 @@
 package de.davidbattefeld.berlinskylarks.classes
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import com.google.gson.GsonBuilder
 import java.lang.reflect.Type
 import java.net.URL
 
-abstract class ContentLoader : ViewModel() { // check inheritance here
+abstract class ContentLoader(application: Application) : AndroidViewModel(application) {
     open var url = ""
 
     inline fun <reified T> parseResponse(json: String, typeToken: Type): T {

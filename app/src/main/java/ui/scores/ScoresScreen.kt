@@ -96,7 +96,7 @@ fun ScoresScreen(
                     Text(scoresViewModel.gamesCount.toString())
                 }
                 Text(
-                    text = "Selected Season: 2022",
+                    text = "Selected Season: ${scoresViewModel.selectedSeason}",
                     style = MaterialTheme.typography.labelLarge,
                     modifier = Modifier
                         .padding(start = 10.dp)
@@ -141,7 +141,7 @@ fun ScoresScreen(
                         .padding(bottom = 85.dp) // height of BottomBar
                 ) {
                     item { 
-                        if (scoresViewModel.gamescores.isEmpty()) {
+                        if (scoresViewModel.gameScores.isEmpty()) {
                             Card(
                                 modifier = Modifier
                                     .padding(cardPadding)
@@ -164,7 +164,7 @@ fun ScoresScreen(
                             }
                         }
                     }
-                    items(scoresViewModel.gamescores) { gameScore ->
+                    items(scoresViewModel.gameScores) { gameScore ->
                         ScoresItem(gameScore)
                     }
                 }
