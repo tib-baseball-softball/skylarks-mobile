@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -58,6 +59,7 @@ fun ScoresItem(gameScore: GameScore) {
                     Spacer(modifier = Modifier.weight(1.0F))
                     Text(text = gameScore.away_runs.toString(), style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.Bold,
+                        color = if ((gameScore.home_runs ?: 0) < (gameScore.away_runs ?: 0)) MaterialTheme.colorScheme.onPrimaryContainer else Color.Gray,
                         fontSize = 18.sp,
                     ), modifier = Modifier.padding(end = 6.dp))
                 }
@@ -73,6 +75,7 @@ fun ScoresItem(gameScore: GameScore) {
                     Spacer(modifier = Modifier.weight(1.0F))
                     Text(text = gameScore.home_runs.toString(), style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.Bold,
+                        color = if ((gameScore.home_runs ?: 0) > (gameScore.away_runs ?: 0)) MaterialTheme.colorScheme.onPrimaryContainer else Color.Gray,
                         fontSize = 18.sp,
                     ), modifier = Modifier.padding(end = 6.dp))
                 }
