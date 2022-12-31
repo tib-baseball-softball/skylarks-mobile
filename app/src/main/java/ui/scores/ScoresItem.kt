@@ -42,7 +42,7 @@ fun ScoresItem(gameScore: GameScore) {
                     }
                 }
                 Spacer(modifier = Modifier.weight(1.0F))
-                Text(text = "X", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(end = 6.dp))
+                GameResultIndicator(gameScore = gameScore)
             }
             Divider()
             Column() {

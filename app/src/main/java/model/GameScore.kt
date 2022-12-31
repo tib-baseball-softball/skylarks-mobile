@@ -39,12 +39,12 @@ data class GameScore(
     data class License (
         var person: Person,
         var number: String,
-        )
+    )
 
     data class Person (
         var first_name: String,
         var last_name: String,
-        )
+    )
     //beware the other version of this class (own file)
     data class Team(
         var name: String,
@@ -69,5 +69,60 @@ data class GameScore(
     fun addDate() {
         val formatter = DateTimeFormatter.ofPattern("y-M-dd HH:mm:ss Z")
         gameDate = LocalDateTime.parse(time, formatter)
+    }
+
+    fun determineGameStatus() {
+        if (home_team_name.contains("Skylarks") && (!away_team_name.contains("Skylarks")))  {
+            skyLarksAreHomeTeam = true
+            isDerby = false
+        } else if (!home_team_name.contains("Skylarks") && (away_team_name.contains("Skylarks"))) {
+            skyLarksAreHomeTeam = false
+            isDerby = false
+        } else if (home_team_name.contains("Skylarks") && (away_team_name.contains("Skylarks"))) {
+            skyLarksAreHomeTeam = true
+            isDerby = true
+        } else if (!home_team_name.contains("Skylarks") && (!away_team_name.contains("Skylarks"))) {
+            isDerby = false
+            isExternalGame = true
+        }
+
+        homeTeamWin = (home_runs ?: 0) > (away_runs ?: 0)
+
+        skylarksWin = if (skyLarksAreHomeTeam) {
+            homeTeamWin
+        } else {
+            !homeTeamWin
+        }
+    }
+
+    fun getGameResultIndicatorText(): String {
+        var str = "X"
+
+        if (human_state.contains("geplant")) {
+            str = "TBD"
+        } else if (human_state.contains("ausgefallen")) {
+            str = "PPD"
+        } else if (
+            human_state.contains("gespielt") ||
+            human_state.contains("Forfeit") ||
+            human_state.contains("Nichtantreten") ||
+            human_state.contains("Wertung") ||
+            human_state.contains("Rückzug") ||
+            human_state.contains("Ausschluss")
+        ) {
+            if (isExternalGame) {
+                str = "F"
+            } else {
+                str = if (skylarksWin) {
+                    "W"
+                } else {
+                    "L"
+                }
+                if (isDerby) {
+                    str = "heart"
+                }
+            }
+        }
+        return str
     }
 }

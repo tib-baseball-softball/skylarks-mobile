@@ -9,7 +9,6 @@ import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,9 +28,9 @@ fun ScoresScreen(
     var selectedOptionText by remember { mutableStateOf(scoresViewModel.options[0]) }
     var showExternalGames by remember { mutableStateOf(true) }
 
-    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    //val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        //modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             MediumTopAppBar(
                 title = { Text(text = "Scores") },
@@ -92,8 +91,6 @@ fun ScoresScreen(
                     }) {
                         Text(text = "Load games")
                     }
-                    Spacer(modifier = Modifier.weight(1.0F))
-                    Text(scoresViewModel.gamesCount.toString())
                 }
                 Text(
                     text = "Selected Season: ${scoresViewModel.selectedSeason}",

@@ -36,7 +36,10 @@ class ScoresViewModel(application: Application) : ContentLoader(application) {
             val type = object : TypeToken<List<GameScore>>() {}.type
             withContext(Dispatchers.IO) { json = fetchJSONData() }
             val results: List<GameScore> = parseResponse<List<GameScore>>(json = json, typeToken = type)
-            results.forEach { result -> result.addDate() }
+            results.forEach { result ->
+                result.addDate()
+                result.determineGameStatus()
+            }
             gameScores.addAll(results)
             gamesCount = gameScores.count()
             //teeeeeest()
