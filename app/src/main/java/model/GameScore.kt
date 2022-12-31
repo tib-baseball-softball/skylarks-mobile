@@ -3,6 +3,8 @@ package model
 import androidx.annotation.DrawableRes
 import de.davidbattefeld.berlinskylarks.R
 import de.davidbattefeld.berlinskylarks.global.BSVBB_CLUBS
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 data class GameScore(
     var id: Int,
@@ -22,12 +24,17 @@ data class GameScore(
     var umpire_assignments: List<Umpire_Assignments>,
     var scorer_assignments: List<Scorer_Assignments>,
 ) {
+    // secondary properties are not supplied by the BSM API, instead computed by class methods
+    var gameDate: LocalDateTime? = null
+    var skyLarksAreHomeTeam = false
+    var skylarksWin = false
+    var isDerby = false
+    var isExternalGame = false
+    var homeTeamWin = false
+
     data class LeagueEntry(var team: Team)
-
     data class Umpire_Assignments(var license: License)
-
     data class Scorer_Assignments(var license: License)
-
 
     data class License (
         var person: Person,
@@ -57,5 +64,10 @@ data class GameScore(
                 homeLogo = club.logo
             }
         }
+    }
+
+    fun addDate() {
+        val formatter = DateTimeFormatter.ofPattern("y-M-dd HH:mm:ss Z")
+        gameDate = LocalDateTime.parse(time, formatter)
     }
 }

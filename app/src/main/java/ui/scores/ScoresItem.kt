@@ -15,6 +15,8 @@ import androidx.compose.ui.unit.sp
 import de.davidbattefeld.berlinskylarks.testdata.testGame
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 import model.GameScore
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 @Composable
 fun ScoresItem(gameScore: GameScore) {
@@ -33,9 +35,11 @@ fun ScoresItem(gameScore: GameScore) {
                 horizontalArrangement = Arrangement.Center
             ) {
                 Column() {
-                    // TODO: better date processing
                     Text(text = gameScore.league.name, style = MaterialTheme.typography.titleSmall)
-                    Text(text = gameScore.time, style = MaterialTheme.typography.bodySmall)
+                    Row{
+                        Text(text = gameScore.gameDate?.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))
+                            ?: "Game date could not be read", style = MaterialTheme.typography.bodySmall)
+                    }
                 }
                 Spacer(modifier = Modifier.weight(1.0F))
                 Text(text = "X", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(end = 6.dp))
