@@ -1,6 +1,7 @@
 package de.davidbattefeld.berlinskylarks.classes
 
 import android.app.Application
+import android.icu.util.Calendar
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -22,8 +23,8 @@ class ScoresViewModel(application: Application) : ContentLoader(application) {
     var gamesCount by mutableStateOf(0)
 
     var selectedSeason by mutableStateOf(
-        2021
-        //Calendar.getInstance().get(Calendar.YEAR)
+        //2021
+        Calendar.getInstance().get(Calendar.YEAR)
     )
 
     override var url = "https://bsm.baseball-softball.de/matches.json?filters[seasons][]=2022&search=skylarks&filters[gamedays][]=any&api_key=$API_KEY"
