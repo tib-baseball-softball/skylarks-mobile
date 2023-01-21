@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.davidbattefeld.berlinskylarks.classes.ScoresViewModel
+import de.davidbattefeld.berlinskylarks.global.cardPadding
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -23,7 +24,6 @@ fun ScoresScreen(
     modifier: Modifier = Modifier,
     scoresViewModel: ScoresViewModel = viewModel()
 ) {
-    val cardPadding = 8.dp
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(scoresViewModel.options[0]) }
     var showExternalGames by remember { mutableStateOf(true) }
