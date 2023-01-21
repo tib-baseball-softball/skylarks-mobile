@@ -9,6 +9,7 @@ import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,10 +30,12 @@ fun ScoresScreen(
     var showExternalGames by remember { mutableStateOf(true) }
 
     //val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
-        //modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             MediumTopAppBar(
+                scrollBehavior = scrollBehavior,
                 title = { Text(text = "Scores") },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surface
@@ -81,89 +84,95 @@ fun ScoresScreen(
                 }
             )
         }, content = {
-            Column(
-                modifier = Modifier.padding(it),
+            LazyColumn(
+                modifier = Modifier
+                    .padding(bottom = 85.dp) // height of BottomBar
+                    .padding(it),
                 verticalArrangement = Arrangement.spacedBy(2.dp),
             ) {
-                Row {
-                    Button(onClick = {
-                        scoresViewModel.loadGames()
-                    }) {
-                        Text(text = "Load games")
+                item {
+                    Row {
+                        Button(onClick = {
+                            scoresViewModel.loadGames()
+                        }) {
+                            Text(text = "Load games")
+                        }
                     }
                 }
-                Text(
-                    text = "Selected Season: ${scoresViewModel.selectedSeason}",
-                    style = MaterialTheme.typography.labelLarge,
-                    modifier = Modifier
-                        .padding(start = 10.dp)
-                )
-                Text("SEGMENTED BUTTON", style = MaterialTheme.typography.labelSmall, modifier = Modifier.fillMaxWidth(0.5F))
-
-                Card(
-                    modifier = Modifier
-                        .padding(cardPadding),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.tertiaryContainer
-                    )
-                ) {
-                    Row(
+                item {
+                    Text(
+                        text = "Selected Season: ${scoresViewModel.selectedSeason}",
+                        style = MaterialTheme.typography.labelLarge,
                         modifier = Modifier
-                            .padding(10.dp),
+                            .padding(start = 10.dp)
+                    )
+                }
+                item {
+                    Text("SEGMENTED BUTTON", style = MaterialTheme.typography.labelSmall, modifier = Modifier.fillMaxWidth(0.5F))
+                }
+                item {
+                    Card(
+                        modifier = Modifier
+                            .padding(cardPadding),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                        )
                     ) {
-                        Column(
+                        Row(
                             modifier = Modifier
-                                .fillMaxWidth(0.8F)
+                                .padding(10.dp),
                         ) {
-                            Text(text = "Show External Games", style = MaterialTheme.typography.bodyMedium)
-                            Text(
-                                text = "Controls whether the list is filtered by just Skylarks games.",
-                                style = MaterialTheme.typography.labelSmall,
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth(0.8F)
+                            ) {
+                                Text(text = "Show External Games", style = MaterialTheme.typography.bodyMedium)
+                                Text(
+                                    text = "Controls whether the list is filtered by just Skylarks games.",
+                                    style = MaterialTheme.typography.labelSmall,
+                                )
+                            }
+                            Spacer(modifier = Modifier.weight(1.0F))
+                            Switch(
+                                modifier = Modifier.semantics { contentDescription = "Show external Games" },
+                                checked = showExternalGames,
+                                onCheckedChange = { showExternalGames = it },
+                                colors = SwitchDefaults.colors(
+
+                                )
                             )
                         }
-                        Spacer(modifier = Modifier.weight(1.0F))
-                        Switch(
-                            modifier = Modifier.semantics { contentDescription = "Show external Games" },
-                            checked = showExternalGames,
-                            onCheckedChange = { showExternalGames = it },
-                            colors = SwitchDefaults.colors(
-
-                            )
-                        )
                     }
                 }
-                Divider(modifier = Modifier.padding(horizontal = 12.dp))
-                LazyColumn(
-                    modifier = Modifier
-                        .padding(bottom = 85.dp) // height of BottomBar
-                ) {
-                    item { 
-                        if (scoresViewModel.gameScores.isEmpty()) {
-                            Card(
+                item {
+                    Divider(modifier = Modifier.padding(horizontal = 12.dp))
+                }
+                item {
+                    if (scoresViewModel.gameScores.isEmpty()) {
+                        Card(
+                            modifier = Modifier
+                                .padding(cardPadding)
+                        ) {
+                            Row(
                                 modifier = Modifier
-                                    .padding(cardPadding)
+                                    .padding(12.dp)
                             ) {
-                                Row(
+                                Icon(
+                                    imageVector = Icons.Outlined.Info,
+                                    contentDescription = null,
+                                    modifier = Modifier.padding(end = 5.dp)
+                                )
+                                Text(
+                                    text = "There are no games to display.",
                                     modifier = Modifier
-                                        .padding(12.dp)
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Outlined.Info,
-                                        contentDescription = null,
-                                        modifier = Modifier.padding(end = 5.dp)
-                                    )
-                                    Text(
-                                        text = "There are no games to display.",
-                                        modifier = Modifier
-                                            .weight(1.0F)
-                                    )
-                                }
+                                        .weight(1.0F)
+                                )
                             }
                         }
                     }
-                    items(scoresViewModel.gameScores) { gameScore ->
-                        ScoresItem(gameScore)
-                    }
+                }
+                items(scoresViewModel.gameScores) { gameScore ->
+                    ScoresItem(gameScore)
                 }
             }
         }
