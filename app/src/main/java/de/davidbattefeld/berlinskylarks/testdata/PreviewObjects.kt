@@ -2,6 +2,7 @@ package de.davidbattefeld.berlinskylarks.testdata
 
 import model.GameScore
 import model.League
+import model.LeagueTable
 
 val testEntry = GameScore.LeagueEntry(
     team = GameScore.Team(name = "Test Team")
@@ -34,4 +35,11 @@ val testGame = GameScore(
     field = null,
     scorer_assignments = listOf(),
     umpire_assignments = listOf(),
+)
+
+val testTable = LeagueTable(
+    league_id = 1234,
+    league_name = "Kreisliga Baseball",
+    season = 1970,
+    rows = emptyList()
 )

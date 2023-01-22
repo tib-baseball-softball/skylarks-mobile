@@ -87,6 +87,7 @@ fun ScoresScreen(
             LazyColumn(
                 modifier = Modifier
                     .padding(bottom = 85.dp) // height of BottomBar
+                    .padding(horizontal = 10.dp)
                     .padding(it),
                 verticalArrangement = Arrangement.spacedBy(2.dp),
             ) {
