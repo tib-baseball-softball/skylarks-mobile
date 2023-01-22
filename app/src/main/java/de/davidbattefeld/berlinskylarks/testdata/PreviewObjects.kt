@@ -37,9 +37,33 @@ val testGame = GameScore(
     umpire_assignments = listOf(),
 )
 
+val testRow = LeagueTable.Row(
+    rank = "1.",
+    team_name = "Puppeteers",
+    short_team_name = "PUP",
+    match_count = 7,
+    wins_count = 5.0,
+    losses_count = 2.0,
+    quota = ".500",
+    games_behind = "2",
+    streak = "W2"
+)
+
+val testRow2 = LeagueTable.Row(
+    rank = "1.",
+    team_name = "Skylarks",
+    short_team_name = "PUP",
+    match_count = 7,
+    wins_count = 5.0,
+    losses_count = 2.0,
+    quota = ".500",
+    games_behind = "2",
+    streak = "W2"
+)
+
 val testTable = LeagueTable(
     league_id = 1234,
     league_name = "Kreisliga Baseball",
     season = 1970,
-    rows = emptyList()
+    rows = listOf(testRow, testRow, testRow2, testRow, testRow, testRow)
 )
