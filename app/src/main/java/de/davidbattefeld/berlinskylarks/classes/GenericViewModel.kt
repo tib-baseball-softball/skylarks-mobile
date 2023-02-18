@@ -6,8 +6,15 @@ import com.google.gson.GsonBuilder
 import java.lang.reflect.Type
 import java.net.URL
 
-abstract class ContentLoader(application: Application) : AndroidViewModel(application) {
+abstract class GenericViewModel(application: Application) : AndroidViewModel(application) {
     open var url = ""
+
+    val API = API()
+
+    // To be overridden by each specific view model
+    open fun load() {
+
+    }
 
     inline fun <reified T> parseResponse(json: String, typeToken: Type): T {
         val gson = GsonBuilder().create()

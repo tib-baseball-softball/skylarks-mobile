@@ -7,31 +7,33 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
-import com.google.gson.reflect.TypeToken
 import de.davidbattefeld.berlinskylarks.global.API_KEY
 import de.davidbattefeld.berlinskylarks.global.readInt
 import de.davidbattefeld.berlinskylarks.global.writeInt
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import model.GameScore
 
-class ScoresViewModel(application: Application) : ContentLoader(application) {
+class ScoresViewModel(application: Application) : GenericViewModel(application) {
     var gameScores = mutableStateListOf<GameScore>()
     var gamesCount by mutableStateOf(0)
-
-    var selectedSeason by mutableStateOf(
-        //2021
-        Calendar.getInstance().get(Calendar.YEAR)
-    )
 
     override var url = "https://bsm.baseball-softball.de/matches.json?filters[seasons][]=2022&search=skylarks&filters[gamedays][]=any&api_key=$API_KEY"
 
     val options = listOf("Option 1", "Option 2", "Option 3", "Option 4", "Option 5")
 
-    fun loadGames() = runBlocking {
+    override fun load() {
+        getSelectedSeason()
+
+        gameScores.addAll(API.loadGamesForClub(selectedSeason, "current"))
+        gameScores.forEach { gameScore ->
+            gameScore.addDate()
+            gameScore.determineGameStatus()
+        }
+    }
+
+    /*fun loadGames() = runBlocking {
         launch {
             var json: String
             val type = object : TypeToken<List<GameScore>>() {}.type
@@ -45,14 +47,25 @@ class ScoresViewModel(application: Application) : ContentLoader(application) {
             gamesCount = gameScores.count()
             //teeeeeest()
         }
-    }
+    }*/
 
-    fun teeeeeest() {
+    // TODO: test if it's possible to make this generic
+
+    var selectedSeason by mutableStateOf(
+        //2021
+        Calendar.getInstance().get(Calendar.YEAR)
+    )
+
+    fun getSelectedSeason() {
         val context = getApplication<Application>().applicationContext
         viewModelScope.launch(Dispatchers.IO) {
-            context.writeInt("season", 2000)
-            val temp = context.readInt("season").first()
-            selectedSeason = temp
+            selectedSeason = context.readInt("season").first()
+        }
+    }
+    fun setSelectedSeason(season: Int) {
+        val context = getApplication<Application>().applicationContext
+        viewModelScope.launch(Dispatchers.IO) {
+            context.writeInt("season", season)
         }
     }
 }
