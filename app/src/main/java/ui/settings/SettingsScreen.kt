@@ -19,7 +19,6 @@ fun SettingsScreen(
     settingsViewModel: SettingsViewModel = viewModel()
 ) {
     var expanded by remember { mutableStateOf(false) }
-    var selectedSeason by remember { mutableStateOf(settingsViewModel.selectedSeason) }
 
     Scaffold(
         topBar = {
@@ -42,7 +41,7 @@ fun SettingsScreen(
                             // The `menuAnchor` modifier must be passed to the text field for correctness.
                             modifier = Modifier.menuAnchor(),
                             readOnly = true,
-                            value = selectedSeason.toString(),
+                            value = settingsViewModel.selectedSeason.toString(),
                             onValueChange = {},
                             label = { Text("Selected Season") },
                             leadingIcon = { Icon(imageVector = Icons.Outlined.Groups, contentDescription = null) },
@@ -57,8 +56,9 @@ fun SettingsScreen(
                                 DropdownMenuItem(
                                     text = { Text(selectionOption.toString()) },
                                     onClick = {
-                                        selectedSeason = selectionOption
+                                        settingsViewModel.selectedSeason = selectionOption
                                         expanded = false
+                                        settingsViewModel.writeSelectedSeason(selectionOption)
                                     },
                                     contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                                 )
@@ -66,7 +66,10 @@ fun SettingsScreen(
                         }
                     }
                 }
-
+                Column() {
+                    Text(text = "Selected Season is:")
+                    Text(text = settingsViewModel.selectedSeason.toString())
+                }
             }
         }
     )
