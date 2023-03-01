@@ -8,10 +8,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -28,6 +30,7 @@ fun ScoresScreen(
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(scoresViewModel.options[0]) }
     var showExternalGames by remember { mutableStateOf(true) }
+    val tabTitles = listOf("Previous", "Current", "Next", "Any")
 
     //val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -36,7 +39,18 @@ fun ScoresScreen(
         topBar = {
             MediumTopAppBar(
                 scrollBehavior = scrollBehavior,
-                title = { Text(text = "Scores") },
+                title = {
+                            Row(verticalAlignment = Alignment.Bottom) {
+                                Text(text = "Scores")
+                                Spacer(modifier = Modifier.weight(1.0F))
+                                Text(
+                                    text = "Selected Season: ${scoresViewModel.selectedSeason}",
+                                    style = MaterialTheme.typography.labelLarge,
+                                    modifier = Modifier
+                                        .padding(horizontal = 10.dp),
+                                )
+                            }
+                        },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surface
                 ),
@@ -92,24 +106,18 @@ fun ScoresScreen(
                 verticalArrangement = Arrangement.spacedBy(2.dp),
             ) {
                 item {
-                    Row {
-                        Button(onClick = {
-                            scoresViewModel.load()
-                        }) {
-                            Text(text = "Load games")
+                    TabRow(selectedTabIndex = scoresViewModel.tabState) {
+                        tabTitles.forEachIndexed { index, title ->
+                            Tab(
+                                selected = scoresViewModel.tabState == index,
+                                onClick = {
+                                            scoresViewModel.tabState = index
+                                            scoresViewModel.load()
+                                          },
+                                text = { Text(text = title, maxLines = 2, overflow = TextOverflow.Ellipsis) }
+                            )
                         }
                     }
-                }
-                item {
-                    Text(
-                        text = "Selected Season: ${scoresViewModel.selectedSeason}",
-                        style = MaterialTheme.typography.labelLarge,
-                        modifier = Modifier
-                            .padding(start = 10.dp)
-                    )
-                }
-                item {
-                    Text("SEGMENTED BUTTON", style = MaterialTheme.typography.labelSmall, modifier = Modifier.fillMaxWidth(0.5F))
                 }
                 item {
                     Card(
@@ -174,6 +182,15 @@ fun ScoresScreen(
                 }
                 items(scoresViewModel.gameScores) { gameScore ->
                     ScoresItem(gameScore)
+                }
+                item {
+                    Row {
+                        Button(onClick = {
+                            scoresViewModel.load()
+                        }) {
+                            Text(text = "Load games")
+                        }
+                    }
                 }
             }
         }

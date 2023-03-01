@@ -9,33 +9,26 @@ import model.GameScore
 
 class ScoresViewModel(application: Application) : GenericViewModel(application) {
     var gameScores = mutableStateListOf<GameScore>()
-    var gamesCount by mutableStateOf(0)
+    var tabState by mutableStateOf(1)
 
     val options = listOf("Option 1", "Option 2", "Option 3", "Option 4", "Option 5")
 
     override fun load() {
+        gameScores.clear()
         readSelectedSeason()
 
-        gameScores.addAll(api.loadGamesForClub(selectedSeason, "any"))
+        val gamedays = when (tabState) {
+            0 -> "previous"
+            1 -> "current"
+            2 -> "next"
+            3 -> "any"
+            else -> { throw Exception("tabState has invalid value that cannot be used to determine Gameday") }
+        }
+
+        gameScores.addAll(api.loadGamesForClub(selectedSeason, gamedays))
         gameScores.forEach { gameScore ->
             gameScore.addDate()
             gameScore.determineGameStatus()
         }
     }
-
-    /*fun loadGames() = runBlocking {
-        launch {
-            var json: String
-            val type = object : TypeToken<List<GameScore>>() {}.type
-            withContext(Dispatchers.IO) { json = fetchJSONData() }
-            val results: List<GameScore> = parseResponse<List<GameScore>>(json = json, typeToken = type)
-            results.forEach { result ->
-                result.addDate()
-                result.determineGameStatus()
-            }
-            gameScores.addAll(results)
-            gamesCount = gameScores.count()
-            //teeeeeest()
-        }
-    }*/
 }
