@@ -16,7 +16,7 @@ class API {
 
     val clubID = 485
 
-    val DEFAULT_SEASON = Calendar.getInstance().get(Calendar.YEAR)
+    private val DEFAULT_SEASON = Calendar.getInstance().get(Calendar.YEAR)
 
     // in BSM jargon an "organisation" is a Landesverband (BSVBB in this case)
     val organizationID = 9
@@ -25,15 +25,23 @@ class API {
     private inline fun <reified T> apiCall(
         resource: String,
         season: Int?,
-        filters: String?, //WIP
+        filters: String?,
+        search: String?,
         typeToken: Type
     ): T {
-        val url = "${API_URL}/${resource}.json?api_key=${API_KEY}"
+        val currentSeason = season ?: DEFAULT_SEASON
+
+        var searchTerm = ""
+        if (!search.isNullOrEmpty()) {
+            searchTerm = "&search=$search"
+        }
+
+        val url = "${API_URL}/${resource}.json?filters[seasons][]=$currentSeason$searchTerm$filters&api_key=${API_KEY}"
 
         var result: T
         runBlocking {
-            val json = fetchJSONData(url = url)
-            withContext(Dispatchers.IO) { json }
+            var json: String
+            withContext(Dispatchers.IO) { json = fetchJSONData(url = url) }
             val gson = GsonBuilder().create()
             result = gson.fromJson<T>(json, typeToken)
         }
@@ -55,11 +63,16 @@ class API {
         // Gameday Filter
         var gamedayParam: String
         if (gamedays.isNullOrEmpty()) {
-            gamedayParam = "filters[gamedays][]=current"
+            gamedayParam = "&filters[gamedays][]=current"
         } else {
-            gamedayParam = "filters[gamedays][]=$gamedays"
+            gamedayParam = "&filters[gamedays][]=$gamedays"
         }
 
-        return apiCall(resource = "clubs/${clubID}/matches", season = season, filters = null, typeToken = type)
+        return apiCall(
+            resource = "matches",
+            season = season,
+            filters = gamedayParam,
+            search = "skylarks",
+            typeToken = type)
     }
 }

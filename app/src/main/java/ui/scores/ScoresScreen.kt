@@ -94,7 +94,7 @@ fun ScoresScreen(
                 item {
                     Row {
                         Button(onClick = {
-                            scoresViewModel.loadGames()
+                            scoresViewModel.load()
                         }) {
                             Text(text = "Load games")
                         }
