@@ -56,6 +56,10 @@ data class GameScore(
     var roadLogo = R.drawable.app_road_team_logo
 
     fun setCorrectLogos() {
+        // quick fix to prevent crash, not sure why default value is not set here
+        homeLogo = R.drawable.app_home_team_logo
+        roadLogo = R.drawable.app_road_team_logo
+
         for (club in BSVBB_CLUBS) {
             if (away_team_name.contains(club.name, ignoreCase = true)) {
                 roadLogo = club.logo

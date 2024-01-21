@@ -3,7 +3,7 @@ package de.davidbattefeld.berlinskylarks.classes
 import android.app.Application
 import android.icu.util.Calendar
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,7 +17,7 @@ import kotlinx.coroutines.withContext
 abstract class GenericViewModel(application: Application) : AndroidViewModel(application) {
     open var url = ""
 
-    var selectedSeason by mutableStateOf(Calendar.getInstance().get(Calendar.YEAR))
+    var selectedSeason by mutableIntStateOf(Calendar.getInstance().get(Calendar.YEAR))
 
     val api = API()
 

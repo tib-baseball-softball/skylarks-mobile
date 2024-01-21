@@ -2,14 +2,14 @@ package de.davidbattefeld.berlinskylarks.classes
 
 import android.app.Application
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import model.GameScore
 
 class ScoresViewModel(application: Application) : GenericViewModel(application) {
     var gameScores = mutableStateListOf<GameScore>()
-    var tabState by mutableStateOf(1)
+    var tabState by mutableIntStateOf(1)
 
     val options = listOf("Option 1", "Option 2", "Option 3", "Option 4", "Option 5")
 
@@ -26,9 +26,10 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
         }
 
         gameScores.addAll(api.loadGamesForClub(selectedSeason, gamedays))
-        gameScores.forEach { gameScore ->
-            gameScore.addDate()
-            gameScore.determineGameStatus()
+        gameScores.forEach {
+            it.addDate()
+            it.determineGameStatus()
+            it.setCorrectLogos()
         }
     }
 }
