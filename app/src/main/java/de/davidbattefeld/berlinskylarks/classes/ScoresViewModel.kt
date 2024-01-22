@@ -11,8 +11,6 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
     var gameScores = mutableStateListOf<GameScore>()
     var tabState by mutableIntStateOf(1)
 
-    val options = listOf("Option 1", "Option 2", "Option 3", "Option 4", "Option 5")
-
     override fun load() {
         gameScores.clear()
         readSelectedSeason()
