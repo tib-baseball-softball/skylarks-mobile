@@ -1,5 +1,8 @@
 package model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class BSMTeam(
     var id: Int,
     var name: String,
@@ -7,6 +10,7 @@ data class BSMTeam(
     var league_entries: List<LeagueEntry>,
     //var current_player_list: PlayerList?
 ) {
+    @Serializable
     data class LeagueEntry(
         var league: League,
     )

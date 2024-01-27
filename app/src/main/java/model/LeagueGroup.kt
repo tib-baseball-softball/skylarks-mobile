@@ -1,5 +1,8 @@
 package model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class LeagueGroup(
     var id: Int,
     var season: Int,

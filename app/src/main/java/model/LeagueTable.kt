@@ -1,11 +1,15 @@
 package model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class LeagueTable(
     var league_id: Int,
     var league_name: String,
     var season: Int,
     var rows: List<Row>,
 ) {
+    @Serializable
     data class Row(
         var rank: String,
         var team_name: String,

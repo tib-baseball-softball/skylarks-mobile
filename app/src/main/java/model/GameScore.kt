@@ -3,9 +3,11 @@ package model
 import androidx.annotation.DrawableRes
 import de.davidbattefeld.berlinskylarks.R
 import de.davidbattefeld.berlinskylarks.global.BSVBB_CLUBS
+import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+@Serializable
 data class GameScore(
     var id: Int,
     var match_id: String,
@@ -25,27 +27,33 @@ data class GameScore(
     var scorer_assignments: List<Scorer_Assignments>,
 ) {
     // secondary properties are not supplied by the BSM API, instead computed by class methods
-    var gameDate: LocalDateTime? = null
+    var localisedDate: String? = null
     var skyLarksAreHomeTeam = false
     var skylarksWin = false
     var isDerby = false
     var isExternalGame = false
     var homeTeamWin = false
 
+    @Serializable
     data class LeagueEntry(var team: Team)
+    @Serializable
     data class Umpire_Assignments(var license: License)
+    @Serializable
     data class Scorer_Assignments(var license: License)
 
+    @Serializable
     data class License (
         var person: Person,
         var number: String,
     )
 
+    @Serializable
     data class Person (
         var first_name: String,
         var last_name: String,
     )
     //beware the other version of this class (own file)
+    @Serializable
     data class Team(
         var name: String,
     )
@@ -72,7 +80,10 @@ data class GameScore(
 
     fun addDate() {
         val formatter = DateTimeFormatter.ofPattern("y-M-dd HH:mm:ss Z")
-        gameDate = LocalDateTime.parse(time, formatter)
+        val gameDate = LocalDateTime.parse(time, formatter)
+
+        localisedDate = gameDate.format(DateTimeFormatter.ofLocalizedDateTime(
+            java.time.format.FormatStyle.MEDIUM))
     }
 
     fun determineGameStatus() {

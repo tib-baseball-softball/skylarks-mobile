@@ -1,5 +1,8 @@
 package model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Person(
     var id: Int, //this appears to be the OPASO number, too!
     var first_name: String,
