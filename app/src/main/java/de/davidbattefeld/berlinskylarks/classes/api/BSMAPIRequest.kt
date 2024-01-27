@@ -6,18 +6,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
-import model.GameScore
 import java.net.URL
 
-open class API {
-    protected val API_URL = "https://bsm.baseball-softball.de"
+abstract class BSMAPIRequest {
 
-    val clubID = 485
+    companion object {
+        const val CLUB_ID = 485
+        // in BSM jargon an "organisation" is a Landesverband (BSVBB in this case)
+        const val ORGANIZATION_ID = 9
 
+        const val API_URL = "https://bsm.baseball-softball.de"
+    }
     protected val DEFAULT_SEASON = Calendar.getInstance().get(Calendar.YEAR)
-
-    // in BSM jargon an "organisation" is a Landesverband (BSVBB in this case)
-    val organizationID = 9
 
     @OptIn(ExperimentalSerializationApi::class)
     protected val jsonBuilder = Json {
@@ -63,27 +63,5 @@ open class API {
     // reads URL and returns the full response as JSON
     protected fun fetchJSONData(url: String): String {
         return URL(url).readText()
-    }
-
-    suspend fun loadGamesForClub(
-        season: Int?,
-        gamedays: String?,
-        showExternal: Boolean = false,
-    ): List<GameScore> {
-
-        // Gameday Filter
-        var gamedayParam: String
-        if (gamedays.isNullOrEmpty()) {
-            gamedayParam = "&filters[gamedays][]=current"
-        } else {
-            gamedayParam = "&filters[gamedays][]=$gamedays"
-        }
-
-        return apiCall<List<GameScore>>(
-            resource = "matches",
-            season = season,
-            filters = gamedayParam,
-            search = "skylarks",
-        )
     }
 }

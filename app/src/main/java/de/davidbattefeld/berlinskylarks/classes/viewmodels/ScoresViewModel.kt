@@ -6,12 +6,15 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
+import de.davidbattefeld.berlinskylarks.classes.api.MatchAPIRequest
 import kotlinx.coroutines.launch
 import model.GameScore
 
 class ScoresViewModel(application: Application) : GenericViewModel(application) {
     var gameScores = mutableStateListOf<GameScore>()
     var tabState by mutableIntStateOf(1)
+
+    private val request = MatchAPIRequest()
 
     override fun load() {
         gameScores.clear()
@@ -26,7 +29,7 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
         }
 
         viewModelScope.launch {
-            gameScores.addAll(api.loadGamesForClub(selectedSeason, gamedays))
+            gameScores.addAll(request.loadGamesForClub(selectedSeason, gamedays))
             gameScores.forEach {
                 it.addDate()
                 it.determineGameStatus()

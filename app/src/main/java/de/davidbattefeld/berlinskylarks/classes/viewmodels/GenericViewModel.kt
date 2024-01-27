@@ -7,7 +7,6 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import de.davidbattefeld.berlinskylarks.classes.api.API
 import de.davidbattefeld.berlinskylarks.global.readInt
 import de.davidbattefeld.berlinskylarks.global.writeInt
 import kotlinx.coroutines.Dispatchers
@@ -15,17 +14,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-abstract class GenericViewModel(application: Application) : AndroidViewModel(application) {
-    open var url = ""
-
+abstract class GenericViewModel(application: Application) : AndroidViewModel(application), ViewModelInterface {
     var selectedSeason by mutableIntStateOf(Calendar.getInstance().get(Calendar.YEAR))
-
-    val api = API()
-
-    // To be overridden by each specific view model
-    open fun load() {
-
-    }
 
     init {
         readSelectedSeason()
