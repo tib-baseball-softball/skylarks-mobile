@@ -1,34 +1,55 @@
 package de.davidbattefeld.berlinskylarks.classes
 
 import android.icu.util.Calendar
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
 import de.davidbattefeld.berlinskylarks.global.API_KEY
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
 import model.GameScore
-import java.lang.reflect.Type
 import java.net.URL
 
-class API {
-    private val API_URL = "https://bsm.baseball-softball.de"
+open class API {
+    protected val API_URL = "https://bsm.baseball-softball.de"
 
     val clubID = 485
 
-    private val DEFAULT_SEASON = Calendar.getInstance().get(Calendar.YEAR)
+    protected val DEFAULT_SEASON = Calendar.getInstance().get(Calendar.YEAR)
 
     // in BSM jargon an "organisation" is a Landesverband (BSVBB in this case)
     val organizationID = 9
 
-    // builds the actual URL and returns JSON contents
-    private inline fun <reified T> apiCall(
+    @OptIn(ExperimentalSerializationApi::class)
+    protected val jsonBuilder = Json {
+        ignoreUnknownKeys = true
+        explicitNulls = false
+    }
+
+    protected suspend inline fun <reified T> apiCall(
         resource: String,
         season: Int?,
         filters: String?,
         search: String?,
-        typeToken: Type
     ): T {
+        val url = buildURL(season, search, resource, filters)
+
+        var result: T
+
+        var json: String
+        withContext(Dispatchers.IO) {
+            json = fetchJSONData(url = url)
+            result = jsonBuilder.decodeFromString<T>(json)
+        }
+
+        return result
+    }
+
+    protected fun buildURL(
+        season: Int?,
+        search: String?,
+        resource: String,
+        filters: String?,
+    ): String {
         val currentSeason = season ?: DEFAULT_SEASON
 
         var searchTerm = ""
@@ -36,29 +57,19 @@ class API {
             searchTerm = "&search=$search"
         }
 
-        val url = "${API_URL}/${resource}.json?filters[seasons][]=$currentSeason$searchTerm$filters&api_key=${API_KEY}"
-
-        var result: T
-        runBlocking {
-            var json: String
-            withContext(Dispatchers.IO) { json = fetchJSONData(url = url) }
-            val gson = GsonBuilder().create()
-            result = gson.fromJson<T>(json, typeToken)
-        }
-        return result
+        return "$API_URL/${resource}.json?filters[seasons][]=$currentSeason$searchTerm$filters&api_key=${API_KEY}"
     }
 
     // reads URL and returns the full response as JSON
-    private fun fetchJSONData(url: String): String {
+    protected fun fetchJSONData(url: String): String {
         return URL(url).readText()
     }
 
-    fun loadGamesForClub(
+    suspend fun loadGamesForClub(
         season: Int?,
         gamedays: String?,
-        showExternal: Boolean = false
+        showExternal: Boolean = false,
     ): List<GameScore> {
-        val type = object : TypeToken<List<GameScore>>() {}.type
 
         // Gameday Filter
         var gamedayParam: String
@@ -68,11 +79,11 @@ class API {
             gamedayParam = "&filters[gamedays][]=$gamedays"
         }
 
-        return apiCall(
+        return apiCall<List<GameScore>>(
             resource = "matches",
             season = season,
             filters = gamedayParam,
             search = "skylarks",
-            typeToken = type)
+        )
     }
 }

@@ -5,6 +5,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import model.GameScore
 
 class ScoresViewModel(application: Application) : GenericViewModel(application) {
@@ -23,11 +25,13 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
             else -> { throw Exception("tabState has invalid value that cannot be used to determine Gameday") }
         }
 
-        gameScores.addAll(api.loadGamesForClub(selectedSeason, gamedays))
-        gameScores.forEach {
-            it.addDate()
-            it.determineGameStatus()
-            it.setCorrectLogos()
+        viewModelScope.launch {
+            gameScores.addAll(api.loadGamesForClub(selectedSeason, gamedays))
+            gameScores.forEach {
+                it.addDate()
+                it.determineGameStatus()
+                it.setCorrectLogos()
+            }
         }
     }
 }
