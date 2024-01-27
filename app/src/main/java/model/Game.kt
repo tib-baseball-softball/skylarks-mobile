@@ -111,12 +111,10 @@ data class Game(
     }
 
     fun getGameResultIndicatorText(): String {
-        var str = "X"
-
         if (human_state.contains("geplant")) {
-            str = "TBD"
+            return "TBD"
         } else if (human_state.contains("ausgefallen")) {
-            str = "PPD"
+            return "PPD"
         } else if (
             human_state.contains("gespielt") ||
             human_state.contains("Forfeit") ||
@@ -126,18 +124,19 @@ data class Game(
             human_state.contains("Ausschluss")
         ) {
             if (isExternalGame) {
-                str = "F"
+                return "F"
             } else {
-                str = if (skylarksWin) {
+                if (isDerby) {
+                    return "heart"
+                }
+                return if (skylarksWin) {
                     "W"
                 } else {
                     "L"
                 }
-                if (isDerby) {
-                    str = "heart"
-                }
+
             }
         }
-        return str
+        return "X"
     }
 }
