@@ -2,11 +2,15 @@ package de.davidbattefeld.berlinskylarks.classes.api
 
 import android.icu.util.Calendar
 import de.davidbattefeld.berlinskylarks.global.API_KEY
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.engine.cio.CIO
+import io.ktor.client.request.get
+import io.ktor.http.appendPathSegments
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
-import java.net.URL
 
 abstract class BSMAPIRequest {
 
@@ -16,6 +20,9 @@ abstract class BSMAPIRequest {
         const val ORGANIZATION_ID = 9
 
         const val API_URL = "https://bsm.baseball-softball.de"
+
+        const val SEASON_FILTER = "filters[seasons][]"
+        const val GAMEDAY_FILTER = "filters[gamedays][]"
     }
     protected val DEFAULT_SEASON = Calendar.getInstance().get(Calendar.YEAR)
 
@@ -27,41 +34,25 @@ abstract class BSMAPIRequest {
 
     protected suspend inline fun <reified T> apiCall(
         resource: String,
-        season: Int?,
-        filters: String?,
-        search: String?,
+        queryParameters: Map<String, String>
     ): T {
-        val url = buildURL(season, search, resource, filters)
+        val client = HttpClient(CIO)
 
         var result: T
-
-        var json: String
         withContext(Dispatchers.IO) {
-            json = fetchJSONData(url = url)
-            result = jsonBuilder.decodeFromString<T>(json)
+            val response = client.get(API_URL) {
+                url {
+                    appendPathSegments(resource)
+                    queryParameters.forEach {
+                        parameters.append(it.key, it.value)
+                    }
+                    parameters.append("api_key", API_KEY)
+                }
+            }
+            result = jsonBuilder.decodeFromString<T>(response.body())
         }
 
+        client.close()
         return result
-    }
-
-    protected fun buildURL(
-        season: Int?,
-        search: String?,
-        resource: String,
-        filters: String?,
-    ): String {
-        val currentSeason = season ?: DEFAULT_SEASON
-
-        var searchTerm = ""
-        if (!search.isNullOrEmpty()) {
-            searchTerm = "&search=$search"
-        }
-
-        return "$API_URL/${resource}.json?filters[seasons][]=$currentSeason$searchTerm$filters&api_key=${API_KEY}"
-    }
-
-    // reads URL and returns the full response as JSON
-    protected fun fetchJSONData(url: String): String {
-        return URL(url).readText()
     }
 }

@@ -6,22 +6,13 @@ class MatchAPIRequest: BSMAPIRequest() {
     suspend fun loadGamesForClub(
         season: Int?,
         gamedays: String?,
-        showExternal: Boolean = false,
     ): List<GameScore> {
-
-        // Gameday Filter
-        var gamedayParam: String
-        if (gamedays.isNullOrEmpty()) {
-            gamedayParam = "&filters[gamedays][]=current"
-        } else {
-            gamedayParam = "&filters[gamedays][]=$gamedays"
-        }
-
         return apiCall<List<GameScore>>(
-            resource = "matches",
-            season = season,
-            filters = gamedayParam,
-            search = "skylarks",
+            resource = "clubs/$CLUB_ID/matches.json",
+            queryParameters = mapOf(
+                SEASON_FILTER to (season ?: DEFAULT_SEASON).toString(),
+                GAMEDAY_FILTER to (gamedays ?: "current"),
+            )
         )
     }
 }

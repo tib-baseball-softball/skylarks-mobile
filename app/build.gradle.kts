@@ -51,6 +51,8 @@ android {
     }
 }
 
+val ktor_version: String by project
+
 dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
@@ -71,4 +73,6 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling:1.5.4")
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.4")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation("io.ktor:ktor-client-core:$ktor_version")
+    implementation("io.ktor:ktor-client-cio:$ktor_version")
 }
