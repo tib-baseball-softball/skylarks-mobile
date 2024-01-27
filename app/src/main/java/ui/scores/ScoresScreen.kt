@@ -113,7 +113,7 @@ fun ScoresScreen(
             Divider(modifier = Modifier.padding(horizontal = 12.dp))
         }
         item {
-            if (scoresViewModel.gameScores.isEmpty()) {
+            if (scoresViewModel.games.isEmpty()) {
                 Card(
                     modifier = Modifier
                         .padding(cardPadding)
@@ -136,7 +136,7 @@ fun ScoresScreen(
                 }
             }
         }
-        items(scoresViewModel.gameScores) { gameScore ->
+        items(scoresViewModel.games) { gameScore ->
             ScoresItem(gameScore)
         }
         item {

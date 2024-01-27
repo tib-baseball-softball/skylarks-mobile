@@ -11,29 +11,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import de.davidbattefeld.berlinskylarks.ui.theme.skylarksRed
-import model.GameScore
+import model.Game
 
 @Composable
-fun GameResultIndicator(gameScore: GameScore) {
+fun GameResultIndicator(game: Game) {
     val endPadding = Modifier.padding(end = 6.dp)
-    if (gameScore.isDerby) {
+    if (game.isDerby) {
         Icon(
             imageVector = Icons.Outlined.Favorite,
             contentDescription = "Heart Icon",
             tint = skylarksRed,
             modifier = endPadding
         )
-    } else if (gameScore.isExternalGame) {
+    } else if (game.isExternalGame) {
         Text(
-            text = gameScore.getGameResultIndicatorText(),
+            text = game.getGameResultIndicatorText(),
             style = MaterialTheme.typography.titleMedium,
             modifier = endPadding
         )
     } else {
         Text(
-            text = gameScore.getGameResultIndicatorText(),
+            text = game.getGameResultIndicatorText(),
             style = MaterialTheme.typography.titleMedium,
-            color = if (gameScore.skylarksWin) Color.Green else Color.Red,
+            color = if (game.skylarksWin) Color.Green else Color.Red,
             modifier = endPadding
         )
     }

@@ -25,10 +25,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.davidbattefeld.berlinskylarks.testdata.testGame
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
-import model.GameScore
+import model.Game
 
 @Composable
-fun ScoresItem(gameScore: GameScore) {
+fun ScoresItem(game: Game) {
     Card(
         modifier = Modifier.padding(8.dp),
         colors = CardDefaults.cardColors(
@@ -42,48 +42,48 @@ fun ScoresItem(gameScore: GameScore) {
                 horizontalArrangement = Arrangement.Center
             ) {
                 Column() {
-                    Text(text = gameScore.league.name, style = MaterialTheme.typography.titleSmall)
+                    Text(text = game.league.name, style = MaterialTheme.typography.titleSmall)
                     Row{
                         Text(
-                            text = gameScore.localisedDate ?: gameScore.time,
+                            text = game.localisedDate ?: game.time,
                             style = MaterialTheme.typography.bodySmall
                         )
                     }
                 }
                 Spacer(modifier = Modifier.weight(1.0F))
-                GameResultIndicator(gameScore = gameScore)
+                GameResultIndicator(game = game)
             }
             Divider()
             Column() {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
-                        painter = painterResource(id = gameScore.roadLogo),
+                        painter = painterResource(id = game.roadLogo),
                         contentDescription = "Road Team Logo",
                         modifier = Modifier
                             .padding(4.dp)
                             .size(35.dp)
                     )
-                    Text(text = gameScore.away_team_name, style = MaterialTheme.typography.bodyMedium)
+                    Text(text = game.away_team_name, style = MaterialTheme.typography.bodyMedium)
                     Spacer(modifier = Modifier.weight(1.0F))
-                    Text(text = gameScore.away_runs.toString(), style = MaterialTheme.typography.titleMedium.copy(
+                    Text(text = game.away_runs.toString(), style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.Bold,
-                        color = if ((gameScore.home_runs ?: 0) < (gameScore.away_runs ?: 0)) MaterialTheme.colorScheme.onPrimaryContainer else Color.Gray,
+                        color = if ((game.home_runs ?: 0) < (game.away_runs ?: 0)) MaterialTheme.colorScheme.onPrimaryContainer else Color.Gray,
                         fontSize = 18.sp,
                     ), modifier = Modifier.padding(end = 6.dp))
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
-                        painter = painterResource(id = gameScore.homeLogo),
+                        painter = painterResource(id = game.homeLogo),
                         contentDescription = "Home Team Logo",
                         modifier = Modifier
                             .padding(4.dp)
                             .size(35.dp)
                     )
-                    Text(text = gameScore.home_team_name, style = MaterialTheme.typography.bodyMedium)
+                    Text(text = game.home_team_name, style = MaterialTheme.typography.bodyMedium)
                     Spacer(modifier = Modifier.weight(1.0F))
-                    Text(text = gameScore.home_runs.toString(), style = MaterialTheme.typography.titleMedium.copy(
+                    Text(text = game.home_runs.toString(), style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.Bold,
-                        color = if ((gameScore.home_runs ?: 0) > (gameScore.away_runs ?: 0)) MaterialTheme.colorScheme.onPrimaryContainer else Color.Gray,
+                        color = if ((game.home_runs ?: 0) > (game.away_runs ?: 0)) MaterialTheme.colorScheme.onPrimaryContainer else Color.Gray,
                         fontSize = 18.sp,
                     ), modifier = Modifier.padding(end = 6.dp))
                 }
@@ -108,7 +108,7 @@ fun ScoresItemPreview() {
         Surface(
             color = MaterialTheme.colorScheme.surface
         ) {
-            ScoresItem(gameScore = testGame)
+            ScoresItem(game = testGame)
         }
 
     }

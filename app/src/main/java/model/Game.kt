@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @Serializable
-data class GameScore(
+data class Game(
     var id: Int,
     var match_id: String,
     var time: String,

@@ -1,11 +1,11 @@
 package de.davidbattefeld.berlinskylarks.testdata
 
-import model.GameScore
+import model.Game
 import model.League
 import model.LeagueTable
 
-val testEntry = GameScore.LeagueEntry(
-    team = GameScore.Team(name = "Test Team")
+val testEntry = Game.LeagueEntry(
+    team = Game.Team(name = "Test Team")
 )
 
 val testLeague = League(
@@ -18,7 +18,7 @@ val testLeague = League(
     age_group = "Erwachsene"
 )
 
-val testGame = GameScore(
+val testGame = Game(
     id = 0,
     match_id = "12345",
     league_id = 5555,
