@@ -1,4 +1,4 @@
-package de.davidbattefeld.berlinskylarks.classes
+package de.davidbattefeld.berlinskylarks.classes.api
 
 import android.icu.util.Calendar
 import de.davidbattefeld.berlinskylarks.global.API_KEY

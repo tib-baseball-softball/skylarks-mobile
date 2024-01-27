@@ -1,4 +1,4 @@
-package de.davidbattefeld.berlinskylarks.classes
+package de.davidbattefeld.berlinskylarks.classes.viewmodels
 
 import android.app.Application
 import android.icu.util.Calendar
@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import de.davidbattefeld.berlinskylarks.classes.api.API
 import de.davidbattefeld.berlinskylarks.global.readInt
 import de.davidbattefeld.berlinskylarks.global.writeInt
 import kotlinx.coroutines.Dispatchers

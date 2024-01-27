@@ -1,4 +1,4 @@
-package de.davidbattefeld.berlinskylarks.classes
+package de.davidbattefeld.berlinskylarks.classes.viewmodels
 
 import android.app.Application
 import android.icu.util.Calendar
