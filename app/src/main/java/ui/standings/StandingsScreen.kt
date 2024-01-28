@@ -1,6 +1,7 @@
 package ui.standings
 
 import android.content.res.Configuration
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -26,6 +27,7 @@ import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 @Composable
 fun StandingsScreen(
     standingsViewModel: StandingsViewModel = viewModel(),
+    detailRoute: (Int) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -55,7 +57,13 @@ fun StandingsScreen(
             }
         }
         items(standingsViewModel.tables) { leagueTable ->
-            StandingsLeagueRow(leagueTable)
+            StandingsLeagueRow(
+                leagueTable = leagueTable,
+                modifier = Modifier
+                    .clickable {
+                        detailRoute(leagueTable.league_id)
+                    }
+            )
         }
     }
     LaunchedEffect(Unit) {
@@ -78,6 +86,6 @@ fun StandingsScreen(
 @Composable
 fun StandingsScreenPreview() {
     BerlinSkylarksTheme {
-        StandingsScreen()
+       // StandingsScreen()
     }
 }

@@ -1,4 +1,4 @@
-package ui
+package ui.nav
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.Icon
@@ -15,11 +15,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 @Composable
 fun NavBar(navController: NavHostController) {
     val screens = listOf(
-        BottomBarScreen.Home,
-        BottomBarScreen.Scores,
-        BottomBarScreen.Standings,
-        BottomBarScreen.Club,
-        BottomBarScreen.Settings,
+        SkylarksNavDestination.Home,
+        SkylarksNavDestination.Scores,
+        SkylarksNavDestination.Standings,
+        SkylarksNavDestination.Club,
+        SkylarksNavDestination.Settings,
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -38,7 +38,7 @@ fun NavBar(navController: NavHostController) {
 
 @Composable
 fun RowScope.AddItem(
-    screen: BottomBarScreen,
+    screen: SkylarksNavDestination,
     currentDestination: NavDestination?,
     navController: NavHostController
 ) {

@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
-import ui.BottomBarScreen
-import ui.BottomNavGraph
-import ui.NavBar
+import ui.nav.BottomNavGraph
+import ui.nav.NavBar
+import ui.nav.SkylarksNavDestination
 import ui.scores.ScoresTopBar
 
 class MainActivity : ComponentActivity() {
@@ -45,8 +45,8 @@ fun BerlinSkylarksApp(navController: NavHostController) {
     Scaffold(
         topBar = {
             when (currentRoute.value?.destination?.route) {
-                BottomBarScreen.Scores.route -> ScoresTopBar(
-                    title = BottomBarScreen.Scores.title,
+                SkylarksNavDestination.Scores.route -> ScoresTopBar(
+                    title = SkylarksNavDestination.Scores.title,
                     scrollBehavior = scrollBehavior,
                     selectedSeason = 2024, // TODO: get from app state
                 )
@@ -61,3 +61,8 @@ fun BerlinSkylarksApp(navController: NavHostController) {
         BottomNavGraph(navController = navController, modifier = Modifier.padding(padding))
     }
 }
+
+fun NavHostController.navigateSingleTopTo(route: String) =
+    this.navigate(route) {
+        launchSingleTop = true
+    }
