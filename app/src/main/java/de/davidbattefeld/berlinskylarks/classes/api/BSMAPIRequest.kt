@@ -1,10 +1,9 @@
 package de.davidbattefeld.berlinskylarks.classes.api
 
 import android.icu.util.Calendar
+import de.davidbattefeld.berlinskylarks.classes.api.APIClient.client
 import de.davidbattefeld.berlinskylarks.global.API_KEY
-import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.engine.cio.CIO
 import io.ktor.client.request.get
 import io.ktor.http.appendPathSegments
 import kotlinx.coroutines.Dispatchers
@@ -36,8 +35,6 @@ abstract class BSMAPIRequest {
         resource: String,
         queryParameters: Map<String, String>? = null
     ): T {
-        val client = HttpClient(CIO) // TODO: reuse if possible
-
         var result: T
         withContext(Dispatchers.IO) {
             val response = client.get(API_URL) {
@@ -52,7 +49,6 @@ abstract class BSMAPIRequest {
             result = jsonBuilder.decodeFromString<T>(response.body())
         }
 
-        client.close()
         return result
     }
 }
