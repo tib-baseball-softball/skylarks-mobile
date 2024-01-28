@@ -14,15 +14,19 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import de.davidbattefeld.berlinskylarks.classes.viewmodels.StandingsViewModel
 import de.davidbattefeld.berlinskylarks.global.clubCardPadding
-import de.davidbattefeld.berlinskylarks.testdata.testTable
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 
 @Composable
-fun StandingsScreen() {
+fun StandingsScreen(
+    standingsViewModel: StandingsViewModel = viewModel(),
+) {
     LazyColumn(
         modifier = Modifier
             .padding(horizontal = 15.dp),
@@ -50,9 +54,13 @@ fun StandingsScreen() {
                 }
             }
         }
-        val previewTables = listOf(testTable, testTable, testTable, testTable, testTable, testTable)
-        items(previewTables) { leagueTable ->
+        items(standingsViewModel.tables) { leagueTable ->
             StandingsLeagueRow(leagueTable)
+        }
+    }
+    LaunchedEffect(Unit) {
+        if (standingsViewModel.tables.isEmpty()) {
+            standingsViewModel.load()
         }
     }
 }

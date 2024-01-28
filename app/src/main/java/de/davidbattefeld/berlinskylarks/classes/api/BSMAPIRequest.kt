@@ -34,16 +34,16 @@ abstract class BSMAPIRequest {
 
     protected suspend inline fun <reified T> apiCall(
         resource: String,
-        queryParameters: Map<String, String>
+        queryParameters: Map<String, String>? = null
     ): T {
-        val client = HttpClient(CIO)
+        val client = HttpClient(CIO) // TODO: reuse if possible
 
         var result: T
         withContext(Dispatchers.IO) {
             val response = client.get(API_URL) {
                 url {
                     appendPathSegments(resource)
-                    queryParameters.forEach {
+                    queryParameters?.forEach {
                         parameters.append(it.key, it.value)
                     }
                     parameters.append("api_key", API_KEY)
