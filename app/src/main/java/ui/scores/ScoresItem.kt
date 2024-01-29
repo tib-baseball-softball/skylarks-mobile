@@ -23,14 +23,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import de.davidbattefeld.berlinskylarks.testdata.testGame
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 import model.Game
 
 @Composable
-fun ScoresItem(game: Game) {
+fun ScoresItem(game: Game, modifier: Modifier) {
     Card(
-        modifier = Modifier.padding(8.dp),
+        modifier = modifier.padding(8.dp),
         colors = CardDefaults.cardColors(
             // TODO: check theming
             containerColor = MaterialTheme.colorScheme.surfaceVariant
@@ -108,7 +107,7 @@ fun ScoresItemPreview() {
         Surface(
             color = MaterialTheme.colorScheme.surface
         ) {
-            ScoresItem(game = testGame)
+           // ScoresItem(game = testGame)
         }
 
     }

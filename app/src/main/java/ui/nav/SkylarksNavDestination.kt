@@ -25,6 +25,19 @@ sealed class SkylarksNavDestination(
         title = "Scores",
         icon = Icons.Outlined.Scoreboard
     )
+
+    data object ScoresDetail: SkylarksNavDestination(
+        route = "scores_detail",
+        title = "Game Detail",
+        icon = Icons.Outlined.Scoreboard
+    ) {
+        const val scoreArg = "game_id"
+        val routeWithArgs = "${route}/{${scoreArg}}"
+        val arguments = listOf(
+            navArgument(scoreArg) { type = NavType.IntType }
+        )
+    }
+
     data object Standings : SkylarksNavDestination(
         route = "standings",
         title = "Standings",
@@ -33,7 +46,7 @@ sealed class SkylarksNavDestination(
 
     data object StandingsDetail: SkylarksNavDestination(
         route = "standings_detail",
-        title = "Standings Detail",
+        title = "Table Detail",
         icon = Icons.Outlined.TableRows
     ) {
         const val tableArg = "league_group_id"

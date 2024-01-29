@@ -1,6 +1,8 @@
 package ui.scores
 
 import android.content.res.Configuration
+import androidx.activity.ComponentActivity
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,6 +30,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
@@ -41,8 +44,9 @@ import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 @Composable
 fun ScoresScreen(
     modifier: Modifier = Modifier,
-    scoresViewModel: ScoresViewModel = viewModel(),
+    detailRoute: (Int) -> Unit,
 ) {
+    val scoresViewModel: ScoresViewModel = viewModel(LocalContext.current as ComponentActivity)
     var showExternalGames by remember { mutableStateOf(true) }
     val tabTitles = listOf("Previous", "Current", "Next", "Any")
 
@@ -136,8 +140,14 @@ fun ScoresScreen(
                 }
             }
         }
-        items(scoresViewModel.games) { gameScore ->
-            ScoresItem(gameScore)
+        items(scoresViewModel.games) { game ->
+            ScoresItem(
+                game = game,
+                modifier = Modifier
+                    .clickable {
+                        detailRoute(game.id)
+                    }
+            )
         }
         item {
             Row {
@@ -164,6 +174,6 @@ fun ScoresScreen(
 @Composable
 fun ScoresScreenPreview() {
     BerlinSkylarksTheme {
-        ScoresScreen()
+       // ScoresScreen()
     }
 }

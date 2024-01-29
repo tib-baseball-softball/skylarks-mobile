@@ -37,4 +37,8 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
             }
         }
     }
+
+    fun getFilteredGame(id: Int): Game? {
+        return games.firstOrNull { it.id == id }
+    }
 }
