@@ -21,11 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
-import model.LeagueTable
+import model.LeagueGroup
 
 @Composable
 fun StandingsLeagueRow(
-    leagueTable: LeagueTable,
+    leagueGroup: LeagueGroup,
     modifier: Modifier,
 ) {
     Card(
@@ -38,8 +38,8 @@ fun StandingsLeagueRow(
         Row(modifier = Modifier.padding(10.dp), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
             Icon(imageVector = Icons.Outlined.TableChart, contentDescription = "")
             Column(modifier = Modifier.padding(start = 10.dp)) {
-                Text(text = leagueTable.league_name, style = MaterialTheme.typography.titleMedium)
-                Text(text = "${leagueTable.rows.count()} Teams", style = MaterialTheme.typography.labelMedium, modifier = Modifier.padding(top = 2.dp))
+                Text(text = leagueGroup.name, style = MaterialTheme.typography.titleMedium)
+                //Text(text = "${leagueTable.rows.count()} Teams", style = MaterialTheme.typography.labelMedium, modifier = Modifier.padding(top = 2.dp))
             }
             Spacer(modifier = Modifier.weight(1.0F))
             Icon(imageVector = Icons.AutoMirrored.Outlined.ArrowForward, contentDescription = "")

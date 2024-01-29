@@ -9,7 +9,7 @@ val testEntry = Game.LeagueEntry(
 )
 
 val testLeague = League(
-    id = 420,
+    id = 9999,
     name = "Kreisliga",
     season = 2099,
     classification = "Kreisliga",
@@ -19,7 +19,7 @@ val testLeague = League(
 )
 
 val testGame = Game(
-    id = 0,
+    id = 9999,
     match_id = "12345",
     league_id = 5555,
     away_runs = 5,
@@ -52,7 +52,7 @@ val testRow = LeagueTable.Row(
 val testRow2 = LeagueTable.Row(
     rank = "1.",
     team_name = "Skylarks",
-    short_team_name = "PUP",
+    short_team_name = "SKY",
     match_count = 7,
     wins_count = 5.0,
     losses_count = 2.0,
@@ -62,8 +62,8 @@ val testRow2 = LeagueTable.Row(
 )
 
 val testTable = LeagueTable(
-    league_id = 1234,
+    league_id = 9999,
     league_name = "Kreisliga Baseball",
     season = 1970,
-    rows = listOf(testRow, testRow, testRow2, testRow, testRow, testRow)
+    rows = listOf(testRow, testRow, testRow2)
 )

@@ -56,18 +56,18 @@ fun StandingsScreen(
                 }
             }
         }
-        items(standingsViewModel.tables) { leagueTable ->
+        items(standingsViewModel.leagueGroups) {
             StandingsLeagueRow(
-                leagueTable = leagueTable,
+                leagueGroup = it,
                 modifier = Modifier
                     .clickable {
-                        detailRoute(leagueTable.league_id)
+                        detailRoute(it.id)
                     }
             )
         }
     }
     LaunchedEffect(Unit) {
-        if (standingsViewModel.tables.isEmpty()) {
+        if (standingsViewModel.leagueGroups.isEmpty()) {
             standingsViewModel.load()
         }
     }

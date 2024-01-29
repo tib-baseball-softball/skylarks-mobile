@@ -2,16 +2,22 @@ package ui.standings
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.davidbattefeld.berlinskylarks.classes.viewmodels.StandingsViewModel
 
 @Composable
 fun StandingsDetailScreen(
     tableID: Int,
-    standingsViewModel: StandingsViewModel = viewModel()
+    vm: StandingsViewModel = viewModel()
 ) {
-    Text(
-        tableID.toString()
-        //standingsViewModel.tables.filter { it.league_id == tableID }
-    )
+    if (vm.table.value.league_id != 9999) {
+        Text(
+            vm.table.value.toString()
+        )
+    }
+
+    LaunchedEffect(Unit) {
+        vm.loadSingleTable(tableID)
+    }
 }

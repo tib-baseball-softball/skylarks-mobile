@@ -2,27 +2,33 @@ package de.davidbattefeld.berlinskylarks.classes.viewmodels
 
 import android.app.Application
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import de.davidbattefeld.berlinskylarks.classes.api.LeagueGroupsAPIRequest
 import de.davidbattefeld.berlinskylarks.classes.api.TablesAPIRequest
+import de.davidbattefeld.berlinskylarks.testdata.testTable
 import kotlinx.coroutines.launch
-import model.LeagueTable
+import model.LeagueGroup
 
 class StandingsViewModel(application: Application): GenericViewModel(application) {
-    var tables = mutableStateListOf<LeagueTable>()
+    var leagueGroups = mutableStateListOf<LeagueGroup>()
+    var table = mutableStateOf(testTable)
 
     private val tablesRequest = TablesAPIRequest()
     private val leagueGroupsRequest = LeagueGroupsAPIRequest()
 
     override fun load() {
-        tables.clear()
+        leagueGroups.clear()
         readSelectedSeason()
 
         viewModelScope.launch {
-            val leagueGroups = leagueGroupsRequest.loadLeagueGroupsForClub(selectedSeason)
-            leagueGroups.forEach {
-                tables.add(tablesRequest.loadSingleTable(it.id))
-            }
+            leagueGroups.addAll(leagueGroupsRequest.loadLeagueGroupsForClub(selectedSeason))
+        }
+    }
+
+    fun loadSingleTable(id: Int)  {
+        viewModelScope.launch {
+             table.value = tablesRequest.loadSingleTable(id)
         }
     }
 }
