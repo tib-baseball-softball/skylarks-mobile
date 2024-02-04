@@ -50,8 +50,8 @@ fun RowScope.AddItem(
                 contentDescription = "Navigation Icon"
             )
         },
-        selected = currentDestination?.hierarchy?.any {
-            it.route == screen.route
+        selected = currentDestination?.hierarchy?.any { current ->
+            current.route?.contains(screen.route, ignoreCase = true) ?: false
         } == true,
         onClick = {
             navController.navigate(screen.route) {
