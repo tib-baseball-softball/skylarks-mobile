@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter
 data class Game(
     var id: Int,
     var match_id: String,
+    var planned_innings: Int,
     var time: String,
     var league_id: Int,
     var home_runs: Int?,

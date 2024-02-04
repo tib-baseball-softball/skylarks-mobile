@@ -21,6 +21,7 @@ val testLeague = League(
 val testGame = Game(
     id = 9999,
     match_id = "12345",
+    planned_innings = 7,
     league_id = 5555,
     away_runs = 5,
     home_runs = 7,
