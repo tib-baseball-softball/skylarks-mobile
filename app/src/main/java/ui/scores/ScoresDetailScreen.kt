@@ -40,10 +40,11 @@ fun ScoresDetailScreen(
 ) {
     val vm: ScoresViewModel = viewModel(LocalContext.current as ComponentActivity)
     val game = vm.getFilteredGame(matchID) ?: testGame
+    val context = LocalContext.current
 
     var showLocationData by rememberSaveable { mutableStateOf(false) }
     var showOfficialsData by rememberSaveable { mutableStateOf(false) }
-    var showStatisticsData by rememberSaveable { mutableStateOf(false) }
+    var showStatisticsData by rememberSaveable { mutableStateOf(true) }
 
     Column(
         modifier = Modifier
@@ -115,7 +116,7 @@ fun ScoresDetailScreen(
         Divider(modifier = Modifier.padding(8.dp))
         LazyColumn(
             modifier = Modifier,
-            verticalArrangement = Arrangement.spacedBy(2.dp),
+           // verticalArrangement = Arrangement.spacedBy(2.dp),
         ) {
             item {
                 Card(
@@ -128,6 +129,9 @@ fun ScoresDetailScreen(
                 ) {
                     ScoresDetailMainInfo(game)
                 }
+            }
+            item {
+                ScoreDetailStatisticsSection(showStatisticsData, game)
             }
             item {
                 ScoreDetailOfficialsSection(showOfficialsData, game)
