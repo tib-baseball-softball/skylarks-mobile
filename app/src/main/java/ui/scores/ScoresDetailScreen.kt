@@ -57,12 +57,10 @@ fun ScoresDetailScreen(
         ) {
             item {
                 FilterChip(
-                    onClick = { showLocationData = !showLocationData },
-                    label = {
-                        Text("Location")
-                    },
-                    selected = showLocationData,
-                    leadingIcon = if (showLocationData) {
+                    onClick = { showStatisticsData = !showStatisticsData },
+                    label = { Text("Statistics") },
+                    selected = showStatisticsData,
+                    leadingIcon = if (showStatisticsData) {
                         {
                             Icon(
                                 imageVector = Icons.Filled.Done,
@@ -77,10 +75,12 @@ fun ScoresDetailScreen(
             }
             item {
                 FilterChip(
-                    onClick = { showStatisticsData = !showStatisticsData },
-                    label = { Text("Statistics") },
-                    selected = showStatisticsData,
-                    leadingIcon = if (showStatisticsData) {
+                    onClick = { showLocationData = !showLocationData },
+                    label = {
+                        Text("Location")
+                    },
+                    selected = showLocationData,
+                    leadingIcon = if (showLocationData) {
                         {
                             Icon(
                                 imageVector = Icons.Filled.Done,
@@ -131,6 +131,9 @@ fun ScoresDetailScreen(
             }
             item {
                 ScoreDetailStatisticsSection(showStatisticsData, game)
+            }
+            item {
+                ScoreDetailLocationSection(showLocationData, game, matchID)
             }
             item {
                 ScoreDetailOfficialsSection(showOfficialsData, game)
