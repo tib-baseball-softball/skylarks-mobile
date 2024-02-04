@@ -51,7 +51,7 @@ fun ScoresScreen(
     val tabTitles = listOf("Previous", "Current", "Next", "Any")
 
     LazyColumn(
-        modifier = Modifier,
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
         item {

@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -42,11 +44,13 @@ fun ScoresDetailMainInfo(game: Game) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            ScoresDetailMainLogoSection(logo = game.roadLogo, name = game.away_team_name)
+            ScoresDetailMainLogoSection(
+                logo = game.roadLogo,
+            )
             if (game.away_runs != null && game.home_runs != null) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+                    horizontalArrangement = Arrangement.Center,
                 ) {
                     Text(
                         text = "${game.away_runs.toString()} - ${game.home_runs.toString()}",
@@ -55,12 +59,21 @@ fun ScoresDetailMainInfo(game: Game) {
                     )
                 }
             }
-            ScoresDetailMainLogoSection(logo = game.homeLogo, name = game.home_team_name)
+            ScoresDetailMainLogoSection(logo = game.homeLogo)
+        }
+        Row(
+            modifier = Modifier
+                .offset(y = (-10).dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = game.away_team_name, modifier = Modifier.widthIn(max = 120.dp))
+            Text(text = game.home_team_name, modifier = Modifier.widthIn(max = 120.dp))
         }
     }
     Row(
         modifier = Modifier
-            .padding(top = 12.dp)
             .padding(horizontal = 4.dp)
     ) {
         Card(
