@@ -31,9 +31,7 @@ fun StandingsDetailScreen(
             }
         }
         ViewState.Found -> {
-            Text(
-                vm.table.value.toString()
-            )
+            StandingsTable(table = vm.table.value)
         }
         ViewState.NoResults -> {
             Text(text = "The table for this league couldn't be loaded.", modifier = Modifier.padding(8.dp))
