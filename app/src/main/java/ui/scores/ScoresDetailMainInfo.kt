@@ -82,7 +82,7 @@ fun ScoresDetailMainInfo(game: Game) {
                 .heightIn(min = 110.dp)
                 .padding(cardPadding),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-            elevation = CardDefaults.cardElevation(defaultElevation = 20.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
         ) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(6.dp),
@@ -99,7 +99,7 @@ fun ScoresDetailMainInfo(game: Game) {
                 .weight(1f)
                 .heightIn(min = 110.dp)
                 .padding(cardPadding),
-            elevation = CardDefaults.cardElevation(defaultElevation = 20.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
         ) {
             Column(
