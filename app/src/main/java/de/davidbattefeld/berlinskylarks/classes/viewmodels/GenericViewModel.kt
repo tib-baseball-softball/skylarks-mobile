@@ -4,9 +4,11 @@ import android.app.Application
 import android.icu.util.Calendar
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import de.davidbattefeld.berlinskylarks.enums.ViewState
 import de.davidbattefeld.berlinskylarks.global.readInt
 import de.davidbattefeld.berlinskylarks.global.writeInt
 import kotlinx.coroutines.Dispatchers
@@ -16,6 +18,8 @@ import kotlinx.coroutines.withContext
 
 abstract class GenericViewModel(application: Application) : AndroidViewModel(application), ViewModelInterface {
     var selectedSeason by mutableIntStateOf(Calendar.getInstance().get(Calendar.YEAR))
+
+    var viewState = mutableStateOf(ViewState.NotInitialised)
 
     init {
         readSelectedSeason()

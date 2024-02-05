@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import de.davidbattefeld.berlinskylarks.classes.api.LeagueGroupsAPIRequest
 import de.davidbattefeld.berlinskylarks.classes.api.TablesAPIRequest
+import de.davidbattefeld.berlinskylarks.enums.ViewState
 import de.davidbattefeld.berlinskylarks.testdata.testTable
 import kotlinx.coroutines.launch
 import model.LeagueGroup
@@ -27,8 +28,16 @@ class StandingsViewModel(application: Application): GenericViewModel(application
     }
 
     fun loadSingleTable(id: Int)  {
+        viewState.value = ViewState.Loading
+
         viewModelScope.launch {
              table.value = tablesRequest.loadSingleTable(id)
+
+            if (table.value.league_id == 9999) {
+                viewState.value = ViewState.NoResults
+            } else {
+                viewState.value = ViewState.Found
+            }
         }
     }
 }
