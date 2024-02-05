@@ -44,6 +44,8 @@ fun StandingsDetailScreen(
     }
 
     LaunchedEffect(Unit) {
-        vm.loadSingleTable(tableID)
+        if (vm.viewState.value != ViewState.Found) {
+            vm.loadSingleTable(tableID)
+        }
     }
 }

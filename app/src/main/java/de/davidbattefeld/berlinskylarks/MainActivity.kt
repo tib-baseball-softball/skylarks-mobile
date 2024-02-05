@@ -50,6 +50,27 @@ fun BerlinSkylarksApp(navController: NavHostController) {
                     scrollBehavior = scrollBehavior,
                     selectedSeason = 2024, // TODO: get from app state
                 )
+                SkylarksNavDestination.ScoresDetail.routeWithArgs -> ScoresTopBar(
+                    title = SkylarksNavDestination.ScoresDetail.title,
+                    scrollBehavior = scrollBehavior,
+                    selectedSeason = 2024, // TODO: get from app state
+                )
+                SkylarksNavDestination.Standings.route -> MediumTopAppBar(
+                    scrollBehavior = scrollBehavior,
+                    title = { Text(text = SkylarksNavDestination.Standings.title) },
+                )
+                SkylarksNavDestination.StandingsDetail.routeWithArgs -> MediumTopAppBar(
+                    scrollBehavior = scrollBehavior,
+                    title = { Text(text = SkylarksNavDestination.StandingsDetail.title) },
+                )
+                SkylarksNavDestination.Club.route -> MediumTopAppBar(
+                    scrollBehavior = scrollBehavior,
+                    title = { Text(text = SkylarksNavDestination.Club.title) },
+                )
+                SkylarksNavDestination.Settings.route -> MediumTopAppBar(
+                    scrollBehavior = scrollBehavior,
+                    title = { Text(text = SkylarksNavDestination.Settings.title) },
+                )
                 else -> MediumTopAppBar(
                     scrollBehavior = scrollBehavior,
                     title = { Text(text = "Skylarks") },
