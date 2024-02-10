@@ -11,6 +11,9 @@ import ui.club.ClubScreen
 import ui.home.HomeScreen
 import ui.scores.ScoresDetailScreen
 import ui.scores.ScoresScreen
+import ui.settings.AppInfoScreen
+import ui.settings.LegalNoticeScreen
+import ui.settings.PrivacyPolicyScreen
 import ui.settings.SettingsScreen
 import ui.standings.StandingsDetailScreen
 import ui.standings.StandingsScreen
@@ -59,8 +62,25 @@ fun BottomNavGraph(modifier: Modifier, navController: NavHostController) {
             composable(route = SkylarksNavDestination.Club.route) {
                 ClubScreen()
             }
+
             composable(route = SkylarksNavDestination.Settings.route) {
-                SettingsScreen()
+                SettingsScreen(
+                    infoRoute = { navController.navigate(SkylarksNavDestination.Info.route) },
+                    privacyRoute = { navController.navigate(SkylarksNavDestination.Privacy.route) },
+                    legalRoute = { navController.navigate(SkylarksNavDestination.LegalNotice.route) },
+                )
+            }
+
+            composable(SkylarksNavDestination.Info.route) {
+                AppInfoScreen()
+            }
+
+            composable(SkylarksNavDestination.LegalNotice.route) {
+                LegalNoticeScreen()
+            }
+
+            composable(SkylarksNavDestination.Privacy.route) {
+                PrivacyPolicyScreen()
             }
         }
     }

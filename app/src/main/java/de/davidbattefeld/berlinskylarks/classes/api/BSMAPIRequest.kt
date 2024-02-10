@@ -22,8 +22,9 @@ abstract class BSMAPIRequest {
 
         const val SEASON_FILTER = "filters[seasons][]"
         const val GAMEDAY_FILTER = "filters[gamedays][]"
+
+        val DEFAULT_SEASON = Calendar.getInstance().get(Calendar.YEAR)
     }
-    protected val DEFAULT_SEASON = Calendar.getInstance().get(Calendar.YEAR)
 
     @OptIn(ExperimentalSerializationApi::class)
     protected val jsonBuilder = Json {

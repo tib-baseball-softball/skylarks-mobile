@@ -1,6 +1,9 @@
 package ui.nav
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Gavel
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Policy
 import androidx.compose.material.icons.outlined.Scoreboard
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Shield
@@ -13,20 +16,21 @@ import androidx.navigation.navArgument
 sealed class SkylarksNavDestination(
     val route: String,
     val title: String,
-    val icon: ImageVector
+    val icon: ImageVector,
 ) {
     data object Home : SkylarksNavDestination(
         route = "home",
         title = "Home",
         icon = Icons.Outlined.Stars
     )
+
     data object Scores : SkylarksNavDestination(
         route = "scores",
         title = "Scores",
         icon = Icons.Outlined.Scoreboard
     )
 
-    data object ScoresDetail: SkylarksNavDestination(
+    data object ScoresDetail : SkylarksNavDestination(
         route = "scores_detail",
         title = "Game Detail",
         icon = Icons.Outlined.Scoreboard
@@ -44,7 +48,7 @@ sealed class SkylarksNavDestination(
         icon = Icons.Outlined.TableRows
     )
 
-    data object StandingsDetail: SkylarksNavDestination(
+    data object StandingsDetail : SkylarksNavDestination(
         route = "standings_detail",
         title = "Table Detail",
         icon = Icons.Outlined.TableRows
@@ -55,14 +59,34 @@ sealed class SkylarksNavDestination(
             navArgument(tableArg) { type = NavType.IntType }
         )
     }
+
     data object Club : SkylarksNavDestination(
         route = "club",
         title = "Club",
         icon = Icons.Outlined.Shield,
     )
+
     data object Settings : SkylarksNavDestination(
         route = "settings",
         title = "Settings",
         icon = Icons.Outlined.Settings
+    )
+
+    data object Info : SkylarksNavDestination(
+        route = "info",
+        title = "App Info",
+        icon = Icons.Filled.Info
+    )
+
+    data object Privacy : SkylarksNavDestination(
+        route = "privacy",
+        title = "Privacy Policy",
+        icon = Icons.Filled.Policy
+    )
+
+    data object LegalNotice : SkylarksNavDestination(
+        route = "legal",
+        title = "Legal Notice",
+        icon = Icons.Filled.Gavel
     )
 }

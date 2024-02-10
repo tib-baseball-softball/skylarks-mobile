@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.Stadium
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
@@ -73,7 +74,7 @@ fun ScoreDetailLocationSection(
                     )
                 }
             )
-            Divider(modifier = Modifier.padding(horizontal = 20.dp))
+            HorizontalDivider(modifier = Modifier.padding(horizontal = 20.dp))
             ListItem(
                 headlineContent = { Text(game.field?.street ?: "No address provided.") },
                 supportingContent = { Text("Address") },

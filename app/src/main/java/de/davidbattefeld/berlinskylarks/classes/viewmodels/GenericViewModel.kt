@@ -1,11 +1,11 @@
 package de.davidbattefeld.berlinskylarks.classes.viewmodels
 
 import android.app.Application
-import android.icu.util.Calendar
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import de.davidbattefeld.berlinskylarks.classes.api.BSMAPIRequest
 import de.davidbattefeld.berlinskylarks.enums.ViewState
 import de.davidbattefeld.berlinskylarks.global.readInt
 import de.davidbattefeld.berlinskylarks.global.writeInt
@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 abstract class GenericViewModel(application: Application) : AndroidViewModel(application), ViewModelInterface {
-    var selectedSeason = mutableIntStateOf(Calendar.getInstance().get(Calendar.YEAR))
+    var selectedSeason = mutableIntStateOf(BSMAPIRequest.DEFAULT_SEASON)
 
     var viewState = mutableStateOf(ViewState.NotInitialised)
 

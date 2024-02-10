@@ -1,6 +1,5 @@
 package ui.scores
 
-import android.icu.util.Calendar
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -20,13 +19,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import de.davidbattefeld.berlinskylarks.classes.api.BSMAPIRequest
 import de.davidbattefeld.berlinskylarks.global.readInt
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
     val selectedSeason = LocalContext.current.readInt("season")
-        .collectAsState(initial = Calendar.getInstance().get(Calendar.YEAR))
+        .collectAsState(initial = BSMAPIRequest.DEFAULT_SEASON)
 
     MediumTopAppBar(
         scrollBehavior = scrollBehavior,
