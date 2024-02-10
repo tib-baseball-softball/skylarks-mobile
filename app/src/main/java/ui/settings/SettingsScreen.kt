@@ -27,9 +27,7 @@ import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(
-    settingsViewModel: SettingsViewModel = viewModel(),
-) {
+fun SettingsScreen(vm: SettingsViewModel = viewModel(), ) {
     var expanded by remember { mutableStateOf(false) }
 
     Column {
@@ -45,7 +43,7 @@ fun SettingsScreen(
                     // The `menuAnchor` modifier must be passed to the text field for correctness.
                     modifier = Modifier.menuAnchor(),
                     readOnly = true,
-                    value = settingsViewModel.selectedSeason.toString(),
+                    value = vm.selectedSeason.intValue.toString(),
                     onValueChange = {},
                     label = { Text("Selected Season") },
                     leadingIcon = {
@@ -61,13 +59,13 @@ fun SettingsScreen(
                     expanded = expanded,
                     onDismissRequest = { expanded = false },
                 ) {
-                    settingsViewModel.possibleSeasons.forEach { selectionOption ->
+                    vm.possibleSeasons.forEach { selectionOption ->
                         DropdownMenuItem(
                             text = { Text(selectionOption.toString()) },
                             onClick = {
-                                settingsViewModel.selectedSeason = selectionOption
+                                vm.selectedSeason.intValue = selectionOption
                                 expanded = false
-                                settingsViewModel.writeSelectedSeason(selectionOption)
+                                vm.writeSelectedSeason(selectionOption)
                             },
                             contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                         )
@@ -77,7 +75,7 @@ fun SettingsScreen(
         }
         Column() {
             Text(text = "Selected Season is:")
-            Text(text = settingsViewModel.selectedSeason.toString())
+            Text(text = vm.selectedSeason.intValue.toString())
         }
     }
 }

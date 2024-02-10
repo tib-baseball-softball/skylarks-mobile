@@ -30,7 +30,7 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
         }
 
         viewModelScope.launch {
-            games.addAll(request.loadGamesForClub(selectedSeason, gamedays))
+            games.addAll(request.loadGamesForClub(selectedSeason.intValue, gamedays))
             games.forEach {
                 it.addDate()
                 it.determineGameStatus()

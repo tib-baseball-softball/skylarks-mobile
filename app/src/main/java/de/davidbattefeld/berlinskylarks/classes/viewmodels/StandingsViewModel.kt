@@ -23,7 +23,7 @@ class StandingsViewModel(application: Application): GenericViewModel(application
         readSelectedSeason()
 
         viewModelScope.launch {
-            leagueGroups.addAll(leagueGroupsRequest.loadLeagueGroupsForClub(selectedSeason))
+            leagueGroups.addAll(leagueGroupsRequest.loadLeagueGroupsForClub(selectedSeason.intValue))
         }
     }
 

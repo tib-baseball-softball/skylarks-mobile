@@ -48,12 +48,10 @@ fun BerlinSkylarksApp(navController: NavHostController) {
                 SkylarksNavDestination.Scores.route -> ScoresTopBar(
                     title = SkylarksNavDestination.Scores.title,
                     scrollBehavior = scrollBehavior,
-                    selectedSeason = 2024, // TODO: get from app state
                 )
                 SkylarksNavDestination.ScoresDetail.routeWithArgs -> ScoresTopBar(
                     title = SkylarksNavDestination.ScoresDetail.title,
                     scrollBehavior = scrollBehavior,
-                    selectedSeason = 2024, // TODO: get from app state
                 )
                 SkylarksNavDestination.Standings.route -> MediumTopAppBar(
                     scrollBehavior = scrollBehavior,
