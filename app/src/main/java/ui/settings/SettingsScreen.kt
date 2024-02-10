@@ -5,9 +5,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.ForkLeft
+import androidx.compose.material.icons.filled.Mail
+import androidx.compose.material.icons.filled.Web
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,10 +29,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.davidbattefeld.berlinskylarks.classes.api.BSMAPIRequest
 import de.davidbattefeld.berlinskylarks.classes.viewmodels.SettingsViewModel
+import de.davidbattefeld.berlinskylarks.global.TeamGlobals
 import de.davidbattefeld.berlinskylarks.global.readInt
 import ui.nav.SkylarksNavDestination
 
@@ -42,6 +53,7 @@ fun SettingsScreen(
 ) {
     val selectedSeason = LocalContext.current.readInt("season")
         .collectAsState(initial = BSMAPIRequest.DEFAULT_SEASON)
+    val uriHandler = LocalUriHandler.current
 
     var expanded by remember { mutableStateOf(false) }
 
@@ -86,7 +98,7 @@ fun SettingsScreen(
         item {
             Text(
                 modifier = Modifier
-                    .padding(start = 8.dp),
+                    .padding(start = 8.dp, top = 8.dp),
                 text = "Information",
                 style = MaterialTheme.typography.titleSmall
             )
@@ -128,6 +140,86 @@ fun SettingsScreen(
                         contentDescription = "privacy icon",
                     )
                 },
+            )
+        }
+        item {
+            Text(
+                modifier = Modifier
+                    .padding(start = 8.dp, top = 8.dp),
+                text = "Get in Touch",
+                style = MaterialTheme.typography.titleSmall
+            )
+        }
+        item {
+            ListItem(
+                headlineContent = { ClickableText(
+                    text = buildAnnotatedString {
+                        withStyle(style = SpanStyle(
+                            textDecoration = TextDecoration.Underline,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            fontSize = 16.sp
+                        )
+                        ) {
+                            append("Visit the team website")
+                        }
+                    }
+                ) {
+                    uriHandler.openUri(TeamGlobals.TEAM_WEBSITE_URL)
+                } },
+                leadingContent = {
+                    Icon(
+                        Icons.Filled.Web,
+                        contentDescription = "Localized description",
+                    )
+                }
+            )
+        }
+        item {
+            ListItem(
+                headlineContent = { ClickableText(
+                    text = buildAnnotatedString {
+                        withStyle(style = SpanStyle(
+                            textDecoration = TextDecoration.Underline,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            fontSize = 16.sp
+                        )
+                        ) {
+                            append("Contribute to this app")
+                        }
+                    }
+                ) {
+                    uriHandler.openUri(TeamGlobals.PROJECT_REPO)
+                } },
+                leadingContent = {
+                    Icon(
+                        Icons.Filled.ForkLeft,
+                        contentDescription = "Localized description",
+                    )
+                }
+            )
+        }
+        item {
+            ListItem(
+                headlineContent = { ClickableText(
+                    text = buildAnnotatedString {
+                        withStyle(style = SpanStyle(
+                            textDecoration = TextDecoration.Underline,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            fontSize = 16.sp
+                        )
+                        ) {
+                            append("Contact the developer")
+                        }
+                    }
+                ) {
+                    uriHandler.openUri(TeamGlobals.CONTACT_MAILTO_LINK)
+                } },
+                leadingContent = {
+                    Icon(
+                        Icons.Filled.Mail,
+                        contentDescription = "Localized description",
+                    )
+                }
             )
         }
     }
