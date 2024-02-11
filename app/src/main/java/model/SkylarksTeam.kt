@@ -1,8 +1,10 @@
 package model
 
 import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonNames
 
+@Serializable
 @OptIn(ExperimentalSerializationApi::class)
 data class SkylarksTeam(
     val uid: Int,

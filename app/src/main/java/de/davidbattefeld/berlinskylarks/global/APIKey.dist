@@ -1,3 +1,4 @@
 package de.davidbattefeld.berlinskylarks.global
 
 const val API_KEY = "API_KEY_HERE"
+const val AUTH_HEADER = "HEADER_HERE"
