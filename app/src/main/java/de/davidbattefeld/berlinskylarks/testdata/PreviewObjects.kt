@@ -1,5 +1,6 @@
 package de.davidbattefeld.berlinskylarks.testdata
 
+import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
 import model.Game
 import model.League
 import model.LeagueTable
@@ -9,7 +10,7 @@ val testEntry = Game.LeagueEntry(
 )
 
 val testLeague = League(
-    id = 9999,
+    id = BOGUS_ID,
     name = "Kreisliga",
     season = 2099,
     classification = "Kreisliga",
@@ -19,7 +20,7 @@ val testLeague = League(
 )
 
 val testGame = Game(
-    id = 9999,
+    id = BOGUS_ID,
     match_id = "12345",
     planned_innings = 7,
     league_id = 5555,
@@ -63,7 +64,7 @@ val testRow2 = LeagueTable.Row(
 )
 
 val testTable = LeagueTable(
-    league_id = 9999,
+    league_id = BOGUS_ID,
     league_name = "Kreisliga Baseball",
     season = 1970,
     rows = listOf(testRow, testRow, testRow2)

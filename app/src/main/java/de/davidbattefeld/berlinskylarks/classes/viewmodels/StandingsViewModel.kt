@@ -7,11 +7,12 @@ import androidx.lifecycle.viewModelScope
 import de.davidbattefeld.berlinskylarks.classes.api.LeagueGroupsAPIRequest
 import de.davidbattefeld.berlinskylarks.classes.api.TablesAPIRequest
 import de.davidbattefeld.berlinskylarks.enums.ViewState
+import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
 import de.davidbattefeld.berlinskylarks.testdata.testTable
 import kotlinx.coroutines.launch
 import model.LeagueGroup
 
-class StandingsViewModel(application: Application): GenericViewModel(application) {
+class StandingsViewModel(application: Application) : GenericViewModel(application) {
     var leagueGroups = mutableStateListOf<LeagueGroup>()
     var table = mutableStateOf(testTable)
 
@@ -27,17 +28,13 @@ class StandingsViewModel(application: Application): GenericViewModel(application
         }
     }
 
-    fun loadSingleTable(id: Int)  {
+    fun loadSingleTable(id: Int) {
         viewState = ViewState.Loading
 
         viewModelScope.launch {
-             table.value = tablesRequest.loadSingleTable(id)
+            table.value = tablesRequest.loadSingleTable(id)
 
-            if (table.value.league_id == 9999) {
-                viewState = ViewState.NoResults
-            } else {
-                viewState = ViewState.Found
-            }
+            viewState = if (table.value.league_id == BOGUS_ID) ViewState.NoResults else ViewState.Found
         }
     }
 }
