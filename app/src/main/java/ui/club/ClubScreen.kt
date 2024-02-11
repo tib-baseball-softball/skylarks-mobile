@@ -1,6 +1,5 @@
 package ui.club
 
-import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,7 +16,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Badge
 import androidx.compose.material.icons.outlined.Create
-import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.People
 import androidx.compose.material.icons.outlined.Shield
@@ -34,15 +32,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.davidbattefeld.berlinskylarks.R
 import de.davidbattefeld.berlinskylarks.global.cardGridSpacing
 import de.davidbattefeld.berlinskylarks.global.clubCardPadding
-import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 
 @Composable
-fun ClubScreen() {
+fun ClubScreen(
+    teamsRoute: () -> Unit,
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -142,26 +140,7 @@ fun ClubScreen() {
                 }
             }
             item {
-                Card(
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface
-                    ),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .padding(clubCardPadding),
-                        verticalArrangement = Arrangement.spacedBy(1.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Outlined.Groups,
-                            contentDescription = "",
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                        Text(text = "Teams", style = MaterialTheme.typography.titleLarge)
-                        Text(text = ("Adult and Youth"))
-                    }
-                }
+                ClubTeamsCard(teamsRoute)
             }
             item {
                 Card(
@@ -255,6 +234,7 @@ fun ClubScreen() {
     }
 }
 
+/*
 @Preview(
     showBackground = true,
     widthDp = 400,
@@ -270,4 +250,4 @@ fun ClubScreenPreview() {
     BerlinSkylarksTheme {
         ClubScreen()
     }
-}
+}*/

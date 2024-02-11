@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Gavel
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Policy
+import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material.icons.outlined.Scoreboard
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Shield
@@ -66,6 +67,12 @@ sealed class SkylarksNavDestination(
         icon = Icons.Outlined.Shield,
     )
 
+    data object Teams : SkylarksNavDestination(
+        route = "club_teams",
+        title = "Teams",
+        icon = Icons.Outlined.Groups
+    )
+
     data object Settings : SkylarksNavDestination(
         route = "settings",
         title = "Settings",
@@ -73,19 +80,19 @@ sealed class SkylarksNavDestination(
     )
 
     data object Info : SkylarksNavDestination(
-        route = "info",
+        route = "settings_info",
         title = "App Info",
         icon = Icons.Filled.Info
     )
 
     data object Privacy : SkylarksNavDestination(
-        route = "privacy",
+        route = "settings_privacy",
         title = "Privacy Policy",
         icon = Icons.Filled.Policy
     )
 
     data object LegalNotice : SkylarksNavDestination(
-        route = "legal",
+        route = "settings_legal",
         title = "Legal Notice",
         icon = Icons.Filled.Gavel
     )

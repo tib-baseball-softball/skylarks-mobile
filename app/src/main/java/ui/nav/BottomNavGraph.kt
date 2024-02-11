@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import de.davidbattefeld.berlinskylarks.navigateSingleTopTo
 import ui.club.ClubScreen
+import ui.club.teams.TeamsScreen
 import ui.home.HomeScreen
 import ui.scores.ScoresDetailScreen
 import ui.scores.ScoresScreen
@@ -65,14 +66,20 @@ fun BottomNavGraph(
             }
             
             composable(route = SkylarksNavDestination.Club.route) {
-                ClubScreen()
+                ClubScreen(
+                    teamsRoute = { navController.navigateSingleTopTo(SkylarksNavDestination.Teams.route) }
+                )
+            }
+
+            composable(route = SkylarksNavDestination.Teams.route) {
+                TeamsScreen()
             }
 
             composable(route = SkylarksNavDestination.Settings.route) {
                 SettingsScreen(
-                    infoRoute = { navController.navigate(SkylarksNavDestination.Info.route) },
-                    privacyRoute = { navController.navigate(SkylarksNavDestination.Privacy.route) },
-                    legalRoute = { navController.navigate(SkylarksNavDestination.LegalNotice.route) },
+                    infoRoute = { navController.navigateSingleTopTo(SkylarksNavDestination.Info.route) },
+                    privacyRoute = { navController.navigateSingleTopTo(SkylarksNavDestination.Privacy.route) },
+                    legalRoute = { navController.navigateSingleTopTo(SkylarksNavDestination.LegalNotice.route) },
                 )
             }
 
