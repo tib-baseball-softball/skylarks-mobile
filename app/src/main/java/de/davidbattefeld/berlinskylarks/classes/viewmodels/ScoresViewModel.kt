@@ -13,12 +13,15 @@ import model.Game
 
 class ScoresViewModel(application: Application) : GenericViewModel(application) {
     var games = mutableStateListOf<Game>()
+    var skylarksGames = mutableStateListOf<Game>()
+
     var tabState by mutableIntStateOf(1)
 
     private val request = MatchAPIRequest()
 
     override fun load() {
         games.clear()
+        skylarksGames.clear()
         readSelectedSeason()
 
         val gamedays = when (tabState) {
@@ -30,12 +33,16 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
         }
 
         viewModelScope.launch {
-            games.addAll(request.loadGamesForClub(selectedSeason.intValue, gamedays))
+            games.addAll(request.loadAllGames(selectedSeason.intValue, gamedays))
             games.forEach {
                 it.addDate()
                 it.determineGameStatus()
                 it.setCorrectLogos()
             }
+            skylarksGames.addAll(games.filter {
+                it.away_team_name.contains("Skylarks", ignoreCase = true) ||
+                it.home_team_name.contains("Skylarks", ignoreCase = true)
+            })
         }
     }
 

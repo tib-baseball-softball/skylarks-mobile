@@ -16,7 +16,7 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
@@ -46,7 +46,7 @@ fun ScoresScreen(
     modifier: Modifier = Modifier,
     detailRoute: (Int) -> Unit,
 ) {
-    val scoresViewModel: ScoresViewModel = viewModel(LocalContext.current as ComponentActivity)
+    val vm: ScoresViewModel = viewModel(LocalContext.current as ComponentActivity)
     var showExternalGames by remember { mutableStateOf(true) }
     val tabTitles = listOf("Previous", "Current", "Next", "Any")
 
@@ -55,13 +55,13 @@ fun ScoresScreen(
         verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
         item {
-            TabRow(selectedTabIndex = scoresViewModel.tabState) {
+            TabRow(selectedTabIndex = vm.tabState) {
                 tabTitles.forEachIndexed { index, title ->
                     Tab(
-                        selected = scoresViewModel.tabState == index,
+                        selected = vm.tabState == index,
                         onClick = {
-                            scoresViewModel.tabState = index
-                            scoresViewModel.load()
+                            vm.tabState = index
+                            vm.load()
                         },
                         text = {
                             Text(
@@ -114,10 +114,10 @@ fun ScoresScreen(
             }
         }
         item {
-            Divider(modifier = Modifier.padding(horizontal = 12.dp))
+            HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
         }
         item {
-            if (scoresViewModel.games.isEmpty()) {
+            if (vm.games.isEmpty()) {
                 Card(
                     modifier = Modifier
                         .padding(cardPadding)
@@ -140,7 +140,7 @@ fun ScoresScreen(
                 }
             }
         }
-        items(scoresViewModel.games) { game ->
+        items(if (showExternalGames) vm.games else vm.skylarksGames) { game ->
             ScoresItem(
                 game = game,
                 modifier = Modifier
@@ -152,7 +152,7 @@ fun ScoresScreen(
         item {
             Row {
                 Button(onClick = {
-                    scoresViewModel.load()
+                    vm.load()
                 }) {
                     Text(text = "Load games")
                 }

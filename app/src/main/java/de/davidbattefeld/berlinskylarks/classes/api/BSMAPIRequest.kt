@@ -16,12 +16,15 @@ abstract class BSMAPIRequest {
     companion object {
         const val CLUB_ID = 485
         // in BSM jargon an "organisation" is a Landesverband (BSVBB in this case)
-        const val ORGANIZATION_ID = 9
+        const val BSVBB_ORGANIZATION_ID = 9
+        const val DBV_ORGANIZATION_ID = 1
 
         const val API_URL = "https://bsm.baseball-softball.de"
 
         const val SEASON_FILTER = "filters[seasons][]"
         const val GAMEDAY_FILTER = "filters[gamedays][]"
+        const val ORGANIZATION_FILTER = "filters[organizations][]"
+        const val TEAM_SEARCH = "search"
 
         val DEFAULT_SEASON = Calendar.getInstance().get(Calendar.YEAR)
     }
@@ -32,9 +35,13 @@ abstract class BSMAPIRequest {
         explicitNulls = false
     }
 
+    /**
+     * Generic API call method. queryParameters is not a map because duplicate query parameters
+     * need to be possible.
+     */
     protected suspend inline fun <reified T> apiCall(
         resource: String,
-        queryParameters: Map<String, String>? = null
+        queryParameters: MutableList<Pair<String, String>> = mutableListOf()
     ): T {
         var result: T
         withContext(Dispatchers.IO) {
@@ -42,7 +49,7 @@ abstract class BSMAPIRequest {
                 url {
                     appendPathSegments(resource)
                     queryParameters?.forEach {
-                        parameters.append(it.key, it.value)
+                        parameters.append(it.first, it.second)
                     }
                     parameters.append("api_key", API_KEY)
                 }
