@@ -2,6 +2,7 @@ package ui.settings
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,6 +15,7 @@ import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material.icons.filled.Web
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
@@ -101,31 +103,37 @@ fun SettingsScreen(
                 style = MaterialTheme.typography.titleSmall
             )
         }
-        item { 
-            ListItem(
-                modifier = Modifier
-                    .clickable { infoRoute() },
-                headlineContent = { Text(SkylarksNavDestination.Info.title) },
-                leadingContent = {
-                    Icon(
-                        SkylarksNavDestination.Info.icon,
-                        contentDescription = "season icon",
-                    )
-                },
-            )
+        item {
+            Column {
+                ListItem(
+                    modifier = Modifier
+                        .clickable { infoRoute() },
+                    headlineContent = { Text(SkylarksNavDestination.Info.title) },
+                    leadingContent = {
+                        Icon(
+                            SkylarksNavDestination.Info.icon,
+                            contentDescription = "season icon",
+                        )
+                    },
+                )
+                HorizontalDivider()
+            }
         }
         item {
-            ListItem(
-                modifier = Modifier
-                    .clickable { legalRoute() },
-                headlineContent = { Text(SkylarksNavDestination.LegalNotice.title) },
-                leadingContent = {
-                    Icon(
-                        SkylarksNavDestination.LegalNotice.icon,
-                        contentDescription = "legal icon",
-                    )
-                },
-            )
+            Column {
+                ListItem(
+                    modifier = Modifier
+                        .clickable { legalRoute() },
+                    headlineContent = { Text(SkylarksNavDestination.LegalNotice.title) },
+                    leadingContent = {
+                        Icon(
+                            SkylarksNavDestination.LegalNotice.icon,
+                            contentDescription = "legal icon",
+                        )
+                    },
+                )
+                HorizontalDivider()
+            }
         }
         item {
             ListItem(
@@ -149,52 +157,64 @@ fun SettingsScreen(
             )
         }
         item {
-            ListItem(
-                headlineContent = { ClickableText(
-                    text = buildAnnotatedString {
-                        withStyle(style = SpanStyle(
-                            textDecoration = TextDecoration.Underline,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            fontSize = 16.sp
-                        )
+            Column {
+                ListItem(
+                    headlineContent = {
+                        ClickableText(
+                            text = buildAnnotatedString {
+                                withStyle(
+                                    style = SpanStyle(
+                                        textDecoration = TextDecoration.Underline,
+                                        color = MaterialTheme.colorScheme.onSurface,
+                                        fontSize = 16.sp
+                                    )
+                                ) {
+                                    append("Visit the team website")
+                                }
+                            }
                         ) {
-                            append("Visit the team website")
+                            uriHandler.openUri(TeamGlobals.TEAM_WEBSITE_URL)
                         }
+                    },
+                    leadingContent = {
+                        Icon(
+                            Icons.Filled.Web,
+                            contentDescription = "Localized description",
+                        )
                     }
-                ) {
-                    uriHandler.openUri(TeamGlobals.TEAM_WEBSITE_URL)
-                } },
-                leadingContent = {
-                    Icon(
-                        Icons.Filled.Web,
-                        contentDescription = "Localized description",
-                    )
-                }
-            )
+                )
+                HorizontalDivider()
+            }
         }
         item {
-            ListItem(
-                headlineContent = { ClickableText(
-                    text = buildAnnotatedString {
-                        withStyle(style = SpanStyle(
-                            textDecoration = TextDecoration.Underline,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            fontSize = 16.sp
-                        )
+            Column {
+                ListItem(
+                    headlineContent = {
+                        ClickableText(
+                            text = buildAnnotatedString {
+                                withStyle(
+                                    style = SpanStyle(
+                                        textDecoration = TextDecoration.Underline,
+                                        color = MaterialTheme.colorScheme.onSurface,
+                                        fontSize = 16.sp
+                                    )
+                                ) {
+                                    append("Contribute to this app")
+                                }
+                            }
                         ) {
-                            append("Contribute to this app")
+                            uriHandler.openUri(TeamGlobals.PROJECT_REPO)
                         }
+                    },
+                    leadingContent = {
+                        Icon(
+                            Icons.Filled.ForkLeft,
+                            contentDescription = "Localized description",
+                        )
                     }
-                ) {
-                    uriHandler.openUri(TeamGlobals.PROJECT_REPO)
-                } },
-                leadingContent = {
-                    Icon(
-                        Icons.Filled.ForkLeft,
-                        contentDescription = "Localized description",
-                    )
-                }
-            )
+                )
+                HorizontalDivider()
+            }
         }
         item {
             ListItem(
