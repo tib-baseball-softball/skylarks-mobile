@@ -38,8 +38,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.davidbattefeld.berlinskylarks.classes.viewmodels.ScoresViewModel
+import de.davidbattefeld.berlinskylarks.enums.ViewState
 import de.davidbattefeld.berlinskylarks.global.cardPadding
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
+import ui.utility.LoadingView
 
 @Composable
 fun ScoresScreen(
@@ -117,42 +119,55 @@ fun ScoresScreen(
         item {
             HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
         }
-        item {
-            if (vm.games.isEmpty()) {
-                Card(
-                    modifier = Modifier
-                        .padding(cardPadding)
-                ) {
-                    Row(
+        when (vm.viewState) {
+            ViewState.NoResults, ViewState.NotInitialised -> {
+                item {
+                    Card(
                         modifier = Modifier
-                            .padding(12.dp)
+                            .padding(cardPadding)
                     ) {
-                        Icon(
-                            imageVector = Icons.Outlined.Info,
-                            contentDescription = null,
-                            modifier = Modifier.padding(end = 5.dp)
-                        )
-                        Text(
-                            text = "There are no games to display.",
+                        Row(
                             modifier = Modifier
-                                .weight(1.0F)
-                        )
+                                .padding(12.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.Info,
+                                contentDescription = null,
+                                modifier = Modifier.padding(end = 5.dp)
+                            )
+                            Text(
+                                text = "There are no games to display.",
+                                modifier = Modifier
+                                    .weight(1.0F)
+                            )
+                        }
                     }
                 }
             }
-        }
-        items(if (showExternalGames) vm.games else vm.skylarksGames) { game ->
-            ScoresItem(
-                game = game,
-                modifier = Modifier
-                    .clickable {
-                        detailRoute(game.id)
-                    }
-            )
+            ViewState.Loading -> {
+                item {
+                    LoadingView()
+                }
+            }
+            ViewState.Found -> {
+                items(if (showExternalGames) vm.games else vm.skylarksGames) { game ->
+                    ScoresItem(
+                        game = game,
+                        modifier = Modifier
+                            .clickable {
+                                detailRoute(game.id)
+                            }
+                    )
+                }
+            }
         }
     }
     LaunchedEffect(Unit) {
         setFabOnClick { vm.load() }
+
+        if (vm.games.isEmpty()) {
+            vm.load()
+        }
     }
 }
 

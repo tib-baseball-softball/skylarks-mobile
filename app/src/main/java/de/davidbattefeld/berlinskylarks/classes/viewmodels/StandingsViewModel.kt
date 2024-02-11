@@ -28,15 +28,15 @@ class StandingsViewModel(application: Application): GenericViewModel(application
     }
 
     fun loadSingleTable(id: Int)  {
-        viewState.value = ViewState.Loading
+        viewState = ViewState.Loading
 
         viewModelScope.launch {
              table.value = tablesRequest.loadSingleTable(id)
 
             if (table.value.league_id == 9999) {
-                viewState.value = ViewState.NoResults
+                viewState = ViewState.NoResults
             } else {
-                viewState.value = ViewState.Found
+                viewState = ViewState.Found
             }
         }
     }

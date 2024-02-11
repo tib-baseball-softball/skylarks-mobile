@@ -1,8 +1,10 @@
 package de.davidbattefeld.berlinskylarks.classes.viewmodels
 
 import android.app.Application
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import de.davidbattefeld.berlinskylarks.classes.api.BSMAPIRequest
@@ -17,7 +19,7 @@ import kotlinx.coroutines.withContext
 abstract class GenericViewModel(application: Application) : AndroidViewModel(application), ViewModelInterface {
     var selectedSeason = mutableIntStateOf(BSMAPIRequest.DEFAULT_SEASON)
 
-    var viewState = mutableStateOf(ViewState.NotInitialised)
+    var viewState by mutableStateOf(ViewState.NotInitialised)
 
     init {
         readSelectedSeason()

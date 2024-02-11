@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import de.davidbattefeld.berlinskylarks.classes.api.MatchAPIRequest
+import de.davidbattefeld.berlinskylarks.enums.ViewState
 import kotlinx.coroutines.launch
 import model.Game
 
@@ -33,6 +34,7 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
         }
 
         viewModelScope.launch {
+            viewState = ViewState.Loading
             games.addAll(request.loadAllGames(selectedSeason.intValue, gamedays))
             games.forEach {
                 it.addDate()
@@ -43,6 +45,8 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
                 it.away_team_name.contains("Skylarks", ignoreCase = true) ||
                 it.home_team_name.contains("Skylarks", ignoreCase = true)
             })
+
+            viewState = if (games.isNotEmpty()) ViewState.Found else ViewState.NoResults
         }
     }
 
