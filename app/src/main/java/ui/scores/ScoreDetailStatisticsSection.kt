@@ -12,7 +12,7 @@ import androidx.compose.material.icons.filled.TableChart
 import androidx.compose.material.icons.filled.Tag
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
@@ -67,7 +67,7 @@ fun ScoreDetailStatisticsSection(
                     )
                 }
             )
-            Divider(modifier = Modifier.padding(horizontal = 20.dp))
+            HorizontalDivider(modifier = Modifier.padding(horizontal = 20.dp))
             ListItem(
                 headlineContent = { Text(game.match_id) },
                 supportingContent = { Text("Match ID") },
@@ -78,7 +78,7 @@ fun ScoreDetailStatisticsSection(
                     )
                 }
             )
-            Divider(modifier = Modifier.padding(horizontal = 20.dp))
+            HorizontalDivider(modifier = Modifier.padding(horizontal = 20.dp))
             ListItem(
                 headlineContent = { Text(game.planned_innings.toString()) },
                 supportingContent = { Text("Planned innings") },
@@ -90,7 +90,7 @@ fun ScoreDetailStatisticsSection(
                 }
             )
             if (!game.scoresheet_url.isNullOrEmpty()) {
-                Divider(modifier = Modifier.padding(horizontal = 20.dp))
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 20.dp))
                 ListItem(
                     headlineContent = { ClickableText(
                         text = buildAnnotatedString {
@@ -116,7 +116,7 @@ fun ScoreDetailStatisticsSection(
                     }
                 )
             } else {
-                Divider(modifier = Modifier.padding(horizontal = 20.dp))
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 20.dp))
                 ListItem(
                     headlineContent = { Text("No scoresheet available.") },
                     leadingContent = {

@@ -13,7 +13,6 @@ import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Stadium
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
@@ -85,7 +84,7 @@ fun ScoreDetailLocationSection(
                     )
                 }
             )
-            Divider(modifier = Modifier.padding(horizontal = 20.dp))
+            HorizontalDivider(modifier = Modifier.padding(horizontal = 20.dp))
             ListItem(
                 headlineContent = { Text("${game.field?.city} (${game.field?.postal_code})") },
                 supportingContent = { Text("City") },
@@ -96,7 +95,7 @@ fun ScoreDetailLocationSection(
                     )
                 }
             )
-            Divider(modifier = Modifier.padding(horizontal = 20.dp))
+            HorizontalDivider(modifier = Modifier.padding(horizontal = 20.dp))
             ListItem(
                 headlineContent = { ClickableText(
                     text = buildAnnotatedString {

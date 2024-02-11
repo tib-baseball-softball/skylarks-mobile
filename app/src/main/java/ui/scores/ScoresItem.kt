@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -52,7 +52,7 @@ fun ScoresItem(game: Game, modifier: Modifier) {
                 Spacer(modifier = Modifier.weight(1.0F))
                 GameResultIndicator(game = game)
             }
-            Divider()
+            HorizontalDivider()
             Column() {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(

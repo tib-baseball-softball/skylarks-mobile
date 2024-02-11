@@ -26,7 +26,7 @@ import androidx.compose.material.icons.outlined.Stadium
 import androidx.compose.material.icons.outlined.Tag
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -77,7 +77,7 @@ fun ClubScreen() {
                 )
                 Text(text = "Berlin Skylarks Baseball & Softball Club")
             }
-            Divider(
+            HorizontalDivider(
                 modifier = Modifier.padding(horizontal = 12.dp),
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -93,7 +93,7 @@ fun ClubScreen() {
                 )
                 Text(text = "09 01100")
             }
-            Divider(
+            HorizontalDivider(
                 modifier = Modifier.padding(horizontal = 12.dp),
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
