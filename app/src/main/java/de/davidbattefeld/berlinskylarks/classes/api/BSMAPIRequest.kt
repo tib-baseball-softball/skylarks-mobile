@@ -36,7 +36,7 @@ abstract class BSMAPIRequest {
     }
 
     /**
-     * Generic API call method. queryParameters is not a map because duplicate query parameters
+     * Generic API call method. queryParameters is not a Map because duplicate query parameters
      * need to be possible.
      */
     protected suspend inline fun <reified T> apiCall(
@@ -48,7 +48,7 @@ abstract class BSMAPIRequest {
             val response = client.get(API_URL) {
                 url {
                     appendPathSegments(resource)
-                    queryParameters?.forEach {
+                    queryParameters.forEach {
                         parameters.append(it.first, it.second)
                     }
                     parameters.append("api_key", API_KEY)

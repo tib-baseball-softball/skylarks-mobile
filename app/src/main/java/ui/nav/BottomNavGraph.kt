@@ -19,7 +19,11 @@ import ui.standings.StandingsDetailScreen
 import ui.standings.StandingsScreen
 
 @Composable
-fun BottomNavGraph(modifier: Modifier, navController: NavHostController) {
+fun BottomNavGraph(
+    modifier: Modifier,
+    navController: NavHostController,
+    setFabOnClick: (() -> Unit) -> Unit
+) {
     Box(modifier = modifier) {
         NavHost(
             navController = navController,
@@ -31,6 +35,7 @@ fun BottomNavGraph(modifier: Modifier, navController: NavHostController) {
 
             composable(route = SkylarksNavDestination.Scores.route) {
                 ScoresScreen(
+                    setFabOnClick = setFabOnClick,
                     detailRoute = { id ->
                         navController.navigateSingleTopTo("${SkylarksNavDestination.ScoresDetail.route}/$id")
                     }

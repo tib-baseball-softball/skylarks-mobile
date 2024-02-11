@@ -13,7 +13,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -25,6 +24,7 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,6 +45,7 @@ import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 fun ScoresScreen(
     modifier: Modifier = Modifier,
     detailRoute: (Int) -> Unit,
+    setFabOnClick: (() -> Unit) -> Unit,
 ) {
     val vm: ScoresViewModel = viewModel(LocalContext.current as ComponentActivity)
     var showExternalGames by remember { mutableStateOf(true) }
@@ -149,15 +150,9 @@ fun ScoresScreen(
                     }
             )
         }
-        item {
-            Row {
-                Button(onClick = {
-                    vm.load()
-                }) {
-                    Text(text = "Load games")
-                }
-            }
-        }
+    }
+    LaunchedEffect(Unit) {
+        setFabOnClick { vm.load() }
     }
 }
 
