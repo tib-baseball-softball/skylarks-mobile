@@ -16,6 +16,12 @@ import model.Game
 @Composable
 fun GameResultIndicator(game: Game) {
     val endPadding = Modifier.padding(end = 6.dp)
+    var color = MaterialTheme.colorScheme.onSurface
+
+    if (!game.isExternalGame && (game.human_state != "geplant" && game.human_state != "ausgefallen")) {
+        color = if (game.skylarksWin) Color.Green else Color.Red
+    }
+
     if (game.isDerby) {
         Icon(
             imageVector = Icons.Outlined.Favorite,
@@ -33,7 +39,7 @@ fun GameResultIndicator(game: Game) {
         Text(
             text = game.getGameResultIndicatorText(),
             style = MaterialTheme.typography.titleMedium,
-            color = if (game.skylarksWin) Color.Green else Color.Red,
+            color = color,
             modifier = endPadding
         )
     }
