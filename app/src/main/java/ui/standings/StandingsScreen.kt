@@ -6,13 +6,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Insights
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,49 +29,65 @@ import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 
 @Composable
 fun StandingsScreen(
-    standingsViewModel: StandingsViewModel = viewModel(),
+    vm: StandingsViewModel = viewModel(),
     detailRoute: (Int) -> Unit,
 ) {
-    LazyColumn(
+    Column(
+        verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = Modifier
-            .padding(horizontal = 15.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+            .padding(8.dp)
     ) {
-        item {
-            Card(
-                modifier = Modifier.padding(bottom = 20.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.tertiaryContainer
-                ),
+        Card(
+            modifier = Modifier
+                .padding(horizontal = 8.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.tertiaryContainer
+            ),
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(clubCardPadding),
+                verticalArrangement = Arrangement.spacedBy(3.dp)
             ) {
-                Column(
-                    modifier = Modifier
-                        .padding(clubCardPadding),
-                    verticalArrangement = Arrangement.spacedBy(3.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.Insights,
-                        contentDescription = "",
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                    Text(text = "Club Standings", style = MaterialTheme.typography.titleLarge)
-                    Text(text = "See records for all Club teams at a glance and get an overview.")
+                Icon(
+                    imageVector = Icons.Outlined.Insights,
+                    contentDescription = "",
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Text(text = "Club Standings", style = MaterialTheme.typography.titleLarge)
+                Text(text = "See records for all Club teams at a glance and get an overview.")
+            }
+        }
+        Surface(
+            shape = RoundedCornerShape(size = 12.dp),
+            tonalElevation = 1.dp,
+            modifier = Modifier
+                .padding(8.dp)
+        ) {
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                itemsIndexed(vm.leagueGroups) { index, league ->
+                    Column {
+                        StandingsLeagueRow(
+                            leagueGroup = league,
+                            modifier = Modifier
+                                .clickable {
+                                    detailRoute(league.id)
+                                }
+                        )
+                        // last item does not have a divider
+                        if (index + 1 != vm.leagueGroups.size) {
+                            HorizontalDivider(modifier = Modifier.padding(horizontal = 8.dp))
+                        }
+                    }
                 }
             }
         }
-        items(standingsViewModel.leagueGroups) {
-            StandingsLeagueRow(
-                leagueGroup = it,
-                modifier = Modifier
-                    .clickable {
-                        detailRoute(it.id)
-                    }
-            )
-        }
     }
     LaunchedEffect(Unit) {
-        if (standingsViewModel.leagueGroups.isEmpty()) {
-            standingsViewModel.load()
+        if (vm.leagueGroups.isEmpty()) {
+            vm.load()
         }
     }
 }
@@ -86,6 +105,6 @@ fun StandingsScreen(
 @Composable
 fun StandingsScreenPreview() {
     BerlinSkylarksTheme {
-       // StandingsScreen()
+        // StandingsScreen()
     }
 }
