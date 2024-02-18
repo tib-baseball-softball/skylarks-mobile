@@ -9,6 +9,6 @@ class LeagueGroupsAPIRequest: BSMAPIRequest() {
             queryParameters = mutableListOf(
                 SEASON_FILTER to (season ?: DEFAULT_SEASON).toString(),
             )
-        )
+        ) ?: listOf()
     }
 }

@@ -8,6 +8,7 @@ import io.ktor.http.appendPathSegments
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 
 abstract class AbstractAPIRequest {
@@ -31,8 +32,8 @@ abstract class AbstractAPIRequest {
     protected suspend inline fun <reified T> apiCall(
         resource: String,
         queryParameters: MutableList<Pair<String, String>> = mutableListOf()
-    ): T {
-        var result: T
+    ): T? {
+        var result: T? = null
         withContext(Dispatchers.IO) {
             val response = APIClient.client.get(API_URL) {
                 url {
@@ -44,7 +45,13 @@ abstract class AbstractAPIRequest {
                 }
                 addRequestHeaders()
             }
-            result = jsonBuilder.decodeFromString<T>(response.body())
+            try {
+                result = jsonBuilder.decodeFromString<T>(response.body())
+            } catch (e: SerializationException) {
+                print(e.message)
+            } catch (e: IllegalArgumentException) {
+                print(e.message)
+            }
         }
         return result
     }

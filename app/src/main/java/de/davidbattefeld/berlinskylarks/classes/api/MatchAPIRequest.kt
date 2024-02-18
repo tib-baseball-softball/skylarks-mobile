@@ -16,7 +16,7 @@ class MatchAPIRequest: BSMAPIRequest() {
                 SEASON_FILTER to (season ?: DEFAULT_SEASON).toString(),
                 GAMEDAY_FILTER to (gamedays ?: "current"),
             )
-        )
+        ) ?: listOf()
     }
 
     /**
@@ -46,6 +46,6 @@ class MatchAPIRequest: BSMAPIRequest() {
         return apiCall<List<Game>>(
             resource = "matches.json",
             queryParameters = queryParameters,
-        )
+        ) ?: listOf()
     }
 }
