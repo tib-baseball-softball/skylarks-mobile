@@ -73,6 +73,18 @@ sealed class SkylarksNavDestination(
         icon = Icons.Outlined.Groups
     )
 
+    data object TeamDetail : SkylarksNavDestination(
+        route = "club_player_list",
+        title = "Team Detail",
+        icon = Icons.Outlined.Groups
+    ) {
+        const val teamArg = "team_id"
+        val routeWithArgs = "${route}/{${teamArg}}"
+        val arguments = listOf(
+            navArgument(teamArg) { type = NavType.IntType }
+        )
+    }
+
     data object Settings : SkylarksNavDestination(
         route = "settings",
         title = "Settings",

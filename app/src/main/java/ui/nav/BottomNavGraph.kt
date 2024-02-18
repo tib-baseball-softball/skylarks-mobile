@@ -6,8 +6,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
 import de.davidbattefeld.berlinskylarks.navigateSingleTopTo
 import ui.club.ClubScreen
+import ui.club.teams.TeamDetailScreen
 import ui.club.teams.TeamsScreen
 import ui.home.HomeScreen
 import ui.scores.ScoresDetailScreen
@@ -47,7 +49,7 @@ fun BottomNavGraph(
                 arguments = SkylarksNavDestination.ScoresDetail.arguments,
             ) {
                 val id = it.arguments?.getInt(SkylarksNavDestination.ScoresDetail.scoreArg)
-                ScoresDetailScreen(matchID = id ?: 9999)
+                ScoresDetailScreen(matchID = id ?: BOGUS_ID)
             }
 
             composable(route = SkylarksNavDestination.Standings.route) {
@@ -62,7 +64,7 @@ fun BottomNavGraph(
                 arguments = SkylarksNavDestination.StandingsDetail.arguments
             ) {
                 val id = it.arguments?.getInt(SkylarksNavDestination.StandingsDetail.tableArg)
-                StandingsDetailScreen(id ?: 9999)
+                StandingsDetailScreen(id ?: BOGUS_ID)
             }
             
             composable(route = SkylarksNavDestination.Club.route) {
@@ -72,7 +74,18 @@ fun BottomNavGraph(
             }
 
             composable(route = SkylarksNavDestination.Teams.route) {
-                TeamsScreen()
+                TeamsScreen(
+                    teamsDetailRoute = { id ->
+                        navController.navigateSingleTopTo("${SkylarksNavDestination.TeamDetail.route}/$id")
+                    }
+                )
+            }
+            composable(
+                route = SkylarksNavDestination.TeamDetail.routeWithArgs,
+                arguments = SkylarksNavDestination.TeamDetail.arguments,
+            ) {
+                val id = it.arguments?.getInt(SkylarksNavDestination.TeamDetail.teamArg)
+                TeamDetailScreen(teamID = id ?: BOGUS_ID)
             }
 
             composable(route = SkylarksNavDestination.Settings.route) {

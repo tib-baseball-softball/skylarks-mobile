@@ -77,6 +77,10 @@ fun BerlinSkylarksApp(navController: NavHostController) {
                     scrollBehavior = scrollBehavior,
                     title = { Text(text = SkylarksNavDestination.Teams.title) },
                 )
+                SkylarksNavDestination.TeamDetail.route -> MediumTopAppBar(
+                    scrollBehavior = scrollBehavior,
+                    title = { Text(text = SkylarksNavDestination.TeamDetail.title) },
+                )
                 SkylarksNavDestination.Settings.route -> MediumTopAppBar(
                     scrollBehavior = scrollBehavior,
                     title = { Text(text = SkylarksNavDestination.Settings.title) },
