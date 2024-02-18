@@ -11,12 +11,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
@@ -41,6 +38,7 @@ import de.davidbattefeld.berlinskylarks.classes.viewmodels.ScoresViewModel
 import de.davidbattefeld.berlinskylarks.enums.ViewState
 import de.davidbattefeld.berlinskylarks.global.cardPadding
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
+import ui.utility.ContentNotFoundView
 import ui.utility.LoadingView
 
 @Composable
@@ -122,26 +120,7 @@ fun ScoresScreen(
         when (vm.viewState) {
             ViewState.NoResults, ViewState.NotInitialised -> {
                 item {
-                    Card(
-                        modifier = Modifier
-                            .padding(cardPadding)
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .padding(12.dp)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Outlined.Info,
-                                contentDescription = null,
-                                modifier = Modifier.padding(end = 5.dp)
-                            )
-                            Text(
-                                text = "There are no games to display.",
-                                modifier = Modifier
-                                    .weight(1.0F)
-                            )
-                        }
-                    }
+                    ContentNotFoundView("games")
                 }
             }
             ViewState.Loading -> {

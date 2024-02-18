@@ -23,6 +23,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.davidbattefeld.berlinskylarks.classes.viewmodels.TeamsViewModel
+import de.davidbattefeld.berlinskylarks.enums.ViewState
+import ui.utility.ContentNotFoundView
+import ui.utility.LoadingView
 
 @Composable
 fun TeamsScreen() {
@@ -38,28 +41,42 @@ fun TeamsScreen() {
         LazyColumn(
             state = listState
         ) {
-            itemsIndexed(vm.teams) { index, team ->
-                Column {
-                    ListItem(
-                        headlineContent = { Text(team.name) },
-                        supportingContent = { Text(team.bsmShortName) },
-                        leadingContent = {
-                            Icon(
-                                imageVector = Icons.Filled.Groups,
-                                contentDescription = "team icon",
-                                tint = MaterialTheme.colorScheme.primary
+            when (vm.viewState) {
+                ViewState.NoResults, ViewState.NotInitialised -> {
+                    item {
+                        ContentNotFoundView("teams")
+                    }
+                }
+                ViewState.Loading -> {
+                    item {
+                        LoadingView()
+                    }
+                }
+                ViewState.Found -> {
+                    itemsIndexed(vm.teams) { index, team ->
+                        Column {
+                            ListItem(
+                                headlineContent = { Text(team.name) },
+                                supportingContent = { Text(team.bsmShortName) },
+                                leadingContent = {
+                                    Icon(
+                                        imageVector = Icons.Filled.Groups,
+                                        contentDescription = "team icon",
+                                        tint = MaterialTheme.colorScheme.primary
+                                    )
+                                },
+                                trailingContent = {
+                                    Icon(
+                                        imageVector = Icons.Filled.ChevronRight,
+                                        contentDescription = "click to show more info",
+                                    )
+                                }
                             )
-                        },
-                        trailingContent = {
-                            Icon(
-                                imageVector = Icons.Filled.ChevronRight,
-                                contentDescription = "click to show more info",
-                            )
+                            // last item does not have a divider
+                            if (index + 1 != vm.teams.size) {
+                                HorizontalDivider(modifier = Modifier.padding(horizontal = 8.dp))
+                            }
                         }
-                    )
-                    // last item does not have a divider
-                    if (index + 1 != vm.teams.size) {
-                        HorizontalDivider(modifier = Modifier.padding(horizontal = 8.dp))
                     }
                 }
             }

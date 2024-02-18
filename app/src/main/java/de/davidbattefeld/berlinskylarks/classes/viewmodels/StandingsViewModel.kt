@@ -20,11 +20,17 @@ class StandingsViewModel(application: Application) : GenericViewModel(applicatio
     private val leagueGroupsRequest = LeagueGroupsAPIRequest()
 
     override fun load() {
+        viewState = ViewState.Loading
         leagueGroups.clear()
         readSelectedSeason()
 
         viewModelScope.launch {
             leagueGroups.addAll(leagueGroupsRequest.loadLeagueGroupsForClub(selectedSeason.intValue))
+            viewState = if (leagueGroups.isNotEmpty()) {
+                ViewState.Found
+            } else {
+                ViewState.NoResults
+            }
         }
     }
 

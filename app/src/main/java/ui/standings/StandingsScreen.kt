@@ -24,8 +24,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.davidbattefeld.berlinskylarks.classes.viewmodels.StandingsViewModel
+import de.davidbattefeld.berlinskylarks.enums.ViewState
 import de.davidbattefeld.berlinskylarks.global.clubCardPadding
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
+import ui.utility.ContentNotFoundView
+import ui.utility.LoadingView
 
 @Composable
 fun StandingsScreen(
@@ -67,18 +70,32 @@ fun StandingsScreen(
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                itemsIndexed(vm.leagueGroups) { index, league ->
-                    Column {
-                        StandingsLeagueRow(
-                            leagueGroup = league,
-                            modifier = Modifier
-                                .clickable {
-                                    detailRoute(league.id)
+                when (vm.viewState) {
+                    ViewState.NoResults, ViewState.NotInitialised -> {
+                        item {
+                            ContentNotFoundView("tables")
+                        }
+                    }
+                    ViewState.Loading -> {
+                        item {
+                            LoadingView()
+                        }
+                    }
+                    ViewState.Found -> {
+                        itemsIndexed(vm.leagueGroups) { index, league ->
+                            Column {
+                                StandingsLeagueRow(
+                                    leagueGroup = league,
+                                    modifier = Modifier
+                                        .clickable {
+                                            detailRoute(league.id)
+                                        }
+                                )
+                                // last item does not have a divider
+                                if (index + 1 != vm.leagueGroups.size) {
+                                    HorizontalDivider(modifier = Modifier.padding(horizontal = 8.dp))
                                 }
-                        )
-                        // last item does not have a divider
-                        if (index + 1 != vm.leagueGroups.size) {
-                            HorizontalDivider(modifier = Modifier.padding(horizontal = 8.dp))
+                            }
                         }
                     }
                 }
