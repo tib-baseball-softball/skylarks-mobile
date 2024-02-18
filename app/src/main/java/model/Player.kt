@@ -25,4 +25,8 @@ data class Player(
     val teamName: String,
     val media: List<Media>,
     val positions: List<String>
-)
+) {
+    fun isCoach(): Boolean {
+        return number == "C" || positions.isEmpty()
+    }
+}
