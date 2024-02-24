@@ -16,14 +16,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.davidbattefeld.berlinskylarks.classes.viewmodels.TeamsViewModel
+import de.davidbattefeld.berlinskylarks.classes.viewmodels.PlayersViewModel
 import de.davidbattefeld.berlinskylarks.enums.ViewState
 import ui.utility.ContentNotFoundView
 import ui.utility.LoadingView
 
 @Composable
 fun TeamDetailScreen(teamID: Int) {
-    val vm: TeamsViewModel = viewModel(LocalContext.current as ComponentActivity)
+    val vm: PlayersViewModel = viewModel(LocalContext.current as ComponentActivity)
 
     val listState = rememberLazyListState()
 

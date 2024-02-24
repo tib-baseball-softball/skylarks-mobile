@@ -6,20 +6,21 @@ import androidx.lifecycle.viewModelScope
 import de.davidbattefeld.berlinskylarks.classes.api.TeamsAPIRequest
 import de.davidbattefeld.berlinskylarks.enums.ViewState
 import kotlinx.coroutines.launch
-import model.SkylarksTeam
+import model.Player
 
-class TeamsViewModel(application: Application): GenericViewModel(application) {
-    var teams = mutableStateListOf<SkylarksTeam>()
+class PlayersViewModel(application: Application): GenericViewModel(application) {
+    var players = mutableStateListOf<Player>()
 
     val request = TeamsAPIRequest()
-    override fun load() {
-        teams.clear()
+
+    fun loadPlayers(teamID: Int) {
+        players.clear()
 
         viewModelScope.launch {
             viewState = ViewState.Loading
-            teams.addAll(request.loadAllTeams())
+            players.addAll(request.loadPlayersForTeam(teamID))
 
-            viewState = if (teams.isNotEmpty()) ViewState.Found else ViewState.NoResults
+            viewState = if (players.isNotEmpty()) ViewState.Found else ViewState.NoResults
         }
     }
 }
