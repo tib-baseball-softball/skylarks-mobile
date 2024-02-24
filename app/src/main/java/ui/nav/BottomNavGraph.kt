@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
 import de.davidbattefeld.berlinskylarks.navigateSingleTopTo
 import ui.club.ClubScreen
+import ui.club.teams.PlayerDetailScreen
 import ui.club.teams.TeamDetailScreen
 import ui.club.teams.TeamsScreen
 import ui.home.HomeScreen
@@ -85,7 +86,20 @@ fun BottomNavGraph(
                 arguments = SkylarksNavDestination.TeamDetail.arguments,
             ) {
                 val id = it.arguments?.getInt(SkylarksNavDestination.TeamDetail.teamArg)
-                TeamDetailScreen(teamID = id ?: BOGUS_ID)
+                TeamDetailScreen(
+                    teamID = id ?: BOGUS_ID,
+                    playerDetailRoute = { playerDetailID ->
+                        navController.navigateSingleTopTo("${SkylarksNavDestination.PlayerDetail.route}/$playerDetailID")
+                    }
+                )
+            }
+            
+            composable(
+                route = SkylarksNavDestination.PlayerDetail.routeWithArgs,
+                arguments = SkylarksNavDestination.PlayerDetail.arguments,
+            ) {
+                val id = it.arguments?.getInt(SkylarksNavDestination.PlayerDetail.playerArg)
+                PlayerDetailScreen(playerID = id ?: BOGUS_ID)
             }
 
             composable(route = SkylarksNavDestination.Settings.route) {

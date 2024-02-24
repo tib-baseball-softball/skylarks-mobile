@@ -22,7 +22,10 @@ import ui.utility.ContentNotFoundView
 import ui.utility.LoadingView
 
 @Composable
-fun TeamDetailScreen(teamID: Int) {
+fun TeamDetailScreen(
+    teamID: Int,
+    playerDetailRoute: (Int) -> Unit
+) {
     val vm: PlayersViewModel = viewModel(LocalContext.current as ComponentActivity)
 
     val listState = rememberLazyListState()
@@ -54,7 +57,7 @@ fun TeamDetailScreen(teamID: Int) {
                                 player = player,
                                 modifier = Modifier
                                     .clickable {
-                                        // TODO: player detail page
+                                        playerDetailRoute(player.uid)
                                     }
                             )
                             // last item does not have a divider
@@ -69,6 +72,8 @@ fun TeamDetailScreen(teamID: Int) {
     }
 
     LaunchedEffect(Unit) {
-        vm.loadPlayers(teamID)
+        if (vm.players.isEmpty() || vm.lastLoadedTeam != teamID) {
+            vm.loadPlayers(teamID)
+        }
     }
 }

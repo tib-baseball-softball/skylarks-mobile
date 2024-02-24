@@ -5,6 +5,7 @@ import androidx.compose.material.icons.filled.Gavel
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Policy
 import androidx.compose.material.icons.outlined.Groups
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Scoreboard
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Shield
@@ -82,6 +83,18 @@ sealed class SkylarksNavDestination(
         val routeWithArgs = "${route}/{${teamArg}}"
         val arguments = listOf(
             navArgument(teamArg) { type = NavType.IntType }
+        )
+    }
+
+    data object PlayerDetail : SkylarksNavDestination(
+        route = "club_player_detail",
+        title = "Player Detail",
+        icon = Icons.Outlined.Person
+    ) {
+        const val playerArg = "player_id"
+        val routeWithArgs = "${route}/{${playerArg}}"
+        val arguments = listOf(
+            navArgument(playerArg) { type = NavType.IntType }
         )
     }
 

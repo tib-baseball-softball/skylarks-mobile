@@ -1,15 +1,20 @@
 package de.davidbattefeld.berlinskylarks.classes.viewmodels
 
 import android.app.Application
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import de.davidbattefeld.berlinskylarks.classes.api.TeamsAPIRequest
 import de.davidbattefeld.berlinskylarks.enums.ViewState
+import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
 import kotlinx.coroutines.launch
 import model.Player
 
 class PlayersViewModel(application: Application): GenericViewModel(application) {
     var players = mutableStateListOf<Player>()
+    var lastLoadedTeam by mutableIntStateOf(BOGUS_ID)
 
     val request = TeamsAPIRequest()
 
@@ -21,6 +26,8 @@ class PlayersViewModel(application: Application): GenericViewModel(application) 
             players.addAll(request.loadPlayersForTeam(teamID))
 
             viewState = if (players.isNotEmpty()) ViewState.Found else ViewState.NoResults
+
+            lastLoadedTeam = teamID
         }
     }
 }
