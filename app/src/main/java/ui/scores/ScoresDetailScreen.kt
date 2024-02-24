@@ -39,7 +39,7 @@ fun ScoresDetailScreen(
     matchID: Int,
 ) {
     val vm: ScoresViewModel = viewModel(LocalContext.current as ComponentActivity)
-    val game = vm.getFilteredGame(matchID) ?: testGame
+    val game = vm.getFiltered(matchID, vm.games) ?: testGame
 
     var showLocationData by rememberSaveable { mutableStateOf(false) }
     var showOfficialsData by rememberSaveable { mutableStateOf(false) }

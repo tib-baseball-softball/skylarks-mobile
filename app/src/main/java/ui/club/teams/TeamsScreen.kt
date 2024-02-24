@@ -55,7 +55,7 @@ fun TeamsScreen(
                                 team = team,
                                 modifier = Modifier
                                     .clickable {
-                                        teamsDetailRoute(team.uid)
+                                        teamsDetailRoute(team.id)
                                     }
                             )
                             // last item does not have a divider

@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class License(
-    var id: Int,
+    override var id: Int,
     var number: String,
     var valid_until: String,
     var category: String,
@@ -16,7 +16,7 @@ data class License(
     var person: Person,
 
     //var expiryDate: Date?
-) {
+): JSONDataObject {
     // TODO: add date like in the Swift code below
     /*mutating func getExpiryDate() {
         let dateFormatter = DateFormatter()

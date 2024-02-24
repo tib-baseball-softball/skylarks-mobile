@@ -7,7 +7,8 @@ import kotlinx.serialization.json.JsonNames
 @Serializable
 @OptIn(ExperimentalSerializationApi::class)
 data class SkylarksTeam(
-    val uid: Int,
+    @JsonNames("uid")
+    val id: Int,
     val name: String,
     @JsonNames("bsm_league")
     val bsmLeague: Int,

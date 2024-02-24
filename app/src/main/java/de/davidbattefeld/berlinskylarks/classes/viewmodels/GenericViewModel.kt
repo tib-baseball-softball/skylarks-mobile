@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import model.JSONDataObject
 
 abstract class GenericViewModel(application: Application) : AndroidViewModel(application), ViewModelInterface {
     var selectedSeason = mutableIntStateOf(BSMAPIRequest.DEFAULT_SEASON)
@@ -39,5 +40,9 @@ abstract class GenericViewModel(application: Application) : AndroidViewModel(app
         viewModelScope.launch(Dispatchers.IO) {
             context.writeInt("season", season)
         }
+    }
+
+    fun <T: JSONDataObject> getFiltered(id: Int, list: List<T>): T? {
+        return list.firstOrNull { it.id == id }
     }
 }

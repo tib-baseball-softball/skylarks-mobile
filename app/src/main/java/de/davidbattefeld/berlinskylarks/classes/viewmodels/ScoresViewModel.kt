@@ -50,10 +50,6 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
         }
     }
 
-    fun getFilteredGame(id: Int): Game? {
-        return games.firstOrNull { it.id == id }
-    }
-
     fun buildMapsURL(id: Int): String {
         val baseURL = "https://www.google.com/maps/search/"
         val builder = Uri.parse(baseURL).buildUpon()

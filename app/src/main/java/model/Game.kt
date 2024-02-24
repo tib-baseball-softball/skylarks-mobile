@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter
 
 @Serializable
 data class Game(
-    var id: Int,
+    override var id: Int,
     var match_id: String,
     var planned_innings: Int,
     var time: String,
@@ -26,7 +26,7 @@ data class Game(
     var away_league_entry: LeagueEntry,
     var umpire_assignments: List<Umpire_Assignments>,
     var scorer_assignments: List<Scorer_Assignments>,
-) {
+): JSONDataObject {
     // secondary properties are not supplied by the BSM API, instead computed by class methods
     var localisedDate: String? = null
     var skyLarksAreHomeTeam = false

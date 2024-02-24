@@ -7,7 +7,8 @@ import kotlinx.serialization.json.JsonNames
 @Serializable
 @OptIn(ExperimentalSerializationApi::class)
 data class Player(
-    val uid: Int,
+    @JsonNames("uid")
+    override var id: Int,
     @JsonNames("fullname")
     val fullName: String,
     @JsonNames("firstname")
@@ -25,7 +26,7 @@ data class Player(
     val teamName: String,
     val media: List<Media>,
     val positions: List<String>
-) {
+): JSONDataObject {
     fun isCoach(): Boolean {
         return number == "C" || positions.isEmpty()
     }
