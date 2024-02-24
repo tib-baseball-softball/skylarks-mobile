@@ -15,7 +15,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 @Composable
 fun NavBar(navController: NavHostController) {
     val screens = listOf(
-        SkylarksNavDestination.Home,
+        //SkylarksNavDestination.Home,
         SkylarksNavDestination.Scores,
         SkylarksNavDestination.Standings,
         SkylarksNavDestination.Club,
