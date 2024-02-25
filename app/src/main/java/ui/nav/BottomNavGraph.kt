@@ -31,7 +31,7 @@ fun BottomNavGraph(
     Box(modifier = modifier) {
         NavHost(
             navController = navController,
-            startDestination = SkylarksNavDestination.Home.route
+            startDestination = SkylarksNavDestination.Scores.route // change back to Home later
         ) {
             composable(route = SkylarksNavDestination.Home.route) {
                 HomeScreen()
