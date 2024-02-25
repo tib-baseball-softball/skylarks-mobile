@@ -77,4 +77,5 @@ dependencies {
     implementation("io.ktor:ktor-client-cio:$ktor_version")
     implementation("io.coil-kt:coil:2.6.0")
     implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation("org.jetbrains:markdown:0.5.0")
 }
