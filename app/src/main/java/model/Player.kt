@@ -3,6 +3,9 @@ package model
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonNames
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
 
 @Serializable
 @OptIn(ExperimentalSerializationApi::class)
@@ -29,5 +32,16 @@ data class Player(
 ): JSONDataObject {
     fun isCoach(): Boolean {
         return number == "C" || positions.isEmpty()
+    }
+
+    fun getAge(): Int {
+        val birthDate = Instant.ofEpochSecond(birthday.toLong()).atZone(ZoneId.systemDefault()).toLocalDate()
+        val currentDate = LocalDate.now()
+        var age = currentDate.year - birthDate.year
+        if (currentDate.monthValue < birthDate.monthValue ||
+            (currentDate.monthValue == birthDate.monthValue && currentDate.dayOfMonth < birthDate.dayOfMonth)) {
+            age--
+        }
+        return age
     }
 }

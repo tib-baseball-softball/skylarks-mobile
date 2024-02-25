@@ -12,7 +12,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun PlayerNumberGraphic(content: String, colors: Pair<Color, Color>) {
+fun PlayerNumberGraphic(
+    content: String,
+    colors: Pair<Color, Color> = Pair(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.onPrimary)
+) {
     Text(
         text = content,
         textAlign = TextAlign.Center,
