@@ -24,6 +24,8 @@ fun PlayerHeaderSection(player: Player) {
         false -> Pair(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.onPrimary)
     }
 
+    val fallbackImage = painterResource(id = R.drawable.team_placeholder_white)
+
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -34,11 +36,14 @@ fun PlayerHeaderSection(player: Player) {
                 model = player.media.first().url,
                 contentDescription = player.media.firstOrNull()?.alt,
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                placeholder = fallbackImage,
+                error = fallbackImage,
+                fallback = fallbackImage,
             )
         } else {
             Image(
-                painter = painterResource(R.drawable.team_placeholder_white),
+                painter = fallbackImage,
                 contentDescription = "Player placeholder image"
             )
         }
