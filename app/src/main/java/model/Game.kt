@@ -2,7 +2,7 @@ package model
 
 import androidx.annotation.DrawableRes
 import de.davidbattefeld.berlinskylarks.R
-import de.davidbattefeld.berlinskylarks.global.BSVBB_CLUBS
+import de.davidbattefeld.berlinskylarks.global.baseballClubList
 import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -69,7 +69,7 @@ data class Game(
         homeLogo = R.drawable.app_home_team_logo
         roadLogo = R.drawable.app_road_team_logo
 
-        for (club in BSVBB_CLUBS) {
+        for (club in baseballClubList) {
             if (away_team_name.contains(club.name, ignoreCase = true)) {
                 roadLogo = club.logo
             }

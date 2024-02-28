@@ -2,7 +2,7 @@ package de.davidbattefeld.berlinskylarks.classes
 
 import androidx.annotation.DrawableRes
 
-class BSVBBClub(
+class BaseballClub(
     var name: String,
     @DrawableRes
     var logo: Int,
