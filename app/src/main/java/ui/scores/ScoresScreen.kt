@@ -3,14 +3,15 @@ package ui.scores
 import android.content.res.Configuration
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -51,11 +52,11 @@ fun ScoresScreen(
     var showExternalGames by remember { mutableStateOf(true) }
     val tabTitles = listOf("Previous", "Current", "Next", "Any")
 
-    LazyColumn(
+    LazyVerticalGrid(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(2.dp),
+        columns = GridCells.Adaptive(minSize = 350.dp)
     ) {
-        item {
+        item(span = { GridItemSpan(maxCurrentLineSpan) }) {
             TabRow(selectedTabIndex = vm.tabState) {
                 tabTitles.forEachIndexed { index, title ->
                     Tab(
@@ -75,7 +76,7 @@ fun ScoresScreen(
                 }
             }
         }
-        item {
+        item(span = { GridItemSpan(maxCurrentLineSpan) }) {
             Card(
                 modifier = Modifier
                     .padding(cardPadding),
@@ -114,17 +115,17 @@ fun ScoresScreen(
                 }
             }
         }
-        item {
+        item(span = { GridItemSpan(maxCurrentLineSpan) }) {
             HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
         }
         when (vm.viewState) {
             ViewState.NoResults, ViewState.NotInitialised -> {
-                item {
+                item(span = { GridItemSpan(maxCurrentLineSpan) }) {
                     ContentNotFoundView("games")
                 }
             }
             ViewState.Loading -> {
-                item {
+                item(span = { GridItemSpan(maxCurrentLineSpan) }) {
                     LoadingView()
                 }
             }
