@@ -35,7 +35,7 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
 
         viewModelScope.launch {
             viewState = ViewState.Loading
-            games.addAll(request.loadGamesForClub(selectedSeason.intValue, gamedays))
+            games.addAll(request.loadGamesForClub(selectedSeason, gamedays))
             games.forEach {
                 it.addDate()
                 it.determineGameStatus()

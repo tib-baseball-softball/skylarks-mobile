@@ -18,7 +18,7 @@ import kotlinx.coroutines.withContext
 import model.JSONDataObject
 
 abstract class GenericViewModel(application: Application) : AndroidViewModel(application), ViewModelInterface {
-    var selectedSeason = mutableIntStateOf(BSMAPIRequest.DEFAULT_SEASON)
+    var selectedSeason by mutableIntStateOf(BSMAPIRequest.DEFAULT_SEASON)
 
     var viewState by mutableStateOf(ViewState.NotInitialised)
 
@@ -31,7 +31,7 @@ abstract class GenericViewModel(application: Application) : AndroidViewModel(app
         viewModelScope.launch(Dispatchers.IO) {
             val result = context.readInt("season").first()
             withContext(Dispatchers.Main) {
-                selectedSeason.intValue = result
+                selectedSeason = result
             }
         }
     }

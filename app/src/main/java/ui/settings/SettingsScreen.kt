@@ -84,7 +84,7 @@ fun SettingsScreen(
                                 DropdownMenuItem(
                                     text = { Text(selectionOption.toString()) },
                                     onClick = {
-                                        vm.selectedSeason.intValue = selectionOption
+                                        vm.selectedSeason = selectionOption
                                         expanded = false
                                         vm.writeSelectedSeason(selectionOption)
                                     },

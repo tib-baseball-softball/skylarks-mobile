@@ -25,7 +25,7 @@ class StandingsViewModel(application: Application) : GenericViewModel(applicatio
         readSelectedSeason()
 
         viewModelScope.launch {
-            leagueGroups.addAll(leagueGroupsRequest.loadLeagueGroupsForClub(selectedSeason.intValue))
+            leagueGroups.addAll(leagueGroupsRequest.loadLeagueGroupsForClub(selectedSeason))
             viewState = if (leagueGroups.isNotEmpty()) {
                 ViewState.Found
             } else {
