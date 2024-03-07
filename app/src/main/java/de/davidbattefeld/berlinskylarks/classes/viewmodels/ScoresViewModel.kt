@@ -5,25 +5,53 @@ import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
+import de.davidbattefeld.berlinskylarks.classes.api.LeagueGroupsAPIRequest
 import de.davidbattefeld.berlinskylarks.classes.api.MatchAPIRequest
 import de.davidbattefeld.berlinskylarks.enums.ViewState
+import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
+import de.davidbattefeld.berlinskylarks.testdata.testLeagueGroup
 import kotlinx.coroutines.launch
 import model.Game
+import model.LeagueGroup
 
 class ScoresViewModel(application: Application) : GenericViewModel(application) {
     var games = mutableStateListOf<Game>()
     var skylarksGames = mutableStateListOf<Game>()
+    var leagueGroups = mutableStateListOf<LeagueGroup>()
+    var filteredLeagueGroup by mutableStateOf(testLeagueGroup)
 
     var tabState by mutableIntStateOf(1)
 
-    private val request = MatchAPIRequest()
+    private val matchAPIRequest = MatchAPIRequest()
+    private val leagueGroupsAPIRequest = LeagueGroupsAPIRequest()
 
     override fun load() {
+        leagueGroups.clear()
+
+        viewModelScope.launch {
+            readSelectedSeason()
+            viewState = ViewState.Loading
+
+            leagueGroups.addAll(leagueGroupsAPIRequest.loadLeagueGroupsForClub(selectedSeason))
+            loadGames()
+
+            viewState = if (games.isNotEmpty()) ViewState.Found else ViewState.NoResults
+        }
+    }
+
+    fun onLeagueFilterChanged(leagueGroup: LeagueGroup) {
+        filteredLeagueGroup = leagueGroup
+        viewModelScope.launch {
+            loadGames()
+        }
+    }
+
+    private suspend fun loadGames() {
         games.clear()
         skylarksGames.clear()
-        readSelectedSeason()
 
         val gamedays = when (tabState) {
             0 -> "previous"
@@ -33,21 +61,24 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
             else -> { throw Exception("tabState has invalid value that cannot be used to determine Gameday") }
         }
 
-        viewModelScope.launch {
-            viewState = ViewState.Loading
-            games.addAll(request.loadGamesForClub(selectedSeason, gamedays))
-            games.forEach {
-                it.addDate()
-                it.determineGameStatus()
-                it.setCorrectLogos()
-            }
-            skylarksGames.addAll(games.filter {
-                it.away_team_name.contains("Skylarks", ignoreCase = true) ||
-                it.home_team_name.contains("Skylarks", ignoreCase = true)
-            })
-
-            viewState = if (games.isNotEmpty()) ViewState.Found else ViewState.NoResults
+        if (filteredLeagueGroup.id == BOGUS_ID) {
+            games.addAll(matchAPIRequest.loadGamesForClub(selectedSeason, gamedays))
+        } else {
+            games.addAll(matchAPIRequest.loadAllGames(
+                season = selectedSeason,
+                gamedays = gamedays,
+                leagues = filteredLeagueGroup.id
+            ))
         }
+        games.forEach {
+            it.addDate()
+            it.determineGameStatus()
+            it.setCorrectLogos()
+        }
+        skylarksGames.addAll(games.filter {
+            it.away_team_name.contains("Skylarks", ignoreCase = true) ||
+                    it.home_team_name.contains("Skylarks", ignoreCase = true)
+        })
     }
 
     fun buildMapsURL(id: Int): String {
