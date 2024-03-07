@@ -14,7 +14,6 @@ import de.davidbattefeld.berlinskylarks.global.writeInt
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import model.JSONDataObject
 
 abstract class GenericViewModel(application: Application) : AndroidViewModel(application), ViewModelInterface {
@@ -24,15 +23,19 @@ abstract class GenericViewModel(application: Application) : AndroidViewModel(app
 
     init {
         readSelectedSeason()
+
+        // extra check since apparently using the current year as fallback didn't work
+        if (selectedSeason == 0) {
+            selectedSeason = BSMAPIRequest.DEFAULT_SEASON
+            writeSelectedSeason(selectedSeason)
+        }
     }
 
     fun readSelectedSeason() {
         val context = getApplication<Application>().applicationContext
         viewModelScope.launch(Dispatchers.IO) {
-            val result = context.readInt("season").first()
-            withContext(Dispatchers.Main) {
-                selectedSeason = result
-            }
+            val savedSeason = context.readInt("season").first()
+            selectedSeason = savedSeason
         }
     }
     fun writeSelectedSeason(season: Int) {
