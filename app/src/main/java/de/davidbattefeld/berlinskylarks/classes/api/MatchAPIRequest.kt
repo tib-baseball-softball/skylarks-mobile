@@ -23,6 +23,8 @@ class MatchAPIRequest: BSMAPIRequest() {
      * Gets games in general, will also include non-Skylarks games without a search parameter.
      * Only checks for games in DBV and BSVBB!
      *
+     * TODO: check behaviour, which is not really what one would expect
+     *
      * Example request: https://bsm.baseball-softball.de/matches.json?api_key=REDACTED&search=skylarks&filter%5Bseasons%5D%5B%5D=2024&filter%5Bgamedays%5D%5B%5D=next
      */
     suspend fun loadAllGames(

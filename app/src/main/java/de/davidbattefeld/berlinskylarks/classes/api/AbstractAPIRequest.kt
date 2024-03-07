@@ -44,6 +44,7 @@ abstract class AbstractAPIRequest {
                     addAuthorizationParameters()
                 }
                 addRequestHeaders()
+                println(url)
             }
             try {
                 result = jsonBuilder.decodeFromString<T>(response.body())
