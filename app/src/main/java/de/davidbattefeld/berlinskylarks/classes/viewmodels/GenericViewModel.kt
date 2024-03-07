@@ -14,6 +14,7 @@ import de.davidbattefeld.berlinskylarks.global.writeInt
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import model.JSONDataObject
 
 abstract class GenericViewModel(application: Application) : AndroidViewModel(application), ViewModelInterface {
@@ -35,7 +36,11 @@ abstract class GenericViewModel(application: Application) : AndroidViewModel(app
         val context = getApplication<Application>().applicationContext
         viewModelScope.launch(Dispatchers.IO) {
             val savedSeason = context.readInt("season").first()
-            selectedSeason = savedSeason
+
+            // this may look weird, but is needed because of Android State management
+            withContext(Dispatchers.Main) {
+                selectedSeason = savedSeason
+            }
         }
     }
     fun writeSelectedSeason(season: Int) {
