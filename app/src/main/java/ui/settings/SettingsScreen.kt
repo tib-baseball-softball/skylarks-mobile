@@ -22,14 +22,12 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -37,11 +35,11 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.davidbattefeld.berlinskylarks.classes.api.BSMAPIRequest
+import de.davidbattefeld.berlinskylarks.classes.data.DEFAULT_SETTINGS
 import de.davidbattefeld.berlinskylarks.classes.viewmodels.SettingsViewModel
 import de.davidbattefeld.berlinskylarks.global.TeamGlobals
-import de.davidbattefeld.berlinskylarks.global.readInt
 import ui.nav.SkylarksNavDestination
 
 @Composable
@@ -51,8 +49,7 @@ fun SettingsScreen(
         privacyRoute: () -> Unit,
         legalRoute: () -> Unit,
 ) {
-    val selectedSeason = LocalContext.current.readInt("season")
-        .collectAsState(initial = BSMAPIRequest.DEFAULT_SEASON)
+    val userPreferences by vm.userPreferencesFlow.collectAsStateWithLifecycle(initialValue = DEFAULT_SETTINGS)
     val uriHandler = LocalUriHandler.current
 
     var expanded by remember { mutableStateOf(false) }
@@ -61,7 +58,7 @@ fun SettingsScreen(
         item {
             ListItem(
                 headlineContent = { Text("Selected Season") },
-                supportingContent = { Text(selectedSeason.value.toString()) },
+                supportingContent = { Text(userPreferences.season.toString()) },
                 leadingContent = {
                     Icon(
                         Icons.Filled.CalendarMonth,
@@ -84,9 +81,8 @@ fun SettingsScreen(
                                 DropdownMenuItem(
                                     text = { Text(selectionOption.toString()) },
                                     onClick = {
-                                        vm.selectedSeason = selectionOption
+                                        vm.updateSelectedSeason(selectionOption)
                                         expanded = false
-                                        vm.writeSelectedSeason(selectionOption)
                                     },
                                 )
                             }

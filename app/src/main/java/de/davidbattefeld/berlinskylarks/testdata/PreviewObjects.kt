@@ -3,6 +3,7 @@ package de.davidbattefeld.berlinskylarks.testdata
 import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
 import model.Game
 import model.League
+import model.LeagueGroup
 import model.LeagueTable
 
 val testEntry = Game.LeagueEntry(
@@ -17,6 +18,14 @@ val testLeague = League(
     sport = "Baseball",
     acronym = "KRL",
     age_group = "Erwachsene"
+)
+
+val testLeagueGroup = LeagueGroup(
+    id = BOGUS_ID,
+    name = "All Leagues",
+    acronym = "KBD",
+    season = 2099,
+    league = testLeague
 )
 
 val testGame = Game(

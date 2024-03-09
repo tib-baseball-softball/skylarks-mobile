@@ -16,6 +16,7 @@ abstract class BSMAPIRequest: AbstractAPIRequest() {
 
         const val SEASON_FILTER = "filters[seasons][]"
         const val GAMEDAY_FILTER = "filters[gamedays][]"
+        const val LEAGUE_FILTER = "filters[leagues][]"
         const val ORGANIZATION_FILTER = "filters[organizations][]"
         const val TEAM_SEARCH = "search"
 

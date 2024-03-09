@@ -9,6 +9,7 @@ import org.intellij.markdown.html.HtmlGenerator
 import org.intellij.markdown.parser.MarkdownParser
 
 class SettingsViewModel(application: Application) : GenericViewModel(application) {
+    // 2021 is the first year with the new team name
     val possibleSeasons = (2021..Calendar.getInstance().get(Calendar.YEAR)).toList()
 
     fun readStaticMarkdownFile(fileName: String): Spanned {
