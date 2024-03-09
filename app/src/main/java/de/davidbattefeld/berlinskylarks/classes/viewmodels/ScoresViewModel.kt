@@ -8,11 +8,13 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
+import de.davidbattefeld.berlinskylarks.classes.api.BSMAPIRequest
 import de.davidbattefeld.berlinskylarks.classes.api.LeagueGroupsAPIRequest
 import de.davidbattefeld.berlinskylarks.classes.api.MatchAPIRequest
 import de.davidbattefeld.berlinskylarks.enums.ViewState
 import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
 import de.davidbattefeld.berlinskylarks.testdata.testLeagueGroup
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import model.Game
 import model.LeagueGroup
@@ -32,10 +34,10 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
         leagueGroups.clear()
 
         viewModelScope.launch {
-            readSelectedSeason()
+            val season = userPreferencesFlow.firstOrNull()?.season ?: BSMAPIRequest.DEFAULT_SEASON
             viewState = ViewState.Loading
 
-            leagueGroups.addAll(leagueGroupsAPIRequest.loadLeagueGroupsForClub(selectedSeason))
+            leagueGroups.addAll(leagueGroupsAPIRequest.loadLeagueGroupsForClub(season))
             loadGames()
 
             viewState = if (games.isNotEmpty()) ViewState.Found else ViewState.NoResults
@@ -50,6 +52,8 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
     }
 
     private suspend fun loadGames() {
+        val season = userPreferencesFlow.firstOrNull()?.season ?: BSMAPIRequest.DEFAULT_SEASON
+
         games.clear()
         skylarksGames.clear()
 
@@ -62,10 +66,10 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
         }
 
         if (filteredLeagueGroup.id == BOGUS_ID) {
-            games.addAll(matchAPIRequest.loadGamesForClub(selectedSeason, gamedays))
+            games.addAll(matchAPIRequest.loadGamesForClub(season, gamedays))
         } else {
             games.addAll(matchAPIRequest.loadAllGames(
-                season = selectedSeason,
+                season = season,
                 gamedays = gamedays,
                 leagues = filteredLeagueGroup.id
             ))

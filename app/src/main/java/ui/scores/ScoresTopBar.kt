@@ -20,6 +20,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.davidbattefeld.berlinskylarks.classes.data.DEFAULT_SETTINGS
 import de.davidbattefeld.berlinskylarks.classes.viewmodels.ScoresViewModel
 import de.davidbattefeld.berlinskylarks.testdata.testLeagueGroup
 
@@ -36,6 +39,8 @@ import de.davidbattefeld.berlinskylarks.testdata.testLeagueGroup
 fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
     val vm: ScoresViewModel = viewModel(LocalContext.current as ComponentActivity)
     var leagueFilterExpanded by remember { mutableStateOf(false) }
+
+    val userPreferences by vm.userPreferencesFlow.collectAsState(initial = DEFAULT_SETTINGS)
 
     MediumTopAppBar(
         scrollBehavior = scrollBehavior,
@@ -103,4 +108,10 @@ fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
             }
         }
     )
+    LaunchedEffect(Unit) {
+        // this is kinda hacky, but after 2h still no better way to invalidate filter on season change
+        if (vm.filteredLeagueGroup.season != userPreferences.season) {
+            vm.filteredLeagueGroup = testLeagueGroup
+        }
+    }
 }

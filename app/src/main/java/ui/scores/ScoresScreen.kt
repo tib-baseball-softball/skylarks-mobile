@@ -48,7 +48,7 @@ fun ScoresScreen(
     detailRoute: (Int) -> Unit,
     setFabOnClick: (() -> Unit) -> Unit,
 ) {
-    val vm: ScoresViewModel = viewModel(LocalContext.current as ComponentActivity)
+    val vm: ScoresViewModel = viewModel(viewModelStoreOwner = LocalContext.current as ComponentActivity)
     var showExternalGames by remember { mutableStateOf(true) }
     val tabTitles = listOf("Previous", "Current", "Next", "Any")
 

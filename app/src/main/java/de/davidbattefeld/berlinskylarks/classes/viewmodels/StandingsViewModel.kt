@@ -4,11 +4,13 @@ import android.app.Application
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
+import de.davidbattefeld.berlinskylarks.classes.api.BSMAPIRequest
 import de.davidbattefeld.berlinskylarks.classes.api.LeagueGroupsAPIRequest
 import de.davidbattefeld.berlinskylarks.classes.api.TablesAPIRequest
 import de.davidbattefeld.berlinskylarks.enums.ViewState
 import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
 import de.davidbattefeld.berlinskylarks.testdata.testTable
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import model.LeagueGroup
 
@@ -22,10 +24,10 @@ class StandingsViewModel(application: Application) : GenericViewModel(applicatio
     override fun load() {
         viewState = ViewState.Loading
         leagueGroups.clear()
-        readSelectedSeason()
 
         viewModelScope.launch {
-            leagueGroups.addAll(leagueGroupsRequest.loadLeagueGroupsForClub(selectedSeason))
+            val season = userPreferencesFlow.firstOrNull()?.season ?: BSMAPIRequest.DEFAULT_SEASON
+            leagueGroups.addAll(leagueGroupsRequest.loadLeagueGroupsForClub(season))
             viewState = if (leagueGroups.isNotEmpty()) {
                 ViewState.Found
             } else {
