@@ -13,7 +13,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -33,7 +32,6 @@ import de.davidbattefeld.berlinskylarks.classes.viewmodels.ScoresViewModel
 import de.davidbattefeld.berlinskylarks.global.cardPadding
 import de.davidbattefeld.berlinskylarks.testdata.testGame
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScoresDetailScreen(
     matchID: Int,
@@ -41,8 +39,8 @@ fun ScoresDetailScreen(
     val vm: ScoresViewModel = viewModel(LocalContext.current as ComponentActivity)
     val game = vm.getFiltered(matchID, vm.games) ?: testGame
 
-    var showLocationData by rememberSaveable { mutableStateOf(false) }
-    var showOfficialsData by rememberSaveable { mutableStateOf(false) }
+    var showLocationData by rememberSaveable { mutableStateOf(true) }
+    var showOfficialsData by rememberSaveable { mutableStateOf(true) }
     var showStatisticsData by rememberSaveable { mutableStateOf(true) }
 
     Column(
