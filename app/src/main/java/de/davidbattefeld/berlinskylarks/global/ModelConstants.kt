@@ -27,5 +27,6 @@ val baseballClubList = listOf(
     BaseballClub("Regents", R.drawable.regents),
     BaseballClub("Seahawks", R.drawable.seahawks),
     BaseballClub("Stealers", R.drawable.stealers),
-    BaseballClub("Wild Farmers", R.drawable.wild_farmers)
+    BaseballClub("Wild Farmers", R.drawable.wild_farmers),
+    BaseballClub("Wallbreakers", R.drawable.wallbreakers),
 )
