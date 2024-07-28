@@ -35,7 +35,7 @@ fun PlayerMetaSection(player: Player) {
             Column {
                 ListItem(
                     headlineContent = { Text(text = "Team") },
-                    supportingContent = { Text(player.teamName) },
+                    supportingContent = { Text(player.teams.joinToString { it.name }) },
                     leadingContent = {
                         Icon(
                             imageVector = Icons.Outlined.Groups,

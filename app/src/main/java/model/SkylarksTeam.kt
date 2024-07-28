@@ -19,3 +19,14 @@ data class SkylarksTeam(
     @JsonNames("bsm_short_name")
     val bsmShortName: String
 )
+
+/**
+ * TODO: remove when server response is correct again
+ */
+@Serializable
+@OptIn(ExperimentalSerializationApi::class)
+data class SkylarksTeamReduced(
+    @JsonNames("uid")
+    val id: Int,
+    val name: String,
+)

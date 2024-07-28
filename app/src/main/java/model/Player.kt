@@ -26,9 +26,10 @@ data class Player(
     val coach: String,
     val slug: String,
     @JsonNames("teamname")
-    val teamName: String,
+    val teamName: String?,
     val media: List<Media>,
-    val positions: List<String>
+    val positions: List<String>,
+    val teams: List<SkylarksTeamReduced>,
 ): JSONDataObject {
     fun isCoach(): Boolean {
         return number == "C" || positions.isEmpty()
