@@ -1,6 +1,7 @@
 package de.davidbattefeld.berlinskylarks.classes.viewmodels
 
 import android.app.Application
+import android.content.Context
 import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -11,6 +12,7 @@ import androidx.lifecycle.viewModelScope
 import de.davidbattefeld.berlinskylarks.classes.api.BSMAPIRequest
 import de.davidbattefeld.berlinskylarks.classes.api.LeagueGroupsAPIRequest
 import de.davidbattefeld.berlinskylarks.classes.api.MatchAPIRequest
+import de.davidbattefeld.berlinskylarks.classes.service.CalendarService
 import de.davidbattefeld.berlinskylarks.enums.ViewState
 import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
 import de.davidbattefeld.berlinskylarks.testdata.testLeagueGroup
@@ -29,6 +31,7 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
 
     private val matchAPIRequest = MatchAPIRequest()
     private val leagueGroupsAPIRequest = LeagueGroupsAPIRequest()
+    val calendarService = CalendarService()
 
     override fun load() {
         leagueGroups.clear()
@@ -97,5 +100,11 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
         builder.appendQueryParameter("query", "${game?.field?.latitude}, ${game?.field?.longitude}")
 
         return builder.build().toString()
+    }
+
+    fun addGamesToCalendar(context: Context) {
+        val gamesToUse = games
+
+        calendarService.addGamesToCalendar(context, games = gamesToUse, calendarID = 9999)
     }
 }

@@ -39,6 +39,7 @@ import de.davidbattefeld.berlinskylarks.testdata.testLeagueGroup
 fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
     val vm: ScoresViewModel = viewModel(LocalContext.current as ComponentActivity)
     var leagueFilterExpanded by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     val userPreferences by vm.userPreferencesFlow.collectAsState(initial = DEFAULT_SETTINGS)
 
@@ -51,7 +52,7 @@ fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
             containerColor = MaterialTheme.colorScheme.surface
         ),
         actions = {
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = { vm.addGamesToCalendar(context) }) {
                 Icon(
                     imageVector = Icons.Outlined.CalendarMonth,
                     contentDescription = "Button"
