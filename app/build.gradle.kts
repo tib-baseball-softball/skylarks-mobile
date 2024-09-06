@@ -80,4 +80,5 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.7.0")
     implementation("org.jetbrains:markdown:0.7.3")
     implementation("com.google.accompanist:accompanist-permissions:0.36.0")
+    implementation("androidx.compose.material3:material3-window-size-class")
 }

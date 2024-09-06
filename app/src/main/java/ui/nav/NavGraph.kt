@@ -23,7 +23,7 @@ import ui.standings.StandingsDetailScreen
 import ui.standings.StandingsScreen
 
 @Composable
-fun BottomNavGraph(
+fun NavGraph(
     modifier: Modifier,
     navController: NavHostController,
     setFabOnClick: (() -> Unit) -> Unit

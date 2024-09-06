@@ -24,14 +24,23 @@ fun NavBar(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    NavigationBar(
-        //containerColor = MaterialTheme.colors.primary,
-    ) {
+    NavigationBar {
         screens.forEach { screen ->
             AddItem(
                 screen = screen,
                 currentDestination = currentDestination,
-                navController = navController)
+                navigationAction = {
+                    navController.navigate(screen.route) {
+                        navController.graph.startDestinationRoute?.let { route ->
+                            popUpTo(route) {
+                                saveState = true
+                            }
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
+            )
         }
     }
 }
@@ -40,7 +49,7 @@ fun NavBar(navController: NavHostController) {
 fun RowScope.AddItem(
     screen: SkylarksNavDestination,
     currentDestination: NavDestination?,
-    navController: NavHostController
+    navigationAction: () -> Unit
 ) {
     NavigationBarItem(
         label = { Text(text = screen.title) },
@@ -54,15 +63,7 @@ fun RowScope.AddItem(
             current.route?.contains(screen.route, ignoreCase = true) ?: false
         } == true,
         onClick = {
-            navController.navigate(screen.route) {
-                navController.graph.startDestinationRoute?.let { route ->
-                    popUpTo(route) {
-                        saveState = true
-                    }
-                }
-                launchSingleTop = true
-                restoreState = true
-            }
+            navigationAction()
         },
         alwaysShowLabel = true,
     )

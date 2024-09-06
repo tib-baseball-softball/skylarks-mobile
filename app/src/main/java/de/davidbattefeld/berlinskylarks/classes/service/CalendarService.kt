@@ -15,7 +15,7 @@ class CalendarService {
     var context: Context? = null
 
     /**
-     * Loads all calendars and adds them to state var
+     * Loads all available calendars and returns them
      */
     fun loadUserCalendars(): List<UserCalendar> {
         val list = mutableListOf<UserCalendar>()
