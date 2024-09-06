@@ -2,7 +2,6 @@ package de.davidbattefeld.berlinskylarks.classes.viewmodels
 
 import android.app.Application
 import android.content.Context
-import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
@@ -88,18 +87,12 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
         })
     }
 
-    fun buildMapsURL(id: Int): String {
-        val baseURL = "https://www.google.com/maps/search/"
-        val builder = Uri.parse(baseURL).buildUpon()
-
-        val game = games.firstOrNull { it.id == id }
-
-        builder.appendQueryParameter("api", "1")
-        builder.appendQueryParameter("map_action", "map")
-        builder.appendQueryParameter("query_place_id", game?.field?.name)
-        builder.appendQueryParameter("query", "${game?.field?.latitude}, ${game?.field?.longitude}")
-
-        return builder.build().toString()
+    fun loadCalendars(context: Context) {
+        calendarService.context = context
+        viewModelScope.launch {
+            userCalendars.clear()
+            userCalendars.addAll(calendarService.loadUserCalendars())
+        }
     }
 
     fun addGamesToCalendar(context: Context) {

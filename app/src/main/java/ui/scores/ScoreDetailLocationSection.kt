@@ -1,6 +1,5 @@
 package ui.scores
 
-import androidx.activity.ComponentActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandIn
 import androidx.compose.animation.shrinkOut
@@ -20,7 +19,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -28,8 +26,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import de.davidbattefeld.berlinskylarks.classes.viewmodels.ScoresViewModel
+import de.davidbattefeld.berlinskylarks.classes.service.LocationService
 import de.davidbattefeld.berlinskylarks.global.cardPadding
 import model.Game
 
@@ -37,9 +34,7 @@ import model.Game
 fun ScoreDetailLocationSection(
     showLocationData: Boolean,
     game: Game,
-    matchID: Int,
 ) {
-    val vm: ScoresViewModel = viewModel(LocalContext.current as ComponentActivity)
     val uriHandler = LocalUriHandler.current
 
     AnimatedVisibility(
@@ -109,7 +104,7 @@ fun ScoreDetailLocationSection(
                         }
                     }
                 ) {
-                    uriHandler.openUri(vm.buildMapsURL(matchID))
+                    uriHandler.openUri(LocationService.buildGoogleMapsURL(game))
                 } },
                 leadingContent = {
                     Icon(
