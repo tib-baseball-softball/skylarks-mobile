@@ -70,13 +70,16 @@ class CalendarService {
                     CalendarContract.Events.TITLE,
                     "${game.league.acronym}: ${game.away_team_name} @ ${game.home_team_name}"
                 )
-                val eventDescription = """
-    League: ${game.league.name}
-    Match Number: ${game.match_id}
 
-    Field: ${game.field?.name ?: "No data"}
-    Address: ${game.field?.street ?: ""}, ${game.field?.postal_code ?: ""} ${game.field?.city ?: ""}
+                val eventDescription =
 """
+League: ${game.league.name}
+Match Number: ${game.match_id}
+
+Field: ${game.field?.name ?: "No data"}
+Address: ${game.field?.street ?: ""}, ${game.field?.postal_code ?: ""} ${game.field?.city ?: ""}
+"""
+
                 put(CalendarContract.Events.DESCRIPTION, eventDescription)
                 put(CalendarContract.Events.CALENDAR_ID, calendarID)
                 put(CalendarContract.Events.EVENT_TIMEZONE, ZoneId.systemDefault().id)
