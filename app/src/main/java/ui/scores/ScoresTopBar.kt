@@ -1,9 +1,6 @@
 package ui.scores
 
 import android.Manifest
-import android.content.Intent
-import android.net.Uri
-import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,7 +10,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,7 +21,6 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material.icons.outlined.UnfoldMore
-import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -50,7 +45,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -64,6 +58,8 @@ import de.davidbattefeld.berlinskylarks.classes.data.DEFAULT_SETTINGS
 import de.davidbattefeld.berlinskylarks.classes.viewmodels.ScoresViewModel
 import de.davidbattefeld.berlinskylarks.testdata.testLeagueGroup
 import kotlinx.coroutines.launch
+import ui.calendar.PermissionNotGrantedView
+import ui.utility.ConfirmationDialog
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
@@ -75,6 +71,8 @@ fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(false) }
+    var showConfirmationDialog by remember { mutableStateOf(false) }
+
     val readState = rememberPermissionState(Manifest.permission.READ_CALENDAR)
     val writeState = rememberPermissionState(Manifest.permission.WRITE_CALENDAR)
     var selectedCalID by remember { mutableStateOf<Long?>(null) }
@@ -170,7 +168,10 @@ fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
                                         .fillMaxWidth()
                                 ) {
                                     item {
-                                        Text(text = "Select a Calendar to save games", style = MaterialTheme.typography.titleMedium)
+                                        Text(
+                                            text = "Select a Calendar to save games",
+                                            style = MaterialTheme.typography.titleMedium
+                                        )
                                     }
                                     items(vm.userCalendars) { userCalendar ->
                                         val isSelected = userCalendar.id == selectedCalID
@@ -209,6 +210,7 @@ fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
                                     item {
                                         Row(
                                             horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                            modifier = Modifier.padding(vertical = 20.dp)
                                         ) {
                                             OutlinedButton(onClick = {
                                                 scope.launch { sheetState.hide() }
@@ -230,7 +232,7 @@ fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
                                                                 showBottomSheet = false
                                                             }
                                                         }
-                                                    vm.addGamesToCalendar(context = context, selectedCalID!!)
+                                                    showConfirmationDialog = true
                                                 },
                                                 enabled = selectedCalID != null
                                             ) {
@@ -253,6 +255,27 @@ fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
                 }
             }
 
+            if (showConfirmationDialog) {
+                ConfirmationDialog(
+                    icon = Icons.Filled.CalendarMonth,
+                    onDismissRequest = { showConfirmationDialog = false },
+                    onConfirmation = {
+                        vm.addGamesToCalendar(
+                            context = context, selectedCalID!!
+                        )
+                        showConfirmationDialog = false
+                    },
+                    dialogTitle = "Confirm adding events",
+                    content = {
+                        Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                            Text("The following events will be added:")
+                            vm.games.forEach {
+                                Text("${it.away_team_name} @ ${it.home_team_name} on ${it.localisedDate}")
+                            }
+                        }
+                    }
+                )
+            }
         }
     )
     LaunchedEffect(Unit) {
