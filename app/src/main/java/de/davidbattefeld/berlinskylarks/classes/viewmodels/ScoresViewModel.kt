@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
+import de.davidbattefeld.berlinskylarks.classes.UserCalendar
 import de.davidbattefeld.berlinskylarks.classes.api.BSMAPIRequest
 import de.davidbattefeld.berlinskylarks.classes.api.LeagueGroupsAPIRequest
 import de.davidbattefeld.berlinskylarks.classes.api.MatchAPIRequest
@@ -25,6 +26,7 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
     var skylarksGames = mutableStateListOf<Game>()
     var leagueGroups = mutableStateListOf<LeagueGroup>()
     var filteredLeagueGroup by mutableStateOf(testLeagueGroup)
+    var userCalendars = mutableStateListOf<UserCalendar>()
 
     var tabState by mutableIntStateOf(1)
 
@@ -64,17 +66,21 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
             1 -> "current"
             2 -> "next"
             3 -> "any"
-            else -> { throw Exception("tabState has invalid value that cannot be used to determine Gameday") }
+            else -> {
+                throw Exception("tabState has invalid value that cannot be used to determine Gameday")
+            }
         }
 
         if (filteredLeagueGroup.id == BOGUS_ID) {
             games.addAll(matchAPIRequest.loadGamesForClub(season, gamedays))
         } else {
-            games.addAll(matchAPIRequest.loadAllGames(
-                season = season,
-                gamedays = gamedays,
-                leagues = filteredLeagueGroup.id
-            ))
+            games.addAll(
+                matchAPIRequest.loadAllGames(
+                    season = season,
+                    gamedays = gamedays,
+                    leagues = filteredLeagueGroup.id
+                )
+            )
         }
         games.forEach {
             it.addDate()
@@ -95,9 +101,12 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
         }
     }
 
-    fun addGamesToCalendar(context: Context) {
+    fun addGamesToCalendar(context: Context, id: Long) {
         val gamesToUse = games
 
-        calendarService.addGamesToCalendar(context, games = gamesToUse, calendarID = 9999)
+        calendarService.context = context
+        viewModelScope.launch {
+            calendarService.addGamesToCalendar(games = gamesToUse, calendarID = id)
+        }
     }
 }

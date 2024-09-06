@@ -5,13 +5,23 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import androidx.activity.ComponentActivity
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material.icons.outlined.UnfoldMore
@@ -22,6 +32,8 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.ModalBottomSheet
@@ -40,6 +52,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -63,6 +77,7 @@ fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
     var showBottomSheet by remember { mutableStateOf(false) }
     val readState = rememberPermissionState(Manifest.permission.READ_CALENDAR)
     val writeState = rememberPermissionState(Manifest.permission.WRITE_CALENDAR)
+    var selectedCalID by remember { mutableStateOf<Long?>(null) }
 
     val userPreferences by vm.userPreferencesFlow.collectAsState(initial = DEFAULT_SETTINGS)
 
@@ -146,14 +161,83 @@ fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
                     ) {
                         when {
                             readState.status.isGranted && writeState.status.isGranted -> {
-                                Button(onClick = {
-                                    scope.launch { sheetState.hide() }.invokeOnCompletion {
-                                        if (!sheetState.isVisible) {
-                                            showBottomSheet = false
+                                LaunchedEffect(Unit) {
+                                    vm.loadCalendars(context)
+                                }
+
+                                LazyColumn(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                ) {
+                                    item {
+                                        Text(text = "Select a Calendar to save games", style = MaterialTheme.typography.titleMedium)
+                                    }
+                                    items(vm.userCalendars) { userCalendar ->
+                                        val isSelected = userCalendar.id == selectedCalID
+                                        ListItem(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .clip(shape = RoundedCornerShape(12.dp))
+                                                .background(if (isSelected) Color.LightGray else Color.Transparent)
+                                                .clickable {
+                                                    selectedCalID = userCalendar.id
+                                                },
+                                            leadingContent = {
+                                                Icon(
+                                                    imageVector = Icons.Filled.CalendarMonth,
+                                                    contentDescription = "",
+                                                )
+                                            },
+                                            colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                                            headlineContent = {
+                                                Text(text = userCalendar.displayName)
+                                            },
+                                            supportingContent = {
+                                                Text(text = userCalendar.accountName)
+                                            },
+                                            trailingContent = {
+                                                if (isSelected) {
+                                                    Icon(
+                                                        imageVector = Icons.Filled.Check,
+                                                        contentDescription = "item is selected",
+                                                        tint = MaterialTheme.colorScheme.primary,
+                                                    )
+                                                }
+                                            }
+                                        )
+                                    }
+                                    item {
+                                        Row(
+                                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                        ) {
+                                            OutlinedButton(onClick = {
+                                                scope.launch { sheetState.hide() }
+                                                    .invokeOnCompletion {
+                                                        if (!sheetState.isVisible) {
+                                                            showBottomSheet = false
+                                                            selectedCalID = null
+                                                        }
+                                                    }
+                                            }) {
+                                                Text("Cancel")
+                                            }
+
+                                            Button(
+                                                onClick = {
+                                                    scope.launch { sheetState.hide() }
+                                                        .invokeOnCompletion {
+                                                            if (!sheetState.isVisible) {
+                                                                showBottomSheet = false
+                                                            }
+                                                        }
+                                                    vm.addGamesToCalendar(context = context, selectedCalID!!)
+                                                },
+                                                enabled = selectedCalID != null
+                                            ) {
+                                                Text("Add Games to Calendar")
+                                            }
                                         }
                                     }
-                                }) {
-                                    Text("Hide bottom sheet")
                                 }
                             }
 
