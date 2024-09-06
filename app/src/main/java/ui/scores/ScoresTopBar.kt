@@ -245,36 +245,7 @@ fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
                                 LaunchedEffect(Unit) {
                                     readState.launchPermissionRequest()
                                 }
-                                Icon(
-                                    Icons.Rounded.CalendarMonth,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.onBackground
-                                )
-                                Spacer(Modifier.height(8.dp))
-                                Text(
-                                    "Calendar permission not granted",
-                                    style = MaterialTheme.typography.headlineSmall
-                                )
-                                Spacer(Modifier.height(4.dp))
-                                Text("This is required in order for the app to save games to calendars")
-
-                                Button(
-                                    modifier = Modifier
-                                        .align(Alignment.End)
-                                        .padding(16.dp),
-                                    onClick = {
-                                        val intent =
-                                            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                                                data = Uri.fromParts(
-                                                    "package",
-                                                    context.packageName,
-                                                    null
-                                                )
-                                            }
-                                        context.startActivity(intent)
-                                    }) {
-                                    Text("Go to settings")
-                                }
+                                PermissionNotGrantedView()
                             }
 
                         }
