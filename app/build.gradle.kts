@@ -13,8 +13,8 @@ android {
         applicationId = "de.davidbattefeld.berlinskylarks"
         minSdk = 29
         targetSdk = 34
-        versionCode = 4
-        versionName = "0.6.2"
+        versionCode = 5
+        versionName = "0.7"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
