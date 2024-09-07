@@ -73,7 +73,6 @@ fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
     var showBottomSheet by remember { mutableStateOf(false) }
     var showConfirmationDialog by remember { mutableStateOf(false) }
 
-    val readState = rememberPermissionState(Manifest.permission.READ_CALENDAR)
     val writeState = rememberPermissionState(Manifest.permission.WRITE_CALENDAR)
     var selectedCalID by remember { mutableStateOf<Long?>(null) }
 
@@ -158,7 +157,7 @@ fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
                             .padding(vertical = 10.dp, horizontal = 16.dp)
                     ) {
                         when {
-                            readState.status.isGranted && writeState.status.isGranted -> {
+                            writeState.status.isGranted -> {
                                 LaunchedEffect(Unit) {
                                     vm.loadCalendars(context)
                                 }
@@ -245,7 +244,7 @@ fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
 
                             else -> {
                                 LaunchedEffect(Unit) {
-                                    readState.launchPermissionRequest()
+                                    writeState.launchPermissionRequest()
                                 }
                                 PermissionNotGrantedView()
                             }
