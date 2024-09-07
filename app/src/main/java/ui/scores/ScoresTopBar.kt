@@ -75,6 +75,7 @@ fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
     var showBottomSheet by remember { mutableStateOf(false) }
     var showConfirmationDialog by remember { mutableStateOf(false) }
 
+    val readState = rememberPermissionState(Manifest.permission.READ_CALENDAR)
     val writeState = rememberPermissionState(Manifest.permission.WRITE_CALENDAR)
     var selectedCalID by remember { mutableStateOf<Long?>(null) }
 
@@ -160,9 +161,10 @@ fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
                             .padding(vertical = 10.dp, horizontal = 16.dp)
                     ) {
                         when {
-                            writeState.status.isGranted -> {
+                            readState.status.isGranted -> {
                                 LaunchedEffect(Unit) {
                                     vm.loadCalendars(context)
+                                    writeState.launchPermissionRequest()
                                 }
 
                                 LazyColumn(
@@ -181,7 +183,7 @@ fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
                                             modifier = Modifier
                                                 .fillMaxWidth()
                                                 .clip(shape = RoundedCornerShape(12.dp))
-                                                .background(if (isSelected) Color.LightGray else Color.Transparent)
+                                                .background(if (isSelected) MaterialTheme.colorScheme.surfaceVariant else Color.Transparent)
                                                 .clickable {
                                                     selectedCalID = userCalendar.id
                                                 },
@@ -234,7 +236,13 @@ fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
                                                                 showBottomSheet = false
                                                             }
                                                         }
-                                                    showConfirmationDialog = true
+                                                    if (writeState.status.isGranted) {
+                                                        showConfirmationDialog = true
+                                                    } else {
+                                                        scope.launch {
+                                                            snackbarHostState.showSnackbar("Calendar write access not granted.")
+                                                        }
+                                                    }
                                                 },
                                                 enabled = selectedCalID != null
                                             ) {
@@ -247,7 +255,7 @@ fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
 
                             else -> {
                                 LaunchedEffect(Unit) {
-                                    writeState.launchPermissionRequest()
+                                    readState.launchPermissionRequest()
                                 }
                                 PermissionNotGrantedView()
                             }
