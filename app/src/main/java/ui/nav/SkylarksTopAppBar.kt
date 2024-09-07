@@ -1,8 +1,8 @@
 package ui.nav
 
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -21,62 +21,62 @@ fun SkylarksTopAppBar(
             scrollBehavior = scrollBehavior,
         )
 
-        SkylarksNavDestination.ScoresDetail.routeWithArgs -> ScoresTopBar(
-            title = SkylarksNavDestination.ScoresDetail.title,
+        SkylarksNavDestination.ScoresDetail.routeWithArgs -> TopAppBar(
             scrollBehavior = scrollBehavior,
+            title = { Text(text = SkylarksNavDestination.ScoresDetail.title) },
         )
 
-        SkylarksNavDestination.Standings.route -> MediumTopAppBar(
+        SkylarksNavDestination.Standings.route -> TopAppBar(
             scrollBehavior = scrollBehavior,
             title = { Text(text = SkylarksNavDestination.Standings.title) },
         )
 
-        SkylarksNavDestination.StandingsDetail.routeWithArgs -> MediumTopAppBar(
+        SkylarksNavDestination.StandingsDetail.routeWithArgs -> TopAppBar(
             scrollBehavior = scrollBehavior,
             title = { Text(text = SkylarksNavDestination.StandingsDetail.title) },
         )
 
-        SkylarksNavDestination.Club.route -> MediumTopAppBar(
+        SkylarksNavDestination.Club.route -> TopAppBar(
             scrollBehavior = scrollBehavior,
             title = { Text(text = SkylarksNavDestination.Club.title) },
         )
 
-        SkylarksNavDestination.Teams.route -> MediumTopAppBar(
+        SkylarksNavDestination.Teams.route -> TopAppBar(
             scrollBehavior = scrollBehavior,
             title = { Text(text = SkylarksNavDestination.Teams.title) },
         )
 
-        SkylarksNavDestination.TeamDetail.routeWithArgs -> MediumTopAppBar(
+        SkylarksNavDestination.TeamDetail.routeWithArgs -> TopAppBar(
             scrollBehavior = scrollBehavior,
             title = { Text(text = SkylarksNavDestination.TeamDetail.title) },
         )
 
-        SkylarksNavDestination.PlayerDetail.routeWithArgs -> MediumTopAppBar(
+        SkylarksNavDestination.PlayerDetail.routeWithArgs -> TopAppBar(
             scrollBehavior = scrollBehavior,
             title = { Text(text = SkylarksNavDestination.PlayerDetail.title) },
         )
 
-        SkylarksNavDestination.Settings.route -> MediumTopAppBar(
+        SkylarksNavDestination.Settings.route -> TopAppBar(
             scrollBehavior = scrollBehavior,
             title = { Text(text = SkylarksNavDestination.Settings.title) },
         )
 
-        SkylarksNavDestination.Info.route -> MediumTopAppBar(
+        SkylarksNavDestination.Info.route -> TopAppBar(
             scrollBehavior = scrollBehavior,
             title = { Text(text = SkylarksNavDestination.Info.title) },
         )
 
-        SkylarksNavDestination.LegalNotice.route -> MediumTopAppBar(
+        SkylarksNavDestination.LegalNotice.route -> TopAppBar(
             scrollBehavior = scrollBehavior,
             title = { Text(text = SkylarksNavDestination.LegalNotice.title) },
         )
 
-        SkylarksNavDestination.Privacy.route -> MediumTopAppBar(
+        SkylarksNavDestination.Privacy.route -> TopAppBar(
             scrollBehavior = scrollBehavior,
             title = { Text(text = SkylarksNavDestination.Privacy.title) },
         )
 
-        else -> MediumTopAppBar(
+        else -> TopAppBar(
             scrollBehavior = scrollBehavior,
             title = { Text(text = "Skylarks") },
         )

@@ -79,12 +79,14 @@ data class Game(
         }
     }
 
-    fun addDate() {
+    fun parseGameTimeString(): LocalDateTime {
         val formatter = DateTimeFormatter.ofPattern("y-M-dd HH:mm:ss Z")
-        val gameDate = LocalDateTime.parse(time, formatter)
+        return LocalDateTime.parse(time, formatter)
+    }
 
-        localisedDate = gameDate.format(DateTimeFormatter.ofLocalizedDateTime(
-            java.time.format.FormatStyle.MEDIUM))
+    fun addDate() {
+        val gameDate = parseGameTimeString()
+        localisedDate = gameDate.format(DateTimeFormatter.ofLocalizedDateTime(java.time.format.FormatStyle.MEDIUM))
     }
 
     fun determineGameStatus() {

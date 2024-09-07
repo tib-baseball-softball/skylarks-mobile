@@ -131,7 +131,7 @@ fun ScoresDetailScreen(
                 ScoreDetailStatisticsSection(showStatisticsData, game)
             }
             item {
-                ScoreDetailLocationSection(showLocationData, game, matchID)
+                ScoreDetailLocationSection(showLocationData, game)
             }
             item {
                 ScoreDetailOfficialsSection(showOfficialsData, game)
