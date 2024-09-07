@@ -3,22 +3,22 @@ package de.davidbattefeld.berlinskylarks
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.BrokenImage
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.NavigationRail
-import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.PermanentDrawerSheet
 import androidx.compose.material3.PermanentNavigationDrawer
 import androidx.compose.material3.Scaffold
@@ -31,13 +31,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
-import ui.nav.NavBar
 import ui.nav.NavGraph
+import ui.nav.NavItemCollection
 import ui.nav.NavigationType
 import ui.nav.SkylarksNavDestination
 import ui.nav.SkylarksTopAppBar
@@ -77,12 +79,15 @@ fun BerlinSkylarksApp(
         WindowWidthSizeClass.Compact -> {
             NavigationType.BOTTOM_NAVIGATION
         }
+
         WindowWidthSizeClass.Medium -> {
             NavigationType.NAVIGATION_RAIL
         }
+
         WindowWidthSizeClass.Expanded -> {
             NavigationType.PERMANENT_NAVIGATION_DRAWER
         }
+
         else -> {
             NavigationType.BOTTOM_NAVIGATION
         }
@@ -92,15 +97,25 @@ fun BerlinSkylarksApp(
     when (navigationType) {
         NavigationType.NAVIGATION_RAIL -> {
             Row {
-                NavigationRail {
-                    //TODO
-                    NavigationRailItem(
-                        icon = { Icon(Icons.Filled.BrokenImage, contentDescription = null) },
-                        label = { Text("MÖP") },
-                        selected = false,
-                        onClick = {  },
-                    )
-
+                NavigationRail(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainer
+                ) {
+                    Column(
+                        modifier = Modifier.padding(horizontal = 2.dp, vertical = 12.dp),
+                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                        horizontalAlignment = Alignment.End
+                    ) {
+                        NavItemCollection(navController, navigationType)
+                        Spacer(modifier = Modifier.weight(1.0F))
+                        Image(
+                            painter = painterResource(R.drawable.logo_rondell),
+                            contentDescription = "Skylarks Primary Logo",
+                            modifier = Modifier
+                                .padding(4.dp)
+                                .padding(bottom = 12.dp)
+                                .size(60.dp)
+                        )
+                    }
                 }
                 Scaffold(
                     topBar = { SkylarksTopAppBar(currentRoute, scrollBehavior) },
@@ -129,24 +144,35 @@ fun BerlinSkylarksApp(
             PermanentNavigationDrawer(
                 drawerContent = {
                     PermanentDrawerSheet(
+                        drawerContainerColor = MaterialTheme.colorScheme.surfaceContainer,
                         modifier = Modifier
                             .fillMaxHeight()
                             .width(250.dp)
                     ) {
                         Column(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(16.dp)
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 30.dp),
+                            verticalArrangement = Arrangement.spacedBy(4.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            // TODO
-                            NavigationDrawerItem(
-                                icon = { Icon(Icons.Filled.BrokenImage, contentDescription = null) },
-                                label = { Text("MÖP") },
-                                selected = false,
-                                onClick = {  },
-                                modifier = Modifier.padding(horizontal = 12.dp)
+                            Text(
+                                text = "Berlin Skylarks",
+                                style = MaterialTheme.typography.headlineSmall,
+                                modifier = Modifier
+                                    .padding(bottom = 20.dp)
+                                    .align(Alignment.Start)
                             )
-
+                            NavItemCollection(
+                                navController = navController,
+                                navigationType = navigationType,
+                            )
+                            Spacer(modifier = Modifier.weight(1.0F))
+                            Image(
+                                painter = painterResource(R.drawable.logo_rondell),
+                                contentDescription = "Skylarks Primary Logo",
+                                modifier = Modifier
+                                    .padding(4.dp)
+                                    .size(100.dp)
+                            )
                         }
                     }
                 }
@@ -190,7 +216,10 @@ fun BerlinSkylarksApp(
                     }
                 },
                 bottomBar = {
-                    NavBar(navController = navController)
+                    NavItemCollection(
+                        navController = navController,
+                        navigationType = navigationType
+                    )
                 }
             ) { padding ->
                 NavGraph(
