@@ -19,16 +19,21 @@ import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.PermanentDrawerSheet
 import androidx.compose.material3.PermanentNavigationDrawer
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import ui.nav.NavGraph
@@ -43,113 +48,153 @@ fun BerlinSkylarksApp(
     navController: NavHostController,
     windowSize: WindowWidthSizeClass,
 ) {
-    val currentRoute =
-        navController.currentBackStackEntryFlow.collectAsState(initial = navController.currentBackStackEntry)
-    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     val (fabOnClick, setFabOnClick) = remember { mutableStateOf<(() -> Unit)?>(null) }
+    val snackbarHostState = remember { SnackbarHostState() }
 
-    val navigationType = when (windowSize) {
-        WindowWidthSizeClass.Compact -> {
-            NavigationType.BOTTOM_NAVIGATION
+    CompositionLocalProvider(LocalSnackbarHostState provides snackbarHostState) {
+        val currentRoute =
+            navController.currentBackStackEntryFlow.collectAsState(initial = navController.currentBackStackEntry)
+        val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+
+        val navigationType = when (windowSize) {
+            WindowWidthSizeClass.Compact -> {
+                NavigationType.BOTTOM_NAVIGATION
+            }
+
+            WindowWidthSizeClass.Medium -> {
+                NavigationType.NAVIGATION_RAIL
+            }
+
+            WindowWidthSizeClass.Expanded -> {
+                NavigationType.PERMANENT_NAVIGATION_DRAWER
+            }
+
+            else -> {
+                NavigationType.BOTTOM_NAVIGATION
+            }
         }
 
-        WindowWidthSizeClass.Medium -> {
-            NavigationType.NAVIGATION_RAIL
-        }
-
-        WindowWidthSizeClass.Expanded -> {
-            NavigationType.PERMANENT_NAVIGATION_DRAWER
-        }
-
-        else -> {
-            NavigationType.BOTTOM_NAVIGATION
-        }
-    }
-
-
-    when (navigationType) {
-        NavigationType.NAVIGATION_RAIL -> {
-            Row {
-                NavigationRail(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainer
+        val snackBarHost = @Composable {
+            SnackbarHost(LocalSnackbarHostState.current) { data ->
+                Snackbar(
+                    modifier = Modifier
+                        .padding(15.dp)
                 ) {
-                    Column(
-                        modifier = Modifier.padding(horizontal = 2.dp, vertical = 12.dp),
-                        verticalArrangement = Arrangement.spacedBy(4.dp),
-                        horizontalAlignment = Alignment.End
-                    ) {
-                        NavItemCollection(navController, navigationType)
-                        Spacer(modifier = Modifier.weight(1.0F))
-                        Image(
-                            painter = painterResource(R.drawable.logo_rondell),
-                            contentDescription = "Skylarks Primary Logo",
-                            modifier = Modifier
-                                .padding(4.dp)
-                                .padding(bottom = 12.dp)
-                                .size(60.dp)
-                        )
-                    }
-                }
-                Scaffold(
-                    topBar = { SkylarksTopAppBar(currentRoute, scrollBehavior) },
-                    floatingActionButton = {
-                        when (currentRoute.value?.destination?.route) {
-                            SkylarksNavDestination.Scores.route -> ExtendedFloatingActionButton(
-                                onClick = { fabOnClick?.invoke() },
-                                containerColor = MaterialTheme.colorScheme.primary,
-                                expanded = true,
-                                icon = { Icon(Icons.Filled.Refresh, "load new") },
-                                text = { Text(text = "Load Games") },
-                            )
-                        }
-                    },
-                ) { padding ->
-                    NavGraph(
-                        navController = navController,
-                        modifier = Modifier.padding(padding),
-                        setFabOnClick = setFabOnClick,
-                    )
+                    Text(data.visuals.message, maxLines = 2, overflow = TextOverflow.Ellipsis)
                 }
             }
         }
 
-        NavigationType.PERMANENT_NAVIGATION_DRAWER -> {
-            PermanentNavigationDrawer(
-                drawerContent = {
-                    PermanentDrawerSheet(
-                        drawerContainerColor = MaterialTheme.colorScheme.surfaceContainer,
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .width(250.dp)
+        when (navigationType) {
+            NavigationType.NAVIGATION_RAIL -> {
+                Row {
+                    NavigationRail(
+                        containerColor = MaterialTheme.colorScheme.surfaceContainer
                     ) {
                         Column(
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 30.dp),
+                            modifier = Modifier.padding(horizontal = 2.dp, vertical = 12.dp),
                             verticalArrangement = Arrangement.spacedBy(4.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
+                            horizontalAlignment = Alignment.End
                         ) {
-                            Text(
-                                text = "Berlin Skylarks",
-                                style = MaterialTheme.typography.headlineSmall,
-                                modifier = Modifier
-                                    .padding(bottom = 20.dp)
-                                    .align(Alignment.Start)
-                            )
-                            NavItemCollection(
-                                navController = navController,
-                                navigationType = navigationType,
-                            )
+                            NavItemCollection(navController, navigationType)
                             Spacer(modifier = Modifier.weight(1.0F))
                             Image(
                                 painter = painterResource(R.drawable.logo_rondell),
                                 contentDescription = "Skylarks Primary Logo",
                                 modifier = Modifier
                                     .padding(4.dp)
-                                    .size(100.dp)
+                                    .padding(bottom = 12.dp)
+                                    .size(60.dp)
                             )
                         }
                     }
+                    Scaffold(
+                        topBar = { SkylarksTopAppBar(currentRoute, scrollBehavior) },
+                        floatingActionButton = {
+                            when (currentRoute.value?.destination?.route) {
+                                SkylarksNavDestination.Scores.route -> ExtendedFloatingActionButton(
+                                    onClick = { fabOnClick?.invoke() },
+                                    containerColor = MaterialTheme.colorScheme.primary,
+                                    expanded = true,
+                                    icon = { Icon(Icons.Filled.Refresh, "load new") },
+                                    text = { Text(text = "Load Games") },
+                                )
+                            }
+                        },
+                        snackbarHost = snackBarHost
+                    ) { padding ->
+                        NavGraph(
+                            navController = navController,
+                            modifier = Modifier.padding(padding),
+                            setFabOnClick = setFabOnClick,
+                        )
+                    }
                 }
-            ) {
+            }
+
+            NavigationType.PERMANENT_NAVIGATION_DRAWER -> {
+                PermanentNavigationDrawer(
+                    drawerContent = {
+                        PermanentDrawerSheet(
+                            drawerContainerColor = MaterialTheme.colorScheme.surfaceContainer,
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .width(250.dp)
+                        ) {
+                            Column(
+                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 30.dp),
+                                verticalArrangement = Arrangement.spacedBy(4.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text(
+                                    text = "Berlin Skylarks",
+                                    style = MaterialTheme.typography.headlineSmall,
+                                    modifier = Modifier
+                                        .padding(bottom = 20.dp)
+                                        .align(Alignment.Start)
+                                )
+                                NavItemCollection(
+                                    navController = navController,
+                                    navigationType = navigationType,
+                                )
+                                Spacer(modifier = Modifier.weight(1.0F))
+                                Image(
+                                    painter = painterResource(R.drawable.logo_rondell),
+                                    contentDescription = "Skylarks Primary Logo",
+                                    modifier = Modifier
+                                        .padding(4.dp)
+                                        .size(100.dp)
+                                )
+                            }
+                        }
+                    }
+                ) {
+                    Scaffold(
+                        topBar = { SkylarksTopAppBar(currentRoute, scrollBehavior) },
+                        floatingActionButton = {
+                            when (currentRoute.value?.destination?.route) {
+                                SkylarksNavDestination.Scores.route -> ExtendedFloatingActionButton(
+                                    onClick = { fabOnClick?.invoke() },
+                                    containerColor = MaterialTheme.colorScheme.primary,
+                                    expanded = true,
+                                    icon = { Icon(Icons.Filled.Refresh, "load new") },
+                                    text = { Text(text = "Load Games") },
+                                )
+                            }
+                        },
+                        snackbarHost = snackBarHost
+                    ) { padding ->
+                        NavGraph(
+                            navController = navController,
+                            modifier = Modifier.padding(padding),
+                            setFabOnClick = setFabOnClick,
+                        )
+                    }
+                }
+            }
+
+            // bottom bar is default, directly into scaffold
+            else -> {
                 Scaffold(
                     topBar = { SkylarksTopAppBar(currentRoute, scrollBehavior) },
                     floatingActionButton = {
@@ -163,6 +208,13 @@ fun BerlinSkylarksApp(
                             )
                         }
                     },
+                    snackbarHost = snackBarHost,
+                    bottomBar = {
+                        NavItemCollection(
+                            navController = navController,
+                            navigationType = navigationType
+                        )
+                    }
                 ) { padding ->
                     NavGraph(
                         navController = navController,
@@ -170,36 +222,6 @@ fun BerlinSkylarksApp(
                         setFabOnClick = setFabOnClick,
                     )
                 }
-            }
-        }
-
-        // bottom bar is default, directly into scaffold
-        else -> {
-            Scaffold(
-                topBar = { SkylarksTopAppBar(currentRoute, scrollBehavior) },
-                floatingActionButton = {
-                    when (currentRoute.value?.destination?.route) {
-                        SkylarksNavDestination.Scores.route -> ExtendedFloatingActionButton(
-                            onClick = { fabOnClick?.invoke() },
-                            containerColor = MaterialTheme.colorScheme.primary,
-                            expanded = true,
-                            icon = { Icon(Icons.Filled.Refresh, "load new") },
-                            text = { Text(text = "Load Games") },
-                        )
-                    }
-                },
-                bottomBar = {
-                    NavItemCollection(
-                        navController = navController,
-                        navigationType = navigationType
-                    )
-                }
-            ) { padding ->
-                NavGraph(
-                    navController = navController,
-                    modifier = Modifier.padding(padding),
-                    setFabOnClick = setFabOnClick,
-                )
             }
         }
     }

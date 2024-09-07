@@ -10,11 +10,10 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
-import ui.nav.NavGraph
-import ui.nav.NavItemCollection
-import ui.nav.NavigationType
-import ui.nav.SkylarksNavDestination
-import ui.nav.SkylarksTopAppBar
+
+val LocalSnackbarHostState = compositionLocalOf<SnackbarHostState> {
+    error("No Snackbar Host State")
+}
 
 class MainActivity : ComponentActivity() {
     private lateinit var navController: NavHostController

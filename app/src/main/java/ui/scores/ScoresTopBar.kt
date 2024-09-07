@@ -54,6 +54,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import de.davidbattefeld.berlinskylarks.LocalSnackbarHostState
 import de.davidbattefeld.berlinskylarks.classes.data.DEFAULT_SETTINGS
 import de.davidbattefeld.berlinskylarks.classes.viewmodels.ScoresViewModel
 import de.davidbattefeld.berlinskylarks.testdata.testLeagueGroup
@@ -67,6 +68,7 @@ fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
     val vm: ScoresViewModel = viewModel(LocalContext.current as ComponentActivity)
     var leagueFilterExpanded by remember { mutableStateOf(false) }
     val context = LocalContext.current
+    val snackbarHostState = LocalSnackbarHostState.current
 
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
@@ -75,6 +77,7 @@ fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
 
     val writeState = rememberPermissionState(Manifest.permission.WRITE_CALENDAR)
     var selectedCalID by remember { mutableStateOf<Long?>(null) }
+
 
     val userPreferences by vm.userPreferencesFlow.collectAsState(initial = DEFAULT_SETTINGS)
 
@@ -263,6 +266,9 @@ fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
                             context = context, selectedCalID!!
                         )
                         showConfirmationDialog = false
+                        scope.launch {
+                            snackbarHostState.showSnackbar("Events have been added. They might take some time to show up in your calendar.")
+                        }
                     },
                     dialogTitle = "Confirm adding events",
                     content = {
