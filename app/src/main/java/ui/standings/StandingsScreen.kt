@@ -1,6 +1,5 @@
 package ui.standings
 
-import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,13 +19,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.davidbattefeld.berlinskylarks.classes.viewmodels.StandingsViewModel
 import de.davidbattefeld.berlinskylarks.enums.ViewState
 import de.davidbattefeld.berlinskylarks.global.clubCardPadding
-import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 import ui.utility.ContentNotFoundView
 import ui.utility.LoadingView
 
@@ -54,7 +51,7 @@ fun StandingsScreen(
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Insights,
-                    contentDescription = "",
+                    contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary
                 )
                 Text(text = "Club Standings", style = MaterialTheme.typography.titleLarge)
@@ -106,22 +103,5 @@ fun StandingsScreen(
         if (vm.leagueGroups.isEmpty()) {
             vm.load()
         }
-    }
-}
-
-@Preview(
-    showBackground = true,
-    widthDp = 400,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    name = "Dark"
-)
-@Preview(
-    showBackground = true,
-    widthDp = 400
-)
-@Composable
-fun StandingsScreenPreview() {
-    BerlinSkylarksTheme {
-        // StandingsScreen()
     }
 }

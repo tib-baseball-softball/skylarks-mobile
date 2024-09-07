@@ -96,7 +96,7 @@ fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
             }) {
                 Icon(
                     imageVector = Icons.Outlined.CalendarMonth,
-                    contentDescription = "Button"
+                    contentDescription = "add games to calendar"
                 )
             }
             Spacer(modifier = Modifier.weight(1.0F))
