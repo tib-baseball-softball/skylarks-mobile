@@ -59,7 +59,7 @@ fun ClubScreen(
         Card(
             modifier = Modifier.padding(clubCardPadding),
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
+                containerColor = MaterialTheme.colorScheme.surfaceContainer
             ),
             elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
         ) {
@@ -112,7 +112,7 @@ fun ClubScreen(
             columns = GridCells.Fixed(2),
             // If nesting lazy components, they cannot be of infinite height
             modifier = Modifier
-                .height(600.dp)
+                .height(380.dp)
                 .padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(cardGridSpacing),
             horizontalArrangement = Arrangement.spacedBy(cardGridSpacing)
@@ -120,7 +120,7 @@ fun ClubScreen(
             item {
                 Card(
                     colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface
+                        containerColor = MaterialTheme.colorScheme.surfaceContainerLow
                     ),
                     elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
                 ) {
@@ -145,7 +145,7 @@ fun ClubScreen(
             item {
                 Card(
                     colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface
+                        containerColor = MaterialTheme.colorScheme.surfaceContainerLow
                     ),
                     elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
                 ) {
@@ -167,7 +167,7 @@ fun ClubScreen(
             item {
                 Card(
                     colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface
+                        containerColor = MaterialTheme.colorScheme.surfaceContainerLow
                     ),
                     elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
                 ) {
@@ -189,7 +189,7 @@ fun ClubScreen(
             item {
                 Card(
                     colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface
+                        containerColor = MaterialTheme.colorScheme.surfaceContainerLow
                     ),
                     elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
                 ) {
@@ -211,7 +211,7 @@ fun ClubScreen(
             item {
                 Card(
                     colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface
+                        containerColor = MaterialTheme.colorScheme.surfaceContainerLow
                     ),
                     elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
                 ) {
@@ -231,6 +231,7 @@ fun ClubScreen(
                 }
             }
         }
+        Text("under construction")
     }
 }
 

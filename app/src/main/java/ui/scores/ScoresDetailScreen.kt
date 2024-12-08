@@ -120,7 +120,7 @@ fun ScoresDetailScreen(
                     modifier = Modifier
                         .padding(cardPadding),
                     colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface
+                        containerColor = MaterialTheme.colorScheme.surfaceContainerLow
                     ),
                     elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
                 ) {

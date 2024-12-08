@@ -31,7 +31,7 @@ fun ScoresItem(game: Game, modifier: Modifier) {
     Card(
         modifier = modifier.padding(8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = MaterialTheme.colorScheme.surfaceContainer
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
     ) {
