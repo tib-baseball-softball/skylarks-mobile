@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandIn
 import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationCity
@@ -19,13 +18,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import de.davidbattefeld.berlinskylarks.classes.service.LocationService
 import de.davidbattefeld.berlinskylarks.global.cardPadding
 import model.Game
@@ -35,8 +34,6 @@ fun ScoreDetailLocationSection(
     showLocationData: Boolean,
     game: Game,
 ) {
-    val uriHandler = LocalUriHandler.current
-
     AnimatedVisibility(
         modifier = Modifier.padding(vertical = 8.dp),
         visible = showLocationData,
@@ -92,24 +89,25 @@ fun ScoreDetailLocationSection(
             )
             HorizontalDivider(modifier = Modifier.padding(horizontal = 20.dp))
             ListItem(
-                headlineContent = { ClickableText(
-                    text = buildAnnotatedString {
-                        withStyle(style = SpanStyle(
-                            textDecoration = TextDecoration.Underline,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            fontSize = 16.sp
-                        )
-                        ) {
-                            append("Open in Google Maps")
+                headlineContent = {
+                    Text(buildAnnotatedString {
+                        withStyle(style = SpanStyle(textDecoration = TextDecoration.Underline)) {
+                            withLink(
+                                LinkAnnotation.Url(
+                                    url = LocationService.buildGoogleMapsURL(
+                                        game
+                                    )
+                                )
+                            ) {
+                                append("Open in Google Maps")
+                            }
                         }
-                    }
-                ) {
-                    uriHandler.openUri(LocationService.buildGoogleMapsURL(game))
-                } },
+                    })
+                },
                 leadingContent = {
                     Icon(
                         Icons.Filled.Map,
-                        contentDescription = "Localized description",
+                        contentDescription = "Map icon",
                     )
                 }
             )

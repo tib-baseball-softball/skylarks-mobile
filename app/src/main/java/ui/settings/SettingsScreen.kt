@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Edit
@@ -28,10 +27,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -44,13 +44,12 @@ import ui.nav.SkylarksNavDestination
 
 @Composable
 fun SettingsScreen(
-        vm: SettingsViewModel = viewModel(),
-        infoRoute: () -> Unit,
-        privacyRoute: () -> Unit,
-        legalRoute: () -> Unit,
+    vm: SettingsViewModel = viewModel(),
+    infoRoute: () -> Unit,
+    privacyRoute: () -> Unit,
+    legalRoute: () -> Unit,
 ) {
     val userPreferences by vm.userPreferencesFlow.collectAsStateWithLifecycle(initialValue = DEFAULT_SETTINGS)
-    val uriHandler = LocalUriHandler.current
 
     var expanded by remember { mutableStateOf(false) }
 
@@ -156,7 +155,7 @@ fun SettingsScreen(
             Column {
                 ListItem(
                     headlineContent = {
-                        ClickableText(
+                        Text(
                             text = buildAnnotatedString {
                                 withStyle(
                                     style = SpanStyle(
@@ -165,12 +164,12 @@ fun SettingsScreen(
                                         fontSize = 16.sp
                                     )
                                 ) {
-                                    append("Visit the team website")
+                                    withLink(link = LinkAnnotation.Url(url = TeamGlobals.TEAM_WEBSITE_URL)) {
+                                        append("Visit the team website")
+                                    }
                                 }
                             }
-                        ) {
-                            uriHandler.openUri(TeamGlobals.TEAM_WEBSITE_URL)
-                        }
+                        )
                     },
                     leadingContent = {
                         Icon(
@@ -186,7 +185,7 @@ fun SettingsScreen(
             Column {
                 ListItem(
                     headlineContent = {
-                        ClickableText(
+                        Text(
                             text = buildAnnotatedString {
                                 withStyle(
                                     style = SpanStyle(
@@ -195,12 +194,12 @@ fun SettingsScreen(
                                         fontSize = 16.sp
                                     )
                                 ) {
-                                    append("Contribute to this app")
+                                    withLink(link = LinkAnnotation.Url(url = TeamGlobals.PROJECT_REPO)) {
+                                        append("Contribute to this app")
+                                    }
                                 }
                             }
-                        ) {
-                            uriHandler.openUri(TeamGlobals.PROJECT_REPO)
-                        }
+                        )
                     },
                     leadingContent = {
                         Icon(
@@ -214,20 +213,23 @@ fun SettingsScreen(
         }
         item {
             ListItem(
-                headlineContent = { ClickableText(
-                    text = buildAnnotatedString {
-                        withStyle(style = SpanStyle(
-                            textDecoration = TextDecoration.Underline,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            fontSize = 16.sp
-                        )
-                        ) {
-                            append("Contact the developer")
+                headlineContent = {
+                    Text(
+                        text = buildAnnotatedString {
+                            withStyle(
+                                style = SpanStyle(
+                                    textDecoration = TextDecoration.Underline,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                    fontSize = 16.sp
+                                )
+                            ) {
+                                withLink(link = LinkAnnotation.Url(url = TeamGlobals.CONTACT_MAILTO_LINK)) {
+                                    append("Contact the developer")
+                                }
+                            }
                         }
-                    }
-                ) {
-                    uriHandler.openUri(TeamGlobals.CONTACT_MAILTO_LINK)
-                } },
+                    )
+                },
                 leadingContent = {
                     Icon(
                         Icons.Filled.Mail,

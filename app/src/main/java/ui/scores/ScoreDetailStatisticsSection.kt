@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandIn
 import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.HourglassEmpty
 import androidx.compose.material.icons.filled.Link
@@ -19,10 +18,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,8 +34,6 @@ fun ScoreDetailStatisticsSection(
     showStatisticsData: Boolean,
     game: Game,
 ) {
-    val uriHandler = LocalUriHandler.current
-
     AnimatedVisibility(
         modifier = Modifier.padding(vertical = 8.dp),
         visible = showStatisticsData,
@@ -92,22 +90,27 @@ fun ScoreDetailStatisticsSection(
             if (!game.scoresheet_url.isNullOrEmpty()) {
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 20.dp))
                 ListItem(
-                    headlineContent = { ClickableText(
-                        text = buildAnnotatedString {
-                            withStyle(style = SpanStyle(
-                                textDecoration = TextDecoration.Underline,
-                                color = MaterialTheme.colorScheme.onSurface,
-                                fontSize = 16.sp
-                            )) {
-                                append("Link to Scoresheet")
+                    headlineContent = {
+                        Text(
+                            text = buildAnnotatedString {
+                                withStyle(
+                                    style = SpanStyle(
+                                        textDecoration = TextDecoration.Underline,
+                                        color = MaterialTheme.colorScheme.onSurface,
+                                        fontSize = 16.sp
+                                    )
+                                ) {
+                                    withLink(
+                                        link = LinkAnnotation.Url(
+                                            url = game.scoresheet_url ?: ""
+                                        )
+                                    ) {
+                                        append("Link to Scoresheet")
+                                    }
+                                }
                             }
-                        }
-                    ) {
-                        if (!game.scoresheet_url.isNullOrEmpty()) {
-                            // checking two times to please the compiler
-                            uriHandler.openUri(game.scoresheet_url!!)
-                        }
-                    } },
+                        )
+                    },
                     leadingContent = {
                         Icon(
                             Icons.Filled.Link,
