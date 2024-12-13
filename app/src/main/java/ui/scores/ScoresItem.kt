@@ -66,7 +66,7 @@ fun ScoresItem(game: Game, modifier: Modifier) {
                     Spacer(modifier = Modifier.weight(1.0F))
                     Text(text = (game.away_runs ?: "").toString(), style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.Bold,
-                        color = if ((game.home_runs ?: 0) < (game.away_runs ?: 0)) MaterialTheme.colorScheme.onPrimaryContainer else Color.Gray,
+                        color = if ((game.home_runs ?: 0) < (game.away_runs ?: 0)) MaterialTheme.colorScheme.onSurfaceVariant else Color.Gray,
                         fontSize = 18.sp,
                     ), modifier = Modifier.padding(end = 6.dp))
                 }
@@ -82,7 +82,7 @@ fun ScoresItem(game: Game, modifier: Modifier) {
                     Spacer(modifier = Modifier.weight(1.0F))
                     Text(text = (game.home_runs ?: "").toString(), style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.Bold,
-                        color = if ((game.home_runs ?: 0) > (game.away_runs ?: 0)) MaterialTheme.colorScheme.onPrimaryContainer else Color.Gray,
+                        color = if ((game.home_runs ?: 0) > (game.away_runs ?: 0)) MaterialTheme.colorScheme.onSurfaceVariant else Color.Gray,
                         fontSize = 18.sp,
                     ), modifier = Modifier.padding(end = 6.dp))
                 }
