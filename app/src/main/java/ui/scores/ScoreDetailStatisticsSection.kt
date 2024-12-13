@@ -14,6 +14,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,7 +45,7 @@ fun ScoreDetailStatisticsSection(
             modifier = Modifier
                 .padding(cardPadding),
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
+                containerColor = MaterialTheme.colorScheme.surfaceContainerLow
             ),
             elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
         ) {
@@ -63,7 +64,8 @@ fun ScoreDetailStatisticsSection(
                         Icons.Filled.TableChart,
                         contentDescription = "league icon",
                     )
-                }
+                },
+                colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
             )
             HorizontalDivider(modifier = Modifier.padding(horizontal = 20.dp))
             ListItem(
@@ -74,7 +76,8 @@ fun ScoreDetailStatisticsSection(
                         Icons.Filled.Tag,
                         contentDescription = "ID icon",
                     )
-                }
+                },
+                colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
             )
             HorizontalDivider(modifier = Modifier.padding(horizontal = 20.dp))
             ListItem(
@@ -85,7 +88,8 @@ fun ScoreDetailStatisticsSection(
                         Icons.Filled.HourglassEmpty,
                         contentDescription = "Localized description",
                     )
-                }
+                },
+                colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
             )
             if (!game.scoresheet_url.isNullOrEmpty()) {
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 20.dp))
@@ -116,7 +120,8 @@ fun ScoreDetailStatisticsSection(
                             Icons.Filled.Link,
                             contentDescription = "Localized description",
                         )
-                    }
+                    },
+                    colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                 )
             } else {
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 20.dp))
@@ -127,7 +132,8 @@ fun ScoreDetailStatisticsSection(
                             Icons.Filled.Link,
                             contentDescription = "Localized description",
                         )
-                    }
+                    },
+                    colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                 )
             }
         }

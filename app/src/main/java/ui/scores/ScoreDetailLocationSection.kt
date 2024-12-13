@@ -14,6 +14,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -63,7 +64,8 @@ fun ScoreDetailLocationSection(
                         Icons.Filled.Stadium,
                         contentDescription = "ballpark icon",
                     )
-                }
+                },
+                colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
             )
             HorizontalDivider(modifier = Modifier.padding(horizontal = 20.dp))
             ListItem(
@@ -75,6 +77,7 @@ fun ScoreDetailLocationSection(
                         contentDescription = "address icon",
                     )
                 },
+                colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
             )
             HorizontalDivider(modifier = Modifier.padding(horizontal = 20.dp))
             ListItem(
@@ -85,7 +88,8 @@ fun ScoreDetailLocationSection(
                         Icons.Filled.LocationCity,
                         contentDescription = "city icon",
                     )
-                }
+                },
+                colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
             )
             HorizontalDivider(modifier = Modifier.padding(horizontal = 20.dp))
             ListItem(
@@ -109,7 +113,8 @@ fun ScoreDetailLocationSection(
                         Icons.Filled.Map,
                         contentDescription = "Map icon",
                     )
-                }
+                },
+                colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
             )
         }
     }

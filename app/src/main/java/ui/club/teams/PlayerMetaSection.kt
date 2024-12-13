@@ -7,10 +7,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Event
 import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material.icons.outlined.Tag
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,7 +32,10 @@ fun PlayerMetaSection(player: Player) {
         ElevatedCard(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 1.dp)
+                .padding(bottom = 1.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+            ),
         ) {
             Column {
                 ListItem(
@@ -41,7 +46,8 @@ fun PlayerMetaSection(player: Player) {
                             imageVector = Icons.Outlined.Groups,
                             contentDescription = null,
                         )
-                    }
+                    },
+                    colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                 )
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
                 ListItem(
@@ -52,7 +58,8 @@ fun PlayerMetaSection(player: Player) {
                             imageVector = Icons.Outlined.Tag,
                             contentDescription = null,
                         )
-                    }
+                    },
+                    colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                 )
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
                 ListItem(
@@ -63,7 +70,8 @@ fun PlayerMetaSection(player: Player) {
                             imageVector = Icons.Outlined.Event,
                             contentDescription = null,
                         )
-                    }
+                    },
+                    colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                 )
             }
         }

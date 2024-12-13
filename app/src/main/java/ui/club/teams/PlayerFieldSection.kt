@@ -10,6 +10,7 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,7 +41,8 @@ fun PlayerFieldSection(player: Player) {
                             imageVector = Icons.Outlined.Hexagon,
                             contentDescription = null,
                         )
-                    }
+                    },
+                    colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                 )
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
                 ListItem(
@@ -51,7 +53,8 @@ fun PlayerFieldSection(player: Player) {
                             imageVector = Icons.Outlined.SportsBaseball,
                             contentDescription = null,
                         )
-                    }
+                    },
+                    colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                 )
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
                 ListItem(
@@ -62,7 +65,8 @@ fun PlayerFieldSection(player: Player) {
                             imageVector = Icons.Outlined.SportsBaseball,
                             contentDescription = null,
                         )
-                    }
+                    },
+                    colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                 )
             }
         }

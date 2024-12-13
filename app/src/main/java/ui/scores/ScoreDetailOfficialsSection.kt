@@ -13,6 +13,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,7 +37,7 @@ fun ScoreDetailOfficialsSection(
             modifier = Modifier
                 .padding(cardPadding),
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
+                containerColor = MaterialTheme.colorScheme.surfaceContainerLow
             ),
             elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
         ) {
@@ -57,7 +58,8 @@ fun ScoreDetailOfficialsSection(
                                 Icons.Filled.Sports,
                                 contentDescription = "Localized description",
                             )
-                        }
+                        },
+                        colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                     )
                 }
             } else {
@@ -68,7 +70,8 @@ fun ScoreDetailOfficialsSection(
                             Icons.Filled.PersonOff,
                             contentDescription = "no person found icon",
                         )
-                    }
+                    },
+                    colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                 )
             }
             HorizontalDivider(modifier = Modifier.padding(horizontal = 20.dp))
@@ -89,7 +92,8 @@ fun ScoreDetailOfficialsSection(
                                 Icons.Filled.Create,
                                 contentDescription = "scorer icon",
                             )
-                        }
+                        },
+                        colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                     )
                 }
             } else {
@@ -100,7 +104,8 @@ fun ScoreDetailOfficialsSection(
                             Icons.Filled.PersonOff,
                             contentDescription = "no person found icon",
                         )
-                    }
+                    },
+                    colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                 )
             }
         }
