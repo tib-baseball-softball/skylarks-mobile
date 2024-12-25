@@ -7,15 +7,12 @@ import io.ktor.http.URLBuilder
 import io.ktor.http.appendPathSegments
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 
 abstract class AbstractAPIRequest {
     abstract val API_URL: String
     abstract val authKey: String
 
-    @OptIn(ExperimentalSerializationApi::class)
     protected val jsonBuilder = Json {
         ignoreUnknownKeys = true
         explicitNulls = false
@@ -35,23 +32,22 @@ abstract class AbstractAPIRequest {
     ): T? {
         var result: T? = null
         withContext(Dispatchers.IO) {
-            val response = APIClient.client.get(API_URL) {
-                url {
-                    appendPathSegments(resource)
-                    queryParameters.forEach {
-                        parameters.append(it.first, it.second)
-                    }
-                    addAuthorizationParameters()
-                }
-                addRequestHeaders()
-                println(url)
-            }
             try {
+                val response = APIClient.client.get(API_URL) {
+                    url {
+                        appendPathSegments(resource)
+                        queryParameters.forEach {
+                            parameters.append(it.first, it.second)
+                        }
+                        addAuthorizationParameters()
+                    }
+                    addRequestHeaders()
+                    println(url)
+                }
                 result = jsonBuilder.decodeFromString<T>(response.body())
-            } catch (e: SerializationException) {
-                print(e.message)
-            } catch (e: IllegalArgumentException) {
-                print(e.message)
+            } catch (e: Exception) {
+                println(e.message)
+                println(e.stackTrace)
             }
         }
         return result
