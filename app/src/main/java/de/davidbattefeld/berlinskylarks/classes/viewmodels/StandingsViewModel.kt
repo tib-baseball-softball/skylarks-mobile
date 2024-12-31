@@ -4,9 +4,9 @@ import android.app.Application
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
-import de.davidbattefeld.berlinskylarks.classes.api.BSMAPIRequest
-import de.davidbattefeld.berlinskylarks.classes.api.LeagueGroupsAPIRequest
-import de.davidbattefeld.berlinskylarks.classes.api.TablesAPIRequest
+import de.davidbattefeld.berlinskylarks.classes.api.BSMAPIClient
+import de.davidbattefeld.berlinskylarks.classes.api.LeagueGroupsAPIClient
+import de.davidbattefeld.berlinskylarks.classes.api.TablesAPIClient
 import de.davidbattefeld.berlinskylarks.enums.ViewState
 import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
 import de.davidbattefeld.berlinskylarks.testdata.testTable
@@ -18,16 +18,16 @@ class StandingsViewModel(application: Application) : GenericViewModel(applicatio
     var leagueGroups = mutableStateListOf<LeagueGroup>()
     var table = mutableStateOf(testTable)
 
-    private val tablesRequest = TablesAPIRequest()
-    private val leagueGroupsRequest = LeagueGroupsAPIRequest()
+    private val tablesAPIClient = TablesAPIClient()
+    private val leagueGroupsAPIClient = LeagueGroupsAPIClient()
 
     override fun load() {
         viewState = ViewState.Loading
         leagueGroups.clear()
 
         viewModelScope.launch {
-            val season = userPreferencesFlow.firstOrNull()?.season ?: BSMAPIRequest.DEFAULT_SEASON
-            leagueGroups.addAll(leagueGroupsRequest.loadLeagueGroupsForClub(season))
+            val season = userPreferencesFlow.firstOrNull()?.season ?: BSMAPIClient.DEFAULT_SEASON
+            leagueGroups.addAll(leagueGroupsAPIClient.loadLeagueGroupsForClub(season))
             viewState = if (leagueGroups.isNotEmpty()) {
                 ViewState.Found
             } else {
@@ -40,7 +40,7 @@ class StandingsViewModel(application: Application) : GenericViewModel(applicatio
         viewState = ViewState.Loading
 
         viewModelScope.launch {
-            table.value = tablesRequest.loadSingleTable(id)
+            table.value = tablesAPIClient.loadSingleTable(id)
 
             viewState = if (table.value.league_id == BOGUS_ID) ViewState.NoResults else ViewState.Found
         }

@@ -9,9 +9,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import de.davidbattefeld.berlinskylarks.classes.UserCalendar
-import de.davidbattefeld.berlinskylarks.classes.api.BSMAPIRequest
-import de.davidbattefeld.berlinskylarks.classes.api.LeagueGroupsAPIRequest
-import de.davidbattefeld.berlinskylarks.classes.api.MatchAPIRequest
+import de.davidbattefeld.berlinskylarks.classes.api.BSMAPIClient
+import de.davidbattefeld.berlinskylarks.classes.api.LeagueGroupsAPIClient
+import de.davidbattefeld.berlinskylarks.classes.api.MatchAPIClient
 import de.davidbattefeld.berlinskylarks.classes.service.CalendarService
 import de.davidbattefeld.berlinskylarks.enums.ViewState
 import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
@@ -30,18 +30,18 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
 
     var tabState by mutableIntStateOf(1)
 
-    private val matchAPIRequest = MatchAPIRequest()
-    private val leagueGroupsAPIRequest = LeagueGroupsAPIRequest()
+    private val matchAPIClient = MatchAPIClient()
+    private val leagueGroupsAPIClient = LeagueGroupsAPIClient()
     val calendarService = CalendarService()
 
     override fun load() {
         leagueGroups.clear()
 
         viewModelScope.launch {
-            val season = userPreferencesFlow.firstOrNull()?.season ?: BSMAPIRequest.DEFAULT_SEASON
+            val season = userPreferencesFlow.firstOrNull()?.season ?: BSMAPIClient.DEFAULT_SEASON
             viewState = ViewState.Loading
 
-            leagueGroups.addAll(leagueGroupsAPIRequest.loadLeagueGroupsForClub(season))
+            leagueGroups.addAll(leagueGroupsAPIClient.loadLeagueGroupsForClub(season))
             loadGames()
 
             viewState = if (games.isNotEmpty()) ViewState.Found else ViewState.NoResults
@@ -56,7 +56,7 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
     }
 
     private suspend fun loadGames() {
-        val season = userPreferencesFlow.firstOrNull()?.season ?: BSMAPIRequest.DEFAULT_SEASON
+        val season = userPreferencesFlow.firstOrNull()?.season ?: BSMAPIClient.DEFAULT_SEASON
 
         games.clear()
         skylarksGames.clear()
@@ -72,10 +72,10 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
         }
 
         if (filteredLeagueGroup.id == BOGUS_ID) {
-            games.addAll(matchAPIRequest.loadGamesForClub(season, gamedays))
+            games.addAll(matchAPIClient.loadGamesForClub(season, gamedays))
         } else {
             games.addAll(
-                matchAPIRequest.loadAllGames(
+                matchAPIClient.loadAllGames(
                     season = season,
                     gamedays = gamedays,
                     leagues = filteredLeagueGroup.id

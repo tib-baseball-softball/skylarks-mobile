@@ -6,7 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.intPreferencesKey
-import de.davidbattefeld.berlinskylarks.classes.api.BSMAPIRequest
+import de.davidbattefeld.berlinskylarks.classes.api.BSMAPIClient
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
@@ -18,7 +18,7 @@ data class UserPreferences(
 )
 
 val DEFAULT_SETTINGS = UserPreferences(
-    season = BSMAPIRequest.DEFAULT_SEASON
+    season = BSMAPIClient.DEFAULT_SEASON
 )
 
 class UserPreferencesRepository(private val dataStore: DataStore<Preferences>) {
@@ -51,7 +51,7 @@ class UserPreferencesRepository(private val dataStore: DataStore<Preferences>) {
         mapUserPreferences(dataStore.data.first().toPreferences())
 
     private fun mapUserPreferences(preferences: Preferences): UserPreferences {
-        val season = preferences[PreferencesKeys.SEASON] ?: BSMAPIRequest.DEFAULT_SEASON
+        val season = preferences[PreferencesKeys.SEASON] ?: BSMAPIClient.DEFAULT_SEASON
 
         return UserPreferences(season)
     }

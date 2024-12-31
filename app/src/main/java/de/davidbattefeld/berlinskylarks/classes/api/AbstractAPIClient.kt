@@ -9,18 +9,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
-abstract class AbstractAPIRequest {
-    abstract val API_URL: String
-    abstract val authKey: String
+abstract class AbstractAPIClient {
+    protected abstract val API_URL: String
+    protected abstract val authKey: String
 
     protected val jsonBuilder = Json {
         ignoreUnknownKeys = true
         explicitNulls = false
     }
 
-    abstract fun URLBuilder.addAuthorizationParameters()
+    protected abstract fun URLBuilder.addAuthorizationParameters()
 
-    abstract fun HttpRequestBuilder.addRequestHeaders()
+    protected abstract fun HttpRequestBuilder.addRequestHeaders()
 
     /**
      * Generic API call method. queryParameters is not a Map because duplicate query parameters

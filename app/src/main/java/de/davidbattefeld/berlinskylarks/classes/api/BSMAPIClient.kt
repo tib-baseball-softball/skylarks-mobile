@@ -5,7 +5,7 @@ import de.davidbattefeld.berlinskylarks.global.BSM_API_KEY
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.http.URLBuilder
 
-abstract class BSMAPIRequest: AbstractAPIRequest() {
+abstract class BSMAPIClient: AbstractAPIClient() {
     override val API_URL = "https://bsm.baseball-softball.de"
     override val authKey = BSM_API_KEY
     companion object {

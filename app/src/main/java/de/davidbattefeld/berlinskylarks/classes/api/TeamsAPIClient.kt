@@ -3,7 +3,7 @@ package de.davidbattefeld.berlinskylarks.classes.api
 import model.Player
 import model.SkylarksTeam
 
-class TeamsAPIRequest: SkylarksAPIRequest() {
+class TeamsAPIClient: SkylarksAPIClient() {
     suspend fun loadAllTeams(): List<SkylarksTeam> {
         return apiCall<List<SkylarksTeam>>(
             resource = "api/v2/teams",

@@ -5,7 +5,7 @@ import model.Game
 /**
  * Gets games limited to our own club.
  */
-class MatchAPIRequest: BSMAPIRequest() {
+class MatchAPIClient: BSMAPIClient() {
     suspend fun loadGamesForClub(
         season: Int?,
         gamedays: String?,

@@ -6,7 +6,7 @@ import io.ktor.client.request.header
 import io.ktor.http.URLBuilder
 import io.ktor.http.headers
 
-abstract class SkylarksAPIRequest: AbstractAPIRequest() {
+abstract class SkylarksAPIClient: AbstractAPIClient() {
     override val API_URL = "https://tib-baseball.de"
     override val authKey = AUTH_HEADER
 
