@@ -9,14 +9,14 @@ import androidx.lifecycle.viewModelScope
 import de.davidbattefeld.berlinskylarks.classes.api.TeamsAPIClient
 import de.davidbattefeld.berlinskylarks.enums.ViewState
 import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
-import kotlinx.coroutines.launch
 import de.davidbattefeld.berlinskylarks.model.Player
+import kotlinx.coroutines.launch
 
-class PlayersViewModel(application: Application): GenericViewModel(application) {
+class PlayersViewModel(application: Application) : GenericViewModel(application) {
     var players = mutableStateListOf<Player>()
     var lastLoadedTeam by mutableIntStateOf(BOGUS_ID)
 
-    val client = TeamsAPIClient()
+    private val client = TeamsAPIClient()
 
     fun loadPlayers(teamID: Int) {
         players.clear()
