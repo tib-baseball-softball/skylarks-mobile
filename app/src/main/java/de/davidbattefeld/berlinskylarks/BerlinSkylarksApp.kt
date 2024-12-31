@@ -36,11 +36,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import ui.nav.NavGraph
-import ui.nav.NavItemCollection
-import ui.nav.NavigationType
-import ui.nav.SkylarksNavDestination
-import ui.nav.SkylarksTopAppBar
+import de.davidbattefeld.berlinskylarks.ui.nav.NavGraph
+import de.davidbattefeld.berlinskylarks.ui.nav.NavItemCollection
+import de.davidbattefeld.berlinskylarks.ui.nav.NavigationType
+import de.davidbattefeld.berlinskylarks.ui.nav.SkylarksNavDestination
+import de.davidbattefeld.berlinskylarks.ui.nav.SkylarksTopAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

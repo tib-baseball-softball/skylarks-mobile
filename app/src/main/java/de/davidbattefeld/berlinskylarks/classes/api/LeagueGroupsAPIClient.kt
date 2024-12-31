@@ -1,6 +1,6 @@
 package de.davidbattefeld.berlinskylarks.classes.api
 
-import model.LeagueGroup
+import de.davidbattefeld.berlinskylarks.model.LeagueGroup
 
 class LeagueGroupsAPIClient: BSMAPIClient() {
     suspend fun loadLeagueGroupsForClub(season: Int?): List<LeagueGroup> {

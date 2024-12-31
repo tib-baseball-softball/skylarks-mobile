@@ -18,8 +18,8 @@ import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
 import de.davidbattefeld.berlinskylarks.testdata.testLeagueGroup
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import model.Game
-import model.LeagueGroup
+import de.davidbattefeld.berlinskylarks.model.Game
+import de.davidbattefeld.berlinskylarks.model.LeagueGroup
 
 class ScoresViewModel(application: Application) : GenericViewModel(application) {
     var games = mutableStateListOf<Game>()

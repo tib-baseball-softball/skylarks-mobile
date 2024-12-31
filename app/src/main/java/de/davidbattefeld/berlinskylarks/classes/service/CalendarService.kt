@@ -4,7 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.provider.CalendarContract
 import de.davidbattefeld.berlinskylarks.classes.UserCalendar
-import model.Game
+import de.davidbattefeld.berlinskylarks.model.Game
 import java.time.ZoneId
 
 /**

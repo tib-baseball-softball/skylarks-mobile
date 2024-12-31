@@ -1,6 +1,6 @@
 package de.davidbattefeld.berlinskylarks.classes.api
 
-import model.Game
+import de.davidbattefeld.berlinskylarks.model.Game
 
 /**
  * Gets games limited to our own club.

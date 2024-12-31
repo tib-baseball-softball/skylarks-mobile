@@ -10,7 +10,7 @@ import de.davidbattefeld.berlinskylarks.classes.api.TeamsAPIClient
 import de.davidbattefeld.berlinskylarks.enums.ViewState
 import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
 import kotlinx.coroutines.launch
-import model.Player
+import de.davidbattefeld.berlinskylarks.model.Player
 
 class PlayersViewModel(application: Application): GenericViewModel(application) {
     var players = mutableStateListOf<Player>()

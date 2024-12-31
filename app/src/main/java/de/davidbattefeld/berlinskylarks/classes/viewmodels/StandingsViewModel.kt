@@ -12,7 +12,7 @@ import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
 import de.davidbattefeld.berlinskylarks.testdata.testTable
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import model.LeagueGroup
+import de.davidbattefeld.berlinskylarks.model.LeagueGroup
 
 class StandingsViewModel(application: Application) : GenericViewModel(application) {
     var leagueGroups = mutableStateListOf<LeagueGroup>()

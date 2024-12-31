@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import de.davidbattefeld.berlinskylarks.classes.api.TeamsAPIClient
 import de.davidbattefeld.berlinskylarks.enums.ViewState
 import kotlinx.coroutines.launch
-import model.SkylarksTeam
+import de.davidbattefeld.berlinskylarks.model.SkylarksTeam
 
 class TeamsViewModel(application: Application): GenericViewModel(application) {
     var teams = mutableStateListOf<SkylarksTeam>()

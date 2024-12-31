@@ -1,7 +1,7 @@
 package de.davidbattefeld.berlinskylarks.classes.api
 
-import model.Player
-import model.SkylarksTeam
+import de.davidbattefeld.berlinskylarks.model.Player
+import de.davidbattefeld.berlinskylarks.model.SkylarksTeam
 
 class TeamsAPIClient: SkylarksAPIClient() {
     suspend fun loadAllTeams(): List<SkylarksTeam> {

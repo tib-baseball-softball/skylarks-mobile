@@ -10,7 +10,7 @@ import de.davidbattefeld.berlinskylarks.classes.data.UserPreferencesRepository
 import de.davidbattefeld.berlinskylarks.classes.data.dataStore
 import de.davidbattefeld.berlinskylarks.enums.ViewState
 import kotlinx.coroutines.launch
-import model.JSONDataObject
+import de.davidbattefeld.berlinskylarks.model.JSONDataObject
 
 abstract class GenericViewModel(application: Application) : AndroidViewModel(application), ViewModelInterface {
     // this should use DI instead

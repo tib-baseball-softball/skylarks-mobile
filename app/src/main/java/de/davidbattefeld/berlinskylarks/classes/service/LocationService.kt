@@ -1,7 +1,7 @@
 package de.davidbattefeld.berlinskylarks.classes.service
 
 import android.net.Uri
-import model.Game
+import de.davidbattefeld.berlinskylarks.model.Game
 
 class LocationService {
     companion object {
