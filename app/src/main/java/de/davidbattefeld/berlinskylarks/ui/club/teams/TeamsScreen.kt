@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -43,11 +44,13 @@ fun TeamsScreen(
                         ContentNotFoundView("teams")
                     }
                 }
+
                 ViewState.Loading -> {
                     item {
                         LoadingView()
                     }
                 }
+
                 ViewState.Found -> {
                     itemsIndexed(vm.teams) { index, team ->
                         Column {
@@ -63,6 +66,12 @@ fun TeamsScreen(
                                 HorizontalDivider(modifier = Modifier.padding(horizontal = 8.dp))
                             }
                         }
+                    }
+                }
+
+                ViewState.Error -> {
+                    item {
+                        Text("An error occured loading data.")
                     }
                 }
             }

@@ -48,7 +48,8 @@ fun ScoresScreen(
     detailRoute: (Int) -> Unit,
     setFabOnClick: (() -> Unit) -> Unit,
 ) {
-    val vm: ScoresViewModel = viewModel(viewModelStoreOwner = LocalContext.current as ComponentActivity)
+    val vm: ScoresViewModel =
+        viewModel(viewModelStoreOwner = LocalContext.current as ComponentActivity)
     var showExternalGames by rememberSaveable { mutableStateOf(true) }
     val tabTitles = listOf("Previous", "Current", "Next", "Any")
 
@@ -124,11 +125,13 @@ fun ScoresScreen(
                     ContentNotFoundView("games")
                 }
             }
+
             ViewState.Loading -> {
                 item(span = { GridItemSpan(maxCurrentLineSpan) }) {
                     LoadingView()
                 }
             }
+
             ViewState.Found -> {
                 items(if (showExternalGames) vm.games else vm.skylarksGames) { game ->
                     ScoresItem(
@@ -138,6 +141,12 @@ fun ScoresScreen(
                                 detailRoute(game.id)
                             }
                     )
+                }
+            }
+
+            ViewState.Error -> {
+                item {
+                    Text("An error occured loading data.")
                 }
             }
         }
@@ -164,6 +173,6 @@ fun ScoresScreen(
 @Composable
 fun ScoresScreenPreview() {
     BerlinSkylarksTheme {
-       // ScoresScreen()
+        // ScoresScreen()
     }
 }

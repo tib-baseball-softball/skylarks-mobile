@@ -5,4 +5,5 @@ enum class ViewState {
     Loading,
     Found,
     NoResults,
+    Error,
 }

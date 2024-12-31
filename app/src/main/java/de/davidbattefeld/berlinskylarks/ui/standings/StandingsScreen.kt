@@ -73,11 +73,13 @@ fun StandingsScreen(
                             ContentNotFoundView("tables")
                         }
                     }
+
                     ViewState.Loading -> {
                         item {
                             LoadingView()
                         }
                     }
+
                     ViewState.Found -> {
                         itemsIndexed(vm.leagueGroups) { index, league ->
                             Column {
@@ -93,6 +95,12 @@ fun StandingsScreen(
                                     HorizontalDivider(modifier = Modifier.padding(horizontal = 8.dp))
                                 }
                             }
+                        }
+                    }
+
+                    ViewState.Error -> {
+                        item {
+                            Text("An error occured loading data.")
                         }
                     }
                 }
