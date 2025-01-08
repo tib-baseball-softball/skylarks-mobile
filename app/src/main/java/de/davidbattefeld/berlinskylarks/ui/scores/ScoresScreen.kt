@@ -12,14 +12,13 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -37,7 +36,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.davidbattefeld.berlinskylarks.classes.viewmodels.ScoresViewModel
 import de.davidbattefeld.berlinskylarks.enums.ViewState
-import de.davidbattefeld.berlinskylarks.global.cardPadding
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
 import de.davidbattefeld.berlinskylarks.ui.utility.LoadingView
@@ -54,19 +52,23 @@ fun ScoresScreen(
     val tabTitles = listOf("Previous", "Current", "Next", "Any")
 
     LazyVerticalGrid(
-        modifier = modifier,
+        modifier = modifier.padding(horizontal = 6.dp),
         columns = GridCells.Adaptive(minSize = 350.dp)
     ) {
         item(span = { GridItemSpan(maxCurrentLineSpan) }) {
-            TabRow(selectedTabIndex = vm.tabState) {
+            SingleChoiceSegmentedButtonRow(modifier = Modifier.padding(horizontal = 10.dp)) {
                 tabTitles.forEachIndexed { index, title ->
-                    Tab(
+                    SegmentedButton(
+                        shape = SegmentedButtonDefaults.itemShape(
+                            index = index,
+                            count = tabTitles.size
+                        ),
                         selected = vm.tabState == index,
                         onClick = {
                             vm.tabState = index
                             vm.load()
                         },
-                        text = {
+                        label = {
                             Text(
                                 text = title,
                                 maxLines = 2,
@@ -78,42 +80,34 @@ fun ScoresScreen(
             }
         }
         item(span = { GridItemSpan(maxCurrentLineSpan) }) {
-            Card(
+            Row(
                 modifier = Modifier
-                    .padding(cardPadding),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.tertiaryContainer
-                )
+                    .padding(14.dp),
             ) {
-                Row(
+                Column(
                     modifier = Modifier
-                        .padding(10.dp),
+                        .fillMaxWidth(0.8F)
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth(0.8F)
-                    ) {
-                        Text(
-                            text = "Show External Games",
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                        Text(
-                            text = "Controls whether the list is filtered by just Skylarks games.",
-                            style = MaterialTheme.typography.labelSmall,
-                        )
-                    }
-                    Spacer(modifier = Modifier.weight(1.0F))
-                    Switch(
-                        modifier = Modifier.semantics {
-                            contentDescription = "Show external Games"
-                        },
-                        checked = showExternalGames,
-                        onCheckedChange = { showExternalGames = it },
-                        colors = SwitchDefaults.colors(
-
-                        )
+                    Text(
+                        text = "Show External Games",
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    Text(
+                        text = "Controls whether the list is filtered by just Skylarks games.",
+                        style = MaterialTheme.typography.labelSmall,
                     )
                 }
+                Spacer(modifier = Modifier.weight(1.0F))
+                Switch(
+                    modifier = Modifier.semantics {
+                        contentDescription = "Show external Games"
+                    },
+                    checked = showExternalGames,
+                    onCheckedChange = { showExternalGames = it },
+                    colors = SwitchDefaults.colors(
+
+                    )
+                )
             }
         }
         item(span = { GridItemSpan(maxCurrentLineSpan) }) {
