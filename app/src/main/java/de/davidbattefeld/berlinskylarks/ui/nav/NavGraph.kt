@@ -1,8 +1,19 @@
 package de.davidbattefeld.berlinskylarks.ui.nav
 
+import androidx.compose.animation.core.EaseIn
+import androidx.compose.animation.core.EaseOut
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.VisibilityThreshold
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.IntOffset
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -31,7 +42,32 @@ fun NavGraph(
     Box(modifier = modifier) {
         NavHost(
             navController = navController,
-            startDestination = SkylarksNavDestination.Scores.route // change back to Home later
+            startDestination = SkylarksNavDestination.Scores.route, // change back to Home later
+            enterTransition = {
+                slideInVertically(
+                    animationSpec =
+                        spring(
+                            dampingRatio = Spring.DampingRatioNoBouncy,
+                            stiffness = Spring.StiffnessLow,
+                            visibilityThreshold = IntOffset.VisibilityThreshold
+                        ),
+                    initialOffsetY = { -60 }
+                ) +
+                        fadeIn(
+                            initialAlpha = 0.8f,
+                            animationSpec = tween(durationMillis = 300, easing = EaseIn)
+                        )
+            },
+            exitTransition = {
+                slideOutVertically(
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioNoBouncy,
+                        stiffness = Spring.StiffnessLow,
+                        visibilityThreshold = IntOffset.VisibilityThreshold
+                    ),
+                    targetOffsetY = { -60 }
+                ) + fadeOut(animationSpec = tween(durationMillis = 300, easing = EaseOut))
+            }
         ) {
             composable(route = SkylarksNavDestination.Home.route) {
                 HomeScreen()
@@ -67,7 +103,7 @@ fun NavGraph(
                 val id = it.arguments?.getInt(SkylarksNavDestination.StandingsDetail.tableArg)
                 StandingsDetailScreen(id ?: BOGUS_ID)
             }
-            
+
             composable(route = SkylarksNavDestination.Club.route) {
                 ClubScreen(
                     teamsRoute = { navController.navigateSingleTopTo(SkylarksNavDestination.Teams.route) }
@@ -93,7 +129,7 @@ fun NavGraph(
                     }
                 )
             }
-            
+
             composable(
                 route = SkylarksNavDestination.PlayerDetail.routeWithArgs,
                 arguments = SkylarksNavDestination.PlayerDetail.arguments,

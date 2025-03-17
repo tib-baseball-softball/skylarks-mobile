@@ -92,7 +92,7 @@ fun NavSidebarItem(
         )
     }
     val selected = currentDestination?.hierarchy?.any { current ->
-        current.route?.contains(screen.route, ignoreCase = true) ?: false
+        current.route?.contains(screen.route, ignoreCase = true) == true
     } == true
 
     when (navigationType) {
@@ -138,7 +138,7 @@ fun RowScope.NavBarItem(
         )
     }
     val selected = currentDestination?.hierarchy?.any { current ->
-        current.route?.contains(screen.route, ignoreCase = true) ?: false
+        current.route?.contains(screen.route, ignoreCase = true) == true
     } == true
 
     NavigationBarItem(
