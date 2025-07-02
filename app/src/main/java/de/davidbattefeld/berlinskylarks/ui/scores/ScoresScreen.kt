@@ -1,7 +1,6 @@
 package de.davidbattefeld.berlinskylarks.ui.scores
 
 import android.content.res.Configuration
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,6 +32,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.davidbattefeld.berlinskylarks.classes.viewmodels.ScoresViewModel
 import de.davidbattefeld.berlinskylarks.enums.ViewState
@@ -47,7 +47,7 @@ fun ScoresScreen(
     setFabOnClick: (() -> Unit) -> Unit,
 ) {
     val vm: ScoresViewModel =
-        viewModel(viewModelStoreOwner = LocalContext.current as ComponentActivity)
+        viewModel(viewModelStoreOwner = LocalContext.current as ViewModelStoreOwner)
     var showExternalGames by rememberSaveable { mutableStateOf(true) }
     val tabTitles = listOf("Previous", "Current", "Next", "Any")
 

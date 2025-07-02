@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationRail
@@ -112,12 +112,10 @@ fun BerlinSkylarksApp(
                         topBar = { SkylarksTopAppBar(currentRoute, scrollBehavior) },
                         floatingActionButton = {
                             when (currentRoute.value?.destination?.route) {
-                                SkylarksNavDestination.Scores.route -> ExtendedFloatingActionButton(
+                                SkylarksNavDestination.Scores.route -> FloatingActionButton(
                                     onClick = { fabOnClick?.invoke() },
                                     containerColor = MaterialTheme.colorScheme.primary,
-                                    expanded = true,
-                                    icon = { Icon(Icons.Filled.Refresh, "load new") },
-                                    text = { Text(text = "Load Games") },
+                                    content = { Icon(Icons.Filled.Refresh, "refresh games list") },
                                 )
                             }
                         },
@@ -173,12 +171,10 @@ fun BerlinSkylarksApp(
                         topBar = { SkylarksTopAppBar(currentRoute, scrollBehavior) },
                         floatingActionButton = {
                             when (currentRoute.value?.destination?.route) {
-                                SkylarksNavDestination.Scores.route -> ExtendedFloatingActionButton(
+                                SkylarksNavDestination.Scores.route -> FloatingActionButton(
                                     onClick = { fabOnClick?.invoke() },
                                     containerColor = MaterialTheme.colorScheme.primary,
-                                    expanded = true,
-                                    icon = { Icon(Icons.Filled.Refresh, "load new") },
-                                    text = { Text(text = "Load Games") },
+                                    content = { Icon(Icons.Filled.Refresh, "refresh games list") },
                                 )
                             }
                         },
@@ -199,12 +195,10 @@ fun BerlinSkylarksApp(
                     topBar = { SkylarksTopAppBar(currentRoute, scrollBehavior) },
                     floatingActionButton = {
                         when (currentRoute.value?.destination?.route) {
-                            SkylarksNavDestination.Scores.route -> ExtendedFloatingActionButton(
+                            SkylarksNavDestination.Scores.route -> FloatingActionButton(
                                 onClick = { fabOnClick?.invoke() },
                                 containerColor = MaterialTheme.colorScheme.primary,
-                                expanded = true,
-                                icon = { Icon(Icons.Filled.Refresh, "load new") },
-                                text = { Text(text = "Load Games") },
+                                content = { Icon(Icons.Filled.Refresh, "refresh games list") },
                             )
                         }
                     },
