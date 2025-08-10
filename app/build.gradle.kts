@@ -1,18 +1,18 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    kotlin("plugin.serialization") version "2.1.10"
-    id("org.jetbrains.kotlin.plugin.compose")
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.kotlinxSerialization)
 }
 
 android {
     namespace = "de.davidbattefeld.berlinskylarks"
-    compileSdk = 36
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "de.davidbattefeld.berlinskylarks"
-        minSdk = 29
-        targetSdk = 36
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 9
         versionName = "0.8.0"
 
@@ -54,31 +54,34 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.16.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.1")
-    implementation("androidx.activity:activity-compose:1.10.1")
-    implementation("androidx.compose.ui:ui:1.8.3")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.8.3")
-    implementation("androidx.compose.material3:material3-android:1.3.2")
-    implementation("androidx.compose.material3:material3-window-size-class:1.3.2")
-    implementation("androidx.compose.material:material-icons-extended:1.7.8")
-    implementation("androidx.navigation:navigation-compose:2.9.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
-    implementation("androidx.datastore:datastore-preferences:1.1.7")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.9.1")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.8.3")
-    debugImplementation("androidx.compose.ui:ui-tooling:1.8.3")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.8.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
-    implementation("io.ktor:ktor-client-core:3.1.3")
-    implementation("io.ktor:ktor-client-cio:3.1.3")
-    implementation("io.coil-kt:coil:2.7.0")
-    implementation("io.coil-kt:coil-compose:2.7.0")
-    implementation("org.jetbrains:markdown:0.7.3")
-    implementation("com.google.accompanist:accompanist-permissions:0.37.3")
-    implementation("androidx.compose.material3:material3-window-size-class")
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.tooling.preview)
+    implementation(libs.compose.material3.android)
+    implementation(libs.compose.material3.window.size)
+    implementation(libs.compose.material.icons.extended)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.coroutines.android)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+
+    testImplementation(libs.junit)
+
+    androidTestImplementation(libs.androidx.testExt.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.compose.ui.test.junit4)
+
+    debugImplementation(libs.compose.ui.tooling)
+    debugImplementation(libs.compose.ui.test.manifest)
+
+    implementation(libs.serialization.json)
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.cio)
+    implementation(libs.coil)
+    implementation(libs.coil.compose)
+    implementation(libs.jetbrains.markdown)
+    implementation(libs.accompanist.permissions)
 }
