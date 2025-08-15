@@ -1,13 +1,13 @@
 package de.davidbattefeld.berlinskylarks.classes.service
 
-import android.net.Uri
+import androidx.core.net.toUri
 import de.davidbattefeld.berlinskylarks.model.Game
 
 class LocationService {
     companion object {
         fun buildGoogleMapsURL(game: Game): String {
             val baseURL = "https://www.google.com/maps/search/"
-            val builder = Uri.parse(baseURL).buildUpon()
+            val builder = baseURL.toUri().buildUpon()
 
             builder.appendQueryParameter("api", "1")
             builder.appendQueryParameter("map_action", "map")
