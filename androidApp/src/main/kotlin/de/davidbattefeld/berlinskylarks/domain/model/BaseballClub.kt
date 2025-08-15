@@ -1,4 +1,4 @@
-package de.berlinskylarks.shared.data.model
+package de.davidbattefeld.berlinskylarks.domain.model
 
 import androidx.annotation.DrawableRes
 

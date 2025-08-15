@@ -1,14 +1,12 @@
 package de.berlinskylarks.shared.data.api
 
-import de.davidbattefeld.berlinskylarks.global.AUTH_HEADER
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.header
 import io.ktor.http.URLBuilder
 import io.ktor.http.headers
 
-abstract class SkylarksAPIClient: AbstractAPIClient() {
+abstract class SkylarksAPIClient(authKey: String) : AbstractAPIClient(authKey) {
     override val API_URL = "https://tib-baseball.de"
-    override val authKey = AUTH_HEADER
 
     override fun URLBuilder.addAuthorizationParameters() {}
 

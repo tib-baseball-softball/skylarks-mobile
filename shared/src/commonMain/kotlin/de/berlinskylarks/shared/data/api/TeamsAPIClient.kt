@@ -3,7 +3,7 @@ package de.berlinskylarks.shared.data.api
 import de.berlinskylarks.shared.data.model.Player
 import de.berlinskylarks.shared.data.model.SkylarksTeam
 
-class TeamsAPIClient: SkylarksAPIClient() {
+class TeamsAPIClient(authKey: String) : SkylarksAPIClient(authKey) {
     suspend fun loadAllTeams(): List<SkylarksTeam> {
         return apiCall<List<SkylarksTeam>>(
             resource = "api/v2/teams",

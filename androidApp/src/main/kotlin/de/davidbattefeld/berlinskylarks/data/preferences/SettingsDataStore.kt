@@ -1,10 +1,10 @@
-package de.berlinskylarks.shared.data.preferences
+package de.davidbattefeld.berlinskylarks.data.preferences
 
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import de.davidbattefeld.berlinskylarks.data.api.BSMAPIClient
+import de.berlinskylarks.shared.data.api.BSMAPIClient
 
 private const val USER_PREFERENCES_NAME = "settings"
 

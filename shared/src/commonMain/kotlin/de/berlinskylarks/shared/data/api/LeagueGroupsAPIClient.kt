@@ -1,8 +1,8 @@
 package de.berlinskylarks.shared.data.api
 
-import de.davidbattefeld.berlinskylarks.data.model.LeagueGroup
+import de.berlinskylarks.shared.data.model.LeagueGroup
 
-class LeagueGroupsAPIClient: BSMAPIClient() {
+class LeagueGroupsAPIClient(authKey: String) : BSMAPIClient(authKey) {
     suspend fun loadLeagueGroupsForClub(season: Int?): List<LeagueGroup> {
         return apiCall<List<LeagueGroup>>(
             resource = "league_groups.json",

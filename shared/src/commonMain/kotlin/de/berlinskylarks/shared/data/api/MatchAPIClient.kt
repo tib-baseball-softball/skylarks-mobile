@@ -5,7 +5,7 @@ import de.berlinskylarks.shared.data.model.Game
 /**
  * Gets games limited to our own club.
  */
-class MatchAPIClient: BSMAPIClient() {
+class MatchAPIClient(authKey: String) : BSMAPIClient(authKey) {
     suspend fun loadGamesForClub(
         season: Int?,
         gamedays: String?,

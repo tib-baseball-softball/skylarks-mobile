@@ -8,24 +8,24 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
+import de.berlinskylarks.shared.data.api.BSMAPIClient
+import de.berlinskylarks.shared.data.api.LeagueGroupsAPIClient
+import de.berlinskylarks.shared.data.api.MatchAPIClient
+import de.berlinskylarks.shared.data.model.LeagueGroup
 import de.davidbattefeld.berlinskylarks.domain.model.UserCalendar
-import de.davidbattefeld.berlinskylarks.data.api.BSMAPIClient
-import de.davidbattefeld.berlinskylarks.data.api.LeagueGroupsAPIClient
-import de.davidbattefeld.berlinskylarks.data.api.MatchAPIClient
 import de.davidbattefeld.berlinskylarks.domain.service.CalendarService
-import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
+import de.davidbattefeld.berlinskylarks.domain.service.GameDecorator
 import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
 import de.davidbattefeld.berlinskylarks.testdata.testLeagueGroup
+import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import de.davidbattefeld.berlinskylarks.data.model.Game
-import de.davidbattefeld.berlinskylarks.data.model.LeagueGroup
 
 class ScoresViewModel(application: Application) : GenericViewModel(application) {
-    var games = mutableStateListOf<Game>()
-    var skylarksGames = mutableStateListOf<Game>()
+    var games = mutableStateListOf<GameDecorator>()
+    var skylarksGames = mutableStateListOf<GameDecorator>()
     var leagueGroups = mutableStateListOf<LeagueGroup>()
-    var filteredLeagueGroup by mutableStateOf(testLeagueGroup)
+    var filteredLeagueGroup by mutableStateOf<LeagueGroup>(testLeagueGroup)
     var userCalendars = mutableStateListOf<UserCalendar>()
 
     var tabState by mutableIntStateOf(1)
@@ -72,14 +72,14 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
         }
 
         if (filteredLeagueGroup.id == BOGUS_ID) {
-            games.addAll(matchAPIClient.loadGamesForClub(season, gamedays))
+            games.addAll(matchAPIClient.loadGamesForClub(season, gamedays).map { GameDecorator(it) })
         } else {
             games.addAll(
                 matchAPIClient.loadAllGames(
                     season = season,
                     gamedays = gamedays,
                     leagues = filteredLeagueGroup.id
-                )
+                ).map { GameDecorator(it) }
             )
         }
         games.forEach {
@@ -88,8 +88,8 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
             it.setCorrectLogos()
         }
         skylarksGames.addAll(games.filter {
-            it.away_team_name.contains("Skylarks", ignoreCase = true) ||
-                    it.home_team_name.contains("Skylarks", ignoreCase = true)
+            it.game.away_team_name.contains("Skylarks", ignoreCase = true) ||
+                    it.game.home_team_name.contains("Skylarks", ignoreCase = true)
         })
     }
 

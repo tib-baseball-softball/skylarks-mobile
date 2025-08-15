@@ -1,7 +1,7 @@
 package de.berlinskylarks.shared.data.model
 
-import de.davidbattefeld.berlinskylarks.data.enums.TrainingDay
-import de.davidbattefeld.berlinskylarks.data.enums.TrainingSeason
+import de.berlinskylarks.shared.data.enums.TrainingDay
+import de.berlinskylarks.shared.data.enums.TrainingSeason
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonNames
@@ -21,4 +21,3 @@ data class Training(
     @JsonNames("human_day") val humanDay: String,
     @JsonNames("human_season") val humanSeason: String
 )
-

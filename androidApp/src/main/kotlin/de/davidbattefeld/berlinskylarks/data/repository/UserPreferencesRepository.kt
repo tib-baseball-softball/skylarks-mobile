@@ -1,4 +1,4 @@
-package de.berlinskylarks.shared.data.repository
+package de.davidbattefeld.berlinskylarks.data.repository
 
 import android.util.Log
 import androidx.datastore.core.DataStore
@@ -6,13 +6,13 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.intPreferencesKey
-import de.davidbattefeld.berlinskylarks.data.api.BSMAPIClient
+import de.berlinskylarks.shared.data.api.BSMAPIClient
 import de.davidbattefeld.berlinskylarks.data.preferences.UserPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import java.io.IOException
+import kotlinx.io.IOException
 
 class UserPreferencesRepository(private val dataStore: DataStore<Preferences>) {
     private val TAG: String = "UserPreferencesRepo"

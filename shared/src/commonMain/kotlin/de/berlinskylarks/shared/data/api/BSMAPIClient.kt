@@ -1,13 +1,15 @@
 package de.berlinskylarks.shared.data.api
 
-import android.icu.util.Calendar
-import de.davidbattefeld.berlinskylarks.global.BSM_API_KEY
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.http.URLBuilder
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
-abstract class BSMAPIClient: AbstractAPIClient() {
+abstract class BSMAPIClient(authKey: String) : AbstractAPIClient(authKey) {
     override val API_URL = "https://bsm.baseball-softball.de"
-    override val authKey = BSM_API_KEY
+
     companion object {
         const val CLUB_ID = 485
         // in BSM jargon an "organisation" is a Landesverband (BSVBB in this case)
@@ -20,7 +22,8 @@ abstract class BSMAPIClient: AbstractAPIClient() {
         const val ORGANIZATION_FILTER = "filters[organizations][]"
         const val TEAM_SEARCH = "search"
 
-        val DEFAULT_SEASON = Calendar.getInstance().get(Calendar.YEAR)
+        @OptIn(ExperimentalTime::class)
+        val DEFAULT_SEASON = Clock.System.now().toLocalDateTime(timeZone = TimeZone.of("Europe/Berlin")).year
     }
 
     override fun URLBuilder.addAuthorizationParameters() {

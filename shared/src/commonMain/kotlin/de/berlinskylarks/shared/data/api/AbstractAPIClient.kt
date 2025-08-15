@@ -10,9 +10,8 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
-abstract class AbstractAPIClient {
+abstract class AbstractAPIClient(protected val authKey: String) {
     protected abstract val API_URL: String
-    protected abstract val authKey: String
 
     protected val jsonBuilder = Json {
         ignoreUnknownKeys = true
