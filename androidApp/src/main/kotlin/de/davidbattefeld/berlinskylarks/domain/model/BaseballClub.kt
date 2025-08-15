@@ -2,8 +2,8 @@ package de.davidbattefeld.berlinskylarks.domain.model
 
 import androidx.annotation.DrawableRes
 
-class BaseballClub(
+data class BaseballClub(
     var name: String,
-    @DrawableRes
+    @field:DrawableRes
     var logo: Int,
 )

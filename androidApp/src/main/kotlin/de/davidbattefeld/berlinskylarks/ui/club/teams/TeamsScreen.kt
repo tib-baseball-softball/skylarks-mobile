@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.berlinskylarks.shared.data.model.Game
 import de.berlinskylarks.shared.data.model.SkylarksTeam
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.TeamsViewModel
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
