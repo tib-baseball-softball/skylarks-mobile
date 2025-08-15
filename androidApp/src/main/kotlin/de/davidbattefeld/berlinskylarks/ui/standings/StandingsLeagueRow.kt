@@ -12,8 +12,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import de.berlinskylarks.shared.data.model.LeagueGroup
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
-import de.davidbattefeld.berlinskylarks.data.model.LeagueGroup
 
 @Composable
 fun StandingsLeagueRow(

@@ -6,10 +6,10 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
-import de.davidbattefeld.berlinskylarks.data.api.TeamsAPIClient
+import de.berlinskylarks.shared.data.api.TeamsAPIClient
+import de.berlinskylarks.shared.data.model.Player
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
 import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
-import de.davidbattefeld.berlinskylarks.data.model.Player
 import kotlinx.coroutines.launch
 
 class PlayersViewModel(application: Application) : GenericViewModel(application) {

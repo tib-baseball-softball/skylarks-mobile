@@ -1,7 +1,7 @@
 package de.davidbattefeld.berlinskylarks.domain.service
 
 import androidx.core.net.toUri
-import de.davidbattefeld.berlinskylarks.data.model.Game
+import de.berlinskylarks.shared.data.model.Game
 
 class LocationService {
     companion object {

@@ -106,7 +106,7 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
 
         calendarService.context = context
         viewModelScope.launch {
-            calendarService.addGamesToCalendar(games = gamesToUse, calendarID = id)
+            calendarService.addGamesToCalendar(gameDecorators = gamesToUse, calendarID = id)
         }
     }
 }

@@ -3,7 +3,6 @@ package de.davidbattefeld.berlinskylarks.domain.service
 import android.content.ContentValues
 import android.content.Context
 import android.provider.CalendarContract
-import de.davidbattefeld.berlinskylarks.data.model.Game
 import de.davidbattefeld.berlinskylarks.domain.model.UserCalendar
 import java.time.ZoneId
 
@@ -57,9 +56,9 @@ class CalendarService {
     /**
      * Adds the provided list of games to single calendar specified by ID.
      */
-    fun addGamesToCalendar(games: List<Game>, calendarID: Long) {
-        for (game in games) {
-            val localDateTime = game.parseGameTimeString()
+    fun addGamesToCalendar(gameDecorators: List<GameDecorator>, calendarID: Long) {
+        for (gameDecorator in gameDecorators) {
+            val localDateTime = gameDecorator.parseGameTimeString()
             val zonedDateTime = localDateTime.atZone(ZoneId.systemDefault())
             val timeInMillis: Long = zonedDateTime.toInstant().toEpochMilli()
 
@@ -68,16 +67,16 @@ class CalendarService {
                 put(CalendarContract.Events.DTEND, timeInMillis + 120 * 60 * 1000) // 2 hours later
                 put(
                     CalendarContract.Events.TITLE,
-                    "${game.league.acronym}: ${game.away_team_name} @ ${game.home_team_name}"
+                    "${gameDecorator.game.league.acronym}: ${gameDecorator.game.away_team_name} @ ${gameDecorator.game.home_team_name}"
                 )
 
                 val eventDescription =
 """
-League: ${game.league.name}
-Match Number: ${game.match_id}
+League: ${gameDecorator.game.league.name}
+Match Number: ${gameDecorator.game.match_id}
 
-Field: ${game.field?.name ?: "No data"}
-Address: ${game.field?.street ?: ""}, ${game.field?.postal_code ?: ""} ${game.field?.city ?: ""}
+Field: ${gameDecorator.game.field?.name ?: "No data"}
+Address: ${gameDecorator.game.field?.street ?: ""}, ${gameDecorator.game.field?.postal_code ?: ""} ${gameDecorator.game.field?.city ?: ""}
 """
 
                 put(CalendarContract.Events.DESCRIPTION, eventDescription)
@@ -85,7 +84,7 @@ Address: ${game.field?.street ?: ""}, ${game.field?.postal_code ?: ""} ${game.fi
                 put(CalendarContract.Events.EVENT_TIMEZONE, ZoneId.systemDefault().id)
                 put(
                     CalendarContract.Events.EVENT_LOCATION,
-                    "${game.field?.name} - ${game.field?.street ?: ""}, ${game.field?.postal_code ?: ""} ${game.field?.city ?: ""}\n (Lat: ${game.field?.latitude}, Long: ${game.field?.longitude})"
+                    "${gameDecorator.game.field?.name} - ${gameDecorator.game.field?.street ?: ""}, ${gameDecorator.game.field?.postal_code ?: ""} ${gameDecorator.game.field?.city ?: ""}\n (Lat: ${gameDecorator.game.field?.latitude}, Long: ${gameDecorator.game.field?.longitude})"
                 )
             }
             context?.contentResolver?.insert(CalendarContract.Events.CONTENT_URI, calendarValues)

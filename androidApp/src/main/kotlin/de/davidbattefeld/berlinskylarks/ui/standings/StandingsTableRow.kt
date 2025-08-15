@@ -11,9 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.berlinskylarks.shared.data.model.LeagueTable
 import de.davidbattefeld.berlinskylarks.testdata.testRow
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
-import de.davidbattefeld.berlinskylarks.data.model.LeagueTable
 
 @Composable
 fun StandingsTableRow(row: LeagueTable.Row) {

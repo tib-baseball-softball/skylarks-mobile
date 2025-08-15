@@ -9,12 +9,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.berlinskylarks.shared.data.model.Player
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.PlayersViewModel
 
 @Composable
 fun PlayerDetailScreen(playerID: Int) {
     val vm: PlayersViewModel = viewModel(LocalContext.current as ComponentActivity)
-    val player = vm.getFiltered(playerID, vm.players)
+    val player = vm.getFiltered<Player>(playerID, vm.players)
 
     LazyColumn(
         modifier = Modifier

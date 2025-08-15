@@ -10,9 +10,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.berlinskylarks.shared.data.model.LeagueTable
 import de.davidbattefeld.berlinskylarks.testdata.testTable
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
-import de.davidbattefeld.berlinskylarks.data.model.LeagueTable
 
 @Composable
 fun StandingsTable(table: LeagueTable) {

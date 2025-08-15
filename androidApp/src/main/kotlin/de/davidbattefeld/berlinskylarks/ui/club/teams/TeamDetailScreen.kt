@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.berlinskylarks.shared.data.model.Player
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.PlayersViewModel
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
 import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
@@ -54,7 +55,7 @@ fun TeamDetailScreen(
                 }
 
                 ViewState.Found -> {
-                    itemsIndexed(vm.players) { index, player ->
+                    itemsIndexed<Player>(vm.players) { index, player ->
                         Column {
                             PlayerRow(
                                 player = player,
