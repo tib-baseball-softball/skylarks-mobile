@@ -1,5 +1,5 @@
 # Berlin Skylarks
-iOS/macOS/watchOS App for the Berlin Skylarks Baseball &amp; Softball Club, built in Swift.
+iOS/macOS App for the Berlin Skylarks Baseball &amp; Softball Club, built in Swift.
 
 Intended Features:
 
@@ -25,7 +25,8 @@ Contact info: app@tib-baseball.de
 
 ## Development History
 
-- Started as a learning project into Programming in general as a complete beginner - therefore very different standards of code quality present.
+> [!NOTE]
+> This projects started as a learning project as a complete beginner - older parts of the code might not reach current standards of code quality. Refactoring is happening according to the campfire principle.
 
 ## Roadmap
 
