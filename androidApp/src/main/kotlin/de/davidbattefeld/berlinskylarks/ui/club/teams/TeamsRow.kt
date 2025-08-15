@@ -18,7 +18,7 @@ fun TeamsRow(
 ) {
     ListItem(
         headlineContent = { Text(team.name) },
-        supportingContent = { Text(team.bsmShortName) },
+        supportingContent = { Text(team.bsmShortName ?: "") },
         leadingContent = {
             Icon(
                 imageVector = Icons.Filled.Groups,

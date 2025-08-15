@@ -10,8 +10,8 @@ data class SkylarksTeam(
     val name: String,
 
     @JsonNames("league_id")
-    val leagueID: Int,
+    val leagueID: Int?,
 
     @JsonNames("bsm_short_name")
-    val bsmShortName: String
+    val bsmShortName: String?
 )
