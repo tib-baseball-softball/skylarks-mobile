@@ -6,6 +6,9 @@ plugins {
 }
 
 kotlin {
+    compilerOptions {
+        optIn.add("kotlinx.serialization.ExperimentalSerializationApi")
+    }
 
     // Target declarations - add or remove as needed below. These define
     // which platforms this KMP module supports.

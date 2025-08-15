@@ -2,12 +2,10 @@ package de.berlinskylarks.shared.data.model
 
 import de.berlinskylarks.shared.data.enums.TrainingDay
 import de.berlinskylarks.shared.data.enums.TrainingSeason
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonNames
 
 @Serializable
-@OptIn(ExperimentalSerializationApi::class)
 data class Training(
     val uid: Int,
     val season: TrainingSeason,

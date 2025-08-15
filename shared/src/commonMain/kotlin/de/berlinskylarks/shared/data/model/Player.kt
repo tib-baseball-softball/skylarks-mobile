@@ -3,7 +3,6 @@ package de.berlinskylarks.shared.data.model
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.datetime.todayIn
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonNames
 import kotlin.time.Clock
@@ -11,7 +10,6 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
 @Serializable
-@OptIn(ExperimentalSerializationApi::class)
 data class Player(
     @JsonNames("uid")
     override var id: Int,
@@ -32,7 +30,7 @@ data class Player(
     val teamName: String?,
     val media: List<Media>,
     val positions: List<String>,
-    val teams: List<SkylarksTeamReduced>,
+    val teams: List<SkylarksTeam>,
 ): JSONDataObject {
     fun isCoach(): Boolean {
         return number == "C" || positions.isEmpty()
