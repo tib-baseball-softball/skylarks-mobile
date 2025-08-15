@@ -1,0 +1,11 @@
+# no Spotlight indexing
+.DS_Store
+
+# no API keys
+API_Key.swift
+
+*.xcuserstate
+
+*.xcsettings
+
+buildServer.json

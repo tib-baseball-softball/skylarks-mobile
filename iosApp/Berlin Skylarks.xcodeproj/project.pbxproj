@@ -1,0 +1,1087 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CA01EF17287DB9A70056166F /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE134822771F2E000DFA745 /* WidgetKit.framework */; };
+		CA1CB211275D15BA0007D24E /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CA1CB210275D15BA0007D24E /* README.md */; };
+		CA2C18352D21A54E00273312 /* SkylarksAPIClient in Frameworks */ = {isa = PBXBuildFile; productRef = CA2C18342D21A54E00273312 /* SkylarksAPIClient */; };
+		CA2C18402D21B8E100273312 /* OpenAPIRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = CA2C183F2D21B8E100273312 /* OpenAPIRuntime */; };
+		CA2C18432D21B90000273312 /* OpenAPIURLSession in Frameworks */ = {isa = PBXBuildFile; productRef = CA2C18422D21B90000273312 /* OpenAPIURLSession */; };
+		CA65FF4627F5EC4400F7845D /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA65FF4527F5EC4400F7845D /* Intents.framework */; };
+		CA65FF5F27F5EC4400F7845D /* Skylarks Intents.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CA65FF4427F5EC4400F7845D /* Skylarks Intents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CAA393242D85F6A100E80819 /* OpenAPIURLSession in Frameworks */ = {isa = PBXBuildFile; productRef = CAA393232D85F6A100E80819 /* OpenAPIURLSession */; };
+		CAA393272D85F6AF00E80819 /* OpenAPIRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = CAA393262D85F6AF00E80819 /* OpenAPIRuntime */; };
+		CAA393292D85F72A00E80819 /* SkylarksAPIClient in Frameworks */ = {isa = PBXBuildFile; productRef = CAA393282D85F72A00E80819 /* SkylarksAPIClient */; };
+		CAE134852771F2E000DFA745 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE134842771F2E000DFA745 /* SwiftUI.framework */; };
+		CAE134912771F2E100DFA745 /* WidgetSkylarksExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CAE134802771F2DF00DFA745 /* WidgetSkylarksExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CA3C4C3028B40C3400F72841 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CABF7BE3259351D400B95813 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CABF7BEA259351D400B95813;
+			remoteInfo = "Berlin Skylarks";
+		};
+		CA65FF5D27F5EC4400F7845D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CABF7BE3259351D400B95813 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CA65FF4327F5EC4400F7845D;
+			remoteInfo = "Skylarks Intents";
+		};
+		CAE1348F2771F2E100DFA745 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CABF7BE3259351D400B95813 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CAE1347F2771F2DF00DFA745;
+			remoteInfo = WidgetSkylarksExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CA1C39DB2731856C00BB194C /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CAE134932771F2E100DFA745 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				CAE134912771F2E100DFA745 /* WidgetSkylarksExtension.appex in Embed Foundation Extensions */,
+				CA65FF5F27F5EC4400F7845D /* Skylarks Intents.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		CA1CB210275D15BA0007D24E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		CA3C4C2C28B40C3400F72841 /* BerlinSkylarksTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BerlinSkylarksTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA65FF4427F5EC4400F7845D /* Skylarks Intents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Skylarks Intents.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA65FF4527F5EC4400F7845D /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		CA65FF5027F5EC4400F7845D /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
+		CABF7BEB259351D400B95813 /* Berlin Skylarks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Berlin Skylarks.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CAE134802771F2DF00DFA745 /* WidgetSkylarksExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetSkylarksExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		CAE134822771F2E000DFA745 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		CAE134842771F2E000DFA745 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		CAE134922771F2E100DFA745 /* WidgetSkylarksExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetSkylarksExtension.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		CAA393422D85FFA300E80819 /* Exceptions for "Skylarks_Intents" folder in "Skylarks Intents" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = CA65FF4327F5EC4400F7845D /* Skylarks Intents */;
+		};
+		CAE1C91E2D85EB2200AA7538 /* Exceptions for "WidgetSkylarks" folder in "WidgetSkylarksExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"/Localized: WidgetSkylarks.intentdefinition",
+				Info.plist,
+			);
+			target = CAE1347F2771F2DF00DFA745 /* WidgetSkylarksExtension */;
+		};
+		CAE1C9202D85EB2200AA7538 /* Exceptions for "WidgetSkylarks" folder in "Skylarks Intents" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				WidgetPreviewData.swift,
+			);
+			target = CA65FF4327F5EC4400F7845D /* Skylarks Intents */;
+		};
+		CAE1CA692D85EB7400AA7538 /* Exceptions for "Berlin_Skylarks" folder in "Berlin Skylarks" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = CABF7BEA259351D400B95813 /* Berlin Skylarks */;
+		};
+		CAE1CA6A2D85EB7400AA7538 /* Exceptions for "Berlin_Skylarks" folder in "WidgetSkylarksExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"/Localized: Localizable.strings",
+				Assets.xcassets,
+				Classes/CalendarManager.swift,
+				Classes/Data/OpenAPIClientAware.swift,
+				Classes/DateTimeUtility.swift,
+				Classes/FavoriteTeamWidgetObject.swift,
+				Classes/MarkdownFile.swift,
+				Classes/NetworkManager.swift,
+				Classes/PlayoffSeries.swift,
+				Classes/PlayoffTeam.swift,
+				Classes/TeamImageData.swift,
+				Classes/ViewModels/ClubDataManager.swift,
+				Classes/ViewModels/HomeViewModel.swift,
+				Classes/ViewModels/LicenseManager.swift,
+				Classes/ViewModels/TeamDetailViewModel.swift,
+				Classes/ViewModels/TeamsLoader.swift,
+				Enums/Gameday.swift,
+				Enums/PlayerListDisplayMode.swift,
+				Enums/ViewState.swift,
+				Generated/Client.swift,
+				Generated/Types.swift,
+				Global/API_Key.dist,
+				Global/API_Key.swift,
+				Global/AppSettings.swift,
+				Global/ColorSets.swift,
+				Global/GlobalFunctions.swift,
+				Global/Ints_Floats.swift,
+				Global/TestData.swift,
+				Global/ViewModifiers.swift,
+				Legal/app_impressum_de.md,
+				Legal/app_impressum_en.md,
+				Legal/app_pp_de.md,
+				Legal/app_pp_en.md,
+				Models/BSMClub.swift,
+				Models/BSMField.swift,
+				Models/BSMFunctionary.swift,
+				Models/BSMGameScore.swift,
+				Models/BSMLeagueGroup.swift,
+				Models/BSMLicense.swift,
+				Models/BSMPerson.swift,
+				Models/BSMStandingsTable.swift,
+				Models/BSMTeam.swift,
+				Models/HomeDataset.swift,
+				Models/StreakDataEntry.swift,
+				Views/Scores/ScoreNumber.swift,
+			);
+			target = CAE1347F2771F2DF00DFA745 /* WidgetSkylarksExtension */;
+		};
+		CAE1CA6B2D85EB7400AA7538 /* Exceptions for "Berlin_Skylarks" folder in "Skylarks Intents" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+				Classes/DateTimeUtility.swift,
+				Classes/PlayoffSeries.swift,
+				Classes/PlayoffTeam.swift,
+				Global/API_Key.dist,
+				Global/API_Key.swift,
+				Global/AppSettings.swift,
+				Global/ColorSets.swift,
+				Global/GlobalFunctions.swift,
+				Global/Ints_Floats.swift,
+				Global/TestData.swift,
+				Global/ViewModifiers.swift,
+				Models/BSMClub.swift,
+				Models/BSMField.swift,
+				Models/BSMFunctionary.swift,
+				Models/BSMGameScore.swift,
+				Models/BSMLeagueGroup.swift,
+				Models/BSMLicense.swift,
+				Models/BSMPerson.swift,
+				Models/BSMStandingsTable.swift,
+				Models/BSMTeam.swift,
+				Models/HomeDataset.swift,
+				Models/StreakDataEntry.swift,
+			);
+			target = CA65FF4327F5EC4400F7845D /* Skylarks Intents */;
+		};
+		CAE1CA6C2D85EB7400AA7538 /* Exceptions for "Berlin_Skylarks" folder in "BerlinSkylarksTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+				Enums/Gameday.swift,
+				Enums/PlayerListDisplayMode.swift,
+				Enums/ViewState.swift,
+				Models/BSMLeagueGroup.swift,
+			);
+			target = CA3C4C2B28B40C3400F72841 /* BerlinSkylarksTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		CAA3936C2D86AF7C00E80819 /* Exceptions for "WidgetSkylarks" folder in "Compile Sources" phase from "Berlin Skylarks" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = CABF7BE7259351D400B95813 /* Sources */;
+			membershipExceptions = (
+				"/Localized: WidgetSkylarks.intentdefinition",
+			);
+		};
+		CAC832142DF0E0E100EB7B8C /* Exceptions for "WidgetSkylarks" folder in "Compile Sources" phase from "WidgetSkylarksExtension" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = CAE1347C2771F2DF00DFA745 /* Sources */;
+			membershipExceptions = (
+				"/Localized: WidgetSkylarks.intentdefinition",
+			);
+		};
+		CAC9A0C22DECFA2300823E77 /* Exceptions for "WidgetSkylarks" folder in "Compile Sources" phase from "Skylarks Intents" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = CA65FF4027F5EC4400F7845D /* Sources */;
+			membershipExceptions = (
+				"/Localized: WidgetSkylarks.intentdefinition",
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		CA2C1A092D21D27B00273312 /* Skylarks IntentsUI */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Skylarks IntentsUI";
+			sourceTree = "<group>";
+		};
+		CA2C1A0B2D21D27F00273312 /* BerlinSkylarksTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = BerlinSkylarksTests;
+			sourceTree = "<group>";
+		};
+		CAA3933F2D85FED300E80819 /* Skylarks_Intents */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CAA393422D85FFA300E80819 /* Exceptions for "Skylarks_Intents" folder in "Skylarks Intents" target */,
+			);
+			path = Skylarks_Intents;
+			sourceTree = "<group>";
+		};
+		CAE1C9042D85EB2200AA7538 /* WidgetSkylarks */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CAA3936C2D86AF7C00E80819 /* Exceptions for "WidgetSkylarks" folder in "Compile Sources" phase from "Berlin Skylarks" target */,
+				CAE1C91E2D85EB2200AA7538 /* Exceptions for "WidgetSkylarks" folder in "WidgetSkylarksExtension" target */,
+				CAC832142DF0E0E100EB7B8C /* Exceptions for "WidgetSkylarks" folder in "Compile Sources" phase from "WidgetSkylarksExtension" target */,
+				CAE1C9202D85EB2200AA7538 /* Exceptions for "WidgetSkylarks" folder in "Skylarks Intents" target */,
+				CAC9A0C22DECFA2300823E77 /* Exceptions for "WidgetSkylarks" folder in "Compile Sources" phase from "Skylarks Intents" target */,
+			);
+			path = WidgetSkylarks;
+			sourceTree = "<group>";
+		};
+		CAE1C9AF2D85EB7400AA7538 /* Berlin_Skylarks */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CAE1CA692D85EB7400AA7538 /* Exceptions for "Berlin_Skylarks" folder in "Berlin Skylarks" target */,
+				CAE1CA6A2D85EB7400AA7538 /* Exceptions for "Berlin_Skylarks" folder in "WidgetSkylarksExtension" target */,
+				CAE1CA6B2D85EB7400AA7538 /* Exceptions for "Berlin_Skylarks" folder in "Skylarks Intents" target */,
+				CAE1CA6C2D85EB7400AA7538 /* Exceptions for "Berlin_Skylarks" folder in "BerlinSkylarksTests" target */,
+			);
+			path = Berlin_Skylarks;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CA3C4C2928B40C3400F72841 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA65FF4127F5EC4400F7845D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA65FF4627F5EC4400F7845D /* Intents.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CABF7BE8259351D400B95813 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA2C18402D21B8E100273312 /* OpenAPIRuntime in Frameworks */,
+				CA2C18432D21B90000273312 /* OpenAPIURLSession in Frameworks */,
+				CA2C18352D21A54E00273312 /* SkylarksAPIClient in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CAE1347D2771F2DF00DFA745 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CAA393292D85F72A00E80819 /* SkylarksAPIClient in Frameworks */,
+				CAA393242D85F6A100E80819 /* OpenAPIURLSession in Frameworks */,
+				CAA393272D85F6AF00E80819 /* OpenAPIRuntime in Frameworks */,
+				CAE134852771F2E000DFA745 /* SwiftUI.framework in Frameworks */,
+				CA01EF17287DB9A70056166F /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CABF7BE2259351D400B95813 = {
+			isa = PBXGroup;
+			children = (
+				CAE134922771F2E100DFA745 /* WidgetSkylarksExtension.entitlements */,
+				CA1CB210275D15BA0007D24E /* README.md */,
+				CAE1C9AF2D85EB7400AA7538 /* Berlin_Skylarks */,
+				CAE1C9042D85EB2200AA7538 /* WidgetSkylarks */,
+				CAA3933F2D85FED300E80819 /* Skylarks_Intents */,
+				CA2C1A092D21D27B00273312 /* Skylarks IntentsUI */,
+				CA2C1A0B2D21D27F00273312 /* BerlinSkylarksTests */,
+				CAE134812771F2DF00DFA745 /* Frameworks */,
+				CABF7BEC259351D400B95813 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CABF7BEC259351D400B95813 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CABF7BEB259351D400B95813 /* Berlin Skylarks.app */,
+				CAE134802771F2DF00DFA745 /* WidgetSkylarksExtension.appex */,
+				CA65FF4427F5EC4400F7845D /* Skylarks Intents.appex */,
+				CA3C4C2C28B40C3400F72841 /* BerlinSkylarksTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CAE134812771F2DF00DFA745 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CAE134822771F2E000DFA745 /* WidgetKit.framework */,
+				CAE134842771F2E000DFA745 /* SwiftUI.framework */,
+				CA65FF4527F5EC4400F7845D /* Intents.framework */,
+				CA65FF5027F5EC4400F7845D /* IntentsUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CA3C4C2B28B40C3400F72841 /* BerlinSkylarksTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA3C4C3428B40C3400F72841 /* Build configuration list for PBXNativeTarget "BerlinSkylarksTests" */;
+			buildPhases = (
+				CA3C4C2828B40C3400F72841 /* Sources */,
+				CA3C4C2928B40C3400F72841 /* Frameworks */,
+				CA3C4C2A28B40C3400F72841 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CA3C4C3128B40C3400F72841 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				CA2C1A0B2D21D27F00273312 /* BerlinSkylarksTests */,
+			);
+			name = BerlinSkylarksTests;
+			productName = BerlinSkylarksTests;
+			productReference = CA3C4C2C28B40C3400F72841 /* BerlinSkylarksTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		CA65FF4327F5EC4400F7845D /* Skylarks Intents */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA65FF6427F5EC4400F7845D /* Build configuration list for PBXNativeTarget "Skylarks Intents" */;
+			buildPhases = (
+				CA65FF4027F5EC4400F7845D /* Sources */,
+				CA65FF4127F5EC4400F7845D /* Frameworks */,
+				CA65FF4227F5EC4400F7845D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				CAA3933F2D85FED300E80819 /* Skylarks_Intents */,
+			);
+			name = "Skylarks Intents";
+			productName = "Skylarks Intents";
+			productReference = CA65FF4427F5EC4400F7845D /* Skylarks Intents.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		CABF7BEA259351D400B95813 /* Berlin Skylarks */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CABF7BFF259351D500B95813 /* Build configuration list for PBXNativeTarget "Berlin Skylarks" */;
+			buildPhases = (
+				CABF7BE7259351D400B95813 /* Sources */,
+				CABF7BE8259351D400B95813 /* Frameworks */,
+				CABF7BE9259351D400B95813 /* Resources */,
+				CA1C39DB2731856C00BB194C /* Embed Watch Content */,
+				CAE134932771F2E100DFA745 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CAE134902771F2E100DFA745 /* PBXTargetDependency */,
+				CA65FF5E27F5EC4400F7845D /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				CAE1C9AF2D85EB7400AA7538 /* Berlin_Skylarks */,
+			);
+			name = "Berlin Skylarks";
+			productName = "Berlin Skylarks";
+			productReference = CABF7BEB259351D400B95813 /* Berlin Skylarks.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CAE1347F2771F2DF00DFA745 /* WidgetSkylarksExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CAE134962771F2E100DFA745 /* Build configuration list for PBXNativeTarget "WidgetSkylarksExtension" */;
+			buildPhases = (
+				CAE1347C2771F2DF00DFA745 /* Sources */,
+				CAE1347D2771F2DF00DFA745 /* Frameworks */,
+				CAE1347E2771F2DF00DFA745 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				CAE1C9042D85EB2200AA7538 /* WidgetSkylarks */,
+			);
+			name = WidgetSkylarksExtension;
+			productName = WidgetSkylarksExtension;
+			productReference = CAE134802771F2DF00DFA745 /* WidgetSkylarksExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CABF7BE3259351D400B95813 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastSwiftUpdateCheck = 1400;
+				LastUpgradeCheck = 1640;
+				TargetAttributes = {
+					CA3C4C2B28B40C3400F72841 = {
+						CreatedOnToolsVersion = 13.4.1;
+						TestTargetID = CABF7BEA259351D400B95813;
+					};
+					CA65FF4327F5EC4400F7845D = {
+						CreatedOnToolsVersion = 13.3;
+					};
+					CABF7BEA259351D400B95813 = {
+						CreatedOnToolsVersion = 12.3;
+					};
+					CAE1347F2771F2DF00DFA745 = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+				};
+			};
+			buildConfigurationList = CABF7BE6259351D400B95813 /* Build configuration list for PBXProject "Berlin Skylarks" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				de,
+			);
+			mainGroup = CABF7BE2259351D400B95813;
+			packageReferences = (
+				CA9FCE7B2D218105006686F4 /* XCRemoteSwiftPackageReference "skylarks-api-client-swift" */,
+				CAA393222D85F6A100E80819 /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */,
+				CAA393252D85F6AF00E80819 /* XCRemoteSwiftPackageReference "swift-openapi-runtime" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = CABF7BEC259351D400B95813 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CABF7BEA259351D400B95813 /* Berlin Skylarks */,
+				CAE1347F2771F2DF00DFA745 /* WidgetSkylarksExtension */,
+				CA65FF4327F5EC4400F7845D /* Skylarks Intents */,
+				CA3C4C2B28B40C3400F72841 /* BerlinSkylarksTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CA3C4C2A28B40C3400F72841 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA65FF4227F5EC4400F7845D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CABF7BE9259351D400B95813 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA1CB211275D15BA0007D24E /* README.md in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CAE1347E2771F2DF00DFA745 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CA3C4C2828B40C3400F72841 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA65FF4027F5EC4400F7845D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CABF7BE7259351D400B95813 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CAE1347C2771F2DF00DFA745 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CA3C4C3128B40C3400F72841 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CABF7BEA259351D400B95813 /* Berlin Skylarks */;
+			targetProxy = CA3C4C3028B40C3400F72841 /* PBXContainerItemProxy */;
+		};
+		CA65FF5E27F5EC4400F7845D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CA65FF4327F5EC4400F7845D /* Skylarks Intents */;
+			targetProxy = CA65FF5D27F5EC4400F7845D /* PBXContainerItemProxy */;
+		};
+		CAE134902771F2E100DFA745 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CAE1347F2771F2DF00DFA745 /* WidgetSkylarksExtension */;
+			targetProxy = CAE1348F2771F2E100DFA745 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		CA3C4C3228B40C3400F72841 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.3;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.tib-baseball.BerlinSkylarksTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Berlin Skylarks.app/Berlin Skylarks";
+			};
+			name = Debug;
+		};
+		CA3C4C3328B40C3400F72841 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.3;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.tib-baseball.BerlinSkylarksTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Berlin Skylarks.app/Berlin Skylarks";
+			};
+			name = Release;
+		};
+		CA65FF6527F5EC4400F7845D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = Skylarks_Intents/Skylarks_Intents.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Skylarks_Intents/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Skylarks Intents";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.6.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.davidbattefeld.berlinskylarks.Berlin-Skylarks.Skylarks-Intents";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CA65FF6627F5EC4400F7845D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = Skylarks_Intents/Skylarks_Intents.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Skylarks_Intents/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Skylarks Intents";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.6.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.davidbattefeld.berlinskylarks.Berlin-Skylarks.Skylarks-Intents";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CABF7BFD259351D500B95813 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 5KD4MUBZ2T;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.3;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		CABF7BFE259351D500B95813 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 5KD4MUBZ2T;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		CABF7C00259351D500B95813 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = Berlin_Skylarks/Berlin_Skylarks.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Berlin_Skylarks/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Skylarks;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.6.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.davidbattefeld.berlinskylarks.Berlin-Skylarks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2,6";
+			};
+			name = Debug;
+		};
+		CABF7C01259351D500B95813 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = Berlin_Skylarks/Berlin_Skylarks.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Berlin_Skylarks/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Skylarks;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.6.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.davidbattefeld.berlinskylarks.Berlin-Skylarks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2,6";
+			};
+			name = Release;
+		};
+		CAE134942771F2E100DFA745 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = WidgetSkylarksExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WidgetSkylarks/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Skylarks;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.6.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.davidbattefeld.berlinskylarks.Berlin-Skylarks.WidgetSkylarks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CAE134952771F2E100DFA745 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = WidgetSkylarksExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WidgetSkylarks/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Skylarks;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.6.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.davidbattefeld.berlinskylarks.Berlin-Skylarks.WidgetSkylarks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CA3C4C3428B40C3400F72841 /* Build configuration list for PBXNativeTarget "BerlinSkylarksTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA3C4C3228B40C3400F72841 /* Debug */,
+				CA3C4C3328B40C3400F72841 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA65FF6427F5EC4400F7845D /* Build configuration list for PBXNativeTarget "Skylarks Intents" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA65FF6527F5EC4400F7845D /* Debug */,
+				CA65FF6627F5EC4400F7845D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CABF7BE6259351D400B95813 /* Build configuration list for PBXProject "Berlin Skylarks" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CABF7BFD259351D500B95813 /* Debug */,
+				CABF7BFE259351D500B95813 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CABF7BFF259351D500B95813 /* Build configuration list for PBXNativeTarget "Berlin Skylarks" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CABF7C00259351D500B95813 /* Debug */,
+				CABF7C01259351D500B95813 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CAE134962771F2E100DFA745 /* Build configuration list for PBXNativeTarget "WidgetSkylarksExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CAE134942771F2E100DFA745 /* Debug */,
+				CAE134952771F2E100DFA745 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CA2C183E2D21B8E100273312 /* XCRemoteSwiftPackageReference "swift-openapi-runtime" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-openapi-runtime";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.7.0;
+			};
+		};
+		CA2C18412D21B90000273312 /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-openapi-urlsession";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.2;
+			};
+		};
+		CA9FCE7B2D218105006686F4 /* XCRemoteSwiftPackageReference "skylarks-api-client-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tib-baseball-softball/skylarks-api-client-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		CAA393222D85F6A100E80819 /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-openapi-urlsession";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.2;
+			};
+		};
+		CAA393252D85F6AF00E80819 /* XCRemoteSwiftPackageReference "swift-openapi-runtime" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-openapi-runtime";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.8.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CA2C18342D21A54E00273312 /* SkylarksAPIClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA9FCE7B2D218105006686F4 /* XCRemoteSwiftPackageReference "skylarks-api-client-swift" */;
+			productName = SkylarksAPIClient;
+		};
+		CA2C183F2D21B8E100273312 /* OpenAPIRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA2C183E2D21B8E100273312 /* XCRemoteSwiftPackageReference "swift-openapi-runtime" */;
+			productName = OpenAPIRuntime;
+		};
+		CA2C18422D21B90000273312 /* OpenAPIURLSession */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA2C18412D21B90000273312 /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */;
+			productName = OpenAPIURLSession;
+		};
+		CAA393232D85F6A100E80819 /* OpenAPIURLSession */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAA393222D85F6A100E80819 /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */;
+			productName = OpenAPIURLSession;
+		};
+		CAA393262D85F6AF00E80819 /* OpenAPIRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAA393252D85F6AF00E80819 /* XCRemoteSwiftPackageReference "swift-openapi-runtime" */;
+			productName = OpenAPIRuntime;
+		};
+		CAA393282D85F72A00E80819 /* SkylarksAPIClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA9FCE7B2D218105006686F4 /* XCRemoteSwiftPackageReference "skylarks-api-client-swift" */;
+			productName = SkylarksAPIClient;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = CABF7BE3259351D400B95813 /* Project object */;
+}
