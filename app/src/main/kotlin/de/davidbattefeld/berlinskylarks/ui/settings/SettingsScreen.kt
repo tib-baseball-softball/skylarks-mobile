@@ -37,8 +37,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.davidbattefeld.berlinskylarks.classes.data.DEFAULT_SETTINGS
-import de.davidbattefeld.berlinskylarks.classes.viewmodels.SettingsViewModel
+import de.davidbattefeld.berlinskylarks.data.preferences.DEFAULT_SETTINGS
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.SettingsViewModel
 import de.davidbattefeld.berlinskylarks.global.TeamGlobals
 import de.davidbattefeld.berlinskylarks.ui.nav.SkylarksNavDestination
 

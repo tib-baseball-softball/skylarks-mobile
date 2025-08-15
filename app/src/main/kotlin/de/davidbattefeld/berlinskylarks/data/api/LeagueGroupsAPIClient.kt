@@ -1,0 +1,14 @@
+package de.davidbattefeld.berlinskylarks.data.api
+
+import de.davidbattefeld.berlinskylarks.data.model.LeagueGroup
+
+class LeagueGroupsAPIClient: BSMAPIClient() {
+    suspend fun loadLeagueGroupsForClub(season: Int?): List<LeagueGroup> {
+        return apiCall<List<LeagueGroup>>(
+            resource = "league_groups.json",
+            queryParameters = mutableListOf(
+                SEASON_FILTER to (season ?: DEFAULT_SEASON).toString(),
+            )
+        ) ?: listOf()
+    }
+}

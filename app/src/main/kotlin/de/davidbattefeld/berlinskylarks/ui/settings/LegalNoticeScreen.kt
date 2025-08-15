@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.davidbattefeld.berlinskylarks.classes.viewmodels.SettingsViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.SettingsViewModel
 
 @Composable
 fun LegalNoticeScreen(vm: SettingsViewModel = viewModel()) {

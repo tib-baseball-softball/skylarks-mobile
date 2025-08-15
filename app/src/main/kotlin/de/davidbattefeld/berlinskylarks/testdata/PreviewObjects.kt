@@ -1,10 +1,10 @@
 package de.davidbattefeld.berlinskylarks.testdata
 
 import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
-import de.davidbattefeld.berlinskylarks.model.Game
-import de.davidbattefeld.berlinskylarks.model.League
-import de.davidbattefeld.berlinskylarks.model.LeagueGroup
-import de.davidbattefeld.berlinskylarks.model.LeagueTable
+import de.davidbattefeld.berlinskylarks.data.model.Game
+import de.davidbattefeld.berlinskylarks.data.model.League
+import de.davidbattefeld.berlinskylarks.data.model.LeagueGroup
+import de.davidbattefeld.berlinskylarks.data.model.LeagueTable
 
 val testEntry = Game.LeagueEntry(
     team = Game.Team(name = "Test Team")

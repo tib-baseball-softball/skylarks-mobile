@@ -20,7 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import de.davidbattefeld.berlinskylarks.global.cardPadding
-import de.davidbattefeld.berlinskylarks.model.Game
+import de.davidbattefeld.berlinskylarks.data.model.Game
 
 @Composable
 fun ScoreDetailOfficialsSection(

@@ -55,8 +55,8 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import de.davidbattefeld.berlinskylarks.LocalSnackbarHostState
-import de.davidbattefeld.berlinskylarks.classes.data.DEFAULT_SETTINGS
-import de.davidbattefeld.berlinskylarks.classes.viewmodels.ScoresViewModel
+import de.davidbattefeld.berlinskylarks.data.preferences.DEFAULT_SETTINGS
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
 import de.davidbattefeld.berlinskylarks.testdata.testLeagueGroup
 import kotlinx.coroutines.launch
 import de.davidbattefeld.berlinskylarks.ui.calendar.PermissionNotGrantedView

@@ -1,7 +1,7 @@
 package de.davidbattefeld.berlinskylarks.global
 
 import de.davidbattefeld.berlinskylarks.R
-import de.davidbattefeld.berlinskylarks.classes.BaseballClub
+import de.davidbattefeld.berlinskylarks.data.model.BaseballClub
 
 val baseballClubList = listOf(
     BaseballClub("Flamingos", R.drawable.berlin_flamingos_logo_3d),

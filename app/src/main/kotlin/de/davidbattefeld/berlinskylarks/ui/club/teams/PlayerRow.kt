@@ -8,7 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import de.davidbattefeld.berlinskylarks.model.Player
+import de.davidbattefeld.berlinskylarks.data.model.Player
 
 @Composable
 fun PlayerRow(

@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.davidbattefeld.berlinskylarks.classes.viewmodels.PlayersViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.PlayersViewModel
 
 @Composable
 fun PlayerDetailScreen(playerID: Int) {

@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import de.davidbattefeld.berlinskylarks.ui.theme.skylarksRed
-import de.davidbattefeld.berlinskylarks.model.Game
+import de.davidbattefeld.berlinskylarks.data.model.Game
 
 @Composable
 fun GameResultIndicator(game: Game) {

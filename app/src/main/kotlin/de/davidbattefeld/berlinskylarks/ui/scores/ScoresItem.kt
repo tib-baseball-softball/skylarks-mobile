@@ -24,7 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
-import de.davidbattefeld.berlinskylarks.model.Game
+import de.davidbattefeld.berlinskylarks.data.model.Game
 
 @Composable
 fun ScoresItem(game: Game, modifier: Modifier) {

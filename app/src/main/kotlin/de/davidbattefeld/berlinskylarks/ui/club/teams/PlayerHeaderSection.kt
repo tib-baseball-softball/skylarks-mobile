@@ -15,7 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import de.davidbattefeld.berlinskylarks.R
-import de.davidbattefeld.berlinskylarks.model.Player
+import de.davidbattefeld.berlinskylarks.data.model.Player
 
 @Composable
 fun PlayerHeaderSection(player: Player) {
