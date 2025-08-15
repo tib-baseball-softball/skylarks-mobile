@@ -15,14 +15,14 @@ import de.davidbattefeld.berlinskylarks.testdata.testTable
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 
 @Composable
-fun StandingsTable(table: LeagueTable) {
+fun StandingsTable(table: LeagueTable?) {
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
             StandingsTableHeader()
         }
-        items(table.rows) { row ->
+        items(table?.rows ?: listOf()) { row ->
             StandingsTableRow(row)
             HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
         }

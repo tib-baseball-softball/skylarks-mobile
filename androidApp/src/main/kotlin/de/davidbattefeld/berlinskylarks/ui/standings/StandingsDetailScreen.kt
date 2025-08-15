@@ -7,9 +7,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.StandingsViewModel
-import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
 import de.davidbattefeld.berlinskylarks.ui.utility.LoadingView
+import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.StandingsViewModel
 
 @Composable
 fun StandingsDetailScreen(

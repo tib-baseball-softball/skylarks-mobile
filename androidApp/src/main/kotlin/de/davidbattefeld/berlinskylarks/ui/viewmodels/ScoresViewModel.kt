@@ -16,6 +16,7 @@ import de.davidbattefeld.berlinskylarks.domain.model.UserCalendar
 import de.davidbattefeld.berlinskylarks.domain.service.CalendarService
 import de.davidbattefeld.berlinskylarks.domain.service.GameDecorator
 import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
+import de.davidbattefeld.berlinskylarks.global.BSM_API_KEY
 import de.davidbattefeld.berlinskylarks.testdata.testLeagueGroup
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
 import kotlinx.coroutines.flow.firstOrNull
@@ -30,8 +31,8 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
 
     var tabState by mutableIntStateOf(1)
 
-    private val matchAPIClient = MatchAPIClient()
-    private val leagueGroupsAPIClient = LeagueGroupsAPIClient()
+    private val matchAPIClient = MatchAPIClient(authKey = BSM_API_KEY)
+    private val leagueGroupsAPIClient = LeagueGroupsAPIClient(authKey = BSM_API_KEY)
     val calendarService = CalendarService()
 
     override fun load() {
