@@ -1,0 +1,21 @@
+package de.berlinskylarks.shared.data.api
+
+import de.berlinskylarks.shared.data.model.Player
+import de.berlinskylarks.shared.data.model.SkylarksTeam
+
+class TeamsAPIClient: SkylarksAPIClient() {
+    suspend fun loadAllTeams(): List<SkylarksTeam> {
+        return apiCall<List<SkylarksTeam>>(
+            resource = "api/v2/teams",
+        ) ?: listOf()
+    }
+
+    suspend fun loadPlayersForTeam(teamID: Int): List<Player> {
+        return apiCall<List<Player>>(
+            resource = "api/v2/players",
+            queryParameters = mutableListOf(
+                "team" to teamID.toString()
+            )
+        ) ?: listOf()
+    }
+}
