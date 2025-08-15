@@ -18,11 +18,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import de.davidbattefeld.berlinskylarks.domain.service.GameDecorator
 import de.davidbattefeld.berlinskylarks.global.cardPadding
-import de.davidbattefeld.berlinskylarks.data.model.Game
 
 @Composable
-fun ScoresDetailMainInfo(game: Game) {
+fun ScoresDetailMainInfo(gameDecorator: GameDecorator) {
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier
@@ -36,7 +36,7 @@ fun ScoresDetailMainInfo(game: Game) {
                 style = MaterialTheme.typography.titleMedium,
             )
             Spacer(modifier = Modifier.weight(1f))
-            GameResultIndicator(game = game)
+            GameResultIndicator(gameDecorator = gameDecorator)
         }
         Row(
             modifier = Modifier
@@ -45,21 +45,21 @@ fun ScoresDetailMainInfo(game: Game) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             ScoresDetailMainLogoSection(
-                logo = game.roadLogo,
+                logo = gameDecorator.roadLogo,
             )
-            if (game.away_runs != null && game.home_runs != null) {
+            if (gameDecorator.game.away_runs != null && gameDecorator.game.home_runs != null) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
                 ) {
                     Text(
-                        text = "${game.away_runs.toString()} - ${game.home_runs.toString()}",
+                        text = "${gameDecorator.game.away_runs.toString()} - ${gameDecorator.game.home_runs.toString()}",
                         fontWeight = FontWeight.Bold,
                         style = MaterialTheme.typography.displaySmall
                     )
                 }
             }
-            ScoresDetailMainLogoSection(logo = game.homeLogo)
+            ScoresDetailMainLogoSection(logo = gameDecorator.homeLogo)
         }
         Row(
             modifier = Modifier
@@ -68,8 +68,8 @@ fun ScoresDetailMainInfo(game: Game) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = game.away_team_name, modifier = Modifier.widthIn(max = 120.dp))
-            Text(text = game.home_team_name, modifier = Modifier.widthIn(max = 120.dp))
+            Text(text = gameDecorator.game.away_team_name, modifier = Modifier.widthIn(max = 120.dp))
+            Text(text = gameDecorator.game.home_team_name, modifier = Modifier.widthIn(max = 120.dp))
         }
     }
     Row(
@@ -90,7 +90,7 @@ fun ScoresDetailMainInfo(game: Game) {
                     .padding(8.dp)
             ) {
                 Text(text = "Date", style = MaterialTheme.typography.bodyMedium)
-                Text(text = game.localisedDate ?: "No game date available")
+                Text(text = gameDecorator.localisedDate ?: "No game date available")
             }
         }
 
@@ -109,7 +109,7 @@ fun ScoresDetailMainInfo(game: Game) {
                     .padding(8.dp)
             ) {
                 Text(text = "Status", style = MaterialTheme.typography.bodyMedium)
-                Text(text = game.human_state)
+                Text(text = gameDecorator.game.human_state)
             }
         }
     }

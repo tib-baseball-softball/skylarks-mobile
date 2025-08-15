@@ -10,34 +10,34 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import de.davidbattefeld.berlinskylarks.domain.service.GameDecorator
 import de.davidbattefeld.berlinskylarks.ui.theme.skylarksRed
-import de.davidbattefeld.berlinskylarks.data.model.Game
 
 @Composable
-fun GameResultIndicator(game: Game) {
+fun GameResultIndicator(gameDecorator: GameDecorator) {
     val endPadding = Modifier.padding(end = 6.dp)
     var color = MaterialTheme.colorScheme.onSurface
 
-    if (!game.isExternalGame && (game.human_state != "geplant" && game.human_state != "ausgefallen")) {
-        color = if (game.skylarksWin) Color.Green else Color.Red
+    if (!gameDecorator.isExternalGame && (gameDecorator.game.human_state != "geplant" && gameDecorator.game.human_state != "ausgefallen")) {
+        color = if (gameDecorator.skylarksWin) Color.Green else Color.Red
     }
 
-    if (game.isDerby) {
+    if (gameDecorator.isDerby) {
         Icon(
             imageVector = Icons.Outlined.Favorite,
             contentDescription = "Heart Icon",
             tint = skylarksRed,
             modifier = endPadding
         )
-    } else if (game.isExternalGame) {
+    } else if (gameDecorator.isExternalGame) {
         Text(
-            text = game.getGameResultIndicatorText(),
+            text = gameDecorator.getGameResultIndicatorText(),
             style = MaterialTheme.typography.titleMedium,
             modifier = endPadding
         )
     } else {
         Text(
-            text = game.getGameResultIndicatorText(),
+            text = gameDecorator.getGameResultIndicatorText(),
             style = MaterialTheme.typography.titleMedium,
             color = color,
             modifier = endPadding

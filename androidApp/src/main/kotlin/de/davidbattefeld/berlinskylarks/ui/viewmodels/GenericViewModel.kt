@@ -6,11 +6,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
+import de.berlinskylarks.shared.data.model.JSONDataObject
 import de.davidbattefeld.berlinskylarks.data.preferences.dataStore
+import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
 import kotlinx.coroutines.launch
-import de.davidbattefeld.berlinskylarks.data.model.JSONDataObject
 
 abstract class GenericViewModel(application: Application) : AndroidViewModel(application), ViewModelInterface {
     // this should use DI instead

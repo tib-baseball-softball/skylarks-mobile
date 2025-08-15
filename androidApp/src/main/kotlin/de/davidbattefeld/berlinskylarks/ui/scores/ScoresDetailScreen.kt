@@ -28,20 +28,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
 import de.davidbattefeld.berlinskylarks.global.cardPadding
-import de.davidbattefeld.berlinskylarks.testdata.testGame
+import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
 
 @Composable
 fun ScoresDetailScreen(
     matchID: Int,
 ) {
     val vm: ScoresViewModel = viewModel(LocalContext.current as ComponentActivity)
-    val game = vm.getFiltered(matchID, vm.games) ?: testGame
+    val gameDecorator = vm.games.firstOrNull { it.game.id == matchID }
 
     var showLocationData by rememberSaveable { mutableStateOf(true) }
     var showOfficialsData by rememberSaveable { mutableStateOf(true) }
     var showStatisticsData by rememberSaveable { mutableStateOf(true) }
+
+    if (gameDecorator == null) {
+        return ContentNotFoundView("games")
+    }
 
     Column(
         modifier = Modifier
@@ -124,17 +128,17 @@ fun ScoresDetailScreen(
                     ),
                     elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
                 ) {
-                    ScoresDetailMainInfo(game)
+                    ScoresDetailMainInfo(gameDecorator)
                 }
             }
             item {
-                ScoreDetailStatisticsSection(showStatisticsData, game)
+                ScoreDetailStatisticsSection(showStatisticsData, gameDecorator.game)
             }
             item {
-                ScoreDetailLocationSection(showLocationData, game)
+                ScoreDetailLocationSection(showLocationData, gameDecorator.game)
             }
             item {
-                ScoreDetailOfficialsSection(showOfficialsData, game)
+                ScoreDetailOfficialsSection(showOfficialsData, gameDecorator.game)
             }
         }
     }

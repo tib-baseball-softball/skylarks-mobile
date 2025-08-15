@@ -23,11 +23,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import de.davidbattefeld.berlinskylarks.domain.service.GameDecorator
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
-import de.davidbattefeld.berlinskylarks.data.model.Game
 
 @Composable
-fun ScoresItem(game: Game, modifier: Modifier) {
+fun ScoresItem(gameDecorator: GameDecorator, modifier: Modifier) {
     Card(
         modifier = modifier.padding(8.dp),
         colors = CardDefaults.cardColors(
@@ -41,48 +41,48 @@ fun ScoresItem(game: Game, modifier: Modifier) {
                 horizontalArrangement = Arrangement.Center
             ) {
                 Column() {
-                    Text(text = game.league.name, style = MaterialTheme.typography.titleSmall)
+                    Text(text = gameDecorator.game.league.name, style = MaterialTheme.typography.titleSmall)
                     Row{
                         Text(
-                            text = game.localisedDate ?: game.time,
+                            text = gameDecorator.localisedDate ?: gameDecorator.game.time,
                             style = MaterialTheme.typography.bodySmall
                         )
                     }
                 }
                 Spacer(modifier = Modifier.weight(1.0F))
-                GameResultIndicator(game = game)
+                GameResultIndicator(gameDecorator = gameDecorator)
             }
             HorizontalDivider()
             Column() {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
-                        painter = painterResource(id = game.roadLogo),
+                        painter = painterResource(id = gameDecorator.roadLogo),
                         contentDescription = "Road Team Logo",
                         modifier = Modifier
                             .padding(4.dp)
                             .size(35.dp)
                     )
-                    Text(text = game.away_team_name, style = MaterialTheme.typography.bodyMedium)
+                    Text(text = gameDecorator.game.away_team_name, style = MaterialTheme.typography.bodyMedium)
                     Spacer(modifier = Modifier.weight(1.0F))
-                    Text(text = (game.away_runs ?: "").toString(), style = MaterialTheme.typography.titleMedium.copy(
+                    Text(text = (gameDecorator.game.away_runs ?: "").toString(), style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.Bold,
-                        color = if ((game.home_runs ?: 0) < (game.away_runs ?: 0)) MaterialTheme.colorScheme.onSurfaceVariant else Color.Gray,
+                        color = if ((gameDecorator.game.home_runs ?: 0) < (gameDecorator.game.away_runs ?: 0)) MaterialTheme.colorScheme.onSurfaceVariant else Color.Gray,
                         fontSize = 18.sp,
                     ), modifier = Modifier.padding(end = 6.dp))
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
-                        painter = painterResource(id = game.homeLogo),
+                        painter = painterResource(id = gameDecorator.homeLogo),
                         contentDescription = "Home Team Logo",
                         modifier = Modifier
                             .padding(4.dp)
                             .size(35.dp)
                     )
-                    Text(text = game.home_team_name, style = MaterialTheme.typography.bodyMedium)
+                    Text(text = gameDecorator.game.home_team_name, style = MaterialTheme.typography.bodyMedium)
                     Spacer(modifier = Modifier.weight(1.0F))
-                    Text(text = (game.home_runs ?: "").toString(), style = MaterialTheme.typography.titleMedium.copy(
+                    Text(text = (gameDecorator.game.home_runs ?: "").toString(), style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.Bold,
-                        color = if ((game.home_runs ?: 0) > (game.away_runs ?: 0)) MaterialTheme.colorScheme.onSurfaceVariant else Color.Gray,
+                        color = if ((gameDecorator.game.home_runs ?: 0) > (gameDecorator.game.away_runs ?: 0)) MaterialTheme.colorScheme.onSurfaceVariant else Color.Gray,
                         fontSize = 18.sp,
                     ), modifier = Modifier.padding(end = 6.dp))
                 }

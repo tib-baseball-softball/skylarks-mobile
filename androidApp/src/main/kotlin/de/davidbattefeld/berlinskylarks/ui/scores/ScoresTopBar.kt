@@ -283,7 +283,7 @@ fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
                         Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                             Text("The following events will be added:")
                             vm.games.forEach {
-                                Text("${it.away_team_name} @ ${it.home_team_name} on ${it.localisedDate}")
+                                Text("${it.game.away_team_name} @ ${it.game.home_team_name} on ${it.localisedDate}")
                             }
                         }
                     }

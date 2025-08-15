@@ -34,11 +34,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
-import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
 import de.davidbattefeld.berlinskylarks.ui.utility.LoadingView
+import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
 
 @Composable
 fun ScoresScreen(
@@ -127,12 +127,12 @@ fun ScoresScreen(
             }
 
             ViewState.Found -> {
-                items(if (showExternalGames) vm.games else vm.skylarksGames) { game ->
+                items(if (showExternalGames) vm.games else vm.skylarksGames) { gameDecorator ->
                     ScoresItem(
-                        game = game,
+                        gameDecorator = gameDecorator,
                         modifier = Modifier
                             .clickable {
-                                detailRoute(game.id)
+                                detailRoute(gameDecorator.game.id)
                             }
                     )
                 }

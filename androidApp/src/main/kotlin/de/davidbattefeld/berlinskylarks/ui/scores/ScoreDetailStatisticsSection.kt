@@ -27,8 +27,8 @@ import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import de.berlinskylarks.shared.data.model.Game
 import de.davidbattefeld.berlinskylarks.global.cardPadding
-import de.davidbattefeld.berlinskylarks.data.model.Game
 
 @Composable
 fun ScoreDetailStatisticsSection(
