@@ -49,6 +49,7 @@ func determineTableRow(team: BSMTeam, table: LeagueTable) -> LeagueTable.Row {
 /// Generic load function that accepts any codable type.
 ///
 /// Should be refactored to be the base of an API client class.
+@available(*, deprecated, message: "use KMP module instead")
 func fetchBSMData<T: Codable>(url: URL, dataType: T.Type) async throws -> T {
     
     let (data, _) = try await URLSession.shared.data(from: url)
@@ -57,6 +58,7 @@ func fetchBSMData<T: Codable>(url: URL, dataType: T.Type) async throws -> T {
     return responseObj
 }
 
+@available(*, deprecated, message: "use KMP module instead")
 func loadSkylarksTeams(season: Int) async throws -> [BSMTeam] {
     
     let teamURL = URL(string:"https://bsm.baseball-softball.de/clubs/485/teams.json?filters[seasons][]=" + "\(season)" + "&sort[league_sort]=asc&api_key=" + apiKey)!
@@ -64,6 +66,7 @@ func loadSkylarksTeams(season: Int) async throws -> [BSMTeam] {
     return teams
 }
 
+@available(*, deprecated, message: "use KMP module instead")
 func loadLeagueGroups(season: Int) async -> [LeagueGroup] {
     
     let leagueGroupsURL = URL(string:"https://bsm.baseball-softball.de/league_groups.json?filters[seasons][]=" + "\(season)" + "&api_key=" + apiKey)!
@@ -96,6 +99,7 @@ func loadTablesForTeam(team: BSMTeam, leagueGroups: [LeagueGroup]) async -> [Lea
     return ret
 }
 
+@available(*, deprecated, message: "use KMP module instead")
 func loadSingleTable(for leagueGroup: LeagueGroup) async -> LeagueTable {
     let url = URL(string: "https://bsm.baseball-softball.de/leagues/\(leagueGroup.id)/table.json")!
     
