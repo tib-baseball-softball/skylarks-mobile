@@ -109,6 +109,7 @@
 		CAE1CA692D85EB7400AA7538 /* Exceptions for "Berlin_Skylarks" folder in "Berlin Skylarks" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Global/API_Key.dist,
 				Info.plist,
 			);
 			target = CABF7BEA259351D400B95813 /* Berlin Skylarks */;
@@ -137,7 +138,6 @@
 				Enums/ViewState.swift,
 				Generated/Client.swift,
 				Generated/Types.swift,
-				Global/API_Key.dist,
 				Global/API_Key.swift,
 				Global/AppSettings.swift,
 				Global/ColorSets.swift,
@@ -171,7 +171,6 @@
 				Classes/DateTimeUtility.swift,
 				Classes/PlayoffSeries.swift,
 				Classes/PlayoffTeam.swift,
-				Global/API_Key.dist,
 				Global/API_Key.swift,
 				Global/AppSettings.swift,
 				Global/ColorSets.swift,
@@ -400,6 +399,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CABF7BFF259351D500B95813 /* Build configuration list for PBXNativeTarget "Berlin Skylarks" */;
 			buildPhases = (
+				CA76AC882E5077A000ED9990 /* ShellScript */,
 				CABF7BE7259351D400B95813 /* Sources */,
 				CABF7BE8259351D400B95813 /* Frameworks */,
 				CABF7BE9259351D400B95813 /* Resources */,
@@ -523,6 +523,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CA76AC882E5077A000ED9990 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :shared:embedAndSignAppleFrameworkForXcode\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CA3C4C2828B40C3400F72841 /* Sources */ = {
@@ -831,6 +852,8 @@
 				CURRENT_PROJECT_VERSION = 2;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)\"";
 				INFOPLIST_FILE = Berlin_Skylarks/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Skylarks;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
@@ -865,6 +888,8 @@
 				CURRENT_PROJECT_VERSION = 2;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)\"";
 				INFOPLIST_FILE = Berlin_Skylarks/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Skylarks;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
