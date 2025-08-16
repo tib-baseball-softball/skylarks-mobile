@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import de.berlinskylarks.shared.Greeting
 import de.davidbattefeld.berlinskylarks.BuildConfig
 
 @Composable
@@ -49,6 +50,12 @@ fun AppInfoScreen() {
         ListItem(
             headlineContent = { Text(text = "Build Type") },
             supportingContent = { Text(BuildConfig.BUILD_TYPE) },
+            colors = listItemColors
+        )
+        HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
+        ListItem(
+            headlineContent = { Text(text = "Kotlin Multiplatform") },
+            supportingContent = { Text(Greeting().greet()) },
             colors = listItemColors
         )
     }

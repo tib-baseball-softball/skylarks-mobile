@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import sharedKit
 
 struct InfoView: View {
     #if os(iOS)
@@ -40,6 +41,10 @@ struct InfoView: View {
             HStack {
                 Text("Build Number:")
                 Text(build)
+            }
+            HStack {
+                Text("Kotlin Multiplatform:")
+                Text(Greeting().greet())
             }
         }
         .textSelection(.enabled)
