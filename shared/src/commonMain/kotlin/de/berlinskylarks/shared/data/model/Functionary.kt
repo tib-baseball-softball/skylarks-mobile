@@ -9,4 +9,5 @@ data class Functionary(
     var function: String, //set by user (Freitext)
     var mail: String,
     var person: Person,
+    var admission_date: String,
 )

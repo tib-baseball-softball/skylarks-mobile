@@ -17,7 +17,7 @@ expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
     entities = [
         FunctionaryEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false,
 )
 @ConstructedBy(AppDatabaseConstructor::class)

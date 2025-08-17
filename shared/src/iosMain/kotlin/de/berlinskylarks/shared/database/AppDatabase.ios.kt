@@ -17,6 +17,7 @@ import platform.Foundation.NSUserDomainMask
 fun getPersistentDatabase(): AppDatabase {
     val dbFilePath = documentDirectory() + "/" + "local.db"
     return Room.databaseBuilder<AppDatabase>(name = dbFilePath)
+        .fallbackToDestructiveMigration(dropAllTables = true)
         .setDriver(BundledSQLiteDriver())
         .build()
 }

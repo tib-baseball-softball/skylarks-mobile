@@ -1,6 +1,5 @@
 package de.davidbattefeld.berlinskylarks.ui.nav
 
-import android.R.attr.data
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Gavel
 import androidx.compose.material.icons.filled.Info

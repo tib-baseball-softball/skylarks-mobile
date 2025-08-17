@@ -10,5 +10,6 @@ data class FunctionaryEntity (
     var category: String, //set by BSM (Enum)
     var function: String, //set by user (Freitext)
     var mail: String,
+    var admission_date: String,
     // var person: Person
 )

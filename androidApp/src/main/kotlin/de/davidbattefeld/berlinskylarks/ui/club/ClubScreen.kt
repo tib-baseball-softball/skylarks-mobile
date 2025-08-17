@@ -17,7 +17,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Badge
 import androidx.compose.material.icons.outlined.Create
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.People
 import androidx.compose.material.icons.outlined.Shield
 import androidx.compose.material.icons.outlined.Sports
 import androidx.compose.material.icons.outlined.Stadium

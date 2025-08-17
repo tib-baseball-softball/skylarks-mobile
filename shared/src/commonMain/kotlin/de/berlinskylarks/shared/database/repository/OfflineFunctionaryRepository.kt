@@ -32,6 +32,7 @@ class OfflineFunctionaryRepository(
                 category = functionary.category,
                 function = functionary.function,
                 mail = functionary.mail,
+                admission_date = functionary.admission_date,
                 //person = functionary.person
             ))
         }
