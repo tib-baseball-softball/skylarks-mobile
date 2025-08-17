@@ -77,6 +77,7 @@ dependencies {
     implementation(libs.coroutines.android)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.room.runtime)
 
     testImplementation(libs.junit)
 
