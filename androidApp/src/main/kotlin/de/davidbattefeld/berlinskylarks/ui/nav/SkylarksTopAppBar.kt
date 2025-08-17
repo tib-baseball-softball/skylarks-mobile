@@ -56,6 +56,11 @@ fun SkylarksTopAppBar(
             title = { Text(text = SkylarksNavDestination.PlayerDetail.title) },
         )
 
+        SkylarksNavDestination.Functionary.route -> TopAppBar(
+            scrollBehavior = scrollBehavior,
+            title = { Text(text = SkylarksNavDestination.Functionary.title) },
+        )
+
         SkylarksNavDestination.Settings.route -> TopAppBar(
             scrollBehavior = scrollBehavior,
             title = { Text(text = SkylarksNavDestination.Settings.title) },

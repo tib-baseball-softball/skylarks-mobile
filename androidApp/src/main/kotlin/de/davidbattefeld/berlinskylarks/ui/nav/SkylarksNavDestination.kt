@@ -1,5 +1,6 @@
 package de.davidbattefeld.berlinskylarks.ui.nav
 
+import android.R.attr.data
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Gavel
 import androidx.compose.material.icons.filled.Info
@@ -97,6 +98,12 @@ sealed class SkylarksNavDestination(
             navArgument(playerArg) { type = NavType.IntType }
         )
     }
+
+    data object Functionary : SkylarksNavDestination(
+        route = "functionary",
+        title = "Functionary",
+        icon = Icons.Outlined.Person
+    )
 
     data object Settings : SkylarksNavDestination(
         route = "settings",

@@ -20,6 +20,7 @@ import androidx.navigation.compose.composable
 import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
 import de.davidbattefeld.berlinskylarks.navigateSingleTopTo
 import de.davidbattefeld.berlinskylarks.ui.club.ClubScreen
+import de.davidbattefeld.berlinskylarks.ui.club.functionary.FunctionaryScreen
 import de.davidbattefeld.berlinskylarks.ui.club.teams.PlayerDetailScreen
 import de.davidbattefeld.berlinskylarks.ui.club.teams.TeamDetailScreen
 import de.davidbattefeld.berlinskylarks.ui.club.teams.TeamsScreen
@@ -106,7 +107,8 @@ fun NavGraph(
 
             composable(route = SkylarksNavDestination.Club.route) {
                 ClubScreen(
-                    teamsRoute = { navController.navigateSingleTopTo(SkylarksNavDestination.Teams.route) }
+                    teamsRoute = { navController.navigateSingleTopTo(SkylarksNavDestination.Teams.route) },
+                    functionaryRoute = { navController.navigateSingleTopTo(SkylarksNavDestination.Functionary.route) },
                 )
             }
 
@@ -136,6 +138,10 @@ fun NavGraph(
             ) {
                 val id = it.arguments?.getInt(SkylarksNavDestination.PlayerDetail.playerArg)
                 PlayerDetailScreen(playerID = id ?: BOGUS_ID)
+            }
+
+            composable(route = SkylarksNavDestination.Functionary.route) {
+                FunctionaryScreen()
             }
 
             composable(route = SkylarksNavDestination.Settings.route) {

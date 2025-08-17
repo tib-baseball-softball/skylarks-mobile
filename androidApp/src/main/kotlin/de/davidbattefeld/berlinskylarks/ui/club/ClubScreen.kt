@@ -36,10 +36,12 @@ import androidx.compose.ui.unit.dp
 import de.davidbattefeld.berlinskylarks.R
 import de.davidbattefeld.berlinskylarks.global.cardGridSpacing
 import de.davidbattefeld.berlinskylarks.global.clubCardPadding
+import de.davidbattefeld.berlinskylarks.ui.club.functionary.FunctionaryCard
 
 @Composable
 fun ClubScreen(
     teamsRoute: () -> Unit,
+    functionaryRoute: () -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -209,26 +211,7 @@ fun ClubScreen(
                 }
             }
             item {
-                Card(
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-                    ),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .padding(clubCardPadding),
-                        verticalArrangement = Arrangement.spacedBy(1.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Outlined.People,
-                            contentDescription = "",
-                            tint = MaterialTheme.colorScheme.secondary
-                        )
-                        Text(text = "Officials", style = MaterialTheme.typography.titleLarge)
-                        Text(text = "Administration")
-                    }
-                }
+                FunctionaryCard(functionaryRoute)
             }
         }
         Text("under construction")
