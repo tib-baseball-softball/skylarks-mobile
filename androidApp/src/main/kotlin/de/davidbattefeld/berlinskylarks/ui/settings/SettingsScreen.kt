@@ -1,6 +1,5 @@
 package de.davidbattefeld.berlinskylarks.ui.settings
 
-import android.R.attr.contentDescription
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,12 +41,11 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.davidbattefeld.berlinskylarks.data.preferences.DEFAULT_SETTINGS
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.SettingsViewModel
 import de.davidbattefeld.berlinskylarks.global.TeamGlobals
 import de.davidbattefeld.berlinskylarks.ui.nav.Info
 import de.davidbattefeld.berlinskylarks.ui.nav.LegalNotice
 import de.davidbattefeld.berlinskylarks.ui.nav.Privacy
-import de.davidbattefeld.berlinskylarks.ui.nav.SkylarksNavDestination
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.SettingsViewModel
 
 @Composable
 fun SettingsScreen(
