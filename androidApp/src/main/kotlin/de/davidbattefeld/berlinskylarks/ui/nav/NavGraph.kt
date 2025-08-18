@@ -61,8 +61,8 @@ fun NavGraph(
                 }
                 entry<ScoresDetail>(
                     metadata = ListDetailSceneStrategy.detailPane()
-                ) { match ->
-                    ScoresDetailScreen(matchID = match.id)
+                ) { key ->
+                    ScoresDetailScreen(matchID = key.id)
                 }
 
                 entry<Standings> {
@@ -72,8 +72,8 @@ fun NavGraph(
                         }
                     )
                 }
-                entry<StandingsDetail> { table ->
-                    StandingsDetailScreen(table.id)
+                entry<StandingsDetail> { key ->
+                    StandingsDetailScreen(key.id)
                 }
 
                 entry<Club> {
@@ -90,17 +90,17 @@ fun NavGraph(
                         }
                     )
                 }
-                entry<TeamDetail> { team ->
+                entry<TeamDetail> { key ->
                     TeamDetailScreen(
-                        teamID = team.id,
+                        teamID = key.id,
                         playerDetailRoute = { playerDetailID ->
                             topLevelBackStack.add(PlayerDetail(playerDetailID))
                         }
                     )
                 }
 
-                entry<PlayerDetail> { player ->
-                    PlayerDetailScreen(playerID = player.id)
+                entry<PlayerDetail> { key ->
+                    PlayerDetailScreen(playerID = key.id)
                 }
 
                 entry<Functionary> {
