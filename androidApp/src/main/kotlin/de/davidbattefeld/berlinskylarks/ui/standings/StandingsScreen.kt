@@ -26,11 +26,11 @@ import de.davidbattefeld.berlinskylarks.global.clubCardPadding
 import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
 import de.davidbattefeld.berlinskylarks.ui.utility.LoadingView
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.StandingsViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.LeagueGroupsViewModel
 
 @Composable
 fun StandingsScreen(
-    vm: StandingsViewModel = viewModel(),
+    vm: LeagueGroupsViewModel = viewModel(),
     detailRoute: (Int) -> Unit,
 ) {
     Column(
