@@ -9,7 +9,11 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.PermanentDrawerSheet
@@ -105,13 +109,13 @@ fun BerlinSkylarksApp(windowSize: WindowWidthSizeClass, ) {
                     Scaffold(
                         topBar = { SkylarksTopAppBar(topLevelBackStack, scrollBehavior) },
                         floatingActionButton = {
-//                            when (currentRoute.value?.destination?.route) {
-//                                Scores.route -> FloatingActionButton(
-//                                    onClick = { fabOnClick?.invoke() },
-//                                    containerColor = MaterialTheme.colorScheme.primary,
-//                                    content = { Icon(Icons.Filled.Refresh, "refresh games list") },
-//                                )
-//                            }
+                            when (topLevelBackStack.topLevelKey) {
+                                Scores -> FloatingActionButton(
+                                    onClick = { fabOnClick?.invoke() },
+                                    containerColor = MaterialTheme.colorScheme.primary,
+                                    content = { Icon(Icons.Filled.Refresh, "refresh games list") },
+                                )
+                            }
                         },
                         snackbarHost = snackBarHost
                     ) { padding ->
@@ -164,13 +168,13 @@ fun BerlinSkylarksApp(windowSize: WindowWidthSizeClass, ) {
                     Scaffold(
                         topBar = { SkylarksTopAppBar(topLevelBackStack, scrollBehavior) },
                         floatingActionButton = {
-//                            when (currentRoute.value?.destination?.route) {
-//                                SkylarksNavDestination.Scores.route -> FloatingActionButton(
-//                                    onClick = { fabOnClick?.invoke() },
-//                                    containerColor = MaterialTheme.colorScheme.primary,
-//                                    content = { Icon(Icons.Filled.Refresh, "refresh games list") },
-//                                )
-//                            }
+                            when (topLevelBackStack.topLevelKey) {
+                                Scores -> FloatingActionButton(
+                                    onClick = { fabOnClick?.invoke() },
+                                    containerColor = MaterialTheme.colorScheme.primary,
+                                    content = { Icon(Icons.Filled.Refresh, "refresh games list") },
+                                )
+                            }
                         },
                         snackbarHost = snackBarHost
                     ) { padding ->
@@ -188,13 +192,13 @@ fun BerlinSkylarksApp(windowSize: WindowWidthSizeClass, ) {
                 Scaffold(
                     topBar = { SkylarksTopAppBar(topLevelBackStack, scrollBehavior) },
                     floatingActionButton = {
-//                        when (currentRoute.value?.destination?.route) {
-//                            SkylarksNavDestination.Scores.route -> FloatingActionButton(
-//                                onClick = { fabOnClick?.invoke() },
-//                                containerColor = MaterialTheme.colorScheme.primary,
-//                                content = { Icon(Icons.Filled.Refresh, "refresh games list") },
-//                            )
-//                        }
+                        when (topLevelBackStack.topLevelKey) {
+                            Scores -> FloatingActionButton(
+                                onClick = { fabOnClick?.invoke() },
+                                containerColor = MaterialTheme.colorScheme.primary,
+                                content = { Icon(Icons.Filled.Refresh, "refresh games list") },
+                            )
+                        }
                     },
                     snackbarHost = snackBarHost,
                     bottomBar = {
