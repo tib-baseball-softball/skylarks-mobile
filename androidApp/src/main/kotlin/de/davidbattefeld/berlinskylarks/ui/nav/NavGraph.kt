@@ -1,24 +1,16 @@
 package de.davidbattefeld.berlinskylarks.ui.nav
 
-import androidx.compose.animation.core.EaseIn
-import androidx.compose.animation.core.EaseOut
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.VisibilityThreshold
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.navigation3.ListDetailSceneStrategy
+import androidx.compose.material3.adaptive.navigation3.rememberListDetailSceneStrategy
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.IntOffset
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
-import de.davidbattefeld.berlinskylarks.navigateSingleTopTo
+import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.entry
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.ui.NavDisplay
 import de.davidbattefeld.berlinskylarks.ui.club.ClubScreen
 import de.davidbattefeld.berlinskylarks.ui.club.functionary.FunctionaryScreen
 import de.davidbattefeld.berlinskylarks.ui.club.teams.PlayerDetailScreen
@@ -34,135 +26,107 @@ import de.davidbattefeld.berlinskylarks.ui.settings.SettingsScreen
 import de.davidbattefeld.berlinskylarks.ui.standings.StandingsDetailScreen
 import de.davidbattefeld.berlinskylarks.ui.standings.StandingsScreen
 
+@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun NavGraph(
     modifier: Modifier,
-    navController: NavHostController,
+    topLevelBackStack: TopLevelBackStack<NavKey>,
     setFabOnClick: (() -> Unit) -> Unit
 ) {
+    val listDetailStrategy = rememberListDetailSceneStrategy<NavKey>()
+
     Box(modifier = modifier) {
-        NavHost(
-            navController = navController,
-            startDestination = SkylarksNavDestination.Scores.route, // change back to Home later
-            enterTransition = {
-                slideInVertically(
-                    animationSpec =
-                        spring(
-                            dampingRatio = Spring.DampingRatioNoBouncy,
-                            stiffness = Spring.StiffnessLow,
-                            visibilityThreshold = IntOffset.VisibilityThreshold
-                        ),
-                    initialOffsetY = { -60 }
-                ) +
-                        fadeIn(
-                            initialAlpha = 0.8f,
-                            animationSpec = tween(durationMillis = 300, easing = EaseIn)
-                        )
-            },
-            exitTransition = {
-                slideOutVertically(
-                    animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioNoBouncy,
-                        stiffness = Spring.StiffnessLow,
-                        visibilityThreshold = IntOffset.VisibilityThreshold
-                    ),
-                    targetOffsetY = { -60 }
-                ) + fadeOut(animationSpec = tween(durationMillis = 300, easing = EaseOut))
-            }
-        ) {
-            composable(route = SkylarksNavDestination.Home.route) {
-                HomeScreen()
-            }
+        NavDisplay(
+            backStack = topLevelBackStack.backStack,
+            onBack = { topLevelBackStack.removeLast() },
+            sceneStrategy = listDetailStrategy,
+            entryProvider = entryProvider {
+                entry<Home>{
+                    HomeScreen()
+                }
 
-            composable(route = SkylarksNavDestination.Scores.route) {
-                ScoresScreen(
-                    setFabOnClick = setFabOnClick,
-                    detailRoute = { id ->
-                        navController.navigateSingleTopTo("${SkylarksNavDestination.ScoresDetail.route}/$id")
-                    }
-                )
-            }
-            composable(
-                route = SkylarksNavDestination.ScoresDetail.routeWithArgs,
-                arguments = SkylarksNavDestination.ScoresDetail.arguments,
-            ) {
-                val id = it.arguments?.getInt(SkylarksNavDestination.ScoresDetail.scoreArg)
-                ScoresDetailScreen(matchID = id ?: BOGUS_ID)
-            }
+                entry<Scores>(
+                    metadata = ListDetailSceneStrategy.listPane(
+                        detailPlaceholder = {
+                            Text("Choose a game from the list")
+                        }
+                    )
+                ) {
+                    ScoresScreen(
+                        setFabOnClick = setFabOnClick,
+                        detailRoute = { id ->
+                            topLevelBackStack.add(ScoresDetail(id))
+                        }
+                    )
+                }
+                entry<ScoresDetail>(
+                    metadata = ListDetailSceneStrategy.detailPane()
+                ) { match ->
+                    ScoresDetailScreen(matchID = match.id)
+                }
 
-            composable(route = SkylarksNavDestination.Standings.route) {
-                StandingsScreen(
-                    detailRoute = { id ->
-                        navController.navigateSingleTopTo("${SkylarksNavDestination.StandingsDetail.route}/$id")
-                    }
-                )
-            }
-            composable(
-                route = SkylarksNavDestination.StandingsDetail.routeWithArgs,
-                arguments = SkylarksNavDestination.StandingsDetail.arguments
-            ) {
-                val id = it.arguments?.getInt(SkylarksNavDestination.StandingsDetail.tableArg)
-                StandingsDetailScreen(id ?: BOGUS_ID)
-            }
+                entry<Standings> {
+                    StandingsScreen(
+                        detailRoute = { id ->
+                            topLevelBackStack.add(StandingsDetail(id))
+                        }
+                    )
+                }
+                entry<StandingsDetail> { table ->
+                    StandingsDetailScreen(table.id)
+                }
 
-            composable(route = SkylarksNavDestination.Club.route) {
-                ClubScreen(
-                    teamsRoute = { navController.navigateSingleTopTo(SkylarksNavDestination.Teams.route) },
-                    functionaryRoute = { navController.navigateSingleTopTo(SkylarksNavDestination.Functionary.route) },
-                )
-            }
+                entry<Club> {
+                    ClubScreen(
+                        teamsRoute = { topLevelBackStack.add(Teams) },
+                        functionaryRoute = { topLevelBackStack.add(Functionary) },
+                    )
+                }
 
-            composable(route = SkylarksNavDestination.Teams.route) {
-                TeamsScreen(
-                    teamsDetailRoute = { id ->
-                        navController.navigateSingleTopTo("${SkylarksNavDestination.TeamDetail.route}/$id")
-                    }
-                )
-            }
-            composable(
-                route = SkylarksNavDestination.TeamDetail.routeWithArgs,
-                arguments = SkylarksNavDestination.TeamDetail.arguments,
-            ) {
-                val id = it.arguments?.getInt(SkylarksNavDestination.TeamDetail.teamArg)
-                TeamDetailScreen(
-                    teamID = id ?: BOGUS_ID,
-                    playerDetailRoute = { playerDetailID ->
-                        navController.navigateSingleTopTo("${SkylarksNavDestination.PlayerDetail.route}/$playerDetailID")
-                    }
-                )
-            }
+                entry<Teams> {
+                    TeamsScreen(
+                        teamsDetailRoute = { id ->
+                            topLevelBackStack.add(TeamDetail(id))
+                        }
+                    )
+                }
+                entry<TeamDetail> { team ->
+                    TeamDetailScreen(
+                        teamID = team.id,
+                        playerDetailRoute = { playerDetailID ->
+                            topLevelBackStack.add(PlayerDetail(playerDetailID))
+                        }
+                    )
+                }
 
-            composable(
-                route = SkylarksNavDestination.PlayerDetail.routeWithArgs,
-                arguments = SkylarksNavDestination.PlayerDetail.arguments,
-            ) {
-                val id = it.arguments?.getInt(SkylarksNavDestination.PlayerDetail.playerArg)
-                PlayerDetailScreen(playerID = id ?: BOGUS_ID)
-            }
+                entry<PlayerDetail> { player ->
+                    PlayerDetailScreen(playerID = player.id)
+                }
 
-            composable(route = SkylarksNavDestination.Functionary.route) {
-                FunctionaryScreen()
-            }
+                entry<Functionary> {
+                    FunctionaryScreen()
+                }
 
-            composable(route = SkylarksNavDestination.Settings.route) {
-                SettingsScreen(
-                    infoRoute = { navController.navigateSingleTopTo(SkylarksNavDestination.Info.route) },
-                    privacyRoute = { navController.navigateSingleTopTo(SkylarksNavDestination.Privacy.route) },
-                    legalRoute = { navController.navigateSingleTopTo(SkylarksNavDestination.LegalNotice.route) },
-                )
-            }
+                entry<Settings> {
+                    SettingsScreen(
+                        infoRoute = { topLevelBackStack.add(Info) },
+                        privacyRoute = { topLevelBackStack.add(Privacy) },
+                        legalRoute = { topLevelBackStack.add(LegalNotice) },
+                    )
+                }
 
-            composable(SkylarksNavDestination.Info.route) {
-                AppInfoScreen()
-            }
+                entry<Info> {
+                    AppInfoScreen()
+                }
 
-            composable(SkylarksNavDestination.LegalNotice.route) {
-                LegalNoticeScreen()
-            }
+                entry<LegalNotice> {
+                    LegalNoticeScreen()
+                }
 
-            composable(SkylarksNavDestination.Privacy.route) {
-                PrivacyPolicyScreen()
+                entry<Privacy> {
+                    PrivacyPolicyScreen()
+                }
             }
-        }
+        )
     }
 }

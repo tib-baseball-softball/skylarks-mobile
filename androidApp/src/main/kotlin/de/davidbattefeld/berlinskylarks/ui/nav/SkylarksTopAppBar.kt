@@ -5,80 +5,81 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
-import androidx.navigation.NavBackStackEntry
+import androidx.navigation3.runtime.NavKey
 import de.davidbattefeld.berlinskylarks.ui.scores.ScoresTopBar
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun SkylarksTopAppBar(
-    currentRoute: State<NavBackStackEntry?>,
+    topLevelBackStack: TopLevelBackStack<NavKey>,
     scrollBehavior: TopAppBarScrollBehavior,
 ) {
-    when (currentRoute.value?.destination?.route) {
-        SkylarksNavDestination.Scores.route -> ScoresTopBar(
-            title = SkylarksNavDestination.Scores.title,
+    val currentRoute = topLevelBackStack.topLevelKey
+
+    when (currentRoute) {
+        Scores -> ScoresTopBar(
             scrollBehavior = scrollBehavior,
+            title = Scores.title,
         )
 
-        SkylarksNavDestination.ScoresDetail.routeWithArgs -> TopAppBar(
+        ScoresDetail -> TopAppBar(
             scrollBehavior = scrollBehavior,
-            title = { Text(text = SkylarksNavDestination.ScoresDetail.title) },
+            title = { Text(text = ScoresDetail.title) },
         )
 
-        SkylarksNavDestination.Standings.route -> TopAppBar(
+        Standings -> TopAppBar(
             scrollBehavior = scrollBehavior,
-            title = { Text(text = SkylarksNavDestination.Standings.title) },
+            title = { Text(text = Standings.title) },
         )
 
-        SkylarksNavDestination.StandingsDetail.routeWithArgs -> TopAppBar(
+        StandingsDetail -> TopAppBar(
             scrollBehavior = scrollBehavior,
-            title = { Text(text = SkylarksNavDestination.StandingsDetail.title) },
+            title = { Text(text = StandingsDetail.title) },
         )
 
-        SkylarksNavDestination.Club.route -> TopAppBar(
+        Club -> TopAppBar(
             scrollBehavior = scrollBehavior,
-            title = { Text(text = SkylarksNavDestination.Club.title) },
+            title = { Text(text = Club.title) },
         )
 
-        SkylarksNavDestination.Teams.route -> TopAppBar(
+        Teams -> TopAppBar(
             scrollBehavior = scrollBehavior,
-            title = { Text(text = SkylarksNavDestination.Teams.title) },
+            title = { Text(text = Teams.title) },
         )
 
-        SkylarksNavDestination.TeamDetail.routeWithArgs -> TopAppBar(
+        TeamDetail -> TopAppBar(
             scrollBehavior = scrollBehavior,
-            title = { Text(text = SkylarksNavDestination.TeamDetail.title) },
+            title = { Text(text = TeamDetail.title) },
         )
 
-        SkylarksNavDestination.PlayerDetail.routeWithArgs -> TopAppBar(
+        PlayerDetail -> TopAppBar(
             scrollBehavior = scrollBehavior,
-            title = { Text(text = SkylarksNavDestination.PlayerDetail.title) },
+            title = { Text(text = PlayerDetail.title) },
         )
 
-        SkylarksNavDestination.Functionary.route -> TopAppBar(
+        Functionary -> TopAppBar(
             scrollBehavior = scrollBehavior,
-            title = { Text(text = SkylarksNavDestination.Functionary.title) },
+            title = { Text(text = Functionary.title) },
         )
 
-        SkylarksNavDestination.Settings.route -> TopAppBar(
+        Settings -> TopAppBar(
             scrollBehavior = scrollBehavior,
-            title = { Text(text = SkylarksNavDestination.Settings.title) },
+            title = { Text(text = Settings.title) },
         )
 
-        SkylarksNavDestination.Info.route -> TopAppBar(
+        Info -> TopAppBar(
             scrollBehavior = scrollBehavior,
-            title = { Text(text = SkylarksNavDestination.Info.title) },
+            title = { Text(text = Info.title) },
         )
 
-        SkylarksNavDestination.LegalNotice.route -> TopAppBar(
+        LegalNotice -> TopAppBar(
             scrollBehavior = scrollBehavior,
-            title = { Text(text = SkylarksNavDestination.LegalNotice.title) },
+            title = { Text(text = LegalNotice.title) },
         )
 
-        SkylarksNavDestination.Privacy.route -> TopAppBar(
+        Privacy -> TopAppBar(
             scrollBehavior = scrollBehavior,
-            title = { Text(text = SkylarksNavDestination.Privacy.title) },
+            title = { Text(text = Privacy.title) },
         )
 
         else -> TopAppBar(

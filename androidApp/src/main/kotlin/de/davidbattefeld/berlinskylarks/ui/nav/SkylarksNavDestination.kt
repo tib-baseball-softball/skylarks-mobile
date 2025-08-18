@@ -1,130 +1,135 @@
 package de.davidbattefeld.berlinskylarks.ui.nav
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Gavel
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Policy
 import androidx.compose.material.icons.outlined.Groups
-import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Scoreboard
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Shield
 import androidx.compose.material.icons.outlined.Stars
 import androidx.compose.material.icons.outlined.TableRows
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
+import androidx.navigation3.runtime.NavKey
+import kotlinx.serialization.Serializable
 
-sealed class SkylarksNavDestination(
-    val route: String,
-    val title: String,
-    val icon: ImageVector,
-) {
-    data object Home : SkylarksNavDestination(
-        route = "home",
-        title = "Home",
-        icon = Icons.Outlined.Stars
-    )
+val TOP_LEVEL_ROUTES: List<TopLevelDestination> = listOf(Scores, Standings, Club, Settings)
 
-    data object Scores : SkylarksNavDestination(
-        route = "scores",
-        title = "Scores",
-        icon = Icons.Outlined.Scoreboard
-    )
+/**
+ * Sealed interface defining the contract for all navigation destinations.
+ */
+sealed interface SkylarksNavDestination : NavKey {
+    val route: String
+    val title: String
+}
 
-    data object ScoresDetail : SkylarksNavDestination(
-        route = "scores_detail",
-        title = "Game Detail",
-        icon = Icons.Outlined.Scoreboard
-    ) {
-        const val scoreArg = "game_id"
-        val routeWithArgs = "${route}/{${scoreArg}}"
-        val arguments = listOf(
-            navArgument(scoreArg) { type = NavType.IntType }
-        )
+/**
+ * Top level destinations need an icon.
+ */
+sealed interface TopLevelDestination : SkylarksNavDestination {
+    val icon: ImageVector
+}
+
+@Serializable
+data object Home : TopLevelDestination {
+    override val route = "home"
+    override val title = "Home"
+    override val icon = Icons.Outlined.Stars
+}
+
+@Serializable
+data object Scores : TopLevelDestination {
+    override val route = "scores"
+    override val title = "Scores"
+    override val icon = Icons.Outlined.Scoreboard
+}
+
+@Serializable
+data class ScoresDetail(val id: Int) : SkylarksNavDestination {
+    override val route = "scores_detail"
+    override val title = "Game Detail"
+
+    companion object {
+        val title = "Game Detail"
     }
+}
 
-    data object Standings : SkylarksNavDestination(
-        route = "standings",
-        title = "Standings",
-        icon = Icons.Outlined.TableRows
-    )
+@Serializable
+data object Standings : TopLevelDestination {
+    override val route = "standings"
+    override val title = "Standings"
+    override val icon = Icons.Outlined.TableRows
+}
 
-    data object StandingsDetail : SkylarksNavDestination(
-        route = "standings_detail",
-        title = "Table Detail",
-        icon = Icons.Outlined.TableRows
-    ) {
-        const val tableArg = "league_group_id"
-        val routeWithArgs = "${route}/{${tableArg}}"
-        val arguments = listOf(
-            navArgument(tableArg) { type = NavType.IntType }
-        )
+@Serializable
+data class StandingsDetail(val id: Int) : SkylarksNavDestination {
+    override val route = "standings_detail"
+    override val title = "Table Detail"
+
+    companion object {
+        val title = "Table Detail"
     }
+}
 
-    data object Club : SkylarksNavDestination(
-        route = "club",
-        title = "Club",
-        icon = Icons.Outlined.Shield,
-    )
+@Serializable
+data object Club : TopLevelDestination {
+    override val route = "club"
+    override val title = "Club"
+    override val icon = Icons.Outlined.Shield
+}
 
-    data object Teams : SkylarksNavDestination(
-        route = "club_teams",
-        title = "Teams",
-        icon = Icons.Outlined.Groups
-    )
+@Serializable
+data object Teams : TopLevelDestination {
+    override val route = "club_teams"
+    override val title = "Teams"
+    override val icon = Icons.Outlined.Groups
+}
 
-    data object TeamDetail : SkylarksNavDestination(
-        route = "club_player_list",
-        title = "Team Detail",
-        icon = Icons.Outlined.Groups
-    ) {
-        const val teamArg = "team_id"
-        val routeWithArgs = "${route}/{${teamArg}}"
-        val arguments = listOf(
-            navArgument(teamArg) { type = NavType.IntType }
-        )
+@Serializable
+data class TeamDetail(val id: Int) : SkylarksNavDestination {
+    override val route = "club_player_list"
+    override val title = "Team Detail"
+
+    companion object {
+        val title = "Team Detail"
     }
+}
 
-    data object PlayerDetail : SkylarksNavDestination(
-        route = "club_player_detail",
-        title = "Player Detail",
-        icon = Icons.Outlined.Person
-    ) {
-        const val playerArg = "player_id"
-        val routeWithArgs = "${route}/{${playerArg}}"
-        val arguments = listOf(
-            navArgument(playerArg) { type = NavType.IntType }
-        )
+@Serializable
+data class PlayerDetail(val id: Int) : SkylarksNavDestination {
+    override val route = "club_player_detail"
+    override val title = "Player Detail"
+
+    companion object {
+        val title = "Player Detail"
     }
+}
 
-    data object Functionary : SkylarksNavDestination(
-        route = "functionary",
-        title = "Functionary",
-        icon = Icons.Outlined.Person
-    )
+@Serializable
+data object Functionary : SkylarksNavDestination {
+    override val route = "functionary"
+    override val title = "Functionaries"
+}
 
-    data object Settings : SkylarksNavDestination(
-        route = "settings",
-        title = "Settings",
-        icon = Icons.Outlined.Settings
-    )
+@Serializable
+data object Settings : TopLevelDestination {
+    override val route = "settings"
+    override val title = "Settings"
+    override val icon = Icons.Outlined.Settings
+}
 
-    data object Info : SkylarksNavDestination(
-        route = "settings_info",
-        title = "App Info",
-        icon = Icons.Filled.Info
-    )
+@Serializable
+data object Info : SkylarksNavDestination {
+    override val route = "settings_info"
+    override val title = "App Info"
+}
 
-    data object Privacy : SkylarksNavDestination(
-        route = "settings_privacy",
-        title = "Privacy Policy",
-        icon = Icons.Filled.Policy
-    )
+@Serializable
+data object Privacy : SkylarksNavDestination {
+    override val route = "settings_privacy"
+    override val title = "Privacy Policy"
+}
 
-    data object LegalNotice : SkylarksNavDestination(
-        route = "settings_legal",
-        title = "Legal Notice",
-        icon = Icons.Filled.Gavel
-    )
+@Serializable
+data object LegalNotice : SkylarksNavDestination {
+    override val route = "settings_legal"
+    override val title = "Legal Notice"
 }

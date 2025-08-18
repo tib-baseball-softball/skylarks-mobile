@@ -1,5 +1,6 @@
 package de.davidbattefeld.berlinskylarks.ui.settings
 
+import android.R.attr.contentDescription
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,7 +11,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.ForkLeft
+import androidx.compose.material.icons.filled.Gavel
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Mail
+import androidx.compose.material.icons.filled.Policy
 import androidx.compose.material.icons.filled.Web
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -40,6 +44,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.davidbattefeld.berlinskylarks.data.preferences.DEFAULT_SETTINGS
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.SettingsViewModel
 import de.davidbattefeld.berlinskylarks.global.TeamGlobals
+import de.davidbattefeld.berlinskylarks.ui.nav.Info
+import de.davidbattefeld.berlinskylarks.ui.nav.LegalNotice
+import de.davidbattefeld.berlinskylarks.ui.nav.Privacy
 import de.davidbattefeld.berlinskylarks.ui.nav.SkylarksNavDestination
 
 @Composable
@@ -103,10 +110,10 @@ fun SettingsScreen(
                 ListItem(
                     modifier = Modifier
                         .clickable { infoRoute() },
-                    headlineContent = { Text(SkylarksNavDestination.Info.title) },
+                    headlineContent = { Text(Info.title) },
                     leadingContent = {
                         Icon(
-                            SkylarksNavDestination.Info.icon,
+                            imageVector = Icons.Filled.Info,
                             contentDescription = "season icon",
                         )
                     },
@@ -119,10 +126,10 @@ fun SettingsScreen(
                 ListItem(
                     modifier = Modifier
                         .clickable { legalRoute() },
-                    headlineContent = { Text(SkylarksNavDestination.LegalNotice.title) },
+                    headlineContent = { Text(LegalNotice.title) },
                     leadingContent = {
                         Icon(
-                            SkylarksNavDestination.LegalNotice.icon,
+                            imageVector = Icons.Filled.Gavel,
                             contentDescription = "legal icon",
                         )
                     },
@@ -134,10 +141,10 @@ fun SettingsScreen(
             ListItem(
                 modifier = Modifier
                     .clickable { privacyRoute() },
-                headlineContent = { Text(SkylarksNavDestination.Privacy.title) },
+                headlineContent = { Text(Privacy.title) },
                 leadingContent = {
                     Icon(
-                        SkylarksNavDestination.Privacy.icon,
+                        imageVector = Icons.Filled.Policy,
                         contentDescription = "privacy icon",
                     )
                 },

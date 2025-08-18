@@ -8,8 +8,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.compositionLocalOf
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 
 val LocalSnackbarHostState = compositionLocalOf<SnackbarHostState> {
@@ -17,7 +15,6 @@ val LocalSnackbarHostState = compositionLocalOf<SnackbarHostState> {
 }
 
 class MainActivity : ComponentActivity() {
-    private lateinit var navController: NavHostController
 
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,12 +23,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             BerlinSkylarksTheme {
                 val windowSize = calculateWindowSizeClass(this)
-                navController = rememberNavController()
 
-                BerlinSkylarksApp(
-                    navController = navController,
-                    windowSize = windowSize.widthSizeClass,
-                )
+                BerlinSkylarksApp(windowSize = windowSize.widthSizeClass)
             }
         }
     }

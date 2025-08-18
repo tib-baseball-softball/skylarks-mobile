@@ -8,67 +8,39 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.navigation.NavDestination
-import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation3.runtime.NavKey
 
 @Composable
 fun NavItemCollection(
-    navController: NavHostController,
+    topLevelBackStack: TopLevelBackStack<NavKey>,
     navigationType: NavigationType,
 ) {
-    val screens = listOf(
-        //SkylarksNavDestination.Home,
-        SkylarksNavDestination.Scores,
-        SkylarksNavDestination.Standings,
-        SkylarksNavDestination.Club,
-        SkylarksNavDestination.Settings,
-    )
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination
-
     when (navigationType) {
         NavigationType.BOTTOM_NAVIGATION -> {
             NavigationBar {
-                screens.forEach { screen ->
+                TOP_LEVEL_ROUTES.forEach { topLevelRoute ->
+                    val isSelected = topLevelRoute == topLevelBackStack.topLevelKey
                     NavBarItem(
-                        screen = screen,
-                        currentDestination = currentDestination,
+                        selected = isSelected,
+                        screen = topLevelRoute,
                         navigationAction = {
-                            navController.navigate(screen.route) {
-                                navController.graph.startDestinationRoute?.let { route ->
-                                    popUpTo(route) {
-                                        saveState = true
-                                    }
-                                }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
-                        },
+                            topLevelBackStack.addTopLevel(topLevelRoute)
+                        }
                     )
                 }
             }
         }
 
         else -> {
-            screens.forEach { screen ->
+            TOP_LEVEL_ROUTES.forEach { topLevelRoute ->
+                val isSelected = topLevelRoute == topLevelBackStack.topLevelKey
                 NavSidebarItem(
-                    screen = screen,
-                    currentDestination = currentDestination,
+                    screen = topLevelRoute,
                     navigationAction = {
-                        navController.navigate(screen.route) {
-                            navController.graph.startDestinationRoute?.let { route ->
-                                popUpTo(route) {
-                                    saveState = true
-                                }
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
+                        topLevelBackStack.addTopLevel(topLevelRoute)
                     },
-                    navigationType = navigationType
+                    navigationType = navigationType,
+                    selected = isSelected,
                 )
             }
         }
@@ -79,9 +51,9 @@ fun NavItemCollection(
 
 @Composable
 fun NavSidebarItem(
-    screen: SkylarksNavDestination,
-    currentDestination: NavDestination?,
+    screen: TopLevelDestination,
     navigationAction: () -> Unit,
+    selected: Boolean,
     navigationType: NavigationType,
 ) {
     val label = @Composable { Text(text = screen.title) }
@@ -91,9 +63,6 @@ fun NavSidebarItem(
             contentDescription = "navigation icon for ${screen.title}"
         )
     }
-    val selected = currentDestination?.hierarchy?.any { current ->
-        current.route?.contains(screen.route, ignoreCase = true) == true
-    } == true
 
     when (navigationType) {
         NavigationType.NAVIGATION_RAIL -> {
@@ -126,8 +95,8 @@ fun NavSidebarItem(
  */
 @Composable
 fun RowScope.NavBarItem(
-    screen: SkylarksNavDestination,
-    currentDestination: NavDestination?,
+    screen: TopLevelDestination,
+    selected: Boolean,
     navigationAction: () -> Unit,
 ) {
     val label = @Composable { Text(text = screen.title) }
@@ -137,9 +106,6 @@ fun RowScope.NavBarItem(
             contentDescription = "navigation icon for ${screen.title}"
         )
     }
-    val selected = currentDestination?.hierarchy?.any { current ->
-        current.route?.contains(screen.route, ignoreCase = true) == true
-    } == true
 
     NavigationBarItem(
         label = label,
