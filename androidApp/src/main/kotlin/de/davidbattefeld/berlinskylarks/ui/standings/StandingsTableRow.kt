@@ -37,7 +37,7 @@ fun StandingsTableRow(row: LeagueTable.Row) {
             row.team_name,
             color = textColor,
             modifier = Modifier
-                .weight(0.55F, fill = true)
+                .weight(0.50F, fill = true)
                 .padding(8.dp)
         )
         Text(

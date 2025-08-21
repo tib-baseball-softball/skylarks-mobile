@@ -7,10 +7,14 @@ import androidx.compose.material3.adaptive.navigation3.ListDetailSceneStrategy
 import androidx.compose.material3.adaptive.navigation3.rememberListDetailSceneStrategy
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entry
 import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
 import de.davidbattefeld.berlinskylarks.ui.club.ClubScreen
 import de.davidbattefeld.berlinskylarks.ui.club.functionary.FunctionaryScreen
 import de.davidbattefeld.berlinskylarks.ui.club.teams.PlayerDetailScreen
@@ -25,6 +29,8 @@ import de.davidbattefeld.berlinskylarks.ui.settings.PrivacyPolicyScreen
 import de.davidbattefeld.berlinskylarks.ui.settings.SettingsScreen
 import de.davidbattefeld.berlinskylarks.ui.standings.StandingsDetailScreen
 import de.davidbattefeld.berlinskylarks.ui.standings.StandingsScreen
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.LeagueGroupsViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.TablesViewModel
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
@@ -40,8 +46,13 @@ fun NavGraph(
             backStack = topLevelBackStack.backStack,
             onBack = { topLevelBackStack.removeLast() },
             sceneStrategy = listDetailStrategy,
+//            entryDecorators = listOf(
+//                rememberSceneSetupNavEntryDecorator(),
+//                rememberSavedStateNavEntryDecorator(),
+//                rememberViewModelStoreNavEntryDecorator()
+//            ),
             entryProvider = entryProvider {
-                entry<Home>{
+                entry<Home> {
                     HomeScreen()
                 }
 
@@ -69,11 +80,16 @@ fun NavGraph(
                     StandingsScreen(
                         detailRoute = { id ->
                             topLevelBackStack.add(StandingsDetail(id))
-                        }
+                        },
+                        vm = viewModel(factory = LeagueGroupsViewModel.Factory)
                     )
                 }
+
                 entry<StandingsDetail> { key ->
-                    StandingsDetailScreen(key.id)
+                    StandingsDetailScreen(
+                        tableID = key.id,
+                        vm = viewModel(factory = TablesViewModel.Factory(key))
+                    )
                 }
 
                 entry<Club> {

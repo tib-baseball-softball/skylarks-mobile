@@ -9,12 +9,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.davidbattefeld.berlinskylarks.ui.utility.LoadingView
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.AppViewModelProvider
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.TablesViewModel
 
 @Composable
 fun StandingsDetailScreen(
     tableID: Int,
-    vm: TablesViewModel = viewModel()
+    vm: TablesViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     when (vm.viewState) {
         ViewState.Loading -> {

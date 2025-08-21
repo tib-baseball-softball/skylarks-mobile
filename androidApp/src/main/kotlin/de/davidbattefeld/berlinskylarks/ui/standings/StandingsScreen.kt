@@ -30,7 +30,7 @@ import de.davidbattefeld.berlinskylarks.ui.viewmodels.LeagueGroupsViewModel
 
 @Composable
 fun StandingsScreen(
-    vm: LeagueGroupsViewModel = viewModel(),
+    vm: LeagueGroupsViewModel = viewModel(factory = LeagueGroupsViewModel.Factory),
     detailRoute: (Int) -> Unit,
 ) {
     Column(
