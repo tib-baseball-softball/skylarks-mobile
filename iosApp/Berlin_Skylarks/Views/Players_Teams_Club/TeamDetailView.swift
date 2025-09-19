@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TeamDetailView: View {
     @State private var vm: TeamDetailViewModel = TeamDetailViewModel()
-    @State private var playerListDisplayMode: PlayerListDisplayMode = .image
+    @State private var playerListDisplayMode: PlayerListDisplayMode = .number
     @State private var showingTrainingSheet = false
 
     var team: Components.Schemas.Team
@@ -67,8 +67,8 @@ struct TeamDetailView: View {
 
             Section(header: Text("Player Profiles")) {
                 Picker("Display mode", selection: $playerListDisplayMode) {
-                    Text("Image").tag(PlayerListDisplayMode.image)
                     Text("Number").tag(PlayerListDisplayMode.number)
+                    Text("Image").tag(PlayerListDisplayMode.image)
                 }
                 .pickerStyle(.segmented)
 
