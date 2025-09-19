@@ -160,6 +160,7 @@
 				Models/BSMTeam.swift,
 				Models/HomeDataset.swift,
 				Models/StreakDataEntry.swift,
+				SkylarksApp.icon,
 				Views/Scores/ScoreNumber.swift,
 			);
 			target = CAE1347F2771F2DF00DFA745 /* WidgetSkylarksExtension */;
@@ -189,6 +190,7 @@
 				Models/BSMTeam.swift,
 				Models/HomeDataset.swift,
 				Models/StreakDataEntry.swift,
+				SkylarksApp.icon,
 			);
 			target = CA65FF4327F5EC4400F7845D /* Skylarks Intents */;
 		};
@@ -200,6 +202,7 @@
 				Enums/PlayerListDisplayMode.swift,
 				Enums/ViewState.swift,
 				Models/BSMLeagueGroup.swift,
+				SkylarksApp.icon,
 			);
 			target = CA3C4C2B28B40C3400F72841 /* BerlinSkylarksTests */;
 		};
@@ -843,7 +846,7 @@
 		CABF7C00259351D500B95813 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = SkylarksApp;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = Berlin_Skylarks/Berlin_Skylarks.entitlements;
@@ -879,7 +882,7 @@
 		CABF7C01259351D500B95813 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = SkylarksApp;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = Berlin_Skylarks/Berlin_Skylarks.entitlements;
