@@ -16,7 +16,7 @@ struct PlayoffSeriesView: View {
             List {
                 Section(
                     header: Text("Status"),
-                    footer: Text("Series Length: ") + Text("Best of \(playoffSeries.seriesLength)")) {
+                    footer: Text("Series Length: Best of \(playoffSeries.seriesLength)")) {
                         HStack {
                             Spacer()
                             VStack {

@@ -72,7 +72,7 @@ struct StandingsView: View {
                 header: HStack {
                     Text("Club Team Records")
                     Spacer()
-                    Text("Season: ") + Text(String(selectedSeason))
+                    Text("Season: \(selectedSeason)")
                 },
                 footer: Text("How are our teams doing?")
             ) {

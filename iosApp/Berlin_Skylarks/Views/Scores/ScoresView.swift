@@ -236,7 +236,7 @@ struct ScoresView: View {
             .listRowBackground(Color.clear)
             
             Section(
-                header: Text("Selected Season: ") + Text(String(selectedSeason))
+                header: Text("Selected Season: \(selectedSeason)")
             ) {
                 
                 //Switch to external games/only our games

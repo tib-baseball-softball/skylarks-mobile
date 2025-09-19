@@ -63,12 +63,12 @@ struct BallparkDetailView: View {
                     HStack {
                         Image(systemName: "person.2.fill")
                             .clubIconStyleDynamic()
-                        Text("Capacity: ") + Text(String(total))
+                        Text("Capacity: \(total)")
                     }
                     HStack {
                         Image(systemName: "ticket.fill")
                             .clubIconStyleDynamic()
-                        Text("Seats: ") + Text(String(seats))
+                        Text("Seats: \(seats)")
                     }
                 }
             }
