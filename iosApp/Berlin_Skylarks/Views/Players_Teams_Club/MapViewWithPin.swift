@@ -5,35 +5,49 @@
 //  Created by David Battefeld on 05.08.22.
 //
 
-import SwiftUI
 import MapKit
+import SwiftUI
 
 struct MapViewWithPin: View {
-    
-#if os(iOS)
-    @Environment(\.verticalSizeClass) var verticalSizeClass
-    
-    //computed property to use a bigger map on larger screens, but not on portrait iPhones
-    private var expandMap: Bool {
-        if verticalSizeClass == .regular && UIDevice.current.userInterfaceIdiom != .phone {
-            return true
+
+    #if os(iOS)
+        @Environment(\.verticalSizeClass) var verticalSizeClass
+
+        //computed property to use a bigger map on larger screens, but not on portrait iPhones
+        private var expandMap: Bool {
+            if verticalSizeClass == .regular
+                && UIDevice.current.userInterfaceIdiom != .phone
+            {
+                return true
+            }
+            return false
         }
-        return false
-    }
-#endif
-    
+    #endif
+
     var latitude: Double
     var longitude: Double
     var name: String
-    
+
     var body: some View {
         let fieldPin = [
-            Ballpark(name: name, coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude)),
+            Ballpark(
+                name: name,
+                coordinate: CLLocationCoordinate2D(
+                    latitude: latitude,
+                    longitude: longitude
+                )
+            )
         ]
         let position = MapCameraPosition.region(
             MKCoordinateRegion(
-                center: CLLocationCoordinate2D(latitude: latitude, longitude: longitude),
-                span: MKCoordinateSpan(latitudeDelta: 0.015, longitudeDelta: 0.015)
+                center: CLLocationCoordinate2D(
+                    latitude: latitude,
+                    longitude: longitude
+                ),
+                span: MKCoordinateSpan(
+                    latitudeDelta: 0.015,
+                    longitudeDelta: 0.015
+                )
             )
         )
         Map(initialPosition: position, interactionModes: []) {
@@ -49,28 +63,27 @@ struct MapViewWithPin: View {
         }
         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
         #if os(iOS)
-        .frame(height: expandMap ? 500 : 200)
+            .frame(height: expandMap ? 500 : 200)
         #else
-        // macOS
-        .frame(height: 500)
+            // macOS
+            .frame(height: 500)
         #endif
-        
-        .onTapGesture(perform: {
+
+        Button("Open in Maps") {
             if !fieldPin.isEmpty {
-                let coordinate = fieldPin[0].coordinate
-                let placemark = MKPlacemark(coordinate: coordinate)
-                let mapItem = MKMapItem(placemark: placemark)
-                mapItem.name = fieldPin[0].name
+                let coordinate = fieldPin.first!.coordinate
+                let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+                let mapItem = MKMapItem(location: location, address: nil)
+                mapItem.name = fieldPin.first!.name
                 mapItem.openInMaps()
             }
-        })
+        }
+        .buttonStyle(.glass)
     }
 }
 
-struct MapViewWithPin_Previews: PreviewProvider {
-    static var previews: some View {
-        List {
-            MapViewWithPin(latitude: 15, longitude: 35, name: "Important Location")
-        }
+#Preview {
+    List {
+        MapViewWithPin(latitude: 15, longitude: 35, name: "Important Location")
     }
 }
