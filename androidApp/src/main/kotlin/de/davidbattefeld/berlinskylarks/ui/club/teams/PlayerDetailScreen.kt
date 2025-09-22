@@ -8,13 +8,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.berlinskylarks.shared.data.model.Player
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.AppViewModelProvider
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.PlayersViewModel
 
 @Composable
 fun PlayerDetailScreen(
     playerID: Int,
-    vm: PlayersViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    vm: PlayersViewModel = viewModel()
 ) {
     val player = vm.getFiltered<Player>(playerID, vm.players)
 

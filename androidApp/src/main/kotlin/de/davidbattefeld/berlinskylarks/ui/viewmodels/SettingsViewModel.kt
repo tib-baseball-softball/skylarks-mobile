@@ -4,13 +4,17 @@ import android.content.Context
 import android.icu.util.Calendar
 import android.text.Html
 import android.text.Spanned
+import dagger.hilt.android.lifecycle.HiltViewModel
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
+import javax.inject.Inject
 import org.intellij.markdown.flavours.commonmark.CommonMarkFlavourDescriptor
 import org.intellij.markdown.html.HtmlGenerator
 import org.intellij.markdown.parser.MarkdownParser
 
-class SettingsViewModel(userPreferencesRepository: UserPreferencesRepository) :
-    GenericViewModel(userPreferencesRepository) {
+@HiltViewModel
+class SettingsViewModel @Inject constructor(
+    userPreferencesRepository: UserPreferencesRepository
+) : GenericViewModel(userPreferencesRepository) {
     // 2021 is the first year with the new team name
     val possibleSeasons = (2021..Calendar.getInstance().get(Calendar.YEAR)).toList()
 

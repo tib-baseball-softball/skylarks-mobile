@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import de.berlinskylarks.shared.data.api.BSMAPIClient
 import de.berlinskylarks.shared.data.api.LeagueGroupsAPIClient
 import de.berlinskylarks.shared.data.api.MatchAPIClient
@@ -16,14 +17,18 @@ import de.davidbattefeld.berlinskylarks.domain.model.UserCalendar
 import de.davidbattefeld.berlinskylarks.domain.service.CalendarService
 import de.davidbattefeld.berlinskylarks.domain.service.GameDecorator
 import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
-import de.davidbattefeld.berlinskylarks.global.BSM_API_KEY
 import de.davidbattefeld.berlinskylarks.testdata.testLeagueGroup
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
+import javax.inject.Inject
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
-class ScoresViewModel(userPreferencesRepository: UserPreferencesRepository) :
-    GenericViewModel(userPreferencesRepository) {
+@HiltViewModel
+class ScoresViewModel @Inject constructor(
+    private val matchAPIClient: MatchAPIClient,
+    private val leagueGroupsAPIClient: LeagueGroupsAPIClient,
+    userPreferencesRepository: UserPreferencesRepository
+) : GenericViewModel(userPreferencesRepository) {
     var games = mutableStateListOf<GameDecorator>()
     var skylarksGames = mutableStateListOf<GameDecorator>()
     var leagueGroups = mutableStateListOf<LeagueGroup>()
@@ -32,8 +37,6 @@ class ScoresViewModel(userPreferencesRepository: UserPreferencesRepository) :
 
     var tabState by mutableIntStateOf(1)
 
-    private val matchAPIClient = MatchAPIClient(authKey = BSM_API_KEY)
-    private val leagueGroupsAPIClient = LeagueGroupsAPIClient(authKey = BSM_API_KEY)
     val calendarService = CalendarService()
 
     override fun load() {

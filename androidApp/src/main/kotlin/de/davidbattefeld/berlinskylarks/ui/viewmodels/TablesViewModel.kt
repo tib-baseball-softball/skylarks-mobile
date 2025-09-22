@@ -1,10 +1,11 @@
 package de.davidbattefeld.berlinskylarks.ui.viewmodels
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.CreationExtras
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import de.berlinskylarks.shared.data.api.TablesAPIClient
 import de.berlinskylarks.shared.data.model.LeagueTable
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
@@ -13,10 +14,11 @@ import de.davidbattefeld.berlinskylarks.ui.nav.StandingsDetail
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
 import kotlinx.coroutines.launch
 
-class TablesViewModel(
+@HiltViewModel(assistedFactory = TablesViewModel.Factory::class)
+class TablesViewModel @AssistedInject constructor(
     private val tablesAPIClient: TablesAPIClient,
-    val key: StandingsDetail,
-    userPreferencesRepository: UserPreferencesRepository
+    userPreferencesRepository: UserPreferencesRepository,
+    @Assisted val navKey: StandingsDetail,
 ) : GenericViewModel(userPreferencesRepository) {
     var table = mutableStateOf<LeagueTable?>(null)
 
@@ -33,19 +35,8 @@ class TablesViewModel(
         }
     }
 
-    class Factory(
-        private val key: StandingsDetail
-    ) : ViewModelProvider.Factory {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(
-            modelClass: Class<T>,
-            extras: CreationExtras
-        ): T {
-            return TablesViewModel(
-                tablesAPIClient = extras.berlinSkylarksApplication().container.tablesAPIClient,
-                key = key,
-                userPreferencesRepository = extras.berlinSkylarksApplication().container.userPreferencesRepository
-            ) as T
-        }
+    @AssistedFactory
+    interface Factory {
+        fun create(navKey: StandingsDetail): TablesViewModel
     }
 }

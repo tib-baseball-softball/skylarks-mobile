@@ -1,11 +1,14 @@
 package de.davidbattefeld.berlinskylarks.ui.viewmodels
 
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import de.berlinskylarks.shared.database.repository.FunctionaryRepository
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 
-class FunctionaryViewModel(
+@HiltViewModel
+class FunctionaryViewModel @Inject constructor(
     functionaryRepository: FunctionaryRepository,
     userPreferencesRepository: UserPreferencesRepository
 ) : GenericViewModel(userPreferencesRepository) {

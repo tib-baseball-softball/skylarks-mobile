@@ -45,12 +45,11 @@ import de.davidbattefeld.berlinskylarks.global.TeamGlobals
 import de.davidbattefeld.berlinskylarks.ui.nav.Info
 import de.davidbattefeld.berlinskylarks.ui.nav.LegalNotice
 import de.davidbattefeld.berlinskylarks.ui.nav.Privacy
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.AppViewModelProvider
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.SettingsViewModel
 
 @Composable
 fun SettingsScreen(
-    vm: SettingsViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    vm: SettingsViewModel = viewModel(),
     infoRoute: () -> Unit,
     privacyRoute: () -> Unit,
     legalRoute: () -> Unit,

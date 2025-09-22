@@ -19,13 +19,12 @@ import de.berlinskylarks.shared.data.model.SkylarksTeam
 import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
 import de.davidbattefeld.berlinskylarks.ui.utility.LoadingView
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.AppViewModelProvider
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.TeamsViewModel
 
 @Composable
 fun TeamsScreen(
     teamsDetailRoute: (Int) -> Unit,
-    vm: TeamsViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    vm: TeamsViewModel = viewModel()
 ) {
     val listState = rememberLazyListState()
 

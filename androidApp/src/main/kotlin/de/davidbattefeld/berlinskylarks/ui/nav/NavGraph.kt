@@ -7,6 +7,7 @@ import androidx.compose.material3.adaptive.navigation3.ListDetailSceneStrategy
 import androidx.compose.material3.adaptive.navigation3.rememberListDetailSceneStrategy
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entry
@@ -28,7 +29,6 @@ import de.davidbattefeld.berlinskylarks.ui.settings.PrivacyPolicyScreen
 import de.davidbattefeld.berlinskylarks.ui.settings.SettingsScreen
 import de.davidbattefeld.berlinskylarks.ui.standings.StandingsDetailScreen
 import de.davidbattefeld.berlinskylarks.ui.standings.StandingsScreen
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.LeagueGroupsViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.TablesViewModel
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
@@ -81,14 +81,19 @@ fun NavGraph(
                         detailRoute = { id ->
                             topLevelBackStack.add(StandingsDetail(id))
                         },
-                        vm = viewModel(factory = LeagueGroupsViewModel.Factory)
+                        vm = viewModel()
                     )
                 }
 
                 entry<StandingsDetail> { key ->
+                    val vm = hiltViewModel<TablesViewModel, TablesViewModel.Factory>(
+                        creationCallback = { factory ->
+                            factory.create(key)
+                        }
+                    )
                     StandingsDetailScreen(
                         tableID = key.id,
-                        vm = viewModel(factory = TablesViewModel.Factory(key))
+                        vm = vm
                     )
                 }
 

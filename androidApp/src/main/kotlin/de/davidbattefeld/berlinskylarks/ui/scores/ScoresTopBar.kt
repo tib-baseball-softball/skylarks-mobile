@@ -58,7 +58,6 @@ import de.davidbattefeld.berlinskylarks.data.preferences.DEFAULT_SETTINGS
 import de.davidbattefeld.berlinskylarks.testdata.testLeagueGroup
 import de.davidbattefeld.berlinskylarks.ui.calendar.PermissionNotGrantedView
 import de.davidbattefeld.berlinskylarks.ui.utility.ConfirmationDialog
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.AppViewModelProvider
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
 import kotlinx.coroutines.launch
 
@@ -67,7 +66,7 @@ import kotlinx.coroutines.launch
 fun ScoresTopBar(
     title: String,
     scrollBehavior: TopAppBarScrollBehavior,
-    vm: ScoresViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    vm: ScoresViewModel = viewModel()
 ) {
     var leagueFilterExpanded by remember { mutableStateOf(false) }
     val context = LocalContext.current

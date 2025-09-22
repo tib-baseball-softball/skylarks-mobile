@@ -9,11 +9,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.AppViewModelProvider
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.SettingsViewModel
 
 @Composable
-fun PrivacyPolicyScreen(vm: SettingsViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
+fun PrivacyPolicyScreen(vm: SettingsViewModel = viewModel()) {
     val context = LocalContext.current
     val displayedText = vm.readStaticMarkdownFile("app_pp_en.md", context)
 

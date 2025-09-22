@@ -28,13 +28,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.davidbattefeld.berlinskylarks.global.cardPadding
 import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.AppViewModelProvider
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
 
 @Composable
 fun ScoresDetailScreen(
     matchID: Int,
-    vm: ScoresViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    vm: ScoresViewModel = viewModel()
 ) {
     val gameDecorator = vm.games.firstOrNull { it.game.id == matchID }
 

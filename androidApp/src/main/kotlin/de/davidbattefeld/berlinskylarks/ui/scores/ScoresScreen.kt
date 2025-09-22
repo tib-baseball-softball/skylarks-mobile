@@ -36,7 +36,6 @@ import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
 import de.davidbattefeld.berlinskylarks.ui.utility.LoadingView
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.AppViewModelProvider
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
 
 @Composable
@@ -44,7 +43,7 @@ fun ScoresScreen(
     modifier: Modifier = Modifier,
     detailRoute: (Int) -> Unit,
     setFabOnClick: (() -> Unit) -> Unit,
-    vm: ScoresViewModel = viewModel<ScoresViewModel>(factory = AppViewModelProvider.Factory)
+    vm: ScoresViewModel = viewModel()
 ) {
     var showExternalGames by rememberSaveable { mutableStateOf(true) }
     val tabTitles = listOf("Previous", "Current", "Next", "Any")

@@ -19,14 +19,13 @@ import de.berlinskylarks.shared.data.model.Player
 import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
 import de.davidbattefeld.berlinskylarks.ui.utility.LoadingView
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.AppViewModelProvider
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.PlayersViewModel
 
 @Composable
 fun TeamDetailScreen(
     teamID: Int,
     playerDetailRoute: (Int) -> Unit,
-    vm: PlayersViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    vm: PlayersViewModel = viewModel()
 ) {
 
     val listState = rememberLazyListState()

@@ -7,11 +7,10 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.berlinskylarks.shared.data.model.Functionary
 import de.berlinskylarks.shared.data.model.Person
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.AppViewModelProvider
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.FunctionaryViewModel
 
 @Composable
-fun FunctionaryScreen(vm: FunctionaryViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
+fun FunctionaryScreen(vm: FunctionaryViewModel = viewModel()) {
     val functionaries by vm.functionariesList.collectAsState(listOf())
 
     FunctionariesList(
