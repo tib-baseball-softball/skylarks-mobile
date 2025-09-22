@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
-val TOP_LEVEL_ROUTES: List<TopLevelDestination> = listOf(Scores, Standings, Club, Settings)
+val TOP_LEVEL_ROUTES: List<TopLevelDestination> = listOf(Home, Scores, Standings, Club, Settings)
 
 /**
  * Sealed interface defining the contract for all navigation destinations.

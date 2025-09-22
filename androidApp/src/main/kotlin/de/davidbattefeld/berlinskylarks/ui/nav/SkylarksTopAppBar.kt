@@ -17,6 +17,11 @@ fun SkylarksTopAppBar(
     val currentRoute = topLevelBackStack.topLevelKey
 
     when (currentRoute) {
+        Home -> TopAppBar(
+            scrollBehavior = scrollBehavior,
+            title = { Text(text = Home.title) },
+        )
+
         Scores -> ScoresTopBar(
             scrollBehavior = scrollBehavior,
             title = Scores.title,

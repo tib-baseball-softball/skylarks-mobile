@@ -35,6 +35,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
+import de.davidbattefeld.berlinskylarks.ui.nav.Home
 import de.davidbattefeld.berlinskylarks.ui.nav.NavGraph
 import de.davidbattefeld.berlinskylarks.ui.nav.NavItemCollection
 import de.davidbattefeld.berlinskylarks.ui.nav.NavigationType
@@ -49,9 +50,7 @@ fun BerlinSkylarksApp(windowSize: WindowWidthSizeClass, ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
     CompositionLocalProvider(LocalSnackbarHostState provides snackbarHostState) {
-        val topLevelBackStack = remember { TopLevelBackStack<NavKey>(Scores) }
-
-
+        val topLevelBackStack = remember { TopLevelBackStack<NavKey>(Home) }
         val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
         val navigationType = when (windowSize) {
