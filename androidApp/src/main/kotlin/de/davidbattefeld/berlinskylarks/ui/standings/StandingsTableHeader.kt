@@ -27,41 +27,41 @@ fun StandingsTableHeader() {
             style = headerStyle,
             modifier = Modifier
                 .weight(0.1F)
-                .padding(8.dp)
+                .padding(4.dp)
         )
         Text(
             "Team",
             style = headerStyle,
             modifier = Modifier
                 .weight(0.55F, fill = true)
-                .padding(8.dp)
+                .padding(4.dp)
         )
         Text(
             "W",
             style = headerStyle,
             modifier = Modifier
-                .weight(0.1F)
-                .padding(8.dp)
+                .weight(0.15F)
+                .padding(4.dp)
         )
         Text(
             "L",
             style = headerStyle,
             modifier = Modifier
-                .weight(0.1F)
-                .padding(8.dp)
+                .weight(0.15F)
+                .padding(4.dp)
         )
         Text(
             "%",
             style = headerStyle,
             modifier = Modifier
-                .weight(0.1F)
-                .padding(8.dp)
+                .weight(0.15F)
+                .padding(4.dp)
         )
         Text(
             "GB",
             style = headerStyle,
             modifier = Modifier
-                .weight(0.12F)
+                .weight(0.15F)
                 .padding(6.dp)
         )
         Text(

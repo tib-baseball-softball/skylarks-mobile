@@ -31,49 +31,49 @@ fun StandingsTableRow(row: LeagueTable.Row) {
             color = textColor,
             modifier = Modifier
                 .weight(0.1F)
-                .padding(8.dp)
+                .padding(4.dp)
         )
         Text(
             row.team_name,
             color = textColor,
             modifier = Modifier
                 .weight(0.50F, fill = true)
-                .padding(8.dp)
+                .padding(4.dp)
         )
         Text(
             row.wins_count.toInt().toString(),
             color = textColor,
             modifier = Modifier
-                .weight(0.07F)
-                .padding(8.dp)
+                .weight(0.1F)
+                .padding(4.dp)
         )
         Text(
             row.losses_count.toInt().toString(),
             color = textColor,
             modifier = Modifier
-                .weight(0.07F)
-                .padding(8.dp)
+                .weight(0.1F)
+                .padding(4.dp)
         )
         Text(
             row.quota,
             color = textColor,
             modifier = Modifier
                 .weight(0.18F)
-                .padding(8.dp)
+                .padding(4.dp)
         )
         Text(
             row.games_behind,
             color = textColor,
             modifier = Modifier
-                .weight(0.07F)
-                .padding(8.dp)
+                .weight(0.12F)
+                .padding(4.dp)
         )
         Text(
             row.streak,
             color = textColor,
             modifier = Modifier
                 .weight(0.15F)
-                .padding(8.dp)
+                .padding(4.dp)
         )
     }
 }
