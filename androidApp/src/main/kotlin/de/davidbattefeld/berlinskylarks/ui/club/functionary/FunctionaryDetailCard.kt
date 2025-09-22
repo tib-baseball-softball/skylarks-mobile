@@ -1,6 +1,7 @@
 package de.davidbattefeld.berlinskylarks.ui.club.functionary
 
 import android.content.Intent
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -44,13 +45,14 @@ fun formatDate(dateString: String): String {
         val date = parser.parse(dateString)
         date?.let { formatter.format(it) } ?: dateString
     } catch (e: Exception) {
+        Log.e("FunctionaryDetailScreen", "Error formatting date: $e")
         dateString
     }
 }
 
 @Composable
-fun FunctionaryDetailScreen( // Renamed from ClubOfficialDetailScreen
-    functionary: Functionary, // Renamed parameter
+fun FunctionaryDetailScreen(
+    functionary: Functionary,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -92,7 +94,7 @@ fun FunctionaryDetailScreen( // Renamed from ClubOfficialDetailScreen
                     leadingContent = { FunctionaryIcon(functionary = functionary) },
                     colors = listItemColors
                 )
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp)) // Indent divider if desired
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
                 ListItem(
                     headlineContent = {
                         Text(

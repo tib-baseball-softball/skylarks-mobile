@@ -17,7 +17,9 @@ import de.davidbattefeld.berlinskylarks.BuildConfig
 @Composable
 fun AppInfoScreen() {
     val listItemColors = ListItemDefaults.colors(
-        containerColor = MaterialTheme.colorScheme.secondaryContainer
+        containerColor = MaterialTheme.colorScheme.surfaceContainer,
+        headlineColor = MaterialTheme.colorScheme.onSurface,
+        supportingColor = MaterialTheme.colorScheme.onSurface,
     )
 
     ElevatedCard(
@@ -25,7 +27,7 @@ fun AppInfoScreen() {
             .padding(bottom = 1.dp)
             .padding(horizontal = 12.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            containerColor = MaterialTheme.colorScheme.surfaceContainer,
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
     ) {
