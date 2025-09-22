@@ -1,15 +1,16 @@
 package de.davidbattefeld.berlinskylarks.ui.viewmodels
 
-import android.app.Application
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.viewModelScope
 import de.berlinskylarks.shared.data.api.TeamsAPIClient
 import de.berlinskylarks.shared.data.model.SkylarksTeam
+import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
 import de.davidbattefeld.berlinskylarks.global.AUTH_HEADER
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
 import kotlinx.coroutines.launch
 
-class TeamsViewModel(application: Application): GenericViewModel(application) {
+class TeamsViewModel(userPreferencesRepository: UserPreferencesRepository) :
+    GenericViewModel(userPreferencesRepository) {
     var teams = mutableStateListOf<SkylarksTeam>()
 
     private val client = TeamsAPIClient(authKey = AUTH_HEADER)

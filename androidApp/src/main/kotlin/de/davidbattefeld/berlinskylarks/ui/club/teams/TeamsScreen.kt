@@ -1,6 +1,5 @@
 package de.davidbattefeld.berlinskylarks.ui.club.teams
 
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -14,20 +13,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.berlinskylarks.shared.data.model.SkylarksTeam
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.TeamsViewModel
-import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
 import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
 import de.davidbattefeld.berlinskylarks.ui.utility.LoadingView
+import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.AppViewModelProvider
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.TeamsViewModel
 
 @Composable
 fun TeamsScreen(
     teamsDetailRoute: (Int) -> Unit,
+    vm: TeamsViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    val vm: TeamsViewModel = viewModel(LocalContext.current as ComponentActivity)
     val listState = rememberLazyListState()
 
     Surface(

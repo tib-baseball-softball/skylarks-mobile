@@ -5,14 +5,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.AppViewModelProvider
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.SettingsViewModel
 
 @Composable
-fun LegalNoticeScreen(vm: SettingsViewModel = viewModel()) {
-    val displayedText = vm.readStaticMarkdownFile("app_impressum_en.md")
+fun LegalNoticeScreen(vm: SettingsViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
+    val context = LocalContext.current
+    val displayedText = vm.readStaticMarkdownFile(fileName = "app_impressum_en.md", context)
 
     LazyColumn(
         modifier = Modifier

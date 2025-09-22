@@ -1,14 +1,14 @@
 package de.davidbattefeld.berlinskylarks.ui.viewmodels
 
-import android.app.Application
 import androidx.lifecycle.viewModelScope
 import de.berlinskylarks.shared.database.repository.FunctionaryRepository
+import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
 import kotlinx.coroutines.launch
 
 class FunctionaryViewModel(
-    application: Application,
-    functionaryRepository: FunctionaryRepository
-) : GenericViewModel(application = application) {
+    functionaryRepository: FunctionaryRepository,
+    userPreferencesRepository: UserPreferencesRepository
+) : GenericViewModel(userPreferencesRepository) {
     var functionariesList = functionaryRepository.getAllFunctionariesStream()
 
     init {

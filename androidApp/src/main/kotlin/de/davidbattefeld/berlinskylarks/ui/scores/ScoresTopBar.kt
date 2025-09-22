@@ -1,7 +1,6 @@
 package de.davidbattefeld.berlinskylarks.ui.scores
 
 import android.Manifest
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -56,16 +55,20 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import de.davidbattefeld.berlinskylarks.LocalSnackbarHostState
 import de.davidbattefeld.berlinskylarks.data.preferences.DEFAULT_SETTINGS
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
 import de.davidbattefeld.berlinskylarks.testdata.testLeagueGroup
-import kotlinx.coroutines.launch
 import de.davidbattefeld.berlinskylarks.ui.calendar.PermissionNotGrantedView
 import de.davidbattefeld.berlinskylarks.ui.utility.ConfirmationDialog
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.AppViewModelProvider
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
-fun ScoresTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
-    val vm: ScoresViewModel = viewModel(LocalContext.current as ComponentActivity)
+fun ScoresTopBar(
+    title: String,
+    scrollBehavior: TopAppBarScrollBehavior,
+    vm: ScoresViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
     var leagueFilterExpanded by remember { mutableStateOf(false) }
     val context = LocalContext.current
     val snackbarHostState = LocalSnackbarHostState.current

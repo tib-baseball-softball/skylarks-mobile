@@ -26,18 +26,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
 import de.davidbattefeld.berlinskylarks.ui.utility.LoadingView
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.AppViewModelProvider
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
 
 @Composable
@@ -45,9 +44,8 @@ fun ScoresScreen(
     modifier: Modifier = Modifier,
     detailRoute: (Int) -> Unit,
     setFabOnClick: (() -> Unit) -> Unit,
+    vm: ScoresViewModel = viewModel<ScoresViewModel>(factory = AppViewModelProvider.Factory)
 ) {
-    val vm: ScoresViewModel =
-        viewModel(viewModelStoreOwner = LocalContext.current as ViewModelStoreOwner)
     var showExternalGames by rememberSaveable { mutableStateOf(true) }
     val tabTitles = listOf("Previous", "Current", "Next", "Any")
 

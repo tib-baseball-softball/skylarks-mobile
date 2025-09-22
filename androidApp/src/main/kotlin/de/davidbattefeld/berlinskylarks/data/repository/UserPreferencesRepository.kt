@@ -15,10 +15,12 @@ import kotlinx.coroutines.flow.map
 import kotlinx.io.IOException
 
 class UserPreferencesRepository(private val dataStore: DataStore<Preferences>) {
-    private val TAG: String = "UserPreferencesRepo"
-
     private object PreferencesKeys {
         val SEASON = intPreferencesKey("season")
+    }
+
+    companion object {
+        private const val TAG: String = "UserPreferencesRepo"
     }
 
     val userPreferencesFlow: Flow<UserPreferences> = dataStore.data

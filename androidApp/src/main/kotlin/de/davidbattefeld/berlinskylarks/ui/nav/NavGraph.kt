@@ -8,7 +8,6 @@ import androidx.compose.material3.adaptive.navigation3.rememberListDetailSceneSt
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entry
 import androidx.navigation3.runtime.entryProvider
@@ -46,11 +45,12 @@ fun NavGraph(
             backStack = topLevelBackStack.backStack,
             onBack = { topLevelBackStack.removeLast() },
             sceneStrategy = listDetailStrategy,
-//            entryDecorators = listOf(
-//                rememberSceneSetupNavEntryDecorator(),
-//                rememberSavedStateNavEntryDecorator(),
-//                rememberViewModelStoreNavEntryDecorator()
-//            ),
+            entryDecorators = listOf(
+                rememberSceneSetupNavEntryDecorator(),
+                rememberSavedStateNavEntryDecorator(),
+                // TODO: this line crashes app (application not populated)
+                //rememberViewModelStoreNavEntryDecorator()
+            ),
             entryProvider = entryProvider {
                 entry<Home> {
                     HomeScreen()

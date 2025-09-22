@@ -1,6 +1,5 @@
 package de.davidbattefeld.berlinskylarks.ui.viewmodels
 
-import android.app.Application
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
@@ -8,12 +7,14 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import de.berlinskylarks.shared.data.api.TeamsAPIClient
 import de.berlinskylarks.shared.data.model.Player
+import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
 import de.davidbattefeld.berlinskylarks.global.AUTH_HEADER
 import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
 import kotlinx.coroutines.launch
 
-class PlayersViewModel(application: Application) : GenericViewModel(application) {
+class PlayersViewModel(userPreferencesRepository: UserPreferencesRepository) :
+    GenericViewModel(userPreferencesRepository) {
     var players = mutableStateListOf<Player>()
     var lastLoadedTeam by mutableIntStateOf(BOGUS_ID)
 

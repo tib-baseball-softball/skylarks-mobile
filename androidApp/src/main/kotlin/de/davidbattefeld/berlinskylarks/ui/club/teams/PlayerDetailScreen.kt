@@ -1,20 +1,21 @@
 package de.davidbattefeld.berlinskylarks.ui.club.teams
 
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.berlinskylarks.shared.data.model.Player
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.AppViewModelProvider
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.PlayersViewModel
 
 @Composable
-fun PlayerDetailScreen(playerID: Int) {
-    val vm: PlayersViewModel = viewModel(LocalContext.current as ComponentActivity)
+fun PlayerDetailScreen(
+    playerID: Int,
+    vm: PlayersViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
     val player = vm.getFiltered<Player>(playerID, vm.players)
 
     LazyColumn(

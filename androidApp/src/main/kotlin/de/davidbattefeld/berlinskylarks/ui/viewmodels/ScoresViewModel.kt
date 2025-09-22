@@ -1,6 +1,5 @@
 package de.davidbattefeld.berlinskylarks.ui.viewmodels
 
-import android.app.Application
 import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -12,6 +11,7 @@ import de.berlinskylarks.shared.data.api.BSMAPIClient
 import de.berlinskylarks.shared.data.api.LeagueGroupsAPIClient
 import de.berlinskylarks.shared.data.api.MatchAPIClient
 import de.berlinskylarks.shared.data.model.LeagueGroup
+import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
 import de.davidbattefeld.berlinskylarks.domain.model.UserCalendar
 import de.davidbattefeld.berlinskylarks.domain.service.CalendarService
 import de.davidbattefeld.berlinskylarks.domain.service.GameDecorator
@@ -22,7 +22,8 @@ import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
-class ScoresViewModel(application: Application) : GenericViewModel(application) {
+class ScoresViewModel(userPreferencesRepository: UserPreferencesRepository) :
+    GenericViewModel(userPreferencesRepository) {
     var games = mutableStateListOf<GameDecorator>()
     var skylarksGames = mutableStateListOf<GameDecorator>()
     var leagueGroups = mutableStateListOf<LeagueGroup>()
@@ -73,7 +74,9 @@ class ScoresViewModel(application: Application) : GenericViewModel(application) 
         }
 
         if (filteredLeagueGroup.id == BOGUS_ID) {
-            games.addAll(matchAPIClient.loadGamesForClub(season, gamedays).map { GameDecorator(it) })
+            games.addAll(
+                matchAPIClient.loadGamesForClub(season, gamedays).map { GameDecorator(it) }
+            )
         } else {
             games.addAll(
                 matchAPIClient.loadAllGames(

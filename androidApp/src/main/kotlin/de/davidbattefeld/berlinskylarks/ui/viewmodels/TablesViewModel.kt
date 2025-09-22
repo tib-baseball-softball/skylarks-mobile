@@ -1,6 +1,5 @@
 package de.davidbattefeld.berlinskylarks.ui.viewmodels
 
-import android.app.Application
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -8,16 +7,17 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import de.berlinskylarks.shared.data.api.TablesAPIClient
 import de.berlinskylarks.shared.data.model.LeagueTable
+import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
 import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
 import de.davidbattefeld.berlinskylarks.ui.nav.StandingsDetail
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
 import kotlinx.coroutines.launch
 
 class TablesViewModel(
-    application: Application,
     private val tablesAPIClient: TablesAPIClient,
     val key: StandingsDetail,
-) : GenericViewModel(application) {
+    userPreferencesRepository: UserPreferencesRepository
+) : GenericViewModel(userPreferencesRepository) {
     var table = mutableStateOf<LeagueTable?>(null)
 
     override fun load() {}
@@ -41,11 +41,10 @@ class TablesViewModel(
             modelClass: Class<T>,
             extras: CreationExtras
         ): T {
-            val application = extras.berlinSkylarksApplication()
             return TablesViewModel(
-                application = application,
                 tablesAPIClient = extras.berlinSkylarksApplication().container.tablesAPIClient,
-                key = key
+                key = key,
+                userPreferencesRepository = extras.berlinSkylarksApplication().container.userPreferencesRepository
             ) as T
         }
     }

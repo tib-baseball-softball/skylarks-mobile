@@ -1,6 +1,5 @@
 package de.davidbattefeld.berlinskylarks.ui.scores
 
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,18 +24,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.davidbattefeld.berlinskylarks.global.cardPadding
 import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.AppViewModelProvider
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
 
 @Composable
 fun ScoresDetailScreen(
     matchID: Int,
+    vm: ScoresViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    val vm: ScoresViewModel = viewModel(LocalContext.current as ComponentActivity)
     val gameDecorator = vm.games.firstOrNull { it.game.id == matchID }
 
     var showLocationData by rememberSaveable { mutableStateOf(true) }
@@ -117,7 +116,7 @@ fun ScoresDetailScreen(
         HorizontalDivider(modifier = Modifier.padding(8.dp))
         LazyColumn(
             modifier = Modifier,
-           // verticalArrangement = Arrangement.spacedBy(2.dp),
+            // verticalArrangement = Arrangement.spacedBy(2.dp),
         ) {
             item {
                 Card(
