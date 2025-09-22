@@ -19,20 +19,27 @@ fun StandingsDetailScreen(
         ViewState.Loading -> {
             LoadingView()
         }
+
         ViewState.Found -> {
             StandingsTable(table = vm.table.value)
         }
+
         ViewState.NoResults -> {
-            Text(text = "The table for this league couldn't be loaded.", modifier = Modifier.padding(8.dp))
+            Text(
+                text = "The table for this league couldn't be loaded.",
+                modifier = Modifier.padding(8.dp)
+            )
         }
+
         else -> {
             Text("Something went very wrong here.", modifier = Modifier.padding(8.dp))
         }
     }
 
     LaunchedEffect(Unit) {
-        if (vm.viewState != ViewState.Found) {
-            vm.loadSingleTable(tableID)
-        }
+        // TODO: workaround for view model reuse issue
+        //if (vm.viewState != ViewState.Found) {
+        vm.loadSingleTable(tableID)
+        //}
     }
 }
