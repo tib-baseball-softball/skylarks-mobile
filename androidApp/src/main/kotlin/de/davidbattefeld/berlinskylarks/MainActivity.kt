@@ -8,12 +8,14 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.compositionLocalOf
+import dagger.hilt.android.AndroidEntryPoint
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 
 val LocalSnackbarHostState = compositionLocalOf<SnackbarHostState> {
     error("No Snackbar Host State")
 }
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)

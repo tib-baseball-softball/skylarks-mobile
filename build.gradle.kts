@@ -10,4 +10,5 @@ plugins {
     alias(libs.plugins.androidLint) apply false
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.androidx.room) apply false
+    alias(libs.plugins.hilt) apply false
 }
