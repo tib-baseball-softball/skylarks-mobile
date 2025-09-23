@@ -19,9 +19,9 @@ import de.davidbattefeld.berlinskylarks.domain.service.GameDecorator
 import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
 import de.davidbattefeld.berlinskylarks.testdata.testLeagueGroup
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
-import javax.inject.Inject
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class ScoresViewModel @Inject constructor(
@@ -95,8 +95,8 @@ class ScoresViewModel @Inject constructor(
             it.setCorrectLogos()
         }
         skylarksGames.addAll(games.filter {
-            it.game.away_team_name.contains("Skylarks", ignoreCase = true) ||
-                    it.game.home_team_name.contains("Skylarks", ignoreCase = true)
+            it.game.awayTeamName.contains("Skylarks", ignoreCase = true) ||
+                    it.game.homeTeamName.contains("Skylarks", ignoreCase = true)
         })
     }
 

@@ -11,6 +11,17 @@ data class Person(
     @JsonNames("last_name")
     var lastName: String,
     @JsonNames("birth_date")
-    var birthDate: String,
+    var birthDate: String?,
     //there's more, but it's privacy-sensitive
+)
+
+/**
+ * Used for the BSM `/matches` endpoint
+ */
+@Serializable
+data class PersonReducedResponse (
+    @JsonNames("first_name")
+    var firstName: String,
+    @JsonNames("last_name")
+    var lastName: String,
 )

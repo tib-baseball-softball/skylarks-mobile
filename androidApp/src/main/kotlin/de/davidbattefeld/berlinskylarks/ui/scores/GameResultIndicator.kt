@@ -18,7 +18,7 @@ fun GameResultIndicator(gameDecorator: GameDecorator) {
     val endPadding = Modifier.padding(end = 6.dp)
     var color = MaterialTheme.colorScheme.onSurface
 
-    if (!gameDecorator.isExternalGame && (gameDecorator.game.human_state != "geplant" && gameDecorator.game.human_state != "ausgefallen")) {
+    if (!gameDecorator.isExternalGame && (gameDecorator.game.humanState != "geplant" && gameDecorator.game.humanState != "ausgefallen")) {
         color = if (gameDecorator.skylarksWin) Color.Green else Color.Red
     }
 

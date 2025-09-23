@@ -1,14 +1,12 @@
 package de.davidbattefeld.berlinskylarks.testdata
 
+import de.berlinskylarks.shared.data.model.BSMTeam
 import de.berlinskylarks.shared.data.model.Game
 import de.berlinskylarks.shared.data.model.League
+import de.berlinskylarks.shared.data.model.LeagueEntry
 import de.berlinskylarks.shared.data.model.LeagueGroup
 import de.berlinskylarks.shared.data.model.LeagueTable
 import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
-
-val testEntry = Game.LeagueEntry(
-    team = Game.Team(name = "Test Team")
-)
 
 val testLeague = League(
     id = BOGUS_ID,
@@ -18,6 +16,16 @@ val testLeague = League(
     sport = "Baseball",
     acronym = "KRL",
     age_group = "Erwachsene"
+)
+
+val testEntry = LeagueEntry(
+    team = BSMTeam(
+        name = "Test Team",
+        id = 0,
+        short_name = "TES",
+        league_entries = listOf()
+    ),
+    league = testLeague
 )
 
 val testLeagueGroup = LeagueGroup(
@@ -30,22 +38,23 @@ val testLeagueGroup = LeagueGroup(
 
 val testGame = Game(
     id = BOGUS_ID,
-    match_id = "12345",
-    planned_innings = 7,
-    league_id = 5555,
-    away_runs = 5,
-    home_runs = 7,
-    away_team_name = "Road Team",
-    home_team_name = "Home Team",
-    human_state = "in limbo",
+    matchID = "12345",
+    plannedInnings = 7,
+    leagueID = 5555,
+    awayRuns = 5,
+    homeRuns = 7,
+    awayTeamName = "Road Team",
+    homeTeamName = "Home Team",
+    humanState = "in limbo",
     time = "2022-45-67 12:00",
-    home_league_entry = testEntry,
-    away_league_entry = testEntry,
-    scoresheet_url = null,
+    homeLeagueEntry = testEntry,
+    awayLeagueEntry = testEntry,
+    scoresheetURL = null,
     league = testLeague,
     field = null,
-    scorer_assignments = listOf(),
-    umpire_assignments = listOf(),
+    scorerAssignments = listOf(),
+    umpireAssignments = listOf(),
+    state = "played",
 )
 
 val testRow = LeagueTable.Row(

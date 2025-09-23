@@ -47,13 +47,13 @@ fun ScoresDetailMainInfo(gameDecorator: GameDecorator) {
             ScoresDetailMainLogoSection(
                 logo = gameDecorator.roadLogo,
             )
-            if (gameDecorator.game.away_runs != null && gameDecorator.game.home_runs != null) {
+            if (gameDecorator.game.awayRuns != null && gameDecorator.game.homeRuns != null) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
                 ) {
                     Text(
-                        text = "${gameDecorator.game.away_runs.toString()} - ${gameDecorator.game.home_runs.toString()}",
+                        text = "${gameDecorator.game.awayRuns.toString()} - ${gameDecorator.game.homeRuns.toString()}",
                         fontWeight = FontWeight.Bold,
                         style = MaterialTheme.typography.displaySmall
                     )
@@ -68,8 +68,8 @@ fun ScoresDetailMainInfo(gameDecorator: GameDecorator) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = gameDecorator.game.away_team_name, modifier = Modifier.widthIn(max = 120.dp))
-            Text(text = gameDecorator.game.home_team_name, modifier = Modifier.widthIn(max = 120.dp))
+            Text(text = gameDecorator.game.awayTeamName, modifier = Modifier.widthIn(max = 120.dp))
+            Text(text = gameDecorator.game.homeTeamName, modifier = Modifier.widthIn(max = 120.dp))
         }
     }
     Row(
@@ -109,7 +109,7 @@ fun ScoresDetailMainInfo(gameDecorator: GameDecorator) {
                     .padding(8.dp)
             ) {
                 Text(text = "Status", style = MaterialTheme.typography.bodyMedium)
-                Text(text = gameDecorator.game.human_state)
+                Text(text = gameDecorator.game.humanState)
             }
         }
     }

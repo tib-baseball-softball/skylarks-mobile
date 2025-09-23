@@ -67,13 +67,13 @@ class CalendarService {
                 put(CalendarContract.Events.DTEND, timeInMillis + 120 * 60 * 1000) // 2 hours later
                 put(
                     CalendarContract.Events.TITLE,
-                    "${gameDecorator.game.league.acronym}: ${gameDecorator.game.away_team_name} @ ${gameDecorator.game.home_team_name}"
+                    "${gameDecorator.game.league.acronym}: ${gameDecorator.game.awayTeamName} @ ${gameDecorator.game.homeTeamName}"
                 )
 
                 val eventDescription =
 """
 League: ${gameDecorator.game.league.name}
-Match Number: ${gameDecorator.game.match_id}
+Match Number: ${gameDecorator.game.matchID}
 
 Field: ${gameDecorator.game.field?.name ?: "No data"}
 Address: ${gameDecorator.game.field?.street ?: ""}, ${gameDecorator.game.field?.postal_code ?: ""} ${gameDecorator.game.field?.city ?: ""}

@@ -28,10 +28,10 @@ class GameDecorator(val game: Game) {
         roadLogo = R.drawable.app_road_team_logo
 
         for (club in baseballClubList) {
-            if (game.away_team_name.contains(club.name, ignoreCase = true)) {
+            if (game.awayTeamName.contains(club.name, ignoreCase = true)) {
                 roadLogo = club.logo
             }
-            if (game.home_team_name.contains(club.name,ignoreCase = true)) {
+            if (game.homeTeamName.contains(club.name,ignoreCase = true)) {
                 homeLogo = club.logo
             }
         }
@@ -48,21 +48,21 @@ class GameDecorator(val game: Game) {
     }
 
     fun determineGameStatus() {
-        if (game.home_team_name.contains("Skylarks") && (!game.away_team_name.contains("Skylarks")))  {
+        if (game.homeTeamName.contains("Skylarks") && (!game.awayTeamName.contains("Skylarks")))  {
             skyLarksAreHomeTeam = true
             isDerby = false
-        } else if (!game.home_team_name.contains("Skylarks") && (game.away_team_name.contains("Skylarks"))) {
+        } else if (!game.homeTeamName.contains("Skylarks") && (game.awayTeamName.contains("Skylarks"))) {
             skyLarksAreHomeTeam = false
             isDerby = false
-        } else if (game.home_team_name.contains("Skylarks") && (game.away_team_name.contains("Skylarks"))) {
+        } else if (game.homeTeamName.contains("Skylarks") && (game.awayTeamName.contains("Skylarks"))) {
             skyLarksAreHomeTeam = true
             isDerby = true
-        } else if (!game.home_team_name.contains("Skylarks") && (!game.away_team_name.contains("Skylarks"))) {
+        } else if (!game.homeTeamName.contains("Skylarks") && (!game.awayTeamName.contains("Skylarks"))) {
             isDerby = false
             isExternalGame = true
         }
 
-        homeTeamWin = (game.home_runs ?: 0) > (game.away_runs ?: 0)
+        homeTeamWin = (game.homeRuns ?: 0) > (game.awayRuns ?: 0)
 
         skylarksWin = if (skyLarksAreHomeTeam) {
             homeTeamWin
@@ -72,17 +72,17 @@ class GameDecorator(val game: Game) {
     }
 
     fun getGameResultIndicatorText(): String {
-        if (game.human_state.contains("geplant")) {
+        if (game.humanState.contains("geplant")) {
             return "TBD"
-        } else if (game.human_state.contains("ausgefallen")) {
+        } else if (game.humanState.contains("ausgefallen")) {
             return "PPD"
         } else if (
-            game.human_state.contains("gespielt") ||
-            game.human_state.contains("Forfeit") ||
-            game.human_state.contains("Nichtantreten") ||
-            game.human_state.contains("Wertung") ||
-            game.human_state.contains("Rückzug") ||
-            game.human_state.contains("Ausschluss")
+            game.humanState.contains("gespielt") ||
+            game.humanState.contains("Forfeit") ||
+            game.humanState.contains("Nichtantreten") ||
+            game.humanState.contains("Wertung") ||
+            game.humanState.contains("Rückzug") ||
+            game.humanState.contains("Ausschluss")
         ) {
             if (isExternalGame) {
                 return "F"

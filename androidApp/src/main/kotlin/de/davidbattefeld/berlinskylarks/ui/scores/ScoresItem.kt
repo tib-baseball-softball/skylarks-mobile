@@ -62,11 +62,11 @@ fun ScoresItem(gameDecorator: GameDecorator, modifier: Modifier) {
                             .padding(4.dp)
                             .size(35.dp)
                     )
-                    Text(text = gameDecorator.game.away_team_name, style = MaterialTheme.typography.bodyMedium)
+                    Text(text = gameDecorator.game.awayTeamName, style = MaterialTheme.typography.bodyMedium)
                     Spacer(modifier = Modifier.weight(1.0F))
-                    Text(text = (gameDecorator.game.away_runs ?: "").toString(), style = MaterialTheme.typography.titleMedium.copy(
+                    Text(text = (gameDecorator.game.awayRuns ?: "").toString(), style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.Bold,
-                        color = if ((gameDecorator.game.home_runs ?: 0) < (gameDecorator.game.away_runs ?: 0)) MaterialTheme.colorScheme.onSurfaceVariant else Color.Gray,
+                        color = if ((gameDecorator.game.homeRuns ?: 0) < (gameDecorator.game.awayRuns ?: 0)) MaterialTheme.colorScheme.onSurfaceVariant else Color.Gray,
                         fontSize = 18.sp,
                     ), modifier = Modifier.padding(end = 6.dp))
                 }
@@ -78,11 +78,11 @@ fun ScoresItem(gameDecorator: GameDecorator, modifier: Modifier) {
                             .padding(4.dp)
                             .size(35.dp)
                     )
-                    Text(text = gameDecorator.game.home_team_name, style = MaterialTheme.typography.bodyMedium)
+                    Text(text = gameDecorator.game.homeTeamName, style = MaterialTheme.typography.bodyMedium)
                     Spacer(modifier = Modifier.weight(1.0F))
-                    Text(text = (gameDecorator.game.home_runs ?: "").toString(), style = MaterialTheme.typography.titleMedium.copy(
+                    Text(text = (gameDecorator.game.homeRuns ?: "").toString(), style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.Bold,
-                        color = if ((gameDecorator.game.home_runs ?: 0) > (gameDecorator.game.away_runs ?: 0)) MaterialTheme.colorScheme.onSurfaceVariant else Color.Gray,
+                        color = if ((gameDecorator.game.homeRuns ?: 0) > (gameDecorator.game.awayRuns ?: 0)) MaterialTheme.colorScheme.onSurfaceVariant else Color.Gray,
                         fontSize = 18.sp,
                     ), modifier = Modifier.padding(end = 6.dp))
                 }

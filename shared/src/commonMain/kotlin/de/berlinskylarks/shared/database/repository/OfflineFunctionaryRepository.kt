@@ -38,7 +38,7 @@ class OfflineFunctionaryRepository(
                     id = functionary.person.id,
                     firstName = functionary.person.firstName,
                     lastName = functionary.person.lastName,
-                    birthDate = functionary.person.birthDate
+                    birthDate = functionary.person.birthDate ?: ""
                 )
             ))
         }

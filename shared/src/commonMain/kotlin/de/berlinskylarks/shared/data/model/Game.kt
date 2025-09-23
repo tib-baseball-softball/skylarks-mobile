@@ -1,48 +1,42 @@
 package de.berlinskylarks.shared.data.model
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * The terms `Game` and `Match` are used interchangeably. Regrettable historical error.
+ */
 @Serializable
 data class Game(
     override var id: Int,
-    var match_id: String,
-    var planned_innings: Int,
+    @SerialName("match_id")
+    var matchID: String,
+    @SerialName("planned_innings")
+    var plannedInnings: Int?,
     var time: String,
-    var league_id: Int,
-    var home_runs: Int?,
-    var away_runs: Int?,
-    var home_team_name: String,
-    var away_team_name: String,
-    var human_state: String,
-    var scoresheet_url: String?,
+    @SerialName("league_id")
+    var leagueID: Int,
+    @SerialName("home_runs")
+    var homeRuns: Int?,
+    @SerialName("away_runs")
+    var awayRuns: Int?,
+    @SerialName("home_team_name")
+    var homeTeamName: String,
+    @SerialName("away_team_name")
+    var awayTeamName: String,
+    var state: String,
+    @SerialName("human_state")
+    var humanState: String,
+    @SerialName("scoresheet_url")
+    var scoresheetURL: String?,
     var field: Field?,
     var league: League,
-    var home_league_entry: LeagueEntry,
-    var away_league_entry: LeagueEntry,
-    var umpire_assignments: List<Umpire_Assignments>,
-    var scorer_assignments: List<Scorer_Assignments>,
-): JSONDataObject {
-    @Serializable
-    data class LeagueEntry(var team: Team)
-    @Serializable
-    data class Umpire_Assignments(var license: License)
-    @Serializable
-    data class Scorer_Assignments(var license: License)
-
-    @Serializable
-    data class License (
-        var person: Person,
-        var number: String,
-    )
-
-    @Serializable
-    data class Person (
-        var first_name: String,
-        var last_name: String,
-    )
-    //beware the other version of this class (own file)
-    @Serializable
-    data class Team(
-        var name: String,
-    )
-}
+    @SerialName("home_league_entry")
+    var homeLeagueEntry: LeagueEntry,
+    @SerialName("away_league_entry")
+    var awayLeagueEntry: LeagueEntry,
+    @SerialName("umpire_assignments")
+    var umpireAssignments: List<Assignment>,
+    @SerialName("scorer_assignments")
+    var scorerAssignments: List<Assignment>,
+): JSONDataObject

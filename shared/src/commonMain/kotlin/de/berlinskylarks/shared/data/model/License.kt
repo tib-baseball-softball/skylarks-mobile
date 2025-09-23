@@ -13,7 +13,7 @@ data class License(
     var sleeve_number: Int?,
     var baseball: Boolean,
     var softball: Boolean,
-    var person: Person,
+    var person: PersonReducedResponse,
 
     //var expiryDate: Date?
 ): JSONDataObject {

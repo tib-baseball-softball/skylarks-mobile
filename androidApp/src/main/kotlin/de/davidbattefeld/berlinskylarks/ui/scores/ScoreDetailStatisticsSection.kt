@@ -69,7 +69,7 @@ fun ScoreDetailStatisticsSection(
             )
             HorizontalDivider(modifier = Modifier.padding(horizontal = 20.dp))
             ListItem(
-                headlineContent = { Text(game.match_id) },
+                headlineContent = { Text(game.matchID) },
                 supportingContent = { Text("Match ID") },
                 leadingContent = {
                     Icon(
@@ -81,7 +81,7 @@ fun ScoreDetailStatisticsSection(
             )
             HorizontalDivider(modifier = Modifier.padding(horizontal = 20.dp))
             ListItem(
-                headlineContent = { Text(game.planned_innings.toString()) },
+                headlineContent = { Text(game.plannedInnings?.toString() ?: "") },
                 supportingContent = { Text("Planned innings") },
                 leadingContent = {
                     Icon(
@@ -91,7 +91,7 @@ fun ScoreDetailStatisticsSection(
                 },
                 colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
             )
-            if (!game.scoresheet_url.isNullOrEmpty()) {
+            if (!game.scoresheetURL.isNullOrEmpty()) {
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 20.dp))
                 ListItem(
                     headlineContent = {
@@ -106,7 +106,7 @@ fun ScoreDetailStatisticsSection(
                                 ) {
                                     withLink(
                                         link = LinkAnnotation.Url(
-                                            url = game.scoresheet_url ?: ""
+                                            url = game.scoresheetURL ?: ""
                                         )
                                     ) {
                                         append("Link to Scoresheet")
