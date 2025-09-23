@@ -13,7 +13,7 @@ fun FunctionaryRow(
     ListItem(
         headlineContent = {
         Text(
-            text = "${functionary.person.last_name}, ${functionary.person.first_name}",
+            text = "${functionary.person.lastName}, ${functionary.person.firstName}",
         )
     }, supportingContent = {
         Text(

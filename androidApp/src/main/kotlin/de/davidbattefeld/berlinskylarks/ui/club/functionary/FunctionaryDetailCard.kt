@@ -121,7 +121,7 @@ fun FunctionaryDetailScreen(
                 ListItem(
                     headlineContent = {
                         Text(
-                            "${functionary.person.last_name}, ${functionary.person.first_name}",
+                            "${functionary.person.lastName}, ${functionary.person.firstName}",
                             style = MaterialTheme.typography.bodyLarge
                         )
                     },

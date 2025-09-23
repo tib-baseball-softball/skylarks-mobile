@@ -4,6 +4,7 @@ import de.berlinskylarks.shared.data.api.BSMAPIClient.Companion.CLUB_ID
 import de.berlinskylarks.shared.data.api.FunctionaryAPIClient
 import de.berlinskylarks.shared.database.dao.FunctionaryDao
 import de.berlinskylarks.shared.database.model.FunctionaryEntity
+import de.berlinskylarks.shared.database.model.PersonEntity
 import kotlinx.coroutines.flow.Flow
 
 class OfflineFunctionaryRepository(
@@ -33,7 +34,12 @@ class OfflineFunctionaryRepository(
                 function = functionary.function,
                 mail = functionary.mail,
                 admission_date = functionary.admission_date,
-                //person = functionary.person
+                personEntity = PersonEntity(
+                    id = functionary.person.id,
+                    firstName = functionary.person.firstName,
+                    lastName = functionary.person.lastName,
+                    birthDate = functionary.person.birthDate
+                )
             ))
         }
     }
