@@ -1,8 +1,8 @@
 package de.davidbattefeld.berlinskylarks.ui.scores
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -37,107 +37,157 @@ fun ScoresDetailScreen(
 ) {
     val gameDecorator = vm.games.firstOrNull { it.game.id == matchID }
 
-    var showLocationData by rememberSaveable { mutableStateOf(true) }
-    var showOfficialsData by rememberSaveable { mutableStateOf(true) }
-    var showStatisticsData by rememberSaveable { mutableStateOf(true) }
+    var showLocationData by rememberSaveable { mutableStateOf(false) }
+    var showOfficialsData by rememberSaveable { mutableStateOf(false) }
+    var showStatisticsData by rememberSaveable { mutableStateOf(false) }
+    var showBoxScoreSection by rememberSaveable { mutableStateOf(false) }
+    var showGameReportSection by rememberSaveable { mutableStateOf(false) }
 
     if (gameDecorator == null) {
         return ContentNotFoundView("games")
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
+    LazyColumn(
+        modifier = Modifier,
+        // verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
-        LazyVerticalGrid(
-            modifier = Modifier
-                .padding(horizontal = 8.dp),
-            columns = GridCells.Adaptive(minSize = 100.dp),
-            horizontalArrangement = Arrangement.spacedBy(6.dp)
-        ) {
-            item {
-                FilterChip(
-                    onClick = { showStatisticsData = !showStatisticsData },
-                    label = { Text("Statistics") },
-                    selected = showStatisticsData,
-                    leadingIcon = if (showStatisticsData) {
-                        {
-                            Icon(
-                                imageVector = Icons.Filled.Done,
-                                contentDescription = "Done icon",
-                                modifier = Modifier.size(FilterChipDefaults.IconSize)
-                            )
-                        }
-                    } else {
-                        null
-                    },
-                )
-            }
-            item {
-                FilterChip(
-                    onClick = { showLocationData = !showLocationData },
-                    label = {
-                        Text("Location")
-                    },
-                    selected = showLocationData,
-                    leadingIcon = if (showLocationData) {
-                        {
-                            Icon(
-                                imageVector = Icons.Filled.Done,
-                                contentDescription = "Done icon",
-                                modifier = Modifier.size(FilterChipDefaults.IconSize)
-                            )
-                        }
-                    } else {
-                        null
-                    },
-                )
-            }
-            item {
-                FilterChip(
-                    onClick = { showOfficialsData = !showOfficialsData },
-                    label = { Text("Officials") },
-                    selected = showOfficialsData,
-                    leadingIcon = if (showOfficialsData) {
-                        {
-                            Icon(
-                                imageVector = Icons.Filled.Done,
-                                contentDescription = "Done icon",
-                                modifier = Modifier.size(FilterChipDefaults.IconSize)
-                            )
-                        }
-                    } else {
-                        null
-                    },
-                )
+        item {
+            Card(
+                modifier = Modifier
+                    .padding(cardPadding),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+                ),
+                elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+            ) {
+                ScoresDetailMainInfo(gameDecorator)
             }
         }
-        HorizontalDivider(modifier = Modifier.padding(8.dp))
-        LazyColumn(
-            modifier = Modifier,
-            // verticalArrangement = Arrangement.spacedBy(2.dp),
-        ) {
-            item {
-                Card(
+        item {
+            Row(
+                modifier = Modifier
+                    .padding(horizontal = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                LazyVerticalGrid(
                     modifier = Modifier
-                        .padding(cardPadding),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-                    ),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+                        .padding(horizontal = 8.dp)
+                        .height(100.dp),
+                    columns = GridCells.Adaptive(minSize = 100.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    ScoresDetailMainInfo(gameDecorator)
+                    item {
+                        FilterChip(
+                            onClick = { showStatisticsData = !showStatisticsData },
+                            label = { Text("Statistics") },
+                            selected = showStatisticsData,
+                            leadingIcon = if (showStatisticsData) {
+                                {
+                                    Icon(
+                                        imageVector = Icons.Filled.Done,
+                                        contentDescription = "Done icon",
+                                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                    )
+                                }
+                            } else {
+                                null
+                            },
+                        )
+                    }
+                    item {
+                        FilterChip(
+                            onClick = { showLocationData = !showLocationData },
+                            label = {
+                                Text("Location")
+                            },
+                            selected = showLocationData,
+                            leadingIcon = if (showLocationData) {
+                                {
+                                    Icon(
+                                        imageVector = Icons.Filled.Done,
+                                        contentDescription = "Done icon",
+                                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                    )
+                                }
+                            } else {
+                                null
+                            },
+                        )
+                    }
+                    item {
+                        FilterChip(
+                            onClick = { showOfficialsData = !showOfficialsData },
+                            label = { Text("Officials") },
+                            selected = showOfficialsData,
+                            leadingIcon = if (showOfficialsData) {
+                                {
+                                    Icon(
+                                        imageVector = Icons.Filled.Done,
+                                        contentDescription = "Done icon",
+                                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                    )
+                                }
+                            } else {
+                                null
+                            },
+                        )
+                    }
+                    item {
+                        FilterChip(
+                            onClick = { showBoxScoreSection = !showBoxScoreSection },
+                            label = { Text("Box Score") },
+                            selected = showBoxScoreSection,
+                            leadingIcon = if (showBoxScoreSection) {
+                                {
+                                    Icon(
+                                        imageVector = Icons.Filled.Done,
+                                        contentDescription = "Done icon",
+                                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                    )
+                                }
+                            } else {
+                                null
+                            },
+                        )
+                    }
+                    item {
+                        FilterChip(
+                            onClick = { showGameReportSection = !showGameReportSection },
+                            label = { Text("Game Report") },
+                            selected = showGameReportSection,
+                            leadingIcon = if (showGameReportSection) {
+                                {
+                                    Icon(
+                                        imageVector = Icons.Filled.Done,
+                                        contentDescription = "Done icon",
+                                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                    )
+                                }
+                            } else {
+                                null
+                            },
+                        )
+                    }
                 }
             }
-            item {
-                ScoreDetailStatisticsSection(showStatisticsData, gameDecorator.game)
-            }
-            item {
-                ScoreDetailLocationSection(showLocationData, gameDecorator.game)
-            }
-            item {
-                ScoreDetailOfficialsSection(showOfficialsData, gameDecorator.game)
-            }
+        }
+        item {
+            HorizontalDivider(modifier = Modifier.padding(8.dp))
+        }
+        item {
+            ScoreDetailStatisticsSection(showStatisticsData, gameDecorator.game)
+        }
+        item {
+            ScoreDetailLocationSection(showLocationData, gameDecorator.game)
+        }
+        item {
+            ScoreDetailOfficialsSection(showOfficialsData, gameDecorator.game)
+        }
+        item {
+            ScoresDetailBoxScoreSection(showBoxScoreSection)
+        }
+        item {
+            ScoresDetailGameReportSection(showGameReportSection)
         }
     }
 }
