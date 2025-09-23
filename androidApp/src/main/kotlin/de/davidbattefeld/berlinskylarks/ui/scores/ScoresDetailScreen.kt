@@ -50,7 +50,9 @@ fun ScoresDetailScreen(
 
     // TODO: replace with repository call
     LaunchedEffect(Unit) {
-        vm.loadBoxScoreForGame(matchID)
+        if (gameDecorator.game.matchID != vm.currentBoxScore?.header?.matchID) {
+            vm.loadBoxScoreForGame(matchID)
+        }
     }
 
     LazyColumn(

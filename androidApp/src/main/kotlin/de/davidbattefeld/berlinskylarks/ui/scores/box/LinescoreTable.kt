@@ -5,9 +5,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,12 +19,15 @@ import androidx.compose.ui.unit.dp
 import de.berlinskylarks.shared.data.model.Linescore
 
 @Composable
-fun LinescoreTable(linescore: Linescore, cellWidth: Dp = 40.dp) {
+fun LinescoreTable(linescore: Linescore, cellWidth: Dp = 25.dp) {
     val scrollState = rememberScrollState()
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp)
+            .padding(vertical = 8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainer
+        )
     ) {
         Column(
             modifier = Modifier
@@ -30,7 +36,7 @@ fun LinescoreTable(linescore: Linescore, cellWidth: Dp = 40.dp) {
         ) {
             // Header
             Row(verticalAlignment = Alignment.CenterVertically) {
-                HeaderCell(text = "", minWidth = 120.dp)
+                HeaderCell(text = "", minWidth = 100.dp)
                 for (inning in 1..linescore.playedInnings) {
                     HeaderCell(text = inning.toString(), minWidth = cellWidth)
                 }
@@ -38,13 +44,16 @@ fun LinescoreTable(linescore: Linescore, cellWidth: Dp = 40.dp) {
                 HeaderCell(text = "H", minWidth = cellWidth)
                 HeaderCell(text = "E", minWidth = cellWidth)
             }
-            HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
+            HorizontalDivider(modifier = Modifier
+                .padding(vertical = 4.dp)
+                .width(400.dp,
+            ))
+
             // Away row
             Row(verticalAlignment = Alignment.CenterVertically) {
                 BodyCell(
                     text = linescore.away.leagueEntry.team.name,
-                    minWidth = 120.dp,
-                    bold = true
+                    minWidth = 100.dp,
                 )
                 linescore.away.innings.forEach { valStr ->
                     BodyCell(
@@ -56,12 +65,12 @@ fun LinescoreTable(linescore: Linescore, cellWidth: Dp = 40.dp) {
                 BodyCell(text = linescore.away.hits.toString(), minWidth = cellWidth)
                 BodyCell(text = linescore.away.errors.toString(), minWidth = cellWidth)
             }
+
             // Home row
             Row(verticalAlignment = Alignment.CenterVertically) {
                 BodyCell(
                     text = linescore.home.leagueEntry.team.name,
-                    minWidth = 120.dp,
-                    bold = true
+                    minWidth = 100.dp,
                 )
                 linescore.home.innings.forEach { valStr ->
                     BodyCell(

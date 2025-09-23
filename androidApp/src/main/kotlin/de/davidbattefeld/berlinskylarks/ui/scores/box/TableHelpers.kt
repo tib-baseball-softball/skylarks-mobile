@@ -28,12 +28,12 @@ fun HeaderCell(text: String, minWidth: Dp) {
         modifier = Modifier
             .width(minWidth)
             .padding(4.dp),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.CenterStart
     ) {
         Text(
             text = text,
             style = MaterialTheme.typography.labelMedium,
-            maxLines = 1,
+            fontWeight = FontWeight.Bold,
             overflow = TextOverflow.Ellipsis
         )
     }
@@ -45,7 +45,7 @@ fun BodyCell(text: String, minWidth: Dp, bold: Boolean = false) {
         modifier = Modifier
             .width(minWidth)
             .padding(4.dp),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.CenterStart
     ) {
         Text(
             text = text,
