@@ -11,6 +11,7 @@ import de.berlinskylarks.shared.data.api.BSMAPIClient
 import de.berlinskylarks.shared.data.api.LeagueGroupsAPIClient
 import de.berlinskylarks.shared.data.api.MatchAPIClient
 import de.berlinskylarks.shared.data.model.LeagueGroup
+import de.berlinskylarks.shared.data.model.MatchBoxScore
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
 import de.davidbattefeld.berlinskylarks.domain.model.UserCalendar
 import de.davidbattefeld.berlinskylarks.domain.service.CalendarService
@@ -33,6 +34,8 @@ class ScoresViewModel @Inject constructor(
     var leagueGroups = mutableStateListOf<LeagueGroup>()
     var filteredLeagueGroup by mutableStateOf<LeagueGroup>(testLeagueGroup)
     var userCalendars = mutableStateListOf<UserCalendar>()
+
+    var currentBoxScore by mutableStateOf<MatchBoxScore?>(null)
 
     var tabState by mutableStateOf(TabState.CURRENT)
 
@@ -110,6 +113,12 @@ class ScoresViewModel @Inject constructor(
         calendarService.context = context
         viewModelScope.launch {
             calendarService.addGamesToCalendar(gameDecorators = gamesToUse, calendarID = id)
+        }
+    }
+
+    fun loadBoxScoreForGame(gameID: Int) {
+        viewModelScope.launch {
+            currentBoxScore = matchAPIClient.getBoxScoreForGame(gameID)
         }
     }
 

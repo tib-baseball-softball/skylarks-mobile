@@ -19,6 +19,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -45,6 +46,10 @@ fun ScoresDetailScreen(
 
     if (gameDecorator == null) {
         return ContentNotFoundView("games")
+    }
+
+    LaunchedEffect(Unit) {
+        vm.loadBoxScoreForGame(matchID)
     }
 
     LazyColumn(
@@ -137,6 +142,7 @@ fun ScoresDetailScreen(
                             onClick = { showBoxScoreSection = !showBoxScoreSection },
                             label = { Text("Box Score") },
                             selected = showBoxScoreSection,
+                            enabled = vm.currentBoxScore != null,
                             leadingIcon = if (showBoxScoreSection) {
                                 {
                                     Icon(

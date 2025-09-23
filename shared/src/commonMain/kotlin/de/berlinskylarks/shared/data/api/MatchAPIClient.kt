@@ -1,6 +1,7 @@
 package de.berlinskylarks.shared.data.api
 
 import de.berlinskylarks.shared.data.model.Game
+import de.berlinskylarks.shared.data.model.MatchBoxScore
 
 /**
  * Gets games limited to our own club.
@@ -54,5 +55,11 @@ class MatchAPIClient(authKey: String) : BSMAPIClient(authKey) {
             resource = "matches.json",
             queryParameters = queryParameters,
         ) ?: listOf()
+    }
+
+    suspend fun getBoxScoreForGame(gameID: Int): MatchBoxScore? {
+        return apiCall<MatchBoxScore>(
+            resource = "matches/$gameID/match_boxscore.json",
+        )
     }
 }

@@ -23,7 +23,13 @@ data class MatchBoxScore(
     val gameNotes: GameNotes,
     @SerialName("full_boxscore_html")
     val fullBoxScoreHTML: String
-)
+) {
+    @Serializable
+    data class BoxScoreLeagueEntry(
+        var id: Int,
+        var type: String,
+    )
+}
 
 @Serializable
 data class Baserunning(
@@ -67,17 +73,25 @@ data class GameNotes(
 
 @Serializable
 data class BoxScoreHeader(
-    val league: League,
+    val league: BoxScoreHeaderLeague,
     val season: Int,
     @SerialName("match_id")
     val matchID: String,
     val time: String
-)
+) {
+    @Serializable
+    data class BoxScoreHeaderLeague(
+        var id: Int,
+        var name: String,
+        var acronym: String,
+        var sport: String,
+    )
+}
 
 @Serializable
 data class AdditionalMatchStats(
     @SerialName("league_entry")
-    val leagueEntry: LeagueEntry,
+    val leagueEntry: MatchBoxScore.BoxScoreLeagueEntry,
     val batting: Batting,
     val baserunning: Baserunning,
     val fielding: Fielding
@@ -86,7 +100,7 @@ data class AdditionalMatchStats(
 @Serializable
 data class OffensiveMatchStats(
     @SerialName("league_entry")
-    val leagueEntry: LeagueEntry,
+    val leagueEntry: MatchBoxScore.BoxScoreLeagueEntry,
     val lineup: List<OffensiveLineupEntry>,
     val sum: OffensiveLineupStats
 )
@@ -94,14 +108,14 @@ data class OffensiveMatchStats(
 @Serializable
 data class PitchingMatchStats(
     @SerialName("league_entry")
-    val leagueEntry: LeagueEntry,
+    val leagueEntry: MatchBoxScore.BoxScoreLeagueEntry,
     val lineup: List<PitchingLineupEntry>,
     val sum: PitchingLineupStats
 )
 
 @Serializable
 data class AdditionalStat(
-    val person: Person,
+    val person: PersonReducedResponse,
     val count: Int,
     val sum: Int
 )

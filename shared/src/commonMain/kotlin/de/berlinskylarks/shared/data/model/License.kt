@@ -6,13 +6,13 @@ import kotlinx.serialization.Serializable
 data class License(
     override var id: Int,
     var number: String,
-    var valid_until: String,
-    var category: String,
+    var valid_until: String?,
+    var category: String?,
     var level: String,
     var sport_association: String?,
     var sleeve_number: Int?,
-    var baseball: Boolean,
-    var softball: Boolean,
+    var baseball: Boolean?,
+    var softball: Boolean?,
     var person: PersonReducedResponse,
 
     //var expiryDate: Date?

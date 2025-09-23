@@ -8,7 +8,7 @@ data class Field(
     var club_id: Int?,
     var name: String,
     var address_addon: String,
-    var description: String,
+    var description: String?,
     var street: String?,
     var postal_code: String?,
     var city: String?,
