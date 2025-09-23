@@ -49,7 +49,7 @@ fun ScoresDetailScreen(
     }
 
     // TODO: replace with repository call
-    LaunchedEffect(Unit) {
+    LaunchedEffect(matchID) {
         if (gameDecorator.game.matchID != vm.currentBoxScore?.header?.matchID) {
             vm.loadBoxScoreForGame(matchID)
         }

@@ -28,7 +28,7 @@ fun ScoresDetailBoxScoreSection(
     vm: ScoresViewModel = viewModel()
 ) {
     AnimatedVisibility(
-        modifier = Modifier.padding(8.dp),
+        modifier = Modifier.padding(12.dp),
         visible = show,
         enter = expandIn(),
         exit = shrinkOut(),
