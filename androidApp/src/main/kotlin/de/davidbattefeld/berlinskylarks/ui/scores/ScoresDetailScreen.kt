@@ -48,13 +48,13 @@ fun ScoresDetailScreen(
         return ContentNotFoundView("games")
     }
 
+    // TODO: replace with repository call
     LaunchedEffect(Unit) {
         vm.loadBoxScoreForGame(matchID)
     }
 
     LazyColumn(
         modifier = Modifier,
-        // verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
         item {
             Card(
@@ -189,8 +189,10 @@ fun ScoresDetailScreen(
         item {
             ScoreDetailOfficialsSection(showOfficialsData, gameDecorator.game)
         }
-        item {
-            ScoresDetailBoxScoreSection(showBoxScoreSection)
+        if (vm.currentBoxScore != null) {
+            item {
+                ScoresDetailBoxScoreSection(showBoxScoreSection)
+            }
         }
         item {
             ScoresDetailGameReportSection(showGameReportSection)

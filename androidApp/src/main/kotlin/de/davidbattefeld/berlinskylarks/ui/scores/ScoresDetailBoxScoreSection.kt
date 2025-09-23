@@ -3,12 +3,23 @@ package de.davidbattefeld.berlinskylarks.ui.scores
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandIn
 import androidx.compose.animation.shrinkOut
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.berlinskylarks.shared.data.model.MatchBoxScore
+import de.davidbattefeld.berlinskylarks.ui.scores.box.AdditionalStatsSection
+import de.davidbattefeld.berlinskylarks.ui.scores.box.LinescoreTable
+import de.davidbattefeld.berlinskylarks.ui.scores.box.OffensiveTable
+import de.davidbattefeld.berlinskylarks.ui.scores.box.PitchingTable
+import de.davidbattefeld.berlinskylarks.ui.scores.box.SectionHeader
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
 
 @Composable
@@ -22,6 +33,38 @@ fun ScoresDetailBoxScoreSection(
         enter = expandIn(),
         exit = shrinkOut(),
     ) {
-        Text("Box Score is ${vm.currentBoxScore?.fullBoxScoreHTML ?: "not available"}")
+        val box = vm.currentBoxScore
+        if (box == null) {
+            Text("Boxscore not available")
+        } else {
+            BoxScoreContent(box)
+        }
+    }
+}
+
+@Composable
+private fun BoxScoreContent(box: MatchBoxScore) {
+    val awayTeamName = box.linescore.away.leagueEntry.team.name
+    val homeTeamName = box.linescore.home.leagueEntry.team.name
+
+    Column(modifier = Modifier.fillMaxWidth()) {
+        SectionHeader(text = "Linescore")
+        LinescoreTable(linescore = box.linescore)
+
+        SectionHeader(text = "Offensive")
+        OffensiveTable(teamName = awayTeamName, matchStats = box.offensiveAway)
+        AdditionalStatsSection(stats = box.additionalAway)
+
+        HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
+
+        OffensiveTable(teamName = homeTeamName, matchStats = box.offensiveHome)
+        AdditionalStatsSection(stats = box.additionalHome)
+
+        HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
+
+        SectionHeader(text = "Pitching")
+        PitchingTable(teamName = awayTeamName, matchStats = box.pitchingAway)
+        Spacer(modifier = Modifier.height(8.dp))
+        PitchingTable(teamName = homeTeamName, matchStats = box.pitchingHome)
     }
 }
