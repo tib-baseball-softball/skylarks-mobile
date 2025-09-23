@@ -2,7 +2,6 @@ package de.davidbattefeld.berlinskylarks.ui.viewmodels
 
 import android.content.Context
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -35,7 +34,7 @@ class ScoresViewModel @Inject constructor(
     var filteredLeagueGroup by mutableStateOf<LeagueGroup>(testLeagueGroup)
     var userCalendars = mutableStateListOf<UserCalendar>()
 
-    var tabState by mutableIntStateOf(1)
+    var tabState by mutableStateOf(TabState.CURRENT)
 
     val calendarService = CalendarService()
 
@@ -67,13 +66,10 @@ class ScoresViewModel @Inject constructor(
         skylarksGames.clear()
 
         val gamedays = when (tabState) {
-            0 -> "previous"
-            1 -> "current"
-            2 -> "next"
-            3 -> "any"
-            else -> {
-                throw Exception("tabState has invalid value that cannot be used to determine Gameday")
-            }
+            TabState.PREVIOUS -> "previous"
+            TabState.CURRENT -> "current"
+            TabState.NEXT -> "next"
+            TabState.ANY -> "any"
         }
 
         if (filteredLeagueGroup.id == BOGUS_ID) {
@@ -115,5 +111,12 @@ class ScoresViewModel @Inject constructor(
         viewModelScope.launch {
             calendarService.addGamesToCalendar(gameDecorators = gamesToUse, calendarID = id)
         }
+    }
+
+    enum class TabState {
+        PREVIOUS,
+        CURRENT,
+        NEXT,
+        ANY
     }
 }

@@ -37,6 +37,7 @@ import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
 import de.davidbattefeld.berlinskylarks.ui.utility.LoadingView
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel.TabState
 
 @Composable
 fun ScoresScreen(
@@ -60,9 +61,9 @@ fun ScoresScreen(
                             index = index,
                             count = tabTitles.size
                         ),
-                        selected = vm.tabState == index,
+                        selected = vm.tabState.ordinal == index,
                         onClick = {
-                            vm.tabState = index
+                            vm.tabState = TabState.entries.toTypedArray().getOrElse(index) { TabState.CURRENT }
                             vm.load()
                         },
                         label = {
