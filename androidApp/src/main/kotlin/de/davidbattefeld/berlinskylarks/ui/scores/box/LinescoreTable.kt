@@ -46,7 +46,7 @@ fun LinescoreTable(linescore: Linescore, cellWidth: Dp = 25.dp) {
             }
             HorizontalDivider(modifier = Modifier
                 .padding(vertical = 4.dp)
-                .width(400.dp,
+                .width(350.dp,
             ))
 
             // Away row

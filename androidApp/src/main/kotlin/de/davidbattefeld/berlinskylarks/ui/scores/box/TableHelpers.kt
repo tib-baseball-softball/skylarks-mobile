@@ -51,7 +51,6 @@ fun BodyCell(text: String, minWidth: Dp, bold: Boolean = false) {
             text = text,
             style = if (bold) MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.ExtraBold)
             else MaterialTheme.typography.bodyMedium,
-            maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
     }
