@@ -440,8 +440,6 @@ struct ScoresView: View {
                     }
                     
                 }
-                .pickerStyle(.menu)
-                .padding(.vertical, scoresGridPadding)
             }
         }
     }
