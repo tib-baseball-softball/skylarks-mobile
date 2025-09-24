@@ -8,6 +8,7 @@
 import EventKit
 import MapKit
 import SwiftUI
+import sharedKit
 
 struct ScoresDetailView: View {
     @Environment(ScoresViewModel.self) var vm: ScoresViewModel
@@ -16,7 +17,6 @@ struct ScoresDetailView: View {
 
     @State private var showingSheet = false
     @State private var showCalendarDialog = false
-    @State private var isBookmarked = false
     @State private var showEventAlert = false
     @State private var showAlertNoGames = false
     @State private var showAlertNoAccess = false
@@ -25,96 +25,11 @@ struct ScoresDetailView: View {
     @State private var calendar: EKCalendar?
 
     var body: some View {
-        let logos = TeamImageData.fetchCorrectLogos(gamescore: gamescore)
-
-        List {
-            Section(header: Text("Main info")) {
-                ScoreMainInfo(gamescore: gamescore)
-            }
-            .textSelection(.enabled)
-            Section(header: Text("Score")) {
-                VStack {
-                    //extracted to subview to be used by OverView as well
-                    GameResultIndicator(gamescore: gamescore)
-                        .font(.title)
-
-                    HStack {
-                        VStack {
-                            Text("Road", comment: "reference to the road team")
-                                .bold()
-                            logos.road
-                                .resizable()
-                                .scaledToFit()
-                                .frame(
-                                    width: 50,
-                                    height: 50,
-                                    alignment: .center
-                                )
-                            Text(gamescore.away_team_name)
-                                .lineLimit(nil)
-                        }
-                        Spacer()
-                        VStack {
-                            Text("Home", comment: "Reference to the home team")
-                                .bold()
-                            logos.home
-                                .resizable()
-                                .scaledToFit()
-                                .frame(
-                                    width: 50,
-                                    height: 50,
-                                    alignment: .center
-                                )
-                            Text(gamescore.home_team_name)
-                                .lineLimit(nil)
-                        }.frame(width: teamNameFrame)
-                    }
-                    .padding(ScoresItemPadding)
-                    Divider()
-                    HStack {
-                        if let awayScore = gamescore.away_runs,
-                            let homeScore = gamescore.home_runs
-                        {
-                            Text(String(awayScore))
-                                .font(.largeTitle)
-                                .bold()
-                                .padding(ScoresNumberPadding)
-                                .foregroundColor(
-                                    awayScore < homeScore
-                                        ? Color.secondary : Color.primary
-                                )
-                        }
-                        Spacer()
-                        if let awayScore = gamescore.away_runs,
-                            let homeScore = gamescore.home_runs
-                        {
-                            Text(String(homeScore))
-                                .font(.largeTitle)
-                                .bold()
-                                .padding(ScoresNumberPadding)
-                                .foregroundColor(
-                                    awayScore > homeScore
-                                        ? Color.secondary : Color.primary
-                                )
-                        }
-                    }
-                    .padding(ScoresItemPadding)
-                }
-            }
-            Section(header: Text("Location")) {
-                BallparkLocation(gamescore: gamescore)
-            }
-            .textSelection(.enabled)
-            Section(header: Text("Status")) {
-                ScoresStatusSection(gamescore: gamescore)
-            }
-            Section(header: Text("Game officials")) {
-                UmpireAssignments(gamescore: gamescore)
-                ScorerAssignments(gamescore: gamescore)
-            }
-            .textSelection(.enabled)
-        }
+        ScoresDetailContent(gamescore: gamescore, gameBoxScore: vm.currentBoxScore)
         .navigationTitle("Game Details")
+        .task(id: gamescore.id) {
+            await vm.loadGameBoxScore(gameID: gamescore.id)
+        }
 
         .toolbar {
             ToolbarItemGroup(placement: .primaryAction) {

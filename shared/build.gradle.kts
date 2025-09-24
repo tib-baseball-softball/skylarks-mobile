@@ -112,6 +112,7 @@ kotlin {
         macosMain {
             dependencies {
                 // Add macOS-specific dependencies here.
+                implementation(libs.ktor.client.darwin)
             }
         }
     }

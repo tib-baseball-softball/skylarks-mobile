@@ -44,6 +44,8 @@ class ScoresViewModel {
     var leagueGroups = [LeagueGroup]()
     var searchResults = [GameScore]()
     var skylarksGamescores = [GameScore]()
+    
+    var currentBoxScore: MatchBoxScore?
 
     func loadLeagueGroups(selectedSeason: Int) async {
         //reset filter options to default
@@ -121,6 +123,14 @@ class ScoresViewModel {
         selectedTeamID = LEAGUEGROUP_ALL.id
         for leagueGroup in leagueGroups where leagueGroup == selectedTeam {
             selectedTeamID = leagueGroup.id
+        }
+    }
+    
+    func loadGameBoxScore(gameID: Int) async {
+        do {
+            currentBoxScore = try await gameRepository.loadGameBoxScore(gameID: Int32(gameID))
+        } catch {
+            print("Error loading box score for game with ID \(gameID)")
         }
     }
 

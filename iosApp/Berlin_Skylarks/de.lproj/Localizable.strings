@@ -1,3 +1,15 @@
+"Linescore" = "Linescore";
+
+"Innings" = "Innings";
+
+"Display" = "Zeige";
+
+"Main" = "Kerninfos";
+
+"Boxscore" = "Boxscore";
+
+"Report" = "Spielbericht";
+
 "Open in Maps" = "In Maps öffnen";
 
 "Kotlin Multiplatform:" = "Kotlin Multiplatform:";
@@ -108,7 +120,7 @@
 "%@ lead series" = "%@ führen in der Serie";
 
 /* No comment provided by engineer. */
-" planned Innings" = " geplante Innings";
+"%@ planned Innings" = "%1$@ geplante Innings";
 
 /* No comment provided by engineer. */
 "%@ Playoff Game %@" = "%1$@ Playoff-Spiel %2$@";
@@ -335,7 +347,7 @@
 "No field coordinates provided" = "Keine Feldkoordinaten angegeben";
 
 /* No comment provided by engineer. */
-"No first umpire assigned yet" = "Bisher kein erster Umpire eingetragen";
+"No umpires assigned yet" = "Bisher keine Umpire eingetragen";
 
 /* No comment provided by engineer. */
 "No location data available." = "Keine Ortsdaten verfügbar";
@@ -351,9 +363,6 @@
 
 /* No comment provided by engineer. */
 "No scorer assigned yet" = "Bisher keine Scorer:in eingetragen";
-
-/* No comment provided by engineer. */
-"No second umpire assigned yet" = "Bisher kein zweiter Umpire eingetragen";
 
 /* No comment provided by engineer. */
 "No standings available." = "Keine Tabellen verfügbar";
