@@ -10,8 +10,9 @@ import MapKit
 import SwiftUI
 
 struct ScoresDetailView: View {
+    @Environment(ScoresViewModel.self) var vm: ScoresViewModel
 
-    @Environment(CalendarManager.self) var calendarManager: CalendarManager
+    var gamescore: GameScore
 
     @State private var showingSheet = false
     @State private var showCalendarDialog = false
@@ -22,30 +23,6 @@ struct ScoresDetailView: View {
 
     @State var showCalendarChooser = false
     @State private var calendar: EKCalendar?
-
-    func checkAccess() async {
-        switch EKEventStore.authorizationStatus(for: .event) {
-        case .denied, .restricted:
-            showAlertNoAccess = true
-        case .writeOnly, .fullAccess:
-            showCalendarDialog = true
-        default:
-            let granted = await calendarManager.requestAccess()
-            if granted {
-                showCalendarDialog = true
-            }
-        }
-    }
-
-    func saveEvent() async {
-        let gameDate = DateTimeUtility.getDatefromBSMString(
-            gamescore: gamescore)
-        await calendarManager.addGameToCalendar(
-            gameDate: gameDate, gamescore: gamescore, calendar: calendar)
-        showEventAlert = true
-    }
-
-    var gamescore: GameScore
 
     var body: some View {
         let logos = TeamImageData.fetchCorrectLogos(gamescore: gamescore)
@@ -69,9 +46,11 @@ struct ScoresDetailView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(
-                                    width: 50, height: 50, alignment: .center)
+                                    width: 50,
+                                    height: 50,
+                                    alignment: .center
+                                )
                             Text(gamescore.away_team_name)
-                                //.frame(width: teamNameFrame)
                                 .lineLimit(nil)
                         }
                         Spacer()
@@ -82,9 +61,11 @@ struct ScoresDetailView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(
-                                    width: 50, height: 50, alignment: .center)
+                                    width: 50,
+                                    height: 50,
+                                    alignment: .center
+                                )
                             Text(gamescore.home_team_name)
-                                //.frame(width: teamNameFrame)
                                 .lineLimit(nil)
                         }.frame(width: teamNameFrame)
                     }
@@ -100,7 +81,8 @@ struct ScoresDetailView: View {
                                 .padding(ScoresNumberPadding)
                                 .foregroundColor(
                                     awayScore < homeScore
-                                        ? Color.secondary : Color.primary)
+                                        ? Color.secondary : Color.primary
+                                )
                         }
                         Spacer()
                         if let awayScore = gamescore.away_runs,
@@ -112,14 +94,14 @@ struct ScoresDetailView: View {
                                 .padding(ScoresNumberPadding)
                                 .foregroundColor(
                                     awayScore > homeScore
-                                        ? Color.secondary : Color.primary)
+                                        ? Color.secondary : Color.primary
+                                )
                         }
                     }
                     .padding(ScoresItemPadding)
                 }
             }
             Section(header: Text("Location")) {
-                //field is now optional - apparently that is not a required field in BSM (doesn't really make sense but okay...)
                 BallparkLocation(gamescore: gamescore)
             }
             .textSelection(.enabled)
@@ -128,9 +110,6 @@ struct ScoresDetailView: View {
             }
             Section(header: Text("Game officials")) {
                 UmpireAssignments(gamescore: gamescore)
-
-                //scorer assignments. I support two entries here to account for double scoring. Only the first one gets an else statement since second scorers are rare
-
                 ScorerAssignments(gamescore: gamescore)
             }
             .textSelection(.enabled)
@@ -167,7 +146,8 @@ struct ScoresDetailView: View {
                                 Text("Selected Calendar:")
                                 Text(
                                     calendar?.title
-                                        ?? String(localized: "Default"))
+                                        ?? String(localized: "Default")
+                                )
                                 Spacer()
                             }
                         }
@@ -254,6 +234,32 @@ struct ScoresDetailView: View {
             """
 
         return data
+    }
+
+    func checkAccess() async {
+        switch EKEventStore.authorizationStatus(for: .event) {
+        case .denied, .restricted:
+            showAlertNoAccess = true
+        case .writeOnly, .fullAccess:
+            showCalendarDialog = true
+        default:
+            let granted = await vm.calendarManager.requestAccess()
+            if granted {
+                showCalendarDialog = true
+            }
+        }
+    }
+
+    func saveEvent() async {
+        let gameDate = DateTimeUtility.getDatefromBSMString(
+            gamescore: gamescore
+        )
+        await vm.calendarManager.addGameToCalendar(
+            gameDate: gameDate,
+            gamescore: gamescore,
+            calendar: calendar
+        )
+        showEventAlert = true
     }
 }
 
