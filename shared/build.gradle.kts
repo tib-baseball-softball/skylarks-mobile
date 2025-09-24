@@ -57,6 +57,12 @@ kotlin {
         }
     }
 
+    macosArm64 {
+        binaries.framework {
+            baseName = xcfName
+        }
+    }
+
     // Source set declarations.
     // Declaring a target automatically creates a source set with the same name. By default, the
     // Kotlin Gradle Plugin creates additional source sets that depend on each other, since it is
@@ -106,6 +112,12 @@ kotlin {
                 // KMP dependencies declared in commonMain.
             }
         }
+
+        macosMain {
+            dependencies {
+                // Add macOS-specific dependencies here.
+            }
+        }
     }
 }
 
@@ -114,6 +126,7 @@ dependencies {
     add("kspIosSimulatorArm64", libs.androidx.room.compiler)
     add("kspIosX64", libs.androidx.room.compiler)
     add("kspIosArm64", libs.androidx.room.compiler)
+    add("kspMacosArm64", libs.androidx.room.compiler)
 }
 
 room {
