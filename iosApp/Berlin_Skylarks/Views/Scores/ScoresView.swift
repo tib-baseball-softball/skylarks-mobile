@@ -289,32 +289,30 @@ struct ScoresView: View {
         )  //it doesn't let me change the prompt
         
         .onChange(of: searchText) {
-            let searchedObjects =
-            showOtherTeams ? gamescores : skylarksGamescores
+            let searchLC = searchText.lowercased()
+            let searchedObjects = showOtherTeams ? gamescores : skylarksGamescores
+
             searchResults = searchedObjects.filter({ gamescore in
-                
-                // list all fields that are searched
                 gamescore.home_team_name.lowercased().contains(
-                    searchText.lowercased())
+                    searchLC)
                 || gamescore.away_team_name.lowercased().contains(
-                    searchText.lowercased())
+                    searchLC)
                 || gamescore.match_id.lowercased().contains(
-                    searchText.lowercased())
+                    searchLC)
                 || gamescore.league.name.lowercased().contains(
-                    searchText.lowercased())
-                //MARK: watch for index errors here
-                || gamescore.home_league_entry.team.clubs[0].name
-                    .lowercased().contains(searchText.lowercased())
-                || gamescore.away_league_entry.team.clubs[0].name
-                    .lowercased().contains(searchText.lowercased())
-                || gamescore.home_league_entry.team.clubs[0].short_name
-                    .lowercased().contains(searchText.lowercased())
-                || gamescore.away_league_entry.team.clubs[0].short_name
-                    .lowercased().contains(searchText.lowercased())
-                || gamescore.home_league_entry.team.clubs[0].acronym
-                    .lowercased().contains(searchText.lowercased())
-                || gamescore.away_league_entry.team.clubs[0].acronym
-                    .lowercased().contains(searchText.lowercased())
+                    searchLC)
+                || gamescore.home_league_entry.team.clubs.first?.name
+                    .localizedCaseInsensitiveContains(searchLC) ?? false
+                || gamescore.away_league_entry.team.clubs.first?.name
+                    .localizedCaseInsensitiveContains(searchLC) ?? false
+                || gamescore.home_league_entry.team.clubs.first?.short_name
+                    .localizedCaseInsensitiveContains(searchLC) ?? false
+                || gamescore.away_league_entry.team.clubs.first?.short_name
+                    .localizedCaseInsensitiveContains(searchLC) ?? false
+                || gamescore.home_league_entry.team.clubs.first?.acronym
+                    .localizedCaseInsensitiveContains(searchLC) ?? false
+                || gamescore.away_league_entry.team.clubs.first?.acronym
+                    .localizedCaseInsensitiveContains(searchLC) ?? false
             })
         }
         
