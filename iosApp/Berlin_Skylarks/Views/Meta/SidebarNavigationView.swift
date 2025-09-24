@@ -11,6 +11,9 @@ import SwiftUI
 ///
 /// Provides navigation links to all major sections of the app.
 struct SidebarNavigationView: View {
+    @Environment(CalendarManager.self) var calendarManager: CalendarManager
+    @Environment(NetworkManager.self) var networkManager: NetworkManager
+    @Environment(AppContainer.self) var appContainer: AppContainer
 
     var body: some View {
         NavigationSplitView {
@@ -31,6 +34,12 @@ struct SidebarNavigationView: View {
                 Section(header: Text("Game Action")) {
                     NavigationLink(
                         destination: ScoresView()
+                            .environment(
+                                ScoresViewModel(
+                                    gameRepository: appContainer.gameRepository,
+                                    networkManager: networkManager
+                                )
+                            )
                     ) {
                         Image(systemName: "42.square.fill")
                             .foregroundColor(.skylarksDynamicNavySand)

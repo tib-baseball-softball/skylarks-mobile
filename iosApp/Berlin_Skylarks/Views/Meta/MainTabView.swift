@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct MainTabView: View {
+    @Environment(CalendarManager.self) var calendarManager: CalendarManager
+    @Environment(NetworkManager.self) var networkManager: NetworkManager
+    @Environment(AppContainer.self) var appContainer: AppContainer
+    
     var body: some View {
         TabView {
             NavigationStack {
@@ -29,6 +33,10 @@ struct MainTabView: View {
             //                    }
             NavigationStack {
                 ScoresView()
+                    .environment(ScoresViewModel(
+                        gameRepository: appContainer.gameRepository,
+                        networkManager: networkManager
+                    ))
             }
             .tabItem {
                 Image(systemName: "42.square.fill")
