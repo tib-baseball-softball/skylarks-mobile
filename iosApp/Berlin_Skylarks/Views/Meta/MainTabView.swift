@@ -9,18 +9,15 @@ import SwiftUI
 
 struct MainTabView: View {
     @Environment(AppContainer.self) var appContainer: AppContainer
-    
+
     var body: some View {
         TabView {
-            NavigationStack {
-                UserHomeView()
+            Tab("HomeTab", systemImage: "star.square.fill") {
+                NavigationStack {
+                    UserHomeView()
+                }
             }
-            .tabItem {
-                Image(systemName: "star.square.fill")
-                Text(
-                    "HomeTab", comment: "refers to the home tab in the tab view"
-                )
-            }
+
             //since News is non-functional right now, let's rather have the settings back in the tab bar
             //                NavigationView {
             //                    NewsView()
@@ -29,46 +26,36 @@ struct MainTabView: View {
             //                        Image(systemName: "newspaper.fill")
             //                        Text("News")
             //                    }
-            NavigationStack {
-                ScoresView()
-                    .environment(ScoresViewModel(
-                        gameRepository: appContainer.gameRepository,
-                        networkManager: appContainer.networkManager,
-                        calendarManager: appContainer.calendarManager
-                    ))
+
+            Tab("Scores", systemImage: "42.square.fill") {
+                NavigationStack {
+                    ScoresView()
+                }
             }
-            .tabItem {
-                Image(systemName: "42.square.fill")
-                Text("Scores", comment: "tab view")
+
+            Tab("Standings", systemImage: "tablecells.fill") {
+                NavigationStack {
+                    StandingsView()
+                }
             }
-            NavigationStack {
-                StandingsView()
+
+            Tab("Club", systemImage: "shield.fill") {
+                NavigationStack {
+                    ClubView()
+                }
             }
-            .tabItem {
-                Image(systemName: "tablecells.fill")
-                Text("Standings", comment: "tab view")
-            }
-            NavigationStack {
-                ClubView()
-            }
-            .tabItem {
-                Image(systemName: "shield.fill")
-                Text("Club", comment: "tab view")
-            }
-            NavigationStack {
-                SettingsListView()
-            }
-            .tabItem {
-                Image(systemName: "gearshape.fill")
-                Text("Settings", comment: "tab view")
+
+            Tab("Settings", systemImage: "gearshape.fill") {
+                NavigationStack {
+                    SettingsListView()
+                }
             }
         }
+        .tabViewStyle(.sidebarAdaptable)
     }
 }
 
-struct MainTabView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainTabView()
-            .environment(NetworkManager())
-    }
+#Preview {
+    MainTabView()
+        .environment(AppContainer())
 }

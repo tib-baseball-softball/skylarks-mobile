@@ -27,19 +27,22 @@ struct ContentView: View {
                 MainTabView()
                     .onboarding(
                         showingSheetOnboarding: $showingSheetOnboarding,
-                        didLaunchBefore: $didLaunchBefore)
+                        didLaunchBefore: $didLaunchBefore
+                    )
             } else if UIDevice.current.userInterfaceIdiom == .pad {
                 SidebarNavigationView()
                     .onboarding(
                         showingSheetOnboarding: $showingSheetOnboarding,
-                        didLaunchBefore: $didLaunchBefore)
+                        didLaunchBefore: $didLaunchBefore
+                    )
             }
 
         #elseif os(macOS)
             SidebarNavigationView()
                 .onboarding(
                     showingSheetOnboarding: $showingSheetOnboarding,
-                    didLaunchBefore: $didLaunchBefore)
+                    didLaunchBefore: $didLaunchBefore
+                )
         #endif
     }
 }

@@ -30,16 +30,7 @@ struct SidebarNavigationView: View {
                     }
                 }
                 Section(header: Text("Game Action")) {
-                    NavigationLink(
-                        destination: ScoresView()
-                            .environment(
-                                ScoresViewModel(
-                                    gameRepository: appContainer.gameRepository,
-                                    networkManager: appContainer.networkManager,
-                                    calendarManager: appContainer.calendarManager
-                                )
-                            )
-                    ) {
+                    NavigationLink(destination: ScoresView()) {
                         Image(systemName: "42.square.fill")
                             .foregroundColor(.skylarksDynamicNavySand)
                             .frame(width: 30)

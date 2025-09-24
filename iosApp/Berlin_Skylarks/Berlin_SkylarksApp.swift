@@ -21,6 +21,13 @@ struct Berlin_SkylarksApp: App {
                 .environment(calendarManager)
                 .environment(networkManager)
                 .environment(appContainer)
+                .environment(
+                    ScoresViewModel(
+                        gameRepository: appContainer.gameRepository,
+                        networkManager: appContainer.networkManager,
+                        calendarManager: appContainer.calendarManager
+                    )
+                )
         }
     }
 }
