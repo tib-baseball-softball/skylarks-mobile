@@ -14,6 +14,7 @@ struct ScoresView: View {
     @Environment(CalendarManager.self) var calendarManager: CalendarManager
     
     @Environment(NetworkManager.self) var networkManager: NetworkManager
+    @Environment(AppContainer.self) var appContainer: AppContainer
     
     @State private var showAlertNoNetwork = false
     

@@ -6,17 +6,21 @@
 //
 
 import SwiftUI
+import sharedKit
 
 @main
 struct Berlin_SkylarksApp: App {
     @State var calendarManager = CalendarManager()
     @State var networkManager = NetworkManager()
+    @State var appContainer = AppContainer()
+    
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(calendarManager)
                 .environment(networkManager)
+                .environment(appContainer)
         }
     }
 }
