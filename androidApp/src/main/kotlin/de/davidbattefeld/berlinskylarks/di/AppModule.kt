@@ -13,14 +13,15 @@ import de.berlinskylarks.shared.data.api.LeagueGroupsAPIClient
 import de.berlinskylarks.shared.data.api.MatchAPIClient
 import de.berlinskylarks.shared.data.api.TablesAPIClient
 import de.berlinskylarks.shared.data.api.TeamsAPIClient
-import de.berlinskylarks.shared.database.getDatabase
 import de.berlinskylarks.shared.database.dao.FunctionaryDao
+import de.berlinskylarks.shared.database.getDatabase
 import de.berlinskylarks.shared.database.repository.FunctionaryRepository
+import de.berlinskylarks.shared.database.repository.GameRepository
 import de.berlinskylarks.shared.database.repository.OfflineFunctionaryRepository
 import de.davidbattefeld.berlinskylarks.data.preferences.dataStore
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
-import de.davidbattefeld.berlinskylarks.global.BSM_API_KEY
 import de.davidbattefeld.berlinskylarks.global.AUTH_HEADER
+import de.davidbattefeld.berlinskylarks.global.BSM_API_KEY
 import javax.inject.Singleton
 
 @Module
@@ -39,6 +40,10 @@ object AppModule {
     @Singleton
     fun provideUserPreferencesRepository(dataStore: DataStore<Preferences>): UserPreferencesRepository =
         UserPreferencesRepository(dataStore)
+
+    @Provides
+    @Singleton
+    fun provideGameRepository(matchAPIClient: MatchAPIClient): GameRepository = GameRepository(matchAPIClient)
 
     @Provides
     @Singleton

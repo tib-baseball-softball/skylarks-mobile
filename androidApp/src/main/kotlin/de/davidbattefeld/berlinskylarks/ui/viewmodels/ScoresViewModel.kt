@@ -12,6 +12,7 @@ import de.berlinskylarks.shared.data.api.LeagueGroupsAPIClient
 import de.berlinskylarks.shared.data.api.MatchAPIClient
 import de.berlinskylarks.shared.data.model.LeagueGroup
 import de.berlinskylarks.shared.data.model.MatchBoxScore
+import de.berlinskylarks.shared.database.repository.GameRepository
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
 import de.davidbattefeld.berlinskylarks.domain.model.UserCalendar
 import de.davidbattefeld.berlinskylarks.domain.service.CalendarService
@@ -25,6 +26,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ScoresViewModel @Inject constructor(
+    private val gameRepository: GameRepository,
     private val matchAPIClient: MatchAPIClient,
     private val leagueGroupsAPIClient: LeagueGroupsAPIClient,
     userPreferencesRepository: UserPreferencesRepository
@@ -118,7 +120,7 @@ class ScoresViewModel @Inject constructor(
 
     fun loadBoxScoreForGame(gameID: Int) {
         viewModelScope.launch {
-            currentBoxScore = matchAPIClient.getBoxScoreForGame(gameID)
+            currentBoxScore = gameRepository.loadGameBoxScore(gameID)
         }
     }
 
