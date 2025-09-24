@@ -9,9 +9,6 @@ import EventKit
 import SwiftUI
 
 struct ScoresView: View {
-    @Environment(CalendarManager.self) var calendarManager: CalendarManager
-    @Environment(NetworkManager.self) var networkManager: NetworkManager
-    @Environment(AppContainer.self) var appContainer: AppContainer
     @Environment(ScoresViewModel.self) var vm: ScoresViewModel
 
     @State var showCalendarChooser = false
@@ -50,7 +47,7 @@ struct ScoresView: View {
         case .writeOnly, .fullAccess:
             vm.showCalendarDialog = true
         default:
-            let granted = await calendarManager.requestAccess()
+                let granted = await vm.calendarManager.requestAccess()
             if granted {
                 vm.showCalendarDialog = true
             }
@@ -65,7 +62,7 @@ struct ScoresView: View {
                 gamescore: gamescore
             )
 
-            await calendarManager.addGameToCalendar(
+            await vm.calendarManager.addGameToCalendar(
                 gameDate: gameDate,
                 gamescore: gamescore,
                 calendar: calendar

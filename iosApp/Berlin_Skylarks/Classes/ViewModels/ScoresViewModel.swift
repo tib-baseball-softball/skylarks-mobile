@@ -12,13 +12,19 @@ import sharedKit
 @Observable
 class ScoresViewModel {
     private let gameRepository: GameRepository
-    private let networkManager: NetworkManager
-    
-    init(gameRepository: GameRepository, networkManager: NetworkManager) {
+    public let networkManager: NetworkManager
+    public let calendarManager: CalendarManager
+
+    init(
+        gameRepository: GameRepository,
+        networkManager: NetworkManager,
+        calendarManager: CalendarManager
+    ) {
         self.gameRepository = gameRepository
         self.networkManager = networkManager
+        self.calendarManager = calendarManager
     }
-    
+
     var showCalendarDialog = false
     var showEventAlert = false
     var showAlertNoNetwork = false
@@ -26,19 +32,18 @@ class ScoresViewModel {
     var showAlertNoAccess = false
     var loadingInProgress = false
     var scoresLoaded = false
-    
+
     //TODO: localise
     var selectedTeam = LEAGUEGROUP_ALL
     var selectedTeamID: Int = LEAGUEGROUP_ALL.id
     var selectedTimeframe = Gameday.current
-    
+
     var filterTeams: [LeagueGroup] = [LEAGUEGROUP_ALL]
 
     var gamescores = [GameScore]()
     var leagueGroups = [LeagueGroup]()
     var searchResults = [GameScore]()
     var skylarksGamescores = [GameScore]()
-
 
     func loadLeagueGroups(selectedSeason: Int) async {
         //reset filter options to default
@@ -118,17 +123,17 @@ class ScoresViewModel {
             selectedTeamID = leagueGroup.id
         }
     }
-    
+
     //---------------------------------------------------------//
     //-------------------func shortcuts------------------------//
     //---------------------------------------------------------//
-    
+
     func refresh(selectedSeason: Int) async {
         gamescores = []
         scoresLoaded = false
         await loadGamesAndProcess(selectedSeason: selectedSeason)
     }
-    
+
     func initialLoad(selectedSeason: Int) {
         if gamescores.isEmpty && scoresLoaded == false {
             Task {
@@ -137,7 +142,7 @@ class ScoresViewModel {
             scoresLoaded = true
         }
     }
-    
+
     func teamChanged(selectedSeason: Int) {
         gamescores = []
         scoresLoaded = false
@@ -146,7 +151,7 @@ class ScoresViewModel {
             await loadGamesAndProcess(selectedSeason: selectedSeason)
         }
     }
-    
+
     func timeframeChanged(selectedSeason: Int) {
         gamescores = []
         scoresLoaded = false
@@ -154,7 +159,7 @@ class ScoresViewModel {
             await loadGamesAndProcess(selectedSeason: selectedSeason)
         }
     }
-    
+
     func seasonChanged() {
         gamescores = []
         skylarksGamescores = []

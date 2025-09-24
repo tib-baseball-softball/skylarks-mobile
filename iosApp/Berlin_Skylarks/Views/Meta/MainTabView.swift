@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct MainTabView: View {
-    @Environment(CalendarManager.self) var calendarManager: CalendarManager
-    @Environment(NetworkManager.self) var networkManager: NetworkManager
     @Environment(AppContainer.self) var appContainer: AppContainer
     
     var body: some View {
@@ -35,7 +33,8 @@ struct MainTabView: View {
                 ScoresView()
                     .environment(ScoresViewModel(
                         gameRepository: appContainer.gameRepository,
-                        networkManager: networkManager
+                        networkManager: appContainer.networkManager,
+                        calendarManager: appContainer.calendarManager
                     ))
             }
             .tabItem {
