@@ -68,7 +68,7 @@ kotlin {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.serialization.json)
                 implementation(libs.ktor.client.core)
-                implementation(libs.ktor.client.cio)
+
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.androidx.room.runtime)
                 implementation(libs.androidx.sqlite.bundled)
@@ -86,6 +86,7 @@ kotlin {
                 // Add Android-specific dependencies here. Note that this source set depends on
                 // commonMain by default and will correctly pull the Android artifacts of any KMP
                 // dependencies declared in commonMain.
+                implementation(libs.ktor.client.android)
             }
         }
 
@@ -104,6 +105,7 @@ kotlin {
                 // part of KMP’s default source set hierarchy. Note that this source set depends
                 // on common by default and will correctly pull the iOS artifacts of any
                 // KMP dependencies declared in commonMain.
+                implementation(libs.ktor.client.darwin)
             }
         }
 
