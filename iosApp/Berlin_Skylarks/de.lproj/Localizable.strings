@@ -1,3 +1,13 @@
+"No Box Score available." = "Kein Boxscore verfügbar.";
+
+"Offensive" = "Offensive";
+
+"Batters" = "Batters";
+
+"Fielding" = "Fielding";
+
+"Baserunning" = "Baserunning";
+
 "Batting" = "Batting";
 
 "Pitching" = "Pitching";
@@ -638,3 +648,47 @@
 /* No comment provided by engineer. */
 "Your favorite team appears in the Home dashboard tab." = "Dein Lieblingsteam erscheint im Home Dashboard-Tab.";
 
+" (%@)" = " (%@)";
+"#" = "#";
+"%@" = "%@";
+"%@ %@" = "%1$@ %2$@";
+"%@ (%@)" = "%1$@ (%2$@)";
+"%@ (%@, %@)" = "%1$@ (%2$@, %3$@)";
+"%@ (Batters)" = "%@ (Batters)";
+"%@ (Pitchers)" = "%@ (Pitchers)";
+"%@ - %@" = "%1$@ - %2$@";
+"%@ / 0%@ %@" = "%1$@ / 0%2$@ %3$@";
+"%@, %@" = "%1$@, %2$@";
+"%@, %@ %@" = "%1$@, %2$@ %3$@";
+"%@, %@ %@, %@" = "%1$@, %2$@ %3$@, %4$@";
+"%@-%@" = "%1$@-%2$@";
+"%@: %lld-%lld" = "%@: %lld-%lld";
+"**%lld-%lld**" = "**%lld-%lld**";
+"AB" = "AB";
+"AVG" = "AVG";
+"BF" = "BF";
+"Capacity: %@" = "Anzahl Plätze: %@";
+"Current Gameday" = "Aktueller Spieltag";
+"E" = "E";
+"ER" = "ER";
+"ERA" = "ERA";
+"Gameday Overview" = "Spieltagsübersicht";
+"H" = "H";
+"IP" = "IP";
+"K" = "K";
+"L " = "L";
+"NOL" = "NOL";
+"OPS" = "OPS";
+"Rank: **%@**" = "Rang: **%@**";
+"Record: **%lld-%lld**" = "Bilanz: **%lld-%lld**";
+"Season: %@" = "Saison: %@";
+"Seats: %@" = "Sitzplätze: %@";
+"Selected Season: %@" = "Selected Season: %@";
+"Series Length: Best of %@" = "Länge der Serie: Best of %@";
+"Show off your team pride with the Skylarks team logo" = "Zeige deinen Teamstolz mit dem Skylarks-Logo";
+"Shows all games on the current gameday" = "Zeige alle Spiele des aktuellen Spieltags";
+"Team Logo" = "Team-Logo";
+"View not initialised. You should never see this." = "View not initialised. You should never see this.";
+"Widget Family could not be determined" = "Widget Family could not be determined";
+"game report" = "Spielbericht";
+"unitialised" = "unitialised";
