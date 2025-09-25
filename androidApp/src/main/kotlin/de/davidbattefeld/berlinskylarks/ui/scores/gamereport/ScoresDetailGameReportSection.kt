@@ -1,4 +1,4 @@
-package de.davidbattefeld.berlinskylarks.ui.scores
+package de.davidbattefeld.berlinskylarks.ui.scores.gamereport
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandIn

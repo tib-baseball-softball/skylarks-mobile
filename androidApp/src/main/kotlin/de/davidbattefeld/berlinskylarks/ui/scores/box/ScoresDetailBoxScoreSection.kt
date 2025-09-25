@@ -1,4 +1,4 @@
-package de.davidbattefeld.berlinskylarks.ui.scores
+package de.davidbattefeld.berlinskylarks.ui.scores.box
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandIn
@@ -15,11 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.berlinskylarks.shared.data.model.MatchBoxScore
-import de.davidbattefeld.berlinskylarks.ui.scores.box.AdditionalStatsSection
-import de.davidbattefeld.berlinskylarks.ui.scores.box.LinescoreTable
-import de.davidbattefeld.berlinskylarks.ui.scores.box.OffensiveTable
-import de.davidbattefeld.berlinskylarks.ui.scores.box.PitchingTable
-import de.davidbattefeld.berlinskylarks.ui.scores.box.SectionHeader
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
 
 @Composable
