@@ -29,6 +29,7 @@ struct ScoreDetailBoxScore: View {
                     PitchingTable(teamName: boxscore.linescore.home.leagueEntry.team.name, matchStats: boxscore.pitchingHome)
                 }
             }
+            .textSelection(.enabled)
         } else {
             ContentUnavailableView(
                 "No Box Score available.",

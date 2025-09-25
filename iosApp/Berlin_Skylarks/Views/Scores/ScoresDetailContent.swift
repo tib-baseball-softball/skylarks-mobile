@@ -27,6 +27,7 @@ struct ScoresDetailContent: View {
                 }
             }
             .pickerStyle(.segmented)
+            .labelsHidden()
             .glassEffect()
             .padding()
             

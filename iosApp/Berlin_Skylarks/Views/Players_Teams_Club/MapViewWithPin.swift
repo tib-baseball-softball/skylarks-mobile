@@ -79,6 +79,7 @@ struct MapViewWithPin: View {
             }
         }
         .buttonStyle(.glass)
+        .padding()
     }
 }
 
