@@ -17,11 +17,16 @@ struct ScoreDetailBoxScore: View {
                 Section(header: Text("Linescore")) {
                     LinescoreTable(linescore: boxscore.linescore)
                 }
-                Section(header: Text("Batting")) {
-
+                Section(header: Text("Offensive")) {
+                    OffensiveTable(teamName: boxscore.linescore.away.leagueEntry.team.name, matchStats: boxscore.offensiveAway)
+                    AdditionalStatsSection(stats: boxscore.additionalAway)
+                    Divider()
+                    OffensiveTable(teamName: boxscore.linescore.home.leagueEntry.team.name, matchStats: boxscore.offensiveHome)
+                    AdditionalStatsSection(stats: boxscore.additionalHome)
                 }
                 Section(header: Text("Pitching")) {
-
+                    PitchingTable(teamName: boxscore.linescore.away.leagueEntry.team.name, matchStats: boxscore.pitchingAway)
+                    PitchingTable(teamName: boxscore.linescore.home.leagueEntry.team.name, matchStats: boxscore.pitchingHome)
                 }
             }
         } else {
