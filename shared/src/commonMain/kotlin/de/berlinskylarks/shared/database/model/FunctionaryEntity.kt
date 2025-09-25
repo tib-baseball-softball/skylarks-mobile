@@ -13,7 +13,7 @@ data class FunctionaryEntity (
     var function: String, //set by user (Freitext)
     var mail: String,
     var admission_date: String,
-    @Embedded(prefix = "person") var personEntity: PersonEntity
+    @Embedded(prefix = "person_") var personEntity: PersonEntity
 ) {
     fun toFunctionary(): Functionary {
         return Functionary(

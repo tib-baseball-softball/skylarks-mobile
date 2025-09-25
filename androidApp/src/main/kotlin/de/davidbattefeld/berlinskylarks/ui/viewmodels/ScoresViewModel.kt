@@ -12,6 +12,7 @@ import de.berlinskylarks.shared.data.api.LeagueGroupsAPIClient
 import de.berlinskylarks.shared.data.api.MatchAPIClient
 import de.berlinskylarks.shared.data.model.LeagueGroup
 import de.berlinskylarks.shared.data.model.MatchBoxScore
+import de.berlinskylarks.shared.data.model.tib.GameReport
 import de.berlinskylarks.shared.database.repository.GameRepository
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
 import de.davidbattefeld.berlinskylarks.domain.model.UserCalendar
@@ -38,6 +39,7 @@ class ScoresViewModel @Inject constructor(
     var userCalendars = mutableStateListOf<UserCalendar>()
 
     var currentBoxScore by mutableStateOf<MatchBoxScore?>(null)
+    var currentGameReport by mutableStateOf<GameReport?>(null)
 
     var tabState by mutableStateOf(TabState.CURRENT)
 

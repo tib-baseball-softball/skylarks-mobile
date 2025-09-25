@@ -9,6 +9,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import de.berlinskylarks.shared.data.api.FunctionaryAPIClient
+import de.berlinskylarks.shared.data.api.GameReportAPIClient
 import de.berlinskylarks.shared.data.api.LeagueGroupsAPIClient
 import de.berlinskylarks.shared.data.api.MatchAPIClient
 import de.berlinskylarks.shared.data.api.TablesAPIClient
@@ -60,6 +61,10 @@ object AppModule {
     @Provides
     @Singleton
     fun provideTeamsApiClient(): TeamsAPIClient = TeamsAPIClient(authKey = AUTH_HEADER)
+
+    @Provides
+    @Singleton
+    fun provideGameReportAPIClient(): GameReportAPIClient = GameReportAPIClient(authKey = BSM_API_KEY)
 
     @Provides
     @Singleton
