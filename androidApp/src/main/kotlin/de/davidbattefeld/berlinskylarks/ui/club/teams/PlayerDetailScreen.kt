@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.berlinskylarks.shared.data.model.Player
+import de.berlinskylarks.shared.data.model.tib.Player
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.PlayersViewModel
 
 @Composable

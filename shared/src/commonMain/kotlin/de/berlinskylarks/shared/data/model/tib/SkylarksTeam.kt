@@ -1,4 +1,4 @@
-package de.berlinskylarks.shared.data.model
+package de.berlinskylarks.shared.data.model.tib
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonNames

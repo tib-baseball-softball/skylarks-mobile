@@ -8,7 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import de.berlinskylarks.shared.data.model.Player
+import de.berlinskylarks.shared.data.model.tib.Player
 
 @Composable
 fun PlayerRow(

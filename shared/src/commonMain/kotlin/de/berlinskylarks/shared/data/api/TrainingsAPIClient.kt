@@ -1,6 +1,6 @@
 package de.berlinskylarks.shared.data.api
 
-import de.berlinskylarks.shared.data.model.Training
+import de.berlinskylarks.shared.data.model.tib.Training
 
 class TrainingsAPIClient(authKey: String) : SkylarksAPIClient(authKey) {
     suspend fun loadTrainingTimesForTeam(teamID: Int): List<Training> {

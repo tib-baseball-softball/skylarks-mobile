@@ -9,7 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import de.berlinskylarks.shared.data.model.SkylarksTeam
+import de.berlinskylarks.shared.data.model.tib.SkylarksTeam
 
 @Composable
 fun TeamsRow(

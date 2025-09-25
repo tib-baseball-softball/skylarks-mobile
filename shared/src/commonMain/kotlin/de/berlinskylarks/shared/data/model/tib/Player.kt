@@ -1,5 +1,6 @@
-package de.berlinskylarks.shared.data.model
+package de.berlinskylarks.shared.data.model.tib
 
+import de.berlinskylarks.shared.data.model.JSONDataObject
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.datetime.todayIn
@@ -38,10 +39,10 @@ data class Player(
 
     @OptIn(ExperimentalTime::class)
     fun getAge(): Int {
-        val birthInstant = Instant.fromEpochSeconds(birthday.toLong())
+        val birthInstant = Instant.Companion.fromEpochSeconds(birthday.toLong())
 
-        val birthDate = birthInstant.toLocalDateTime(TimeZone.currentSystemDefault()).date
-        val currentDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
+        val birthDate = birthInstant.toLocalDateTime(TimeZone.Companion.currentSystemDefault()).date
+        val currentDate = Clock.System.todayIn(TimeZone.Companion.currentSystemDefault())
 
         var age = currentDate.year - birthDate.year
 

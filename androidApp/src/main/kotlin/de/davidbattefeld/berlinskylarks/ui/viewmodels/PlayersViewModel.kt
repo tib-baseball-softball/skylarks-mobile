@@ -7,12 +7,12 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.berlinskylarks.shared.data.api.TeamsAPIClient
-import de.berlinskylarks.shared.data.model.Player
+import de.berlinskylarks.shared.data.model.tib.Player
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
 import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
-import javax.inject.Inject
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class PlayersViewModel @Inject constructor(

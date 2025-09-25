@@ -1,4 +1,4 @@
-package de.berlinskylarks.shared.data.model
+package de.berlinskylarks.shared.data.model.tib
 
 import de.berlinskylarks.shared.data.enums.TrainingDay
 import de.berlinskylarks.shared.data.enums.TrainingSeason

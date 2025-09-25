@@ -1,7 +1,7 @@
 package de.berlinskylarks.shared.data.api
 
-import de.berlinskylarks.shared.data.model.Player
-import de.berlinskylarks.shared.data.model.SkylarksTeam
+import de.berlinskylarks.shared.data.model.tib.Player
+import de.berlinskylarks.shared.data.model.tib.SkylarksTeam
 
 class TeamsAPIClient(authKey: String) : SkylarksAPIClient(authKey) {
     suspend fun loadAllTeams(): List<SkylarksTeam> {
