@@ -49,7 +49,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -66,7 +66,13 @@ import kotlinx.coroutines.launch
 fun ScoresTopBar(
     title: String,
     scrollBehavior: TopAppBarScrollBehavior,
-    vm: ScoresViewModel = viewModel()
+
+    // TODO: refactor, only pass necessary callbacks
+    vm: ScoresViewModel = hiltViewModel<ScoresViewModel, ScoresViewModel.Factory>(
+        creationCallback = { factory ->
+            factory.create()
+        }
+    )
 ) {
     var leagueFilterExpanded by remember { mutableStateOf(false) }
     val context = LocalContext.current
@@ -80,7 +86,6 @@ fun ScoresTopBar(
     val readState = rememberPermissionState(Manifest.permission.READ_CALENDAR)
     val writeState = rememberPermissionState(Manifest.permission.WRITE_CALENDAR)
     var selectedCalID by remember { mutableStateOf<Long?>(null) }
-
 
     val userPreferences by vm.userPreferencesFlow.collectAsState(initial = DEFAULT_SETTINGS)
 

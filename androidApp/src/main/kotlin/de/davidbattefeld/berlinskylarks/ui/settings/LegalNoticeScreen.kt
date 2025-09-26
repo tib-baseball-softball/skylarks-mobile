@@ -11,10 +11,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.SettingsViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.LegalNoticeViewModel
 
 @Composable
-fun LegalNoticeScreen(vm: SettingsViewModel = viewModel()) {
+fun LegalNoticeScreen(vm: LegalNoticeViewModel = viewModel()) {
     val context = LocalContext.current
     val displayedText = vm.readStaticMarkdownFile(fileName = "app_impressum_en.md", context)
     val textColor = MaterialTheme.colorScheme.onSurface.toArgb()

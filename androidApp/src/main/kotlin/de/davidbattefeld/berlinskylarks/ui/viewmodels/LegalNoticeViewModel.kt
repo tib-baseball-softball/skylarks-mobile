@@ -1,20 +1,17 @@
 package de.davidbattefeld.berlinskylarks.ui.viewmodels
 
-import android.icu.util.Calendar
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
 
-@HiltViewModel(assistedFactory = SettingsViewModel.Factory::class)
-class SettingsViewModel @AssistedInject constructor(
+@HiltViewModel(assistedFactory = LegalNoticeViewModel.Factory::class)
+class LegalNoticeViewModel @AssistedInject constructor(
     userPreferencesRepository: UserPreferencesRepository
 ) : GenericViewModel(userPreferencesRepository) {
-    // 2021 is the first year with the new team name
-    val possibleSeasons = (2021..Calendar.getInstance().get(Calendar.YEAR)).toList()
 
     @AssistedFactory
     interface Factory {
-        fun create(): SettingsViewModel
+        fun create(): LegalNoticeViewModel
     }
 }

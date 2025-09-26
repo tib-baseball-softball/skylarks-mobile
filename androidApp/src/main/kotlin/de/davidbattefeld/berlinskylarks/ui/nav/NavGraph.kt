@@ -8,7 +8,7 @@ import androidx.compose.material3.adaptive.navigation3.rememberListDetailSceneSt
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entry
 import androidx.navigation3.runtime.entryProvider
@@ -29,7 +29,17 @@ import de.davidbattefeld.berlinskylarks.ui.settings.PrivacyPolicyScreen
 import de.davidbattefeld.berlinskylarks.ui.settings.SettingsScreen
 import de.davidbattefeld.berlinskylarks.ui.standings.StandingsDetailScreen
 import de.davidbattefeld.berlinskylarks.ui.standings.StandingsScreen
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.FunctionaryViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.LeagueGroupsViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.LegalNoticeViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.PlayerDetailViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.PrivacyPolicyViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoreDetailViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.SettingsViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.TablesViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.TeamDetailViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.TeamsViewModel
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
@@ -48,8 +58,7 @@ fun NavGraph(
             entryDecorators = listOf(
                 rememberSceneSetupNavEntryDecorator(),
                 rememberSavedStateNavEntryDecorator(),
-                // TODO: this line crashes app (application not populated)
-                //rememberViewModelStoreNavEntryDecorator()
+                rememberViewModelStoreNavEntryDecorator()
             ),
             entryProvider = entryProvider {
                 entry<Home> {
@@ -63,25 +72,44 @@ fun NavGraph(
                         }
                     )
                 ) {
+                    val vm = hiltViewModel<ScoresViewModel, ScoresViewModel.Factory>(
+                        creationCallback = { factory ->
+                            factory.create()
+                        }
+                    )
                     ScoresScreen(
                         setFabOnClick = setFabOnClick,
                         detailRoute = { id ->
                             topLevelBackStack.add(ScoresDetail(id))
-                        }
+                        },
+                        vm = vm,
                     )
                 }
                 entry<ScoresDetail>(
                     metadata = ListDetailSceneStrategy.detailPane()
                 ) { key ->
-                    ScoresDetailScreen(matchID = key.id)
+                    val vm = hiltViewModel<ScoreDetailViewModel, ScoreDetailViewModel.Factory>(
+                        creationCallback = { factory ->
+                            factory.create(key)
+                        }
+                    )
+                    ScoresDetailScreen(
+                        matchID = key.id,
+                        vm = vm
+                    )
                 }
 
                 entry<Standings> {
+                    val vm = hiltViewModel<LeagueGroupsViewModel, LeagueGroupsViewModel.Factory>(
+                        creationCallback = { factory ->
+                            factory.create()
+                        }
+                    )
                     StandingsScreen(
                         detailRoute = { id ->
                             topLevelBackStack.add(StandingsDetail(id))
                         },
-                        vm = viewModel()
+                        vm = vm,
                     )
                 }
 
@@ -105,34 +133,65 @@ fun NavGraph(
                 }
 
                 entry<Teams> {
+                    val vm = hiltViewModel<TeamsViewModel, TeamsViewModel.Factory>(
+                        creationCallback = { factory ->
+                            factory.create()
+                        }
+                    )
                     TeamsScreen(
                         teamsDetailRoute = { id ->
                             topLevelBackStack.add(TeamDetail(id))
-                        }
+                        },
+                        vm = vm,
                     )
                 }
                 entry<TeamDetail> { key ->
+                    val vm = hiltViewModel<TeamDetailViewModel, TeamDetailViewModel.Factory>(
+                        creationCallback = { factory ->
+                            factory.create(key)
+                        }
+                    )
                     TeamDetailScreen(
                         teamID = key.id,
                         playerDetailRoute = { playerDetailID ->
                             topLevelBackStack.add(PlayerDetail(playerDetailID))
-                        }
+                        },
+                        vm = vm,
                     )
                 }
 
                 entry<PlayerDetail> { key ->
-                    PlayerDetailScreen(playerID = key.id)
+                    val vm = hiltViewModel<PlayerDetailViewModel, PlayerDetailViewModel.Factory>(
+                        creationCallback = { factory ->
+                            factory.create(key)
+                        }
+                    )
+                    PlayerDetailScreen(
+                        playerID = key.id,
+                        vm = vm,
+                    )
                 }
 
                 entry<Functionary> {
-                    FunctionaryScreen()
+                    val vm = hiltViewModel<FunctionaryViewModel, FunctionaryViewModel.Factory>(
+                        creationCallback = { factory ->
+                            factory.create()
+                        }
+                    )
+                    FunctionaryScreen(vm = vm)
                 }
 
                 entry<Settings> {
+                    val vm = hiltViewModel<SettingsViewModel, SettingsViewModel.Factory>(
+                        creationCallback = { factory ->
+                            factory.create()
+                        }
+                    )
                     SettingsScreen(
                         infoRoute = { topLevelBackStack.add(Info) },
                         privacyRoute = { topLevelBackStack.add(Privacy) },
                         legalRoute = { topLevelBackStack.add(LegalNotice) },
+                        vm = vm,
                     )
                 }
 
@@ -141,11 +200,21 @@ fun NavGraph(
                 }
 
                 entry<LegalNotice> {
-                    LegalNoticeScreen()
+                    val vm = hiltViewModel<LegalNoticeViewModel, LegalNoticeViewModel.Factory>(
+                        creationCallback = { factory ->
+                            factory.create()
+                        }
+                    )
+                    LegalNoticeScreen(vm = vm)
                 }
 
                 entry<Privacy> {
-                    PrivacyPolicyScreen()
+                    val vm = hiltViewModel<PrivacyPolicyViewModel, PrivacyPolicyViewModel.Factory>(
+                        creationCallback = { factory ->
+                            factory.create()
+                        }
+                    )
+                    PrivacyPolicyScreen(vm = vm)
                 }
             }
         )

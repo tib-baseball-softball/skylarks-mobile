@@ -6,6 +6,8 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.berlinskylarks.shared.data.api.BSMAPIClient
 import de.berlinskylarks.shared.data.api.LeagueGroupsAPIClient
@@ -29,10 +31,9 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class ScoresViewModel @Inject constructor(
+@HiltViewModel(assistedFactory = ScoresViewModel.Factory::class)
+class ScoresViewModel @AssistedInject constructor(
     private val gameRepository: GameRepository,
     private val gameReportRepository: GameReportRepository,
     private val matchAPIClient: MatchAPIClient,
@@ -158,5 +159,10 @@ class ScoresViewModel @Inject constructor(
         CURRENT,
         NEXT,
         ANY
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(): ScoresViewModel
     }
 }

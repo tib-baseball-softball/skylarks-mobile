@@ -6,16 +6,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import de.berlinskylarks.shared.data.model.tib.Player
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.PlayersViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.PlayerDetailViewModel
 
 @Composable
 fun PlayerDetailScreen(
     playerID: Int,
-    vm: PlayersViewModel = viewModel()
+    vm: PlayerDetailViewModel
 ) {
-    val player = vm.getFiltered<Player>(playerID, vm.players)
+    //val player = vm.getFiltered<Player>(playerID, vm.players)
 
     LazyColumn(
         modifier = Modifier
@@ -23,16 +21,16 @@ fun PlayerDetailScreen(
             .padding(bottom = 12.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
-        if (player != null) {
-            item {
-                PlayerHeaderSection(player)
-            }
-            item {
-                PlayerMetaSection(player)
-            }
-            item {
-                PlayerFieldSection(player)
-            }
-        }
+//        if (player != null) {
+//            item {
+//                PlayerHeaderSection(player)
+//            }
+//            item {
+//                PlayerMetaSection(player)
+//            }
+//            item {
+//                PlayerFieldSection(player)
+//            }
+//        }
     }
 }

@@ -5,19 +5,23 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.berlinskylarks.shared.data.api.TeamsAPIClient
 import de.berlinskylarks.shared.data.model.tib.Player
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
 import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
+import de.davidbattefeld.berlinskylarks.ui.nav.TeamDetail
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class PlayersViewModel @Inject constructor(
+@HiltViewModel(assistedFactory = TeamDetailViewModel.Factory::class)
+class TeamDetailViewModel @AssistedInject constructor(
     private val client: TeamsAPIClient,
-    userPreferencesRepository: UserPreferencesRepository
+    userPreferencesRepository: UserPreferencesRepository,
+    @Assisted val navKey: TeamDetail,
 ) : GenericViewModel(userPreferencesRepository) {
     var players = mutableStateListOf<Player>()
     var lastLoadedTeam by mutableIntStateOf(BOGUS_ID)
@@ -33,5 +37,10 @@ class PlayersViewModel @Inject constructor(
 
             lastLoadedTeam = teamID
         }
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(navKey: TeamDetail): TeamDetailViewModel
     }
 }

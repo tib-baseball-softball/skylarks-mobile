@@ -1,6 +1,8 @@
 package de.davidbattefeld.berlinskylarks.ui.viewmodels
 
 import androidx.lifecycle.viewModelScope
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.berlinskylarks.shared.data.model.Functionary
 import de.berlinskylarks.shared.database.repository.FunctionaryRepository
@@ -10,10 +12,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class FunctionaryViewModel @Inject constructor(
+@HiltViewModel(assistedFactory = FunctionaryViewModel.Factory::class)
+class FunctionaryViewModel @AssistedInject constructor(
     functionaryRepository: FunctionaryRepository,
     userPreferencesRepository: UserPreferencesRepository
 ) : GenericViewModel(userPreferencesRepository) {
@@ -33,5 +34,10 @@ class FunctionaryViewModel @Inject constructor(
         viewModelScope.launch {
             functionaryRepository.syncFunctionaries()
         }
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(): FunctionaryViewModel
     }
 }

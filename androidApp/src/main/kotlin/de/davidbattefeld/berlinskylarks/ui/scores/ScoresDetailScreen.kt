@@ -19,7 +19,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -28,17 +27,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.davidbattefeld.berlinskylarks.global.cardPadding
-import de.davidbattefeld.berlinskylarks.ui.scores.box.ScoresDetailBoxScoreSection
 import de.davidbattefeld.berlinskylarks.ui.scores.gamereport.ScoresDetailGameReportSection
 import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoreDetailViewModel
 
 @Composable
 fun ScoresDetailScreen(
     matchID: Int,
-    vm: ScoresViewModel = viewModel()
+    vm: ScoreDetailViewModel = viewModel()
 ) {
-    val gameDecorator = vm.games.firstOrNull { it.game.id == matchID }
+    // TODO
+    val gameDecorator = null
 
     var showLocationData by rememberSaveable { mutableStateOf(false) }
     var showOfficialsData by rememberSaveable { mutableStateOf(false) }
@@ -48,13 +47,6 @@ fun ScoresDetailScreen(
 
     if (gameDecorator == null) {
         return ContentNotFoundView("games")
-    }
-
-    // TODO: replace with repository call
-    LaunchedEffect(matchID) {
-        if (gameDecorator.game.matchID != vm.currentBoxScore?.header?.matchID) {
-            vm.loadBoxScoreForGame(matchID)
-        }
     }
 
     LazyColumn(
@@ -142,23 +134,23 @@ fun ScoresDetailScreen(
                         )
                     }
                     item {
-                        FilterChip(
-                            onClick = { showBoxScoreSection = !showBoxScoreSection },
-                            label = { Text("Box Score") },
-                            selected = showBoxScoreSection,
-                            enabled = vm.currentBoxScore != null,
-                            leadingIcon = if (showBoxScoreSection) {
-                                {
-                                    Icon(
-                                        imageVector = Icons.Filled.Done,
-                                        contentDescription = "Done icon",
-                                        modifier = Modifier.size(FilterChipDefaults.IconSize)
-                                    )
-                                }
-                            } else {
-                                null
-                            },
-                        )
+//                        FilterChip(
+//                            onClick = { showBoxScoreSection = !showBoxScoreSection },
+//                            label = { Text("Box Score") },
+//                            selected = showBoxScoreSection,
+//                            enabled = vm.currentBoxScore != null,
+//                            leadingIcon = if (showBoxScoreSection) {
+//                                {
+//                                    Icon(
+//                                        imageVector = Icons.Filled.Done,
+//                                        contentDescription = "Done icon",
+//                                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+//                                    )
+//                                }
+//                            } else {
+//                                null
+//                            },
+//                        )
                     }
                     item {
                         FilterChip(
@@ -184,20 +176,20 @@ fun ScoresDetailScreen(
         item {
             HorizontalDivider(modifier = Modifier.padding(8.dp))
         }
-        item {
-            ScoreDetailStatisticsSection(showStatisticsData, gameDecorator.game)
-        }
-        item {
-            ScoreDetailLocationSection(showLocationData, gameDecorator.game)
-        }
-        item {
-            ScoreDetailOfficialsSection(showOfficialsData, gameDecorator.game)
-        }
-        if (vm.currentBoxScore != null) {
-            item {
-                ScoresDetailBoxScoreSection(showBoxScoreSection)
-            }
-        }
+//        item {
+//            ScoreDetailStatisticsSection(showStatisticsData, gameDecorator.game)
+//        }
+//        item {
+//            ScoreDetailLocationSection(showLocationData, gameDecorator.game)
+//        }
+//        item {
+//            ScoreDetailOfficialsSection(showOfficialsData, gameDecorator.game)
+//        }
+//        if (vm.currentBoxScore != null) {
+//            item {
+//                ScoresDetailBoxScoreSection(showBoxScoreSection)
+//            }
+//        }
         item {
             ScoresDetailGameReportSection(showGameReportSection)
         }
