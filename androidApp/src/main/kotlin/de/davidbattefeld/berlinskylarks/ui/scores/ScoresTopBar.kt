@@ -89,7 +89,7 @@ fun ScoresTopBar(
         title = {
             Text(text = title)
         },
-        colors = TopAppBarDefaults.mediumTopAppBarColors(
+        colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.surface
         ),
         actions = {
