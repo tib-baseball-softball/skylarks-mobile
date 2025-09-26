@@ -17,7 +17,7 @@ data class GameReportEntity(
     val gameID: String,
     val author: String,
     @Embedded(prefix = "tibleague_")
-    val league: TibLeague,
+    val league: TibLeague?,
     val gameToggle: GameToggle,
     val teaserText: String,
     val introduction: String,
@@ -40,7 +40,7 @@ data class GameReportEntityWithMedia(
     @Embedded
     val gameReportEntity: GameReportEntity,
     @Relation(
-        parentColumn = "teaserImage",
+        parentColumn = "uid",
         entity = MediaEntity::class,
         entityColumn = "id",
         associateBy = Junction(
@@ -49,29 +49,7 @@ data class GameReportEntityWithMedia(
             entityColumn = "mediaID"
         )
     )
-    val teaserImage: List<MediaEntity>,
-    @Relation(
-        parentColumn = "headerImage",
-        entity = MediaEntity::class,
-        entityColumn = "id",
-        associateBy = Junction(
-            value = GameReportMediaCrossRef::class,
-            parentColumn = "gameReportID",
-            entityColumn = "mediaID"
-        )
-    )
-    val headerImage: List<MediaEntity>?,
-    @Relation(
-        parentColumn = "gallery",
-        entity = MediaEntity::class,
-        entityColumn = "id",
-        associateBy = Junction(
-            value = GameReportMediaCrossRef::class,
-            parentColumn = "gameReportID",
-            entityColumn = "mediaID"
-        )
-    )
-    val gallery: List<MediaEntity>,
+    val images: List<MediaEntity>,
 ) {
     fun toGameReport(): GameReport {
         return GameReport(
@@ -89,9 +67,9 @@ data class GameReportEntityWithMedia(
             preview = gameReportEntity.preview,
             previewPlain = gameReportEntity.previewPlain,
             gameId = gameReportEntity.gameID,
-            teaserImage = teaserImage.map { Media(it.id, it.title, it.alt, it.caption, it.copyright, it.url) },
-            headerImage = headerImage?.map { Media(it.id, it.title, it.alt, it.caption, it.copyright, it.url) },
-            gallery = gallery.map { Media(it.id, it.title, it.alt, it.caption, it.copyright, it.url) },
+            teaserImage = listOf(),
+            headerImage = listOf(),
+            gallery = images.map { Media(it.id, it.title, it.alt, it.caption, it.copyright, it.url) },
             video = if (gameReportEntity.video != null) Media(
                 id = gameReportEntity.video.id,
                 title = gameReportEntity.video.title,

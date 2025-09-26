@@ -116,8 +116,8 @@ object AppModule {
     @Provides
     @Singleton
     fun provideGameReportService(
-        gameReportRepository: OfflineGameReportRepository,
-        mediaRepository: OfflineMediaRepository,
+        gameReportRepository: GameReportRepository,
+        mediaRepository: MediaRepository,
         gameReportClient: GameReportAPIClient,
     ): GameReportService = GameReportService(gameReportRepository, mediaRepository, gameReportClient)
 }

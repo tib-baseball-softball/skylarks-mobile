@@ -8,7 +8,7 @@ data class GameReport(
     val uid: Int,
     val author: String,
     @SerialName("game_id") val gameId: String,
-    val league: TibLeague,
+    val league: TibLeague?,
     @SerialName("game_toggle") val gameToggle: GameToggle,
     @SerialName("teaser_text") val teaserText: String,
     val introduction: String,

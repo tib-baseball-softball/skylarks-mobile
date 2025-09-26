@@ -13,6 +13,8 @@ import de.berlinskylarks.shared.data.api.MatchAPIClient
 import de.berlinskylarks.shared.data.model.LeagueGroup
 import de.berlinskylarks.shared.data.model.MatchBoxScore
 import de.berlinskylarks.shared.data.model.tib.GameReport
+import de.berlinskylarks.shared.data.service.GameReportService
+import de.berlinskylarks.shared.database.repository.GameReportRepository
 import de.berlinskylarks.shared.database.repository.GameRepository
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
 import de.davidbattefeld.berlinskylarks.domain.model.UserCalendar
@@ -21,15 +23,21 @@ import de.davidbattefeld.berlinskylarks.domain.service.GameDecorator
 import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
 import de.davidbattefeld.berlinskylarks.testdata.testLeagueGroup
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ScoresViewModel @Inject constructor(
     private val gameRepository: GameRepository,
+    private val gameReportRepository: GameReportRepository,
     private val matchAPIClient: MatchAPIClient,
     private val leagueGroupsAPIClient: LeagueGroupsAPIClient,
+    private val gameReportService: GameReportService,
     userPreferencesRepository: UserPreferencesRepository
 ) : GenericViewModel(userPreferencesRepository) {
     var games = mutableStateListOf<GameDecorator>()
@@ -39,11 +47,30 @@ class ScoresViewModel @Inject constructor(
     var userCalendars = mutableStateListOf<UserCalendar>()
 
     var currentBoxScore by mutableStateOf<MatchBoxScore?>(null)
-    var currentGameReport by mutableStateOf<GameReport?>(null)
+
+    // TODO: read route argument
+    var currentGameReport: StateFlow<GameReport?> =
+        gameReportRepository.getGameReportByGameID("")
+            .map { it?.toGameReport() }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
+                initialValue = null
+            )
 
     var tabState by mutableStateOf(TabState.CURRENT)
 
     val calendarService = CalendarService()
+
+    // TODO: TEMP TEMP TEMP
+    init {
+        viewModelScope.launch {
+            val empty = gameReportRepository.getAllGameReportsStream().firstOrNull().isNullOrEmpty()
+            if (empty) {
+                gameReportService.syncGameReports()
+            }
+        }
+    }
 
     override fun load() {
         leagueGroups.clear()

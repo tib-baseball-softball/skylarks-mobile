@@ -14,6 +14,6 @@ class OfflineGameReportRepository(
     override fun getAllGameReportsStream(): Flow<List<GameReportEntityWithMedia>> =
         gameReportDao.getAllGameReports()
 
-    override fun getGameReportByGameID(gameID: String): Flow<GameReportEntityWithMedia> =
+    override fun getGameReportByGameID(gameID: String): Flow<GameReportEntityWithMedia?> =
         gameReportDao.getGameReportByGameID(gameID)
 }
