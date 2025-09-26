@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonNames
 
 @Serializable
-data class Media(
+data class  Media(
     @JsonNames("uid")
     val id: Int,
     val title: String? = null,

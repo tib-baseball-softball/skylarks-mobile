@@ -14,11 +14,19 @@ import de.berlinskylarks.shared.data.api.LeagueGroupsAPIClient
 import de.berlinskylarks.shared.data.api.MatchAPIClient
 import de.berlinskylarks.shared.data.api.TablesAPIClient
 import de.berlinskylarks.shared.data.api.TeamsAPIClient
+import de.berlinskylarks.shared.data.service.GameReportService
+import de.berlinskylarks.shared.database.AppDatabase
 import de.berlinskylarks.shared.database.dao.FunctionaryDao
+import de.berlinskylarks.shared.database.dao.GameReportDao
+import de.berlinskylarks.shared.database.dao.MediaDao
 import de.berlinskylarks.shared.database.getDatabase
 import de.berlinskylarks.shared.database.repository.FunctionaryRepository
+import de.berlinskylarks.shared.database.repository.GameReportRepository
 import de.berlinskylarks.shared.database.repository.GameRepository
+import de.berlinskylarks.shared.database.repository.MediaRepository
 import de.berlinskylarks.shared.database.repository.OfflineFunctionaryRepository
+import de.berlinskylarks.shared.database.repository.OfflineGameReportRepository
+import de.berlinskylarks.shared.database.repository.OfflineMediaRepository
 import de.davidbattefeld.berlinskylarks.data.preferences.dataStore
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
 import de.davidbattefeld.berlinskylarks.global.AUTH_HEADER
@@ -76,7 +84,15 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideFunctionaryDao(db: de.berlinskylarks.shared.database.AppDatabase): FunctionaryDao = db.functionaryDao()
+    fun provideFunctionaryDao(db: AppDatabase): FunctionaryDao = db.functionaryDao()
+
+    @Provides
+    @Singleton
+    fun provideGameReportDao(db: AppDatabase): GameReportDao = db.gameReportDao()
+
+    @Provides
+    @Singleton
+    fun provideMediaDao(db: AppDatabase): MediaDao = db.mediaDao()
 
     @Provides
     @Singleton
@@ -84,4 +100,24 @@ object AppModule {
         functionaryDao: FunctionaryDao,
         functionaryClient: FunctionaryAPIClient
     ): FunctionaryRepository = OfflineFunctionaryRepository(functionaryDao, functionaryClient)
+
+    @Provides
+    @Singleton
+    fun provideMediaRepository(
+        mediaDao: MediaDao
+    ): MediaRepository = OfflineMediaRepository(mediaDao)
+
+    @Provides
+    @Singleton
+    fun provideGameReportRepository(
+        gameReportDao: GameReportDao
+    ): GameReportRepository = OfflineGameReportRepository(gameReportDao)
+
+    @Provides
+    @Singleton
+    fun provideGameReportService(
+        gameReportRepository: OfflineGameReportRepository,
+        mediaRepository: OfflineMediaRepository,
+        gameReportClient: GameReportAPIClient,
+    ): GameReportService = GameReportService(gameReportRepository, mediaRepository, gameReportClient)
 }
