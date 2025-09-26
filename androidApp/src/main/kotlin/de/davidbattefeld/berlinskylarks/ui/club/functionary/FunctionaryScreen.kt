@@ -9,12 +9,10 @@ import de.davidbattefeld.berlinskylarks.ui.viewmodels.FunctionaryViewModel
 
 @Composable
 fun FunctionaryScreen(vm: FunctionaryViewModel = viewModel()) {
-    val functionaries by vm.functionariesList.collectAsState(listOf())
+    val functionaries by vm.functionariesList.collectAsState()
 
     FunctionariesList(
-        functionaries = functionaries.map {
-            it.toFunctionary()
-        },
+        functionaries = functionaries,
         onFunctionaryClick = { println("Clicked on functionary: $it") },
         modifier = Modifier,
     )
