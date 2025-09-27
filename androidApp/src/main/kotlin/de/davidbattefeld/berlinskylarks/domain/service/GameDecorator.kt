@@ -19,10 +19,11 @@ class GameDecorator(val game: Game) {
 
     @DrawableRes
     var homeLogo = R.drawable.app_home_team_logo
+
     @DrawableRes
     var roadLogo = R.drawable.app_road_team_logo
 
-    fun setCorrectLogos() {
+    fun setCorrectLogos(): GameDecorator {
         // quick fix to prevent crash, not sure why default value is not set here
         homeLogo = R.drawable.app_home_team_logo
         roadLogo = R.drawable.app_road_team_logo
@@ -31,10 +32,11 @@ class GameDecorator(val game: Game) {
             if (game.awayTeamName.contains(club.name, ignoreCase = true)) {
                 roadLogo = club.logo
             }
-            if (game.homeTeamName.contains(club.name,ignoreCase = true)) {
+            if (game.homeTeamName.contains(club.name, ignoreCase = true)) {
                 homeLogo = club.logo
             }
         }
+        return this
     }
 
     fun parseGameTimeString(): LocalDateTime {
@@ -42,13 +44,14 @@ class GameDecorator(val game: Game) {
         return LocalDateTime.parse(game.time, formatter)
     }
 
-    fun addDate() {
+    fun addDate(): GameDecorator {
         val gameDate = parseGameTimeString()
         localisedDate = gameDate.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))
+        return this
     }
 
-    fun determineGameStatus() {
-        if (game.homeTeamName.contains("Skylarks") && (!game.awayTeamName.contains("Skylarks")))  {
+    fun determineGameStatus(): GameDecorator {
+        if (game.homeTeamName.contains("Skylarks") && (!game.awayTeamName.contains("Skylarks"))) {
             skyLarksAreHomeTeam = true
             isDerby = false
         } else if (!game.homeTeamName.contains("Skylarks") && (game.awayTeamName.contains("Skylarks"))) {
@@ -69,6 +72,7 @@ class GameDecorator(val game: Game) {
         } else {
             !homeTeamWin
         }
+        return this
     }
 
     fun getGameResultIndicatorText(): String {

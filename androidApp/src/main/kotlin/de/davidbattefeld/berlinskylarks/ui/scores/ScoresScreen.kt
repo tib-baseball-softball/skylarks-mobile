@@ -20,7 +20,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -31,7 +31,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import de.davidbattefeld.berlinskylarks.ui.nav.ScoresDetail
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
 import de.davidbattefeld.berlinskylarks.ui.utility.LoadingView
@@ -42,10 +42,10 @@ import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel.TabState
 @Composable
 fun ScoresScreen(
     modifier: Modifier = Modifier,
-    detailRoute: (Int) -> Unit,
-    setFabOnClick: (() -> Unit) -> Unit,
-    vm: ScoresViewModel = viewModel()
+    detailRoute: (ScoresDetail) -> Unit,
+    vm: ScoresViewModel,
 ) {
+    val games by vm.games.collectAsState()
     var showExternalGames by rememberSaveable { mutableStateOf(true) }
     val tabTitles = listOf("Previous", "Current", "Next", "Any")
 
@@ -63,7 +63,8 @@ fun ScoresScreen(
                         ),
                         selected = vm.tabState.ordinal == index,
                         onClick = {
-                            vm.tabState = TabState.entries.toTypedArray().getOrElse(index) { TabState.CURRENT }
+                            vm.tabState = TabState.entries.toTypedArray()
+                                .getOrElse(index) { TabState.CURRENT }
                             vm.load()
                         },
                         label = {
@@ -125,12 +126,17 @@ fun ScoresScreen(
             }
 
             ViewState.Found -> {
-                items(if (showExternalGames) vm.games else vm.skylarksGames) { gameDecorator ->
+                items(games) { gameDecorator ->
                     ScoresItem(
                         gameDecorator = gameDecorator,
                         modifier = Modifier
                             .clickable {
-                                detailRoute(gameDecorator.game.id)
+                                detailRoute(
+                                    ScoresDetail(
+                                        id = gameDecorator.game.id,
+                                        matchID = gameDecorator.game.matchID
+                                    )
+                                )
                             }
                     )
                 }
@@ -141,13 +147,6 @@ fun ScoresScreen(
                     Text("An error occured loading data.")
                 }
             }
-        }
-    }
-    LaunchedEffect(Unit) {
-        setFabOnClick { vm.load() }
-
-        if (vm.games.isEmpty()) {
-            vm.load()
         }
     }
 }

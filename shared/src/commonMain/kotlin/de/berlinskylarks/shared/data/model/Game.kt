@@ -30,6 +30,7 @@ data class Game(
     @SerialName("scoresheet_url")
     var scoresheetURL: String?,
     var field: Field?,
+    var season: Int,
     var league: League,
     @SerialName("home_league_entry")
     var homeLeagueEntry: LeagueEntry,

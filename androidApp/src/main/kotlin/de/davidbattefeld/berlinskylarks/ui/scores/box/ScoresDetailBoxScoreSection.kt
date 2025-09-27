@@ -13,14 +13,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import de.berlinskylarks.shared.data.model.MatchBoxScore
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
 
 @Composable
 fun ScoresDetailBoxScoreSection(
     show: Boolean,
-    vm: ScoresViewModel = viewModel()
+    boxScore: MatchBoxScore?,
 ) {
     AnimatedVisibility(
         modifier = Modifier.padding(12.dp),
@@ -28,9 +26,9 @@ fun ScoresDetailBoxScoreSection(
         enter = expandIn(),
         exit = shrinkOut(),
     ) {
-        val box = vm.currentBoxScore
+        val box = boxScore
         if (box == null) {
-            Text("Boxscore not available")
+            Text("Boxscore not available.")
         } else {
             BoxScoreContent(box)
         }

@@ -289,7 +289,7 @@ fun ScoresTopBar(
                     content = {
                         Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                             Text("The following events will be added:")
-                            vm.games.forEach {
+                            vm.games.collectAsState().value.forEach {
                                 Text("${it.game.awayTeamName} @ ${it.game.homeTeamName} on ${it.localisedDate}")
                             }
                         }

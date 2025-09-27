@@ -55,6 +55,7 @@ val testGame = Game(
     scorerAssignments = listOf(),
     umpireAssignments = listOf(),
     state = "played",
+    season = 2025,
 )
 
 val testRow = LeagueTable.Row(

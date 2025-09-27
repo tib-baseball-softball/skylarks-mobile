@@ -40,7 +40,7 @@ data object Scores : TopLevelDestination {
 }
 
 @Serializable
-data class ScoresDetail(val id: Int) : SkylarksNavDestination {
+data class ScoresDetail(val id: Int, val matchID: String) : SkylarksNavDestination {
     override val title = "Game Detail"
 
     companion object {

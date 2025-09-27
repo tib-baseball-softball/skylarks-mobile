@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import de.berlinskylarks.shared.database.model.BoxScoreEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BoxScoreDao {
@@ -12,5 +13,5 @@ interface BoxScoreDao {
     suspend fun insert(boxScore: BoxScoreEntity)
 
     @Query("SELECT * FROM box_scores WHERE matchID LIKE :matchID")
-    suspend fun getBoxScoreByMatchID(matchID: String): BoxScoreEntity?
+    fun getBoxScoreByMatchID(matchID: String): Flow<BoxScoreEntity?>
 }

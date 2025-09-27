@@ -19,14 +19,15 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import de.davidbattefeld.berlinskylarks.global.cardPadding
+import de.davidbattefeld.berlinskylarks.ui.scores.box.ScoresDetailBoxScoreSection
 import de.davidbattefeld.berlinskylarks.ui.scores.gamereport.ScoresDetailGameReportSection
 import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoreDetailViewModel
@@ -34,10 +35,11 @@ import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoreDetailViewModel
 @Composable
 fun ScoresDetailScreen(
     matchID: Int,
-    vm: ScoreDetailViewModel = viewModel()
+    vm: ScoreDetailViewModel
 ) {
-    // TODO
-    val gameDecorator = null
+    val gameDecorator by vm.game.collectAsState()
+    val gameReport by vm.gameReport.collectAsState()
+    val gameBoxScore by vm.boxScore.collectAsState()
 
     var showLocationData by rememberSaveable { mutableStateOf(false) }
     var showOfficialsData by rememberSaveable { mutableStateOf(false) }
@@ -61,7 +63,7 @@ fun ScoresDetailScreen(
                 ),
                 elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
             ) {
-                ScoresDetailMainInfo(gameDecorator)
+                gameDecorator?.let { ScoresDetailMainInfo(it) }
             }
         }
         item {
@@ -185,13 +187,17 @@ fun ScoresDetailScreen(
 //        item {
 //            ScoreDetailOfficialsSection(showOfficialsData, gameDecorator.game)
 //        }
-//        if (vm.currentBoxScore != null) {
-//            item {
-//                ScoresDetailBoxScoreSection(showBoxScoreSection)
-//            }
-//        }
         item {
-            ScoresDetailGameReportSection(showGameReportSection)
+            ScoresDetailBoxScoreSection(
+                show = showBoxScoreSection,
+                boxScore = gameBoxScore,
+            )
+        }
+        item {
+            ScoresDetailGameReportSection(
+                show = showGameReportSection,
+                gameReport = gameReport,
+            )
         }
     }
 }

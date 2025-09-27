@@ -78,9 +78,8 @@ fun NavGraph(
                         }
                     )
                     ScoresScreen(
-                        setFabOnClick = setFabOnClick,
-                        detailRoute = { id ->
-                            topLevelBackStack.add(ScoresDetail(id))
+                        detailRoute = { key ->
+                            topLevelBackStack.add(key)
                         },
                         vm = vm,
                     )

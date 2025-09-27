@@ -13,16 +13,15 @@ import de.berlinskylarks.shared.data.api.BSMAPIClient
 import de.berlinskylarks.shared.data.api.LeagueGroupsAPIClient
 import de.berlinskylarks.shared.data.api.MatchAPIClient
 import de.berlinskylarks.shared.data.model.LeagueGroup
-import de.berlinskylarks.shared.data.model.MatchBoxScore
-import de.berlinskylarks.shared.data.model.tib.GameReport
 import de.berlinskylarks.shared.data.service.GameReportService
+import de.berlinskylarks.shared.database.model.GameEntity
 import de.berlinskylarks.shared.database.repository.GameReportRepository
 import de.berlinskylarks.shared.database.repository.GameRepository
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
 import de.davidbattefeld.berlinskylarks.domain.model.UserCalendar
 import de.davidbattefeld.berlinskylarks.domain.service.CalendarService
 import de.davidbattefeld.berlinskylarks.domain.service.GameDecorator
-import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
+import de.davidbattefeld.berlinskylarks.global.TeamGlobals
 import de.davidbattefeld.berlinskylarks.testdata.testLeagueGroup
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
 import kotlinx.coroutines.flow.SharingStarted
@@ -41,34 +40,45 @@ class ScoresViewModel @AssistedInject constructor(
     private val gameReportService: GameReportService,
     userPreferencesRepository: UserPreferencesRepository
 ) : GenericViewModel(userPreferencesRepository) {
-    var games = mutableStateListOf<GameDecorator>()
+
+    var games: StateFlow<List<GameDecorator>> =
+        gameRepository.getAllGames()
+            .map { dbEntities ->
+                dbEntities.map {
+                    GameDecorator(game = it.json)
+                        .addDate()
+                        .determineGameStatus()
+                        .setCorrectLogos()
+                }
+            }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
+                initialValue = emptyList(),
+            )
+
+
     var skylarksGames = mutableStateListOf<GameDecorator>()
     var leagueGroups = mutableStateListOf<LeagueGroup>()
     var filteredLeagueGroup by mutableStateOf<LeagueGroup>(testLeagueGroup)
     var userCalendars = mutableStateListOf<UserCalendar>()
 
-    var currentBoxScore by mutableStateOf<MatchBoxScore?>(null)
-
-    // TODO: read route argument
-    var currentGameReport: StateFlow<GameReport?> =
-        gameReportRepository.getGameReportByGameID("")
-            .map { it?.toGameReport() }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
-                initialValue = null
-            )
-
     var tabState by mutableStateOf(TabState.CURRENT)
 
     val calendarService = CalendarService()
 
-    // TODO: TEMP TEMP TEMP
+    // TODO: TEMP TEMP TEMP - replace this with background data loading
     init {
         viewModelScope.launch {
-            val empty = gameReportRepository.getAllGameReportsStream().firstOrNull().isNullOrEmpty()
-            if (empty) {
+            val reportsEmpty =
+                gameReportRepository.getAllGameReportsStream().firstOrNull().isNullOrEmpty()
+            if (reportsEmpty) {
                 gameReportService.syncGameReports()
+            }
+
+            val gamesEmpty = gameRepository.getAllGames().firstOrNull().isNullOrEmpty()
+            if (gamesEmpty) {
+                loadGames()
             }
         }
     }
@@ -83,7 +93,7 @@ class ScoresViewModel @AssistedInject constructor(
             leagueGroups.addAll(leagueGroupsAPIClient.loadLeagueGroupsForClub(season))
             loadGames()
 
-            viewState = if (games.isNotEmpty()) ViewState.Found else ViewState.NoResults
+            viewState = if (games.value.isNotEmpty()) ViewState.Found else ViewState.NoResults
         }
     }
 
@@ -97,38 +107,43 @@ class ScoresViewModel @AssistedInject constructor(
     private suspend fun loadGames() {
         val season = userPreferencesFlow.firstOrNull()?.season ?: BSMAPIClient.DEFAULT_SEASON
 
-        games.clear()
         skylarksGames.clear()
 
-        val gamedays = when (tabState) {
-            TabState.PREVIOUS -> "previous"
-            TabState.CURRENT -> "current"
-            TabState.NEXT -> "next"
-            TabState.ANY -> "any"
+//        val gamedays = when (tabState) {
+//            TabState.PREVIOUS -> "previous"
+//            TabState.CURRENT -> "current"
+//            TabState.NEXT -> "next"
+//            TabState.ANY -> "any"
+//        }
+
+
+//        if (filteredLeagueGroup.id == BOGUS_ID) {
+        val games = matchAPIClient.loadGamesForClub(season, "any")
+        games.forEach { game ->
+            gameRepository.insertGame(
+                GameEntity(
+                    id = game.id,
+                    matchID = game.matchID,
+                    leagueID = game.leagueID,
+                    time = game.time,
+                    season = game.season,
+                    external = !(game.awayTeamName.contains(TeamGlobals.TEAM_NAME) || game.homeTeamName.contains(
+                        TeamGlobals.TEAM_NAME
+                    )),
+                    json = game,
+                )
+            )
         }
 
-        if (filteredLeagueGroup.id == BOGUS_ID) {
-            games.addAll(
-                matchAPIClient.loadGamesForClub(season, gamedays).map { GameDecorator(it) }
-            )
-        } else {
-            games.addAll(
-                matchAPIClient.loadAllGames(
-                    season = season,
-                    gamedays = gamedays,
-                    leagues = filteredLeagueGroup.id
-                ).map { GameDecorator(it) }
-            )
-        }
-        games.forEach {
-            it.addDate()
-            it.determineGameStatus()
-            it.setCorrectLogos()
-        }
-        skylarksGames.addAll(games.filter {
-            it.game.awayTeamName.contains("Skylarks", ignoreCase = true) ||
-                    it.game.homeTeamName.contains("Skylarks", ignoreCase = true)
-        })
+//        } else {
+//            games.addAll(
+//                matchAPIClient.loadAllGames(
+//                    season = season,
+//                    gamedays = gamedays,
+//                    leagues = filteredLeagueGroup.id
+//                ).map { GameDecorator(it) }
+//            )
+//        }
     }
 
     fun loadCalendars(context: Context) {
@@ -144,15 +159,15 @@ class ScoresViewModel @AssistedInject constructor(
 
         calendarService.context = context
         viewModelScope.launch {
-            calendarService.addGamesToCalendar(gameDecorators = gamesToUse, calendarID = id)
+            calendarService.addGamesToCalendar(gameDecorators = gamesToUse.value, calendarID = id)
         }
     }
 
-    fun loadBoxScoreForGame(gameID: Int) {
-        viewModelScope.launch {
-            currentBoxScore = gameRepository.loadGameBoxScore(gameID)
-        }
-    }
+//    fun loadBoxScoreForGame(gameID: Int) {
+//        viewModelScope.launch {
+//            currentBoxScore = gameRepository.loadGameBoxScore(gameID)
+//        }
+//    }
 
     enum class TabState {
         PREVIOUS,
