@@ -136,23 +136,23 @@ fun ScoresDetailScreen(
                         )
                     }
                     item {
-//                        FilterChip(
-//                            onClick = { showBoxScoreSection = !showBoxScoreSection },
-//                            label = { Text("Box Score") },
-//                            selected = showBoxScoreSection,
-//                            enabled = vm.currentBoxScore != null,
-//                            leadingIcon = if (showBoxScoreSection) {
-//                                {
-//                                    Icon(
-//                                        imageVector = Icons.Filled.Done,
-//                                        contentDescription = "Done icon",
-//                                        modifier = Modifier.size(FilterChipDefaults.IconSize)
-//                                    )
-//                                }
-//                            } else {
-//                                null
-//                            },
-//                        )
+                        FilterChip(
+                            onClick = { showBoxScoreSection = !showBoxScoreSection },
+                            label = { Text("Box Score") },
+                            selected = showBoxScoreSection,
+                            enabled = gameBoxScore != null,
+                            leadingIcon = if (showBoxScoreSection) {
+                                {
+                                    Icon(
+                                        imageVector = Icons.Filled.Done,
+                                        contentDescription = "Done icon",
+                                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                    )
+                                }
+                            } else {
+                                null
+                            },
+                        )
                     }
                     item {
                         FilterChip(
@@ -178,15 +178,21 @@ fun ScoresDetailScreen(
         item {
             HorizontalDivider(modifier = Modifier.padding(8.dp))
         }
-//        item {
-//            ScoreDetailStatisticsSection(showStatisticsData, gameDecorator.game)
-//        }
-//        item {
-//            ScoreDetailLocationSection(showLocationData, gameDecorator.game)
-//        }
-//        item {
-//            ScoreDetailOfficialsSection(showOfficialsData, gameDecorator.game)
-//        }
+        item {
+            gameDecorator?.let {
+                ScoreDetailStatisticsSection(showStatisticsData, it.game)
+            }
+        }
+        item {
+            gameDecorator?.let {
+                ScoreDetailLocationSection(showLocationData, it.game)
+            }
+        }
+        item {
+            gameDecorator?.let {
+                ScoreDetailOfficialsSection(showOfficialsData, it.game)
+            }
+        }
         item {
             ScoresDetailBoxScoreSection(
                 show = showBoxScoreSection,

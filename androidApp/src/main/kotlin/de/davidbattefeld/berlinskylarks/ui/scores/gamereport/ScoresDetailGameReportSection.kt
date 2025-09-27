@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import de.berlinskylarks.shared.data.model.tib.GameReport
+import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
 
 @Composable
 fun ScoresDetailGameReportSection(
@@ -22,7 +23,7 @@ fun ScoresDetailGameReportSection(
         exit = shrinkOut(),
     ) {
         if (gameReport == null) {
-            Text("Game report not available")
+            ContentNotFoundView("game reports")
         } else {
             Text(gameReport.reportFirst)
         }

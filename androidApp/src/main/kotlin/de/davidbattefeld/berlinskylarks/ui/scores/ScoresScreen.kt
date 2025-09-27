@@ -34,8 +34,6 @@ import androidx.compose.ui.unit.dp
 import de.davidbattefeld.berlinskylarks.ui.nav.ScoresDetail
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
-import de.davidbattefeld.berlinskylarks.ui.utility.LoadingView
-import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel.TabState
 
@@ -112,42 +110,34 @@ fun ScoresScreen(
         item(span = { GridItemSpan(maxCurrentLineSpan) }) {
             HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
         }
-        when (vm.viewState) {
-            ViewState.NoResults, ViewState.NotInitialised -> {
-                item(span = { GridItemSpan(maxCurrentLineSpan) }) {
-                    ContentNotFoundView("games")
-                }
+        if (games.isEmpty()) {
+            item(span = { GridItemSpan(maxCurrentLineSpan) }) {
+                ContentNotFoundView("games")
             }
-
-            ViewState.Loading -> {
-                item(span = { GridItemSpan(maxCurrentLineSpan) }) {
-                    LoadingView()
-                }
-            }
-
-            ViewState.Found -> {
-                items(games) { gameDecorator ->
-                    ScoresItem(
-                        gameDecorator = gameDecorator,
-                        modifier = Modifier
-                            .clickable {
-                                detailRoute(
-                                    ScoresDetail(
-                                        id = gameDecorator.game.id,
-                                        matchID = gameDecorator.game.matchID
-                                    )
+        } else {
+            items(games) { gameDecorator ->
+                ScoresItem(
+                    gameDecorator = gameDecorator,
+                    modifier = Modifier
+                        .clickable {
+                            detailRoute(
+                                ScoresDetail(
+                                    id = gameDecorator.game.id,
+                                    matchID = gameDecorator.game.matchID
                                 )
-                            }
-                    )
-                }
-            }
-
-            ViewState.Error -> {
-                item {
-                    Text("An error occured loading data.")
-                }
+                            )
+                        }
+                )
             }
         }
+
+//        item(span = { GridItemSpan(maxCurrentLineSpan) }) {
+//            LoadingView()
+//        }
+
+//        item {
+//            Text("An error occured loading data.")
+//        }
     }
 }
 
