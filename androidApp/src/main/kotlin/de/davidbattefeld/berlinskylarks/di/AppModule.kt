@@ -16,16 +16,21 @@ import de.berlinskylarks.shared.data.api.TablesAPIClient
 import de.berlinskylarks.shared.data.api.TeamsAPIClient
 import de.berlinskylarks.shared.data.service.GameReportService
 import de.berlinskylarks.shared.database.AppDatabase
+import de.berlinskylarks.shared.database.dao.BoxScoreDao
 import de.berlinskylarks.shared.database.dao.FunctionaryDao
+import de.berlinskylarks.shared.database.dao.GameDao
 import de.berlinskylarks.shared.database.dao.GameReportDao
 import de.berlinskylarks.shared.database.dao.MediaDao
 import de.berlinskylarks.shared.database.getDatabase
+import de.berlinskylarks.shared.database.repository.BoxScoreRepository
 import de.berlinskylarks.shared.database.repository.FunctionaryRepository
 import de.berlinskylarks.shared.database.repository.GameReportRepository
 import de.berlinskylarks.shared.database.repository.GameRepository
 import de.berlinskylarks.shared.database.repository.MediaRepository
+import de.berlinskylarks.shared.database.repository.OfflineBoxScoreRepository
 import de.berlinskylarks.shared.database.repository.OfflineFunctionaryRepository
 import de.berlinskylarks.shared.database.repository.OfflineGameReportRepository
+import de.berlinskylarks.shared.database.repository.OfflineGameRepository
 import de.berlinskylarks.shared.database.repository.OfflineMediaRepository
 import de.davidbattefeld.berlinskylarks.data.preferences.dataStore
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
@@ -43,20 +48,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> = context.dataStore
+    fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> =
+        context.dataStore
 
     @Provides
     @Singleton
-    fun provideUserPreferencesRepository(dataStore: DataStore<Preferences>): UserPreferencesRepository =
-        UserPreferencesRepository(dataStore)
-
-    @Provides
-    @Singleton
-    fun provideGameRepository(matchAPIClient: MatchAPIClient): GameRepository = GameRepository(matchAPIClient)
-
-    @Provides
-    @Singleton
-    fun provideFunctionaryApiClient(): FunctionaryAPIClient = FunctionaryAPIClient(authKey = BSM_API_KEY)
+    fun provideFunctionaryApiClient(): FunctionaryAPIClient =
+        FunctionaryAPIClient(authKey = BSM_API_KEY)
 
     @Provides
     @Singleton
@@ -64,7 +62,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideLeagueGroupsApiClient(): LeagueGroupsAPIClient = LeagueGroupsAPIClient(authKey = BSM_API_KEY)
+    fun provideLeagueGroupsApiClient(): LeagueGroupsAPIClient =
+        LeagueGroupsAPIClient(authKey = BSM_API_KEY)
 
     @Provides
     @Singleton
@@ -72,7 +71,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideGameReportAPIClient(): GameReportAPIClient = GameReportAPIClient(authKey = BSM_API_KEY)
+    fun provideGameReportAPIClient(): GameReportAPIClient =
+        GameReportAPIClient(authKey = BSM_API_KEY)
 
     @Provides
     @Singleton
@@ -93,6 +93,29 @@ object AppModule {
     @Provides
     @Singleton
     fun provideMediaDao(db: AppDatabase): MediaDao = db.mediaDao()
+
+    @Provides
+    @Singleton
+    fun provideGameDao(db: AppDatabase): GameDao = db.gameDao()
+
+    @Provides
+    @Singleton
+    fun provideBoxScoreDao(db: AppDatabase): BoxScoreDao = db.boxScoreDao()
+
+    @Provides
+    @Singleton
+    fun provideUserPreferencesRepository(dataStore: DataStore<Preferences>): UserPreferencesRepository =
+        UserPreferencesRepository(dataStore)
+
+    @Provides
+    @Singleton
+    fun provideGameRepository(matchAPIClient: MatchAPIClient, gameDao: GameDao): GameRepository =
+        OfflineGameRepository(matchAPIClient, gameDao)
+
+    @Provides
+    @Singleton
+    fun provideBoxScoreRepository(boxScoreDao: BoxScoreDao): BoxScoreRepository =
+        OfflineBoxScoreRepository(boxScoreDao)
 
     @Provides
     @Singleton
@@ -119,5 +142,6 @@ object AppModule {
         gameReportRepository: GameReportRepository,
         mediaRepository: MediaRepository,
         gameReportClient: GameReportAPIClient,
-    ): GameReportService = GameReportService(gameReportRepository, mediaRepository, gameReportClient)
+    ): GameReportService =
+        GameReportService(gameReportRepository, mediaRepository, gameReportClient)
 }

@@ -1,8 +1,10 @@
 package de.berlinskylarks.shared.database.model
 
+import androidx.room.PrimaryKey
 import de.berlinskylarks.shared.data.model.Person
 
 data class PersonEntity(
+    @PrimaryKey
     val id: Int,
     val firstName: String,
     val lastName: String,

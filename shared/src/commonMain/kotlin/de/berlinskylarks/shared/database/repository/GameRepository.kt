@@ -1,12 +1,11 @@
 package de.berlinskylarks.shared.database.repository
 
-import de.berlinskylarks.shared.data.api.MatchAPIClient
-import de.berlinskylarks.shared.data.model.MatchBoxScore
+import de.berlinskylarks.shared.database.model.GameEntity
+import kotlinx.coroutines.flow.Flow
 
-class GameRepository(
-    private val matchAPIClient: MatchAPIClient,
-) {
-    suspend fun loadGameBoxScore(gameID: Int): MatchBoxScore? {
-        return matchAPIClient.getBoxScoreForGame(gameID)
-    }
+interface GameRepository {
+    suspend fun insertGame(game: GameEntity)
+    fun getAllGames(): Flow<List<GameEntity>>
+    fun getGameByID(id: Int): Flow<GameEntity?>
+    fun getGameByMatchID(matchID: String): Flow<GameEntity?>
 }
