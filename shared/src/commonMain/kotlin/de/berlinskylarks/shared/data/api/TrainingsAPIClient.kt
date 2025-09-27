@@ -2,7 +2,7 @@ package de.berlinskylarks.shared.data.api
 
 import de.berlinskylarks.shared.data.model.tib.Training
 
-class TrainingsAPIClient(authKey: String) : SkylarksAPIClient(authKey) {
+class TrainingsAPIClient(authKey: String) : TYPO3APIClient(authKey) {
     suspend fun loadTrainingTimesForTeam(teamID: Int): List<Training> {
         return apiCall<List<Training>>(
             resource = "api/v2/trainings",

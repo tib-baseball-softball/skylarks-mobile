@@ -3,7 +3,7 @@ package de.berlinskylarks.shared.data.api
 import de.berlinskylarks.shared.data.model.tib.Player
 import de.berlinskylarks.shared.data.model.tib.SkylarksTeam
 
-class TeamsAPIClient(authKey: String) : SkylarksAPIClient(authKey) {
+class TeamsAPIClient(authKey: String) : TYPO3APIClient(authKey) {
     suspend fun loadAllTeams(): List<SkylarksTeam> {
         return apiCall<List<SkylarksTeam>>(
             resource = "api/v2/teams",

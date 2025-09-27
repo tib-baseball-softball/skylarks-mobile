@@ -2,7 +2,7 @@ package de.berlinskylarks.shared.data.api
 
 import de.berlinskylarks.shared.data.model.tib.GameReport
 
-class GameReportAPIClient(authKey: String) : SkylarksAPIClient(authKey) {
+class GameReportAPIClient(authKey: String) : TYPO3APIClient(authKey) {
     suspend fun loadGameReports(): List<GameReport> {
         val response = apiCall<List<GameReport>>(
             resource = "api/v2/gamereports",
