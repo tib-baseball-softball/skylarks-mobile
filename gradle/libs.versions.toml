@@ -31,6 +31,7 @@ ksp = "2.2.20-2.0.3"
 nav3Core = "1.0.0-alpha10"
 lifecycleViewmodelNav3 = "2.10.0-alpha04"
 material3AdaptiveNav3 = "1.0.0-SNAPSHOT"
+workManager = "2.10.5"
 
 [libraries]
 # Kotlin / JUnit
@@ -84,6 +85,9 @@ coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 androidx-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+
+#Scheduling
+androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workManager" }
 
 # Misc
 jetbrains-markdown = { module = "org.jetbrains:markdown", version.ref = "jetbrains-markdown" }
