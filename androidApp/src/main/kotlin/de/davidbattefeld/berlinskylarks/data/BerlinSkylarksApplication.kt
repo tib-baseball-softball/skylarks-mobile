@@ -1,6 +1,8 @@
 package de.davidbattefeld.berlinskylarks.data
 
 import android.app.Application
+import androidx.hilt.work.HiltWorkerFactory
+import androidx.work.Configuration
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
@@ -9,9 +11,19 @@ import androidx.work.WorkManager
 import dagger.hilt.android.HiltAndroidApp
 import de.davidbattefeld.berlinskylarks.data.sync.GameDataWorker
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 @HiltAndroidApp
-class BerlinSkylarksApplication : Application() {
+class BerlinSkylarksApplication() : Application(), Configuration.Provider {
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
+
+    // official docs are wrong: https://stackoverflow.com/questions/78088535/getworkmanagerconfiguration-overrides-nothing
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
+
     override fun onCreate() {
         super.onCreate()
         setupRecurringWork()
