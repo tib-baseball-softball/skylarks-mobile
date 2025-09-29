@@ -40,8 +40,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.berlinskylarks.shared.TeamGlobals
 import de.davidbattefeld.berlinskylarks.data.preferences.DEFAULT_SETTINGS
-import de.davidbattefeld.berlinskylarks.global.TeamGlobals
 import de.davidbattefeld.berlinskylarks.ui.nav.Info
 import de.davidbattefeld.berlinskylarks.ui.nav.LegalNotice
 import de.davidbattefeld.berlinskylarks.ui.nav.Privacy

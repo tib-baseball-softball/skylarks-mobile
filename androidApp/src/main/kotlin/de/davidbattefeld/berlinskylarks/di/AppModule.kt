@@ -14,7 +14,8 @@ import de.berlinskylarks.shared.data.api.LeagueGroupsAPIClient
 import de.berlinskylarks.shared.data.api.MatchAPIClient
 import de.berlinskylarks.shared.data.api.TablesAPIClient
 import de.berlinskylarks.shared.data.api.TeamsAPIClient
-import de.berlinskylarks.shared.data.service.GameReportService
+import de.berlinskylarks.shared.data.service.GameReportSyncService
+import de.berlinskylarks.shared.data.service.GameSyncService
 import de.berlinskylarks.shared.database.AppDatabase
 import de.berlinskylarks.shared.database.dao.BoxScoreDao
 import de.berlinskylarks.shared.database.dao.FunctionaryDao
@@ -138,10 +139,18 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideGameReportService(
+    fun provideGameSyncService(
+        gameRepository: GameRepository,
+        gameClient: MatchAPIClient,
+        boxScoreRepository: BoxScoreRepository,
+    ): GameSyncService = GameSyncService(gameRepository, gameClient)
+
+    @Provides
+    @Singleton
+    fun provideGameReportSyncService(
         gameReportRepository: GameReportRepository,
         mediaRepository: MediaRepository,
         gameReportClient: GameReportAPIClient,
-    ): GameReportService =
-        GameReportService(gameReportRepository, mediaRepository, gameReportClient)
+    ): GameReportSyncService =
+        GameReportSyncService(gameReportRepository, mediaRepository, gameReportClient)
 }

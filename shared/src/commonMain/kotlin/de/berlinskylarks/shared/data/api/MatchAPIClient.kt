@@ -1,5 +1,6 @@
 package de.berlinskylarks.shared.data.api
 
+import de.berlinskylarks.shared.data.enums.Gameday
 import de.berlinskylarks.shared.data.model.Game
 import de.berlinskylarks.shared.data.model.MatchBoxScore
 
@@ -10,45 +11,57 @@ class MatchAPIClient(authKey: String) : BSMAPIClient(authKey) {
     suspend fun loadGamesForClub(
         season: Int?,
         gamedays: String?,
+        compact: Boolean? = false
     ): List<Game> {
+        val queryParameters = mutableListOf(
+            SEASON_FILTER to (season ?: DEFAULT_SEASON).toString(),
+            GAMEDAY_FILTER to (gamedays ?: Gameday.CURRENT.value),
+        )
+
+        if (compact == true) {
+            queryParameters.add(Pair(COMPACT_FILTER, "true"))
+        }
+
         return apiCall<List<Game>>(
             resource = "clubs/$CLUB_ID/matches.json",
-            queryParameters = mutableListOf(
-                SEASON_FILTER to (season ?: DEFAULT_SEASON).toString(),
-                GAMEDAY_FILTER to (gamedays ?: "current"),
-            )
+            queryParameters = queryParameters
         ) ?: listOf()
     }
 
     /**
      * Gets games in general, will also include non-Skylarks games without a search parameter.
-     * Only checks for games in DBV and BSVBB!
-     *
-     * TODO: check behaviour of organization filters, which is not really what one would expect
      *
      * Example request: https://bsm.baseball-softball.de/matches.json?api_key=REDACTED&search=skylarks&filter%5Bseasons%5D%5B%5D=2024&filter%5Bgamedays%5D%5B%5D=next
      */
     suspend fun loadAllGames(
-        season: Int?,
-        gamedays: String?,
-        leagues: Int?,
+        season: Int? = DEFAULT_SEASON,
+        gamedays: String? = Gameday.ANY.value,
+        leagues: Int? = null,
+        organizations: Int? = null,
         search: String? = null,
+        compact: Boolean? = false,
     ): List<Game> {
         val queryParameters = mutableListOf(
             SEASON_FILTER to (season ?: DEFAULT_SEASON).toString(),
             GAMEDAY_FILTER to (gamedays ?: "current"),
-
-            // without these additional queries it returns all leagues in Germany
-            //ORGANIZATION_FILTER to "federation_$DBV_ORGANIZATION_ID",
-            //ORGANIZATION_FILTER to "federation_$BSVBB_ORGANIZATION_ID"
         )
 
+        // Careful: without specifying any additional query, it returns all games for all leagues in Germany
+        // => massive JSON response
         if (leagues != null) {
             queryParameters.add(LEAGUE_FILTER to (leagues.toString()))
         }
 
+        if (organizations != null) {
+            queryParameters.add(ORGANIZATION_FILTER to "federation_$organizations")
+        }
+
         if (!search.isNullOrEmpty()) {
             queryParameters.add(Pair(TEAM_SEARCH, search))
+        }
+
+        if (compact == true) {
+            queryParameters.add(Pair(COMPACT_FILTER, "true"))
         }
 
         return apiCall<List<Game>>(

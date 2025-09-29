@@ -8,7 +8,9 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import androidx.work.workDataOf
 import dagger.hilt.android.HiltAndroidApp
+import de.berlinskylarks.shared.data.api.BSMAPIClient.Companion.DEFAULT_SEASON
 import de.davidbattefeld.berlinskylarks.data.sync.GameDataWorker
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -39,6 +41,9 @@ class BerlinSkylarksApplication() : Application(), Configuration.Provider {
 
         val gameSyncRequest = PeriodicWorkRequestBuilder<GameDataWorker>(4, TimeUnit.HOURS)
             .setConstraints(constraints)
+            .setInputData(workDataOf(
+                "season" to DEFAULT_SEASON // only current year is automatically refreshed
+            ))
             .build()
 
         workManager.enqueueUniquePeriodicWork(

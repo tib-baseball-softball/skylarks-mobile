@@ -6,7 +6,7 @@ import de.berlinskylarks.shared.database.model.MediaEntity
 import de.berlinskylarks.shared.database.repository.GameReportRepository
 import de.berlinskylarks.shared.database.repository.MediaRepository
 
-class GameReportService(
+class GameReportSyncService(
     private val gameReportRepository: GameReportRepository,
     private val mediaRepository: MediaRepository,
     private val gameReportClient: GameReportAPIClient,

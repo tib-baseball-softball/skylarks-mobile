@@ -20,6 +20,7 @@ abstract class BSMAPIClient(authKey: String) : AbstractAPIClient(authKey) {
         const val GAMEDAY_FILTER = "filters[gamedays][]"
         const val LEAGUE_FILTER = "filters[leagues][]"
         const val ORGANIZATION_FILTER = "filters[organizations][]"
+        const val COMPACT_FILTER = "compact"
         const val TEAM_SEARCH = "search"
 
         @OptIn(ExperimentalTime::class)

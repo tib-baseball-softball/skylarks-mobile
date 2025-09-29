@@ -13,15 +13,13 @@ import de.berlinskylarks.shared.data.api.BSMAPIClient
 import de.berlinskylarks.shared.data.api.LeagueGroupsAPIClient
 import de.berlinskylarks.shared.data.api.MatchAPIClient
 import de.berlinskylarks.shared.data.model.LeagueGroup
-import de.berlinskylarks.shared.data.service.GameReportService
-import de.berlinskylarks.shared.database.model.GameEntity
+import de.berlinskylarks.shared.data.service.GameReportSyncService
 import de.berlinskylarks.shared.database.repository.GameReportRepository
 import de.berlinskylarks.shared.database.repository.GameRepository
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
 import de.davidbattefeld.berlinskylarks.domain.model.UserCalendar
 import de.davidbattefeld.berlinskylarks.domain.service.CalendarService
 import de.davidbattefeld.berlinskylarks.domain.service.GameDecorator
-import de.davidbattefeld.berlinskylarks.global.TeamGlobals
 import de.davidbattefeld.berlinskylarks.testdata.testLeagueGroup
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
 import kotlinx.coroutines.flow.SharingStarted
@@ -37,7 +35,7 @@ class ScoresViewModel @AssistedInject constructor(
     private val gameReportRepository: GameReportRepository,
     private val matchAPIClient: MatchAPIClient,
     private val leagueGroupsAPIClient: LeagueGroupsAPIClient,
-    private val gameReportService: GameReportService,
+    private val gameReportSyncService: GameReportSyncService,
     userPreferencesRepository: UserPreferencesRepository
 ) : GenericViewModel(userPreferencesRepository) {
 
@@ -73,7 +71,7 @@ class ScoresViewModel @AssistedInject constructor(
             val reportsEmpty =
                 gameReportRepository.getAllGameReportsStream().firstOrNull().isNullOrEmpty()
             if (reportsEmpty) {
-                gameReportService.syncGameReports()
+                gameReportSyncService.syncGameReports()
             }
 
             val gamesEmpty = gameRepository.getAllGames().firstOrNull().isNullOrEmpty()
@@ -118,22 +116,6 @@ class ScoresViewModel @AssistedInject constructor(
 
 
 //        if (filteredLeagueGroup.id == BOGUS_ID) {
-        val games = matchAPIClient.loadGamesForClub(season, "any")
-        games.forEach { game ->
-            gameRepository.insertGame(
-                GameEntity(
-                    id = game.id,
-                    matchID = game.matchID,
-                    leagueID = game.leagueID,
-                    time = game.time,
-                    season = game.season,
-                    external = !(game.awayTeamName.contains(TeamGlobals.TEAM_NAME) || game.homeTeamName.contains(
-                        TeamGlobals.TEAM_NAME
-                    )),
-                    json = game,
-                )
-            )
-        }
 
 //        } else {
 //            games.addAll(
