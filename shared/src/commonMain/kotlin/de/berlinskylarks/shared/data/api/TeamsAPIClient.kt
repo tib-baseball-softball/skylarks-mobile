@@ -18,4 +18,10 @@ class TeamsAPIClient(authKey: String) : TYPO3APIClient(authKey) {
             )
         ) ?: listOf()
     }
+
+    suspend fun loadAllPlayers(): List<Player> {
+        return apiCall<List<Player>>(
+            resource = "api/v2/players",
+        ) ?: listOf()
+    }
 }

@@ -14,6 +14,7 @@ import de.berlinskylarks.shared.data.api.BSMAPIClient.Companion.DEFAULT_SEASON
 import de.davidbattefeld.berlinskylarks.data.sync.GameDataWorker
 import de.davidbattefeld.berlinskylarks.data.sync.GameReportWorker
 import de.davidbattefeld.berlinskylarks.data.sync.LeagueGroupWorker
+import de.davidbattefeld.berlinskylarks.data.sync.TiBTeamDataWorker
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -43,6 +44,8 @@ class BerlinSkylarksApplication() : Application(), Configuration.Provider {
         makeGameSyncRequest(constraints)
         makeGameReportSyncRequest(constraints)
         makeLeagueGroupSyncRequest(constraints)
+        makeTibTeamsSyncRequest(constraints)
+        makePlayersSyncRequest(constraints)
     }
 
     private fun makeGameSyncRequest(constraints: Constraints) {
@@ -78,7 +81,7 @@ class BerlinSkylarksApplication() : Application(), Configuration.Provider {
             .build()
 
         workManager.enqueueUniquePeriodicWork(
-            uniqueWorkName = SYNC_GAME_DATA_WORK_NAME,
+            uniqueWorkName = SYNC_GAME_REPORT_DATA_WORK_NAME,
             existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
             request = gameReportSyncRequest,
         )
@@ -99,7 +102,39 @@ class BerlinSkylarksApplication() : Application(), Configuration.Provider {
             .build()
 
         workManager.enqueueUniquePeriodicWork(
-            uniqueWorkName = SYNC_GAME_DATA_WORK_NAME,
+            uniqueWorkName = SYNC_LEAGUE_GROUP_DATA_WORK_NAME,
+            existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
+            request = leagueGroupSyncRequest,
+        )
+    }
+
+    private fun makeTibTeamsSyncRequest(constraints: Constraints) {
+        val workManager = WorkManager.getInstance(applicationContext)
+        val leagueGroupSyncRequest = PeriodicWorkRequestBuilder<TiBTeamDataWorker>(
+            repeatInterval = 24,
+            repeatIntervalTimeUnit = TimeUnit.HOURS
+        )
+            .setConstraints(constraints)
+            .build()
+
+        workManager.enqueueUniquePeriodicWork(
+            uniqueWorkName = SYNC_TIB_TEAMS_DATA_WORK_NAME,
+            existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
+            request = leagueGroupSyncRequest,
+        )
+    }
+
+    private fun makePlayersSyncRequest(constraints: Constraints) {
+        val workManager = WorkManager.getInstance(applicationContext)
+        val leagueGroupSyncRequest = PeriodicWorkRequestBuilder<TiBTeamDataWorker>(
+            repeatInterval = 24,
+            repeatIntervalTimeUnit = TimeUnit.HOURS
+        )
+            .setConstraints(constraints)
+            .build()
+
+        workManager.enqueueUniquePeriodicWork(
+            uniqueWorkName = SYNC_PLAYER_DATA_WORK_NAME,
             existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
             request = leagueGroupSyncRequest,
         )
@@ -107,5 +142,9 @@ class BerlinSkylarksApplication() : Application(), Configuration.Provider {
 
     companion object {
         const val SYNC_GAME_DATA_WORK_NAME = "sync_game_data_work"
+        const val SYNC_GAME_REPORT_DATA_WORK_NAME = "sync_game_report_data_work"
+        const val SYNC_LEAGUE_GROUP_DATA_WORK_NAME = "sync_league_group_data_work"
+        const val SYNC_TIB_TEAMS_DATA_WORK_NAME = "sync_tib_teams_data_work"
+        const val SYNC_PLAYER_DATA_WORK_NAME = "sync_player_data_work"
     }
 }

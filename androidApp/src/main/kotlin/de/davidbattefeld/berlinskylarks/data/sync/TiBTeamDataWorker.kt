@@ -7,7 +7,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import de.berlinskylarks.shared.database.repository.TiBTeamRepository
+import de.berlinskylarks.shared.data.service.PlayerSyncService
 
 private const val TAG = "TiBTeamDataWorker"
 
@@ -15,12 +15,12 @@ private const val TAG = "TiBTeamDataWorker"
 class TiBTeamDataWorker @AssistedInject constructor(
     @Assisted ctx: Context,
     @Assisted params: WorkerParameters,
-    private val tiBTeamRepository: TiBTeamRepository,
+    private val playerSyncService: PlayerSyncService,
 ) : CoroutineWorker(ctx, params) {
     override suspend fun doWork(): Result {
         return try {
-            // TODO: add actual sync logic when available
-            Log.d(TAG, "TiB Team Data Worker executed")
+            playerSyncService.syncTeams()
+
             Result.success()
         } catch (t: Throwable) {
             Log.e(TAG, "Error in tib team data worker", t)

@@ -17,41 +17,42 @@ import de.berlinskylarks.shared.data.api.TeamsAPIClient
 import de.berlinskylarks.shared.data.service.GameReportSyncService
 import de.berlinskylarks.shared.data.service.GameSyncService
 import de.berlinskylarks.shared.data.service.LeagueGroupSyncService
+import de.berlinskylarks.shared.data.service.PlayerSyncService
 import de.berlinskylarks.shared.database.AppDatabase
 import de.berlinskylarks.shared.database.dao.BoxScoreDao
+import de.berlinskylarks.shared.database.dao.ClubDao
+import de.berlinskylarks.shared.database.dao.FieldDao
 import de.berlinskylarks.shared.database.dao.FunctionaryDao
 import de.berlinskylarks.shared.database.dao.GameDao
 import de.berlinskylarks.shared.database.dao.GameReportDao
 import de.berlinskylarks.shared.database.dao.LeagueGroupDao
-import de.berlinskylarks.shared.database.dao.MediaDao
-import de.berlinskylarks.shared.database.dao.ClubDao
-import de.berlinskylarks.shared.database.dao.FieldDao
 import de.berlinskylarks.shared.database.dao.LicenseDao
+import de.berlinskylarks.shared.database.dao.MediaDao
 import de.berlinskylarks.shared.database.dao.PlayerDao
 import de.berlinskylarks.shared.database.dao.TiBTeamDao
 import de.berlinskylarks.shared.database.getDatabase
 import de.berlinskylarks.shared.database.repository.BoxScoreRepository
+import de.berlinskylarks.shared.database.repository.ClubRepository
+import de.berlinskylarks.shared.database.repository.FieldRepository
 import de.berlinskylarks.shared.database.repository.FunctionaryRepository
 import de.berlinskylarks.shared.database.repository.GameReportRepository
 import de.berlinskylarks.shared.database.repository.GameRepository
 import de.berlinskylarks.shared.database.repository.LeagueGroupRepository
+import de.berlinskylarks.shared.database.repository.LicenseRepository
 import de.berlinskylarks.shared.database.repository.MediaRepository
 import de.berlinskylarks.shared.database.repository.OfflineBoxScoreRepository
+import de.berlinskylarks.shared.database.repository.OfflineClubRepository
+import de.berlinskylarks.shared.database.repository.OfflineFieldRepository
 import de.berlinskylarks.shared.database.repository.OfflineFunctionaryRepository
 import de.berlinskylarks.shared.database.repository.OfflineGameReportRepository
 import de.berlinskylarks.shared.database.repository.OfflineGameRepository
 import de.berlinskylarks.shared.database.repository.OfflineLeagueGroupRepository
-import de.berlinskylarks.shared.database.repository.OfflineMediaRepository
-import de.berlinskylarks.shared.database.repository.ClubRepository
-import de.berlinskylarks.shared.database.repository.FieldRepository
-import de.berlinskylarks.shared.database.repository.LicenseRepository
-import de.berlinskylarks.shared.database.repository.PlayerRepository
-import de.berlinskylarks.shared.database.repository.TiBTeamRepository
-import de.berlinskylarks.shared.database.repository.OfflineClubRepository
-import de.berlinskylarks.shared.database.repository.OfflineFieldRepository
 import de.berlinskylarks.shared.database.repository.OfflineLicenseRepository
+import de.berlinskylarks.shared.database.repository.OfflineMediaRepository
 import de.berlinskylarks.shared.database.repository.OfflinePlayerRepository
 import de.berlinskylarks.shared.database.repository.OfflineTiBTeamRepository
+import de.berlinskylarks.shared.database.repository.PlayerRepository
+import de.berlinskylarks.shared.database.repository.TiBTeamRepository
 import de.davidbattefeld.berlinskylarks.data.preferences.dataStore
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
 import de.davidbattefeld.berlinskylarks.data.repository.WorkManagerTiBRepository
@@ -247,4 +248,12 @@ object AppModule {
         tablesAPIClient: TablesAPIClient,
     ): LeagueGroupSyncService =
         LeagueGroupSyncService(leagueGroupRepository, leagueGroupsAPIClient, tablesAPIClient)
+
+    @Provides
+    @Singleton
+    fun providePlayerSyncService(
+        teamClient: TeamsAPIClient,
+        playerRepository: PlayerRepository,
+        tibTeamRepository: TiBTeamRepository,
+    ): PlayerSyncService = PlayerSyncService(teamClient, playerRepository, tibTeamRepository)
 }

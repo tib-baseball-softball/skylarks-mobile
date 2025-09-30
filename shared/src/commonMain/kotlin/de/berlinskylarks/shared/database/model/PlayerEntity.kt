@@ -21,7 +21,7 @@ data class PlayerEntity(
     val slug: String,
     val teamName: String?,
     @Embedded(prefix = "media_")
-    val media: MediaEntity,
+    val media: MediaEntity?,
     val positions: String, // concatenated
     val teams: String, // concatenated
 )
