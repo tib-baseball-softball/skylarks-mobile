@@ -12,6 +12,8 @@ import androidx.work.workDataOf
 import dagger.hilt.android.HiltAndroidApp
 import de.berlinskylarks.shared.data.api.BSMAPIClient.Companion.DEFAULT_SEASON
 import de.davidbattefeld.berlinskylarks.data.sync.GameDataWorker
+import de.davidbattefeld.berlinskylarks.data.sync.GameReportWorker
+import de.davidbattefeld.berlinskylarks.data.sync.LeagueGroupWorker
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -40,6 +42,7 @@ class BerlinSkylarksApplication() : Application(), Configuration.Provider {
 
         makeGameSyncRequest(constraints)
         makeGameReportSyncRequest(constraints)
+        makeLeagueGroupSyncRequest(constraints)
     }
 
     private fun makeGameSyncRequest(constraints: Constraints) {
@@ -51,9 +54,11 @@ class BerlinSkylarksApplication() : Application(), Configuration.Provider {
             repeatIntervalTimeUnit = TimeUnit.HOURS
         )
             .setConstraints(constraints)
-            .setInputData(workDataOf(
-                "season" to DEFAULT_SEASON // only current year is automatically refreshed
-            ))
+            .setInputData(
+                workDataOf(
+                    "season" to DEFAULT_SEASON // only current year is automatically refreshed
+                )
+            )
             .build()
 
         workManager.enqueueUniquePeriodicWork(
@@ -65,7 +70,7 @@ class BerlinSkylarksApplication() : Application(), Configuration.Provider {
 
     private fun makeGameReportSyncRequest(constraints: Constraints) {
         val workManager = WorkManager.getInstance(applicationContext)
-        val gameReportSyncRequest = PeriodicWorkRequestBuilder<GameDataWorker>(
+        val gameReportSyncRequest = PeriodicWorkRequestBuilder<GameReportWorker>(
             repeatInterval = 8,
             repeatIntervalTimeUnit = TimeUnit.HOURS
         )
@@ -76,6 +81,27 @@ class BerlinSkylarksApplication() : Application(), Configuration.Provider {
             uniqueWorkName = SYNC_GAME_DATA_WORK_NAME,
             existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
             request = gameReportSyncRequest,
+        )
+    }
+
+    private fun makeLeagueGroupSyncRequest(constraints: Constraints) {
+        val workManager = WorkManager.getInstance(applicationContext)
+        val leagueGroupSyncRequest = PeriodicWorkRequestBuilder<LeagueGroupWorker>(
+            repeatInterval = 4,
+            repeatIntervalTimeUnit = TimeUnit.HOURS
+        )
+            .setInputData(
+                workDataOf(
+                    "season" to DEFAULT_SEASON
+                )
+            )
+            .setConstraints(constraints)
+            .build()
+
+        workManager.enqueueUniquePeriodicWork(
+            uniqueWorkName = SYNC_GAME_DATA_WORK_NAME,
+            existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
+            request = leagueGroupSyncRequest,
         )
     }
 

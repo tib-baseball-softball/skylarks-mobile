@@ -10,9 +10,9 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.berlinskylarks.shared.data.api.BSMAPIClient
-import de.berlinskylarks.shared.data.api.LeagueGroupsAPIClient
 import de.berlinskylarks.shared.data.model.LeagueGroup
 import de.berlinskylarks.shared.database.repository.GameRepository
+import de.berlinskylarks.shared.database.repository.LeagueGroupRepository
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
 import de.davidbattefeld.berlinskylarks.data.repository.WorkManagerTiBRepository
 import de.davidbattefeld.berlinskylarks.domain.model.UserCalendar
@@ -30,9 +30,9 @@ import kotlinx.coroutines.launch
 @HiltViewModel(assistedFactory = ScoresViewModel.Factory::class)
 class ScoresViewModel @AssistedInject constructor(
     gameRepository: GameRepository,
-    private val leagueGroupsAPIClient: LeagueGroupsAPIClient,
     userPreferencesRepository: UserPreferencesRepository,
     workManagerTiBRepository: WorkManagerTiBRepository,
+    leagueGroupRepository: LeagueGroupRepository,
 ) : GenericViewModel(userPreferencesRepository) {
 
     var games: StateFlow<List<GameDecorator>> =
@@ -51,13 +51,25 @@ class ScoresViewModel @AssistedInject constructor(
                 initialValue = emptyList(),
             )
 
+    var leagueGroups: StateFlow<List<LeagueGroup>> =
+        leagueGroupRepository.getAllLeagueGroups()
+            .map { dbEntities ->
+                dbEntities.map {
+                    it.toLeagueGroup()
+                }
+            }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
+                initialValue = emptyList(),
+            )
+
     var skylarksGames = mutableStateListOf<GameDecorator>()
-    var leagueGroups = mutableStateListOf<LeagueGroup>()
     var filteredLeagueGroup by mutableStateOf<LeagueGroup>(testLeagueGroup)
-    var userCalendars = mutableStateListOf<UserCalendar>()
 
     var tabState by mutableStateOf(TabState.CURRENT)
 
+    var userCalendars = mutableStateListOf<UserCalendar>()
     val calendarService = CalendarService()
 
     init {
@@ -65,17 +77,16 @@ class ScoresViewModel @AssistedInject constructor(
             val season = userPreferencesFlow.firstOrNull()?.season ?: BSMAPIClient.DEFAULT_SEASON
             // one-time request to ensure up-to-date game data
             workManagerTiBRepository.syncScores(season = season)
+
+            val existingLeagueGroup = leagueGroupRepository.getFirstItem().firstOrNull()
+            if (existingLeagueGroup == null) {
+                workManagerTiBRepository.syncLeagueGroups(season)
+            }
         }
     }
 
     override fun load() {
-        leagueGroups.clear()
-
         viewModelScope.launch {
-            val season = userPreferencesFlow.firstOrNull()?.season ?: BSMAPIClient.DEFAULT_SEASON
-            viewState = ViewState.Loading
-
-            leagueGroups.addAll(leagueGroupsAPIClient.loadLeagueGroupsForClub(season))
             loadGames()
 
             viewState = if (games.value.isNotEmpty()) ViewState.Found else ViewState.NoResults

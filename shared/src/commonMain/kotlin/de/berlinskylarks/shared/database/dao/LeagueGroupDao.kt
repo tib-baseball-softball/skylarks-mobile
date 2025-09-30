@@ -12,6 +12,9 @@ interface LeagueGroupDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(leagueGroup: LeagueGroupEntity)
 
+    @Query("SELECT * FROM league_groups LIMIT 1")
+    fun getFirstItem(): Flow<LeagueGroupEntity?>
+
     @Query("SELECT * FROM league_groups")
     fun getAllLeagueGroups(): Flow<List<LeagueGroupEntity>>
 

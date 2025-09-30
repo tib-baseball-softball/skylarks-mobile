@@ -74,6 +74,7 @@ fun ScoresTopBar(
         }
     )
 ) {
+    val leagueGroups by vm.leagueGroups.collectAsState()
     var leagueFilterExpanded by remember { mutableStateOf(false) }
     val context = LocalContext.current
     val snackbarHostState = LocalSnackbarHostState.current
@@ -113,7 +114,7 @@ fun ScoresTopBar(
                     onClick = { leagueFilterExpanded = !leagueFilterExpanded }
                 ) {
                     Text(
-                        text = vm.filteredLeagueGroup.name
+                        text = "${vm.filteredLeagueGroup.name} (${vm.filteredLeagueGroup.acronym})",
                     )
                     Icon(
                         modifier = Modifier.offset(x = 8.dp),
@@ -138,9 +139,9 @@ fun ScoresTopBar(
                             )
                         }
                     )
-                    vm.leagueGroups.forEach {
+                    leagueGroups.forEach {
                         DropdownMenuItem(
-                            text = { Text(it.name) },
+                            text = { Text("${it.name} (${it.acronym})") },
                             onClick = {
                                 vm.onLeagueFilterChanged(it)
                                 leagueFilterExpanded = false

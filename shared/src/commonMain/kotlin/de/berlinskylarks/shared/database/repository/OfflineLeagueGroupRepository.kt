@@ -10,6 +10,9 @@ class OfflineLeagueGroupRepository(
     override suspend fun insertLeagueGroup(leagueGroup: LeagueGroupEntity) =
         leagueGroupDao.insert(leagueGroup)
 
+    override fun getFirstItem(): Flow<LeagueGroupEntity?> =
+        leagueGroupDao.getFirstItem()
+
     override fun getAllLeagueGroups(): Flow<List<LeagueGroupEntity>> =
         leagueGroupDao.getAllLeagueGroups()
 

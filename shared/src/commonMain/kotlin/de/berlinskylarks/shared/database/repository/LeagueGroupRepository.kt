@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface LeagueGroupRepository {
     suspend fun insertLeagueGroup(leagueGroup: LeagueGroupEntity)
+    fun getFirstItem(): Flow<LeagueGroupEntity?>
     fun getAllLeagueGroups(): Flow<List<LeagueGroupEntity>>
     fun getLeagueGroupByID(id: Int): Flow<LeagueGroupEntity?>
     fun getLeagueGroupsBySeason(season: Int): Flow<List<LeagueGroupEntity>>

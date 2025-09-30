@@ -14,7 +14,7 @@ val testLeague = League(
     classification = "Kreisliga",
     sport = "Baseball",
     acronym = "KRL",
-    age_group = "Erwachsene"
+    ageGroup = "Erwachsene"
 )
 
 val testEntry = LeagueEntry(
