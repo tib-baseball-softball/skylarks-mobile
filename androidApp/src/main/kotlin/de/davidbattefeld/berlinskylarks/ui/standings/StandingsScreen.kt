@@ -18,10 +18,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import de.berlinskylarks.shared.data.model.LeagueGroup
 import de.davidbattefeld.berlinskylarks.global.clubCardPadding
 import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
 import de.davidbattefeld.berlinskylarks.ui.utility.LoadingView
@@ -30,9 +30,11 @@ import de.davidbattefeld.berlinskylarks.ui.viewmodels.LeagueGroupsViewModel
 
 @Composable
 fun StandingsScreen(
-    vm: LeagueGroupsViewModel = viewModel(),
+    vm: LeagueGroupsViewModel,
     detailRoute: (Int) -> Unit,
 ) {
+    val leagueGroups by vm.leagueGroups.collectAsState()
+
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = Modifier
@@ -82,7 +84,7 @@ fun StandingsScreen(
                     }
 
                     ViewState.Found -> {
-                        itemsIndexed<LeagueGroup>(vm.leagueGroups) { index, league ->
+                        itemsIndexed(leagueGroups) { index, league ->
                             Column {
                                 StandingsLeagueRow(
                                     leagueGroup = league,
@@ -92,7 +94,7 @@ fun StandingsScreen(
                                         }
                                 )
                                 // last item does not have a divider
-                                if (index + 1 != vm.leagueGroups.size) {
+                                if (index + 1 != leagueGroups.size) {
                                     HorizontalDivider(modifier = Modifier.padding(horizontal = 8.dp))
                                 }
                             }
@@ -101,7 +103,7 @@ fun StandingsScreen(
 
                     ViewState.Error -> {
                         item {
-                            Text("An error occured loading data.")
+                            Text("An error occurred loading data.")
                         }
                     }
                 }
@@ -109,8 +111,6 @@ fun StandingsScreen(
         }
     }
     LaunchedEffect(Unit) {
-        if (vm.leagueGroups.isEmpty()) {
-            vm.load()
-        }
+        vm.viewState = ViewState.Found
     }
 }

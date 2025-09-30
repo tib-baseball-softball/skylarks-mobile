@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import de.davidbattefeld.berlinskylarks.ui.utility.LoadingView
@@ -15,13 +17,15 @@ fun StandingsDetailScreen(
     tableID: Int,
     vm: TablesViewModel
 ) {
+    val table by vm.table.collectAsState()
+
     when (vm.viewState) {
         ViewState.Loading -> {
             LoadingView()
         }
 
         ViewState.Found -> {
-            StandingsTable(table = vm.table.value)
+            StandingsTable(table = table)
         }
 
         ViewState.NoResults -> {
@@ -36,10 +40,7 @@ fun StandingsDetailScreen(
         }
     }
 
-    LaunchedEffect(Unit) {
-        // TODO: workaround for view model reuse issue
-        //if (vm.viewState != ViewState.Found) {
-        vm.loadSingleTable(tableID)
-        //}
+    LaunchedEffect(tableID) {
+        vm.viewState = ViewState.Found
     }
 }
