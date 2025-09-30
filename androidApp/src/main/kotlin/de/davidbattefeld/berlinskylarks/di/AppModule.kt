@@ -21,17 +21,20 @@ import de.berlinskylarks.shared.database.dao.BoxScoreDao
 import de.berlinskylarks.shared.database.dao.FunctionaryDao
 import de.berlinskylarks.shared.database.dao.GameDao
 import de.berlinskylarks.shared.database.dao.GameReportDao
+import de.berlinskylarks.shared.database.dao.LeagueGroupDao
 import de.berlinskylarks.shared.database.dao.MediaDao
 import de.berlinskylarks.shared.database.getDatabase
 import de.berlinskylarks.shared.database.repository.BoxScoreRepository
 import de.berlinskylarks.shared.database.repository.FunctionaryRepository
 import de.berlinskylarks.shared.database.repository.GameReportRepository
 import de.berlinskylarks.shared.database.repository.GameRepository
+import de.berlinskylarks.shared.database.repository.LeagueGroupRepository
 import de.berlinskylarks.shared.database.repository.MediaRepository
 import de.berlinskylarks.shared.database.repository.OfflineBoxScoreRepository
 import de.berlinskylarks.shared.database.repository.OfflineFunctionaryRepository
 import de.berlinskylarks.shared.database.repository.OfflineGameReportRepository
 import de.berlinskylarks.shared.database.repository.OfflineGameRepository
+import de.berlinskylarks.shared.database.repository.OfflineLeagueGroupRepository
 import de.berlinskylarks.shared.database.repository.OfflineMediaRepository
 import de.davidbattefeld.berlinskylarks.data.preferences.dataStore
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
@@ -106,6 +109,10 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideLeagueGroupDao(db: AppDatabase): LeagueGroupDao = db.leagueGroupDao()
+
+    @Provides
+    @Singleton
     fun provideUserPreferencesRepository(dataStore: DataStore<Preferences>): UserPreferencesRepository =
         UserPreferencesRepository(dataStore)
 
@@ -118,6 +125,11 @@ object AppModule {
     @Singleton
     fun provideBoxScoreRepository(boxScoreDao: BoxScoreDao): BoxScoreRepository =
         OfflineBoxScoreRepository(boxScoreDao)
+
+    @Provides
+    @Singleton
+    fun provideLeagueGroupRepository(leagueGroupDao: LeagueGroupDao): LeagueGroupRepository =
+        OfflineLeagueGroupRepository(leagueGroupDao)
 
     @Provides
     @Singleton

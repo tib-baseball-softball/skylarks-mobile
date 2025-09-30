@@ -1,5 +1,6 @@
 package de.berlinskylarks.shared.data.model
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -10,5 +11,6 @@ data class League(
     var acronym: String,
     var sport: String,
     var classification: String?,
-    var age_group: String?
+    @SerialName("age_group")
+    var ageGroup: String?
 )
