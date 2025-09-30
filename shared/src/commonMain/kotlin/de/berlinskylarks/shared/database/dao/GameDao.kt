@@ -4,6 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.RawQuery
+import androidx.room.RoomRawQuery
 import de.berlinskylarks.shared.database.model.GameEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -14,6 +16,9 @@ interface GameDao {
 
     @Query("SELECT * FROM games")
     fun getAllGames(): Flow<List<GameEntity>>
+
+    @RawQuery(observedEntities = [GameEntity::class])
+    fun getGamesByFilter(query: RoomRawQuery): Flow<List<GameEntity>>
 
     @Query("SELECT * FROM games WHERE id = :id")
     fun getGameByID(id: Int): Flow<GameEntity?>
