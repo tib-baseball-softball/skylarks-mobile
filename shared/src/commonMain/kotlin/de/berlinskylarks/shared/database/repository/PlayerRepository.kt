@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 interface PlayerRepository {
     suspend fun insertPlayer(player: PlayerEntity)
     fun getAllPlayers(): Flow<List<PlayerEntity>>
+    fun getPlayersForTeam(teamID: Int): Flow<List<PlayerEntity>>
     fun getPlayerByID(id: Int): Flow<PlayerEntity?>
     fun getPlayerByBSMID(bsmID: Int): Flow<PlayerEntity?>
 }

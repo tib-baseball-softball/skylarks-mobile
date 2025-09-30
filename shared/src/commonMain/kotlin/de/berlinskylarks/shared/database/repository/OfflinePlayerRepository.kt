@@ -11,6 +11,9 @@ class OfflinePlayerRepository(
 
     override fun getAllPlayers(): Flow<List<PlayerEntity>> = playerDao.getAllPlayers()
 
+    override fun getPlayersForTeam(teamID: Int): Flow<List<PlayerEntity>> =
+        playerDao.getPlayersForTeam(teamID)
+
     override fun getPlayerByID(id: Int): Flow<PlayerEntity?> = playerDao.getPlayerByID(id)
 
     override fun getPlayerByBSMID(bsmID: Int): Flow<PlayerEntity?> =

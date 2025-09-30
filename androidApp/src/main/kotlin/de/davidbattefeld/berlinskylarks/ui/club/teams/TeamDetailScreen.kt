@@ -12,10 +12,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import de.berlinskylarks.shared.data.model.tib.Player
 import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
 import de.davidbattefeld.berlinskylarks.ui.utility.LoadingView
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
@@ -25,10 +25,10 @@ import de.davidbattefeld.berlinskylarks.ui.viewmodels.TeamDetailViewModel
 fun TeamDetailScreen(
     teamID: Int,
     playerDetailRoute: (Int) -> Unit,
-    vm: TeamDetailViewModel = viewModel()
+    vm: TeamDetailViewModel,
 ) {
-
     val listState = rememberLazyListState()
+    val players by vm.players.collectAsState()
 
     Surface(
         shape = RoundedCornerShape(size = 12.dp),
@@ -53,7 +53,7 @@ fun TeamDetailScreen(
                 }
 
                 ViewState.Found -> {
-                    itemsIndexed<Player>(vm.players) { index, player ->
+                    itemsIndexed(players) { index, player ->
                         Column {
                             PlayerRow(
                                 player = player,
@@ -63,7 +63,7 @@ fun TeamDetailScreen(
                                     }
                             )
                             // last item does not have a divider
-                            if (index + 1 != vm.players.size) {
+                            if (index + 1 != players.size) {
                                 HorizontalDivider(modifier = Modifier.padding(horizontal = 8.dp))
                             }
                         }
@@ -72,7 +72,7 @@ fun TeamDetailScreen(
 
                 ViewState.Error -> {
                     item {
-                        Text("An error occured loading data.")
+                        Text("An error occurred loading data.")
                     }
                 }
             }
@@ -80,8 +80,6 @@ fun TeamDetailScreen(
     }
 
     LaunchedEffect(Unit) {
-        if (vm.players.isEmpty() || vm.lastLoadedTeam != teamID) {
-            vm.loadPlayers(teamID)
-        }
+        vm.viewState = ViewState.Found
     }
 }

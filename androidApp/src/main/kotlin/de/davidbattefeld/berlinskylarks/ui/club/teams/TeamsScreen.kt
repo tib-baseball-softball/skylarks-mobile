@@ -12,10 +12,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import de.berlinskylarks.shared.data.model.tib.SkylarksTeam
 import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
 import de.davidbattefeld.berlinskylarks.ui.utility.LoadingView
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
@@ -24,9 +24,10 @@ import de.davidbattefeld.berlinskylarks.ui.viewmodels.TeamsViewModel
 @Composable
 fun TeamsScreen(
     teamsDetailRoute: (Int) -> Unit,
-    vm: TeamsViewModel = viewModel()
+    vm: TeamsViewModel,
 ) {
     val listState = rememberLazyListState()
+    val teams by vm.teams.collectAsState()
 
     Surface(
         shape = RoundedCornerShape(size = 12.dp),
@@ -51,7 +52,7 @@ fun TeamsScreen(
                 }
 
                 ViewState.Found -> {
-                    itemsIndexed<SkylarksTeam>(vm.teams) { index, team ->
+                    itemsIndexed(teams) { index, team ->
                         Column {
                             TeamsRow(
                                 team = team,
@@ -61,7 +62,7 @@ fun TeamsScreen(
                                     }
                             )
                             // last item does not have a divider
-                            if (index + 1 != vm.teams.size) {
+                            if (index + 1 != teams.size) {
                                 HorizontalDivider(modifier = Modifier.padding(horizontal = 8.dp))
                             }
                         }
@@ -70,15 +71,13 @@ fun TeamsScreen(
 
                 ViewState.Error -> {
                     item {
-                        Text("An error occured loading data.")
+                        Text("An error occurred loading data.")
                     }
                 }
             }
         }
     }
     LaunchedEffect(Unit) {
-        if (vm.teams.isEmpty()) {
-            vm.load()
-        }
+        vm.viewState = ViewState.Found
     }
 }
