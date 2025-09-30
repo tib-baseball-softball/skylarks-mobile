@@ -24,6 +24,11 @@ import de.berlinskylarks.shared.database.dao.GameDao
 import de.berlinskylarks.shared.database.dao.GameReportDao
 import de.berlinskylarks.shared.database.dao.LeagueGroupDao
 import de.berlinskylarks.shared.database.dao.MediaDao
+import de.berlinskylarks.shared.database.dao.ClubDao
+import de.berlinskylarks.shared.database.dao.FieldDao
+import de.berlinskylarks.shared.database.dao.LicenseDao
+import de.berlinskylarks.shared.database.dao.PlayerDao
+import de.berlinskylarks.shared.database.dao.TiBTeamDao
 import de.berlinskylarks.shared.database.getDatabase
 import de.berlinskylarks.shared.database.repository.BoxScoreRepository
 import de.berlinskylarks.shared.database.repository.FunctionaryRepository
@@ -37,6 +42,16 @@ import de.berlinskylarks.shared.database.repository.OfflineGameReportRepository
 import de.berlinskylarks.shared.database.repository.OfflineGameRepository
 import de.berlinskylarks.shared.database.repository.OfflineLeagueGroupRepository
 import de.berlinskylarks.shared.database.repository.OfflineMediaRepository
+import de.berlinskylarks.shared.database.repository.ClubRepository
+import de.berlinskylarks.shared.database.repository.FieldRepository
+import de.berlinskylarks.shared.database.repository.LicenseRepository
+import de.berlinskylarks.shared.database.repository.PlayerRepository
+import de.berlinskylarks.shared.database.repository.TiBTeamRepository
+import de.berlinskylarks.shared.database.repository.OfflineClubRepository
+import de.berlinskylarks.shared.database.repository.OfflineFieldRepository
+import de.berlinskylarks.shared.database.repository.OfflineLicenseRepository
+import de.berlinskylarks.shared.database.repository.OfflinePlayerRepository
+import de.berlinskylarks.shared.database.repository.OfflineTiBTeamRepository
 import de.davidbattefeld.berlinskylarks.data.preferences.dataStore
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
 import de.davidbattefeld.berlinskylarks.data.repository.WorkManagerTiBRepository
@@ -114,6 +129,26 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideClubDao(db: AppDatabase): ClubDao = db.clubDao()
+
+    @Provides
+    @Singleton
+    fun provideFieldDao(db: AppDatabase): FieldDao = db.fieldDao()
+
+    @Provides
+    @Singleton
+    fun provideLicenseDao(db: AppDatabase): LicenseDao = db.licenseDao()
+
+    @Provides
+    @Singleton
+    fun providePlayerDao(db: AppDatabase): PlayerDao = db.playerDao()
+
+    @Provides
+    @Singleton
+    fun provideTiBTeamDao(db: AppDatabase): TiBTeamDao = db.tibTeamDao()
+
+    @Provides
+    @Singleton
     fun provideUserPreferencesRepository(dataStore: DataStore<Preferences>): UserPreferencesRepository =
         UserPreferencesRepository(dataStore)
 
@@ -150,6 +185,36 @@ object AppModule {
     fun provideGameReportRepository(
         gameReportDao: GameReportDao
     ): GameReportRepository = OfflineGameReportRepository(gameReportDao)
+
+    @Provides
+    @Singleton
+    fun provideClubRepository(
+        clubDao: ClubDao
+    ): ClubRepository = OfflineClubRepository(clubDao)
+
+    @Provides
+    @Singleton
+    fun provideFieldRepository(
+        fieldDao: FieldDao
+    ): FieldRepository = OfflineFieldRepository(fieldDao)
+
+    @Provides
+    @Singleton
+    fun provideLicenseRepository(
+        licenseDao: LicenseDao
+    ): LicenseRepository = OfflineLicenseRepository(licenseDao)
+
+    @Provides
+    @Singleton
+    fun providePlayerRepository(
+        playerDao: PlayerDao
+    ): PlayerRepository = OfflinePlayerRepository(playerDao)
+
+    @Provides
+    @Singleton
+    fun provideTiBTeamRepository(
+        tiBTeamDao: TiBTeamDao
+    ): TiBTeamRepository = OfflineTiBTeamRepository(tiBTeamDao)
 
     @Provides
     @Singleton

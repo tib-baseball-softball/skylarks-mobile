@@ -81,7 +81,7 @@ fun ScoreDetailLocationSection(
             )
             HorizontalDivider(modifier = Modifier.padding(horizontal = 20.dp))
             ListItem(
-                headlineContent = { Text("${game.field?.city} (${game.field?.postal_code})") },
+                headlineContent = { Text("${game.field?.city} (${game.field?.postalCode})") },
                 supportingContent = { Text("City") },
                 leadingContent = {
                     Icon(

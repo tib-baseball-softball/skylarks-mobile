@@ -1,17 +1,17 @@
 package de.berlinskylarks.shared.data.model.tib
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonNames
 
 @Serializable
 data class SkylarksTeam(
-    @JsonNames("uid")
+    @SerialName("uid")
     val id: Int,
     val name: String,
 
-    @JsonNames("league_id")
+    @SerialName("league_id")
     val leagueID: Int?,
 
-    @JsonNames("bsm_short_name")
+    @SerialName("bsm_short_name")
     val bsmShortName: String?
 )

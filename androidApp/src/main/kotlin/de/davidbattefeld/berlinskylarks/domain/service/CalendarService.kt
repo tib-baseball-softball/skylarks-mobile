@@ -71,12 +71,12 @@ class CalendarService {
                 )
 
                 val eventDescription =
-"""
+                    """
 League: ${gameDecorator.game.league.name}
 Match Number: ${gameDecorator.game.matchID}
 
 Field: ${gameDecorator.game.field?.name ?: "No data"}
-Address: ${gameDecorator.game.field?.street ?: ""}, ${gameDecorator.game.field?.postal_code ?: ""} ${gameDecorator.game.field?.city ?: ""}
+Address: ${gameDecorator.game.field?.street ?: ""}, ${gameDecorator.game.field?.postalCode ?: ""} ${gameDecorator.game.field?.city ?: ""}
 """
 
                 put(CalendarContract.Events.DESCRIPTION, eventDescription)
@@ -84,7 +84,7 @@ Address: ${gameDecorator.game.field?.street ?: ""}, ${gameDecorator.game.field?.
                 put(CalendarContract.Events.EVENT_TIMEZONE, ZoneId.systemDefault().id)
                 put(
                     CalendarContract.Events.EVENT_LOCATION,
-                    "${gameDecorator.game.field?.name} - ${gameDecorator.game.field?.street ?: ""}, ${gameDecorator.game.field?.postal_code ?: ""} ${gameDecorator.game.field?.city ?: ""}\n (Lat: ${gameDecorator.game.field?.latitude}, Long: ${gameDecorator.game.field?.longitude})"
+                    "${gameDecorator.game.field?.name} - ${gameDecorator.game.field?.street ?: ""}, ${gameDecorator.game.field?.postalCode ?: ""} ${gameDecorator.game.field?.city ?: ""}\n (Lat: ${gameDecorator.game.field?.latitude}, Long: ${gameDecorator.game.field?.longitude})"
                 )
             }
             context?.contentResolver?.insert(CalendarContract.Events.CONTENT_URI, calendarValues)

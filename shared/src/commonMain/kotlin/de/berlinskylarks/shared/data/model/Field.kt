@@ -1,21 +1,29 @@
 package de.berlinskylarks.shared.data.model
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class Field(
-    var id: Int,
-    var club_id: Int?,
-    var name: String,
-    var address_addon: String,
-    var description: String?,
-    var street: String?,
-    var postal_code: String?,
-    var city: String?,
-    var latitude: Double?,
-    var longitude: Double?,
-    var spectator_total: Int?,
-    var spectator_seats: Int?,
-    var human_country: String?,
-    var photo_url: String?,
+    val id: Int,
+    @SerialName("club_id")
+    val clubId: Int?,
+    val name: String,
+    @SerialName("address_addon")
+    val addressAddon: String,
+    val description: String?,
+    val street: String?,
+    @SerialName("postal_code")
+    val postalCode: String?,
+    val city: String?,
+    val latitude: Double?,
+    val longitude: Double?,
+    @SerialName("spectator_total")
+    val spectatorTotal: Int?,
+    @SerialName("spectator_seats")
+    val spectatorSeats: Int?,
+    @SerialName("human_country")
+    val humanCountry: String?,
+    @SerialName("photo_url")
+    val photoUrl: String?,
 )

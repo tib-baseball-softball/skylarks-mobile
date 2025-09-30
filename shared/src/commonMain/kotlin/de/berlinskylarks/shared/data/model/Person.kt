@@ -1,16 +1,16 @@
 package de.berlinskylarks.shared.data.model
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonNames
 
 @Serializable
 data class Person(
     var id: Int,
-    @JsonNames("first_name")
+    @SerialName("first_name")
     var firstName: String,
-    @JsonNames("last_name")
+    @SerialName("last_name")
     var lastName: String,
-    @JsonNames("birth_date")
+    @SerialName("birth_date")
     var birthDate: String?,
     //there's more, but it's privacy-sensitive
 )
@@ -19,9 +19,9 @@ data class Person(
  * Used for the BSM `/matches` endpoint
  */
 @Serializable
-data class PersonReducedResponse (
-    @JsonNames("first_name")
+data class PersonReducedResponse(
+    @SerialName("first_name")
     var firstName: String,
-    @JsonNames("last_name")
+    @SerialName("last_name")
     var lastName: String,
 )
