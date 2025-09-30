@@ -32,14 +32,24 @@ class BerlinSkylarksApplication() : Application(), Configuration.Provider {
     }
 
     private fun setupRecurringWork() {
-        val workManager = WorkManager.getInstance(applicationContext)
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.UNMETERED)
             .setRequiresBatteryNotLow(true)
             .setRequiresDeviceIdle(true)
             .build()
 
-        val gameSyncRequest = PeriodicWorkRequestBuilder<GameDataWorker>(4, TimeUnit.HOURS)
+        makeGameSyncRequest(constraints)
+        makeGameReportSyncRequest(constraints)
+    }
+
+    private fun makeGameSyncRequest(constraints: Constraints) {
+        val workManager = WorkManager.getInstance(applicationContext)
+
+
+        val gameSyncRequest = PeriodicWorkRequestBuilder<GameDataWorker>(
+            repeatInterval = 4,
+            repeatIntervalTimeUnit = TimeUnit.HOURS
+        )
             .setConstraints(constraints)
             .setInputData(workDataOf(
                 "season" to DEFAULT_SEASON // only current year is automatically refreshed
@@ -50,6 +60,22 @@ class BerlinSkylarksApplication() : Application(), Configuration.Provider {
             uniqueWorkName = SYNC_GAME_DATA_WORK_NAME,
             existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
             request = gameSyncRequest,
+        )
+    }
+
+    private fun makeGameReportSyncRequest(constraints: Constraints) {
+        val workManager = WorkManager.getInstance(applicationContext)
+        val gameReportSyncRequest = PeriodicWorkRequestBuilder<GameDataWorker>(
+            repeatInterval = 8,
+            repeatIntervalTimeUnit = TimeUnit.HOURS
+        )
+            .setConstraints(constraints)
+            .build()
+
+        workManager.enqueueUniquePeriodicWork(
+            uniqueWorkName = SYNC_GAME_DATA_WORK_NAME,
+            existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
+            request = gameReportSyncRequest,
         )
     }
 

@@ -35,6 +35,7 @@ import de.berlinskylarks.shared.database.repository.OfflineGameRepository
 import de.berlinskylarks.shared.database.repository.OfflineMediaRepository
 import de.davidbattefeld.berlinskylarks.data.preferences.dataStore
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
+import de.davidbattefeld.berlinskylarks.data.repository.WorkManagerTiBRepository
 import de.davidbattefeld.berlinskylarks.global.AUTH_HEADER
 import de.davidbattefeld.berlinskylarks.global.BSM_API_KEY
 import javax.inject.Singleton
@@ -136,6 +137,12 @@ object AppModule {
     fun provideGameReportRepository(
         gameReportDao: GameReportDao
     ): GameReportRepository = OfflineGameReportRepository(gameReportDao)
+
+    @Provides
+    @Singleton
+    fun provideWorkManagerTiBRepository(
+        @ApplicationContext context: Context
+    ): WorkManagerTiBRepository = WorkManagerTiBRepository(context)
 
     @Provides
     @Singleton

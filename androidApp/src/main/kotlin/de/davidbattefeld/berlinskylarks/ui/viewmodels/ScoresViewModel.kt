@@ -11,12 +11,10 @@ import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.berlinskylarks.shared.data.api.BSMAPIClient
 import de.berlinskylarks.shared.data.api.LeagueGroupsAPIClient
-import de.berlinskylarks.shared.data.api.MatchAPIClient
 import de.berlinskylarks.shared.data.model.LeagueGroup
-import de.berlinskylarks.shared.data.service.GameReportSyncService
-import de.berlinskylarks.shared.database.repository.GameReportRepository
 import de.berlinskylarks.shared.database.repository.GameRepository
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
+import de.davidbattefeld.berlinskylarks.data.repository.WorkManagerTiBRepository
 import de.davidbattefeld.berlinskylarks.domain.model.UserCalendar
 import de.davidbattefeld.berlinskylarks.domain.service.CalendarService
 import de.davidbattefeld.berlinskylarks.domain.service.GameDecorator
@@ -31,12 +29,10 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel(assistedFactory = ScoresViewModel.Factory::class)
 class ScoresViewModel @AssistedInject constructor(
-    private val gameRepository: GameRepository,
-    private val gameReportRepository: GameReportRepository,
-    private val matchAPIClient: MatchAPIClient,
+    gameRepository: GameRepository,
     private val leagueGroupsAPIClient: LeagueGroupsAPIClient,
-    private val gameReportSyncService: GameReportSyncService,
-    userPreferencesRepository: UserPreferencesRepository
+    userPreferencesRepository: UserPreferencesRepository,
+    workManagerTiBRepository: WorkManagerTiBRepository,
 ) : GenericViewModel(userPreferencesRepository) {
 
     var games: StateFlow<List<GameDecorator>> =
@@ -55,7 +51,6 @@ class ScoresViewModel @AssistedInject constructor(
                 initialValue = emptyList(),
             )
 
-
     var skylarksGames = mutableStateListOf<GameDecorator>()
     var leagueGroups = mutableStateListOf<LeagueGroup>()
     var filteredLeagueGroup by mutableStateOf<LeagueGroup>(testLeagueGroup)
@@ -65,19 +60,11 @@ class ScoresViewModel @AssistedInject constructor(
 
     val calendarService = CalendarService()
 
-    // TODO: TEMP TEMP TEMP - replace this with background data loading
     init {
         viewModelScope.launch {
-            val reportsEmpty =
-                gameReportRepository.getAllGameReportsStream().firstOrNull().isNullOrEmpty()
-            if (reportsEmpty) {
-                gameReportSyncService.syncGameReports()
-            }
-
-            val gamesEmpty = gameRepository.getAllGames().firstOrNull().isNullOrEmpty()
-            if (gamesEmpty) {
-                loadGames()
-            }
+            val season = userPreferencesFlow.firstOrNull()?.season ?: BSMAPIClient.DEFAULT_SEASON
+            // one-time request to ensure up-to-date game data
+            workManagerTiBRepository.syncScores(season = season)
         }
     }
 

@@ -11,9 +11,9 @@ import io.ktor.http.HttpHeaders
 object APIClient {
     var client = HttpClient {
         install(HttpTimeout) {
-            requestTimeoutMillis = 15000L
-            connectTimeoutMillis = 15000L
-            socketTimeoutMillis = 15000L
+            requestTimeoutMillis = 45000L
+            connectTimeoutMillis = 45000L
+            socketTimeoutMillis = 45000L
         }
 
         install(DefaultRequest) {

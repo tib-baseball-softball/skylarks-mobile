@@ -1,6 +1,5 @@
 package de.davidbattefeld.berlinskylarks.testdata
 
-import de.berlinskylarks.shared.data.model.BSMTeam
 import de.berlinskylarks.shared.data.model.Game
 import de.berlinskylarks.shared.data.model.League
 import de.berlinskylarks.shared.data.model.LeagueEntry
@@ -19,11 +18,11 @@ val testLeague = League(
 )
 
 val testEntry = LeagueEntry(
-    team = BSMTeam(
+    team = LeagueEntry.LeagueEntryTeam(
         name = "Test Team",
         id = 0,
         short_name = "TES",
-        league_entries = listOf()
+        league_entries = listOf(),
     ),
     league = testLeague
 )
