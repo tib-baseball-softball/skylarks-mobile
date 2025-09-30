@@ -20,7 +20,7 @@ class LeagueGroupsViewModel @AssistedInject constructor(
 ) : GenericViewModel(userPreferencesRepository) {
     var leagueGroups = mutableStateListOf<LeagueGroup>()
 
-    override fun load() {
+    fun load() {
         viewState = ViewState.Loading
         leagueGroups.clear()
 

@@ -22,8 +22,6 @@ class TablesViewModel @AssistedInject constructor(
 ) : GenericViewModel(userPreferencesRepository) {
     var table = mutableStateOf<LeagueTable?>(null)
 
-    override fun load() {}
-
     fun loadSingleTable(id: Int) {
         viewState = ViewState.Loading
 

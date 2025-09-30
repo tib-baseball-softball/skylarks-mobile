@@ -85,7 +85,7 @@ class ScoresViewModel @AssistedInject constructor(
         }
     }
 
-    override fun load() {
+    fun load() {
         viewModelScope.launch {
             loadGames()
 

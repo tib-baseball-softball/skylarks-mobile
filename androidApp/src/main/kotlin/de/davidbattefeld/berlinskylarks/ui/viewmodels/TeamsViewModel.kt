@@ -18,7 +18,7 @@ class TeamsViewModel @AssistedInject constructor(
 ) : GenericViewModel(userPreferencesRepository) {
     var teams = mutableStateListOf<SkylarksTeam>()
 
-    override fun load() {
+    fun load() {
         teams.clear()
 
         viewModelScope.launch {
