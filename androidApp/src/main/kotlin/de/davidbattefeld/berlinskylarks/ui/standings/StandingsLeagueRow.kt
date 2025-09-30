@@ -22,7 +22,7 @@ fun StandingsLeagueRow(
 ) {
     ListItem(
         headlineContent = { Text(leagueGroup.name) },
-        supportingContent = { Text(leagueGroup.acronym) },
+        supportingContent = { Text("${leagueGroup.acronym} (${leagueGroup.season})") },
         leadingContent = {
             Icon(
                 imageVector = Icons.Filled.TableChart,
@@ -54,7 +54,7 @@ fun StandingsLeagueRow(
 fun StandingsLeagueRowPreview() {
     BerlinSkylarksTheme {
         Surface() {
-           // StandingsLeagueRow(testTable)
+            // StandingsLeagueRow(testTable)
         }
     }
 }
