@@ -27,7 +27,8 @@ class GameDataWorker @AssistedInject constructor(
         val season = inputData.getInt(key = "season", defaultValue = DEFAULT_SEASON)
 
         return try {
-            gameSyncService.syncGamesForSeason(season = season)
+            val total = gameSyncService.syncGamesForSeason(season = season)
+            Log.d(TAG, "Synced $total games for season $season")
 
             Result.success()
         } catch (throwable: Throwable) {

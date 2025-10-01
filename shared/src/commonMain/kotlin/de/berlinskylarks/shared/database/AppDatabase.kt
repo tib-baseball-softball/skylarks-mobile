@@ -54,7 +54,7 @@ expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
         PlayerEntity::class,
         TiBTeamEntity::class,
     ],
-    version = 7,
+    version = 8,
     exportSchema = false,
 )
 @TypeConverters(Converters::class)

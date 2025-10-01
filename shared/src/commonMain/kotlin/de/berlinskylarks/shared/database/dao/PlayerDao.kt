@@ -15,7 +15,7 @@ interface PlayerDao {
     @Query("SELECT * FROM players")
     fun getAllPlayers(): Flow<List<PlayerEntity>>
 
-    @Query("SELECT * FROM players WHERE teams LIKE :teamID")
+    @Query("SELECT * FROM players WHERE teams LIKE '%' || :teamID || '%'")
     fun getPlayersForTeam(teamID: Int): Flow<List<PlayerEntity>>
 
     @Query("SELECT * FROM players WHERE id = :id")

@@ -9,9 +9,9 @@ data class GameEntity(
     @PrimaryKey
     val id: Int,
     val matchID: String,
-    val leagueID: Int,
+    val leagueID: Int?,
     val time: String,
-    val season: Int,
+    val season: Int?,
     val external: Boolean,
     val json: Game,
 )

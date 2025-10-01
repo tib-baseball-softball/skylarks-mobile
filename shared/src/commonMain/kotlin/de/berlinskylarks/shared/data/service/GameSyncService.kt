@@ -11,9 +11,11 @@ class GameSyncService(
     private val gameRepository: GameRepository,
     private val gameClient: MatchAPIClient,
 ) {
-    suspend fun syncGamesForSeason(season: Int) {
+    suspend fun syncGamesForSeason(season: Int): Int {
         val organizations =
             listOf(BSMAPIClient.BSVBB_ORGANIZATION_ID, BSMAPIClient.DBV_ORGANIZATION_ID)
+
+        var totalGamesSynced = 0
 
         organizations.forEach { org ->
             val games = gameClient.loadAllGames(
@@ -38,6 +40,8 @@ class GameSyncService(
                     )
                 )
             }
+            totalGamesSynced += games.size
         }
+        return totalGamesSynced
     }
 }

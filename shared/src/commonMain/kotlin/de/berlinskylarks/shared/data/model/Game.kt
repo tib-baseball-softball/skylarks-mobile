@@ -15,7 +15,7 @@ data class Game(
     var plannedInnings: Int?,
     var time: String,
     @SerialName("league_id")
-    var leagueID: Int,
+    var leagueID: Int?,
     @SerialName("home_runs")
     var homeRuns: Int?,
     @SerialName("away_runs")
@@ -30,7 +30,7 @@ data class Game(
     @SerialName("scoresheet_url")
     var scoresheetURL: String?,
     var field: Field?,
-    var season: Int,
+    var season: Int?,
     var league: League,
     @SerialName("home_league_entry")
     var homeLeagueEntry: LeagueEntry,
@@ -40,4 +40,4 @@ data class Game(
     var umpireAssignments: List<Assignment>,
     @SerialName("scorer_assignments")
     var scorerAssignments: List<Assignment>,
-): JSONDataObject
+) : JSONDataObject
