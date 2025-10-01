@@ -61,7 +61,7 @@ class PlayerSyncService(
                     teamName = player.teamName,
                     media = mediaEntity,
                     positions = player.positions.joinToString(separator = ","),
-                    teams = player.teams.joinToString(separator = ",")
+                    teams = player.teams.map { it.id }.joinToString(separator = ",")
                 ),
             )
         }
