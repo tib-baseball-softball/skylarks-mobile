@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class License(
-    override var id: Int,
+    override var id: Long,
     var number: String,
     @SerialName("valid_until")
     var validUntil: String?,

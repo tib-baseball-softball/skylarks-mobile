@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class Game(
-    override var id: Int,
+    override var id: Long,
     @SerialName("match_id")
     var matchID: String,
     @SerialName("planned_innings")

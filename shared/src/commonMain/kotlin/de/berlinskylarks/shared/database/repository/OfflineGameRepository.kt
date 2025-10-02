@@ -63,6 +63,7 @@ class OfflineGameRepository(
                     when (arg) {
                         is String -> bind.bindText(index = index + 1, value = arg)
                         is Int -> bind.bindLong(index = index + 1, value = arg.toLong())
+                        is Long -> bind.bindLong(index = index + 1, value = arg)
                         is Boolean -> bind.bindBoolean(index = index + 1, value = (arg))
                     }
                 }
