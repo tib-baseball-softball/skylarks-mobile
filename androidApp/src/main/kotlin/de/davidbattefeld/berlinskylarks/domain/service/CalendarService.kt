@@ -3,8 +3,11 @@ package de.davidbattefeld.berlinskylarks.domain.service
 import android.content.ContentValues
 import android.content.Context
 import android.provider.CalendarContract
+import de.berlinskylarks.shared.utility.DateTimeUtility
 import de.davidbattefeld.berlinskylarks.domain.model.UserCalendar
 import java.time.ZoneId
+import kotlin.time.ExperimentalTime
+import kotlin.time.toJavaInstant
 
 /**
  * Calendar-related operations. Permissions handling is carried out in the composables calling the
@@ -56,10 +59,11 @@ class CalendarService {
     /**
      * Adds the provided list of games to single calendar specified by ID.
      */
+    @OptIn(ExperimentalTime::class)
     fun addGamesToCalendar(gameDecorators: List<GameDecorator>, calendarID: Long) {
         for (gameDecorator in gameDecorators) {
-            val localDateTime = gameDecorator.parseGameTimeString()
-            val zonedDateTime = localDateTime.atZone(ZoneId.systemDefault())
+            val localDateTime = DateTimeUtility.parseBSMDateTimeString(gameDecorator.game.time)
+            val zonedDateTime = localDateTime.toJavaInstant().atZone(ZoneId.systemDefault())
             val timeInMillis: Long = zonedDateTime.toInstant().toEpochMilli()
 
             val calendarValues = ContentValues().apply {

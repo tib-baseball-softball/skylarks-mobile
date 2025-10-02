@@ -122,7 +122,7 @@ fun ScoresScreen(
                         .clickable {
                             detailRoute(
                                 ScoresDetail(
-                                    id = gameDecorator.game.id,
+                                    id = gameDecorator.game.id.toInt(),
                                     matchID = gameDecorator.game.matchID
                                 )
                             )

@@ -30,7 +30,7 @@ abstract class GenericViewModel(
     }
 
     fun <T : JSONDataObject> getFiltered(id: Int, list: List<T>): T? {
-        return list.firstOrNull { it.id == id }
+        return list.firstOrNull { it.id == id.toLong() }
     }
 
     fun readStaticMarkdownFile(fileName: String, context: Context): Spanned {

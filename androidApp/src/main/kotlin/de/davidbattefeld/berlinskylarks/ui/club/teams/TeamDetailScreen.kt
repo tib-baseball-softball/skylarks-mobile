@@ -59,7 +59,7 @@ fun TeamDetailScreen(
                                 player = player,
                                 modifier = Modifier
                                     .clickable {
-                                        playerDetailRoute(player.id)
+                                        playerDetailRoute(player.id.toInt())
                                     }
                             )
                             // last item does not have a divider

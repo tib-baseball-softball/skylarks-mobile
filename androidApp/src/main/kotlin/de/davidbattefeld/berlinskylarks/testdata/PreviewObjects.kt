@@ -1,6 +1,5 @@
 package de.davidbattefeld.berlinskylarks.testdata
 
-import de.berlinskylarks.shared.data.model.Game
 import de.berlinskylarks.shared.data.model.League
 import de.berlinskylarks.shared.data.model.LeagueEntry
 import de.berlinskylarks.shared.data.model.LeagueGroup
@@ -35,27 +34,27 @@ val testLeagueGroup = LeagueGroup(
     league = testLeague
 )
 
-val testGame = Game(
-    id = BOGUS_ID,
-    matchID = "12345",
-    plannedInnings = 7,
-    leagueID = 5555,
-    awayRuns = 5,
-    homeRuns = 7,
-    awayTeamName = "Road Team",
-    homeTeamName = "Home Team",
-    humanState = "in limbo",
-    time = "2022-45-67 12:00",
-    homeLeagueEntry = testEntry,
-    awayLeagueEntry = testEntry,
-    scoresheetURL = null,
-    league = testLeague,
-    field = null,
-    scorerAssignments = listOf(),
-    umpireAssignments = listOf(),
-    state = "played",
-    season = 2025,
-)
+//val testGame = Game(
+//    id = BOGUS_ID,
+//    matchID = "12345",
+//    plannedInnings = 7,
+//    leagueID = 5555,
+//    awayRuns = 5,
+//    homeRuns = 7,
+//    awayTeamName = "Road Team",
+//    homeTeamName = "Home Team",
+//    humanState = "in limbo",
+//    time = "2022-45-67 12:00",
+//    homeLeagueEntry = testEntry,
+//    awayLeagueEntry = testEntry,
+//    scoresheetURL = null,
+//    league = testLeague,
+//    field = null,
+//    scorerAssignments = listOf(),
+//    umpireAssignments = listOf(),
+//    state = "played",
+//    season = 2025,
+//)
 
 val testRow = LeagueTable.Row(
     rank = "1.",

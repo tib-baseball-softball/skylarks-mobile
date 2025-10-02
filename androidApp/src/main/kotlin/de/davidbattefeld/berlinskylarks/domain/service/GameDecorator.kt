@@ -2,12 +2,16 @@ package de.davidbattefeld.berlinskylarks.domain.service
 
 import androidx.annotation.DrawableRes
 import de.berlinskylarks.shared.data.model.Game
+import de.berlinskylarks.shared.utility.DateTimeUtility
 import de.davidbattefeld.berlinskylarks.R
 import de.davidbattefeld.berlinskylarks.global.baseballClubList
-import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
+import kotlin.time.ExperimentalTime
+import kotlin.time.toJavaInstant
 
+@OptIn(ExperimentalTime::class)
 class GameDecorator(val game: Game) {
     // secondary properties are not supplied by the BSM API, instead computed by class methods
     var localisedDate: String? = null
@@ -39,14 +43,22 @@ class GameDecorator(val game: Game) {
         return this
     }
 
-    fun parseGameTimeString(): LocalDateTime {
-        val formatter = DateTimeFormatter.ofPattern("y-M-dd HH:mm:ss Z")
-        return LocalDateTime.parse(game.time, formatter)
-    }
-
+    /**
+     * Formats the game time into a localized, human-readable date and time string.
+     *
+     * kotlinx.datetime does not have built-in support for locale-sensitive formatting.
+     * The recommended approach on Android is to convert the Instant back to the java.time API
+     * and use the platform's robust formatting capabilities.
+     */
     fun addDate(): GameDecorator {
-        val gameDate = parseGameTimeString()
-        localisedDate = gameDate.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))
+        val gameInstant = DateTimeUtility.parseBSMDateTimeString(game.time)
+
+        // Convert to a ZonedDateTime in the user's default time zone for display
+        val zonedDateTime = gameInstant.toJavaInstant().atZone(ZoneId.systemDefault())
+
+        // Use the platform's localized formatter
+        val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
+        localisedDate = zonedDateTime.format(formatter)
         return this
     }
 

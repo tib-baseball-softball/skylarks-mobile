@@ -9,12 +9,12 @@ import de.berlinskylarks.shared.data.model.tib.Player
 @Entity(tableName = "players")
 data class PlayerEntity(
     @PrimaryKey
-    var id: Int,
-    val bsmID: Int,
+    var id: Long,
+    val bsmID: Long,
     val fullName: String,
     val firstName: String,
     val lastName: String,
-    val birthday: Int,
+    val birthday: Long,
     val admission: String,
     val number: String,
     val throwing: String,

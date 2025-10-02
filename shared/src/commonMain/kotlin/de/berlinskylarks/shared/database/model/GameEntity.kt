@@ -7,7 +7,7 @@ import de.berlinskylarks.shared.data.model.Game
 @Entity(tableName = "games")
 data class GameEntity(
     @PrimaryKey
-    val id: Int,
+    val id: Long,
     val matchID: String,
     val leagueID: Int?,
     val time: String,
