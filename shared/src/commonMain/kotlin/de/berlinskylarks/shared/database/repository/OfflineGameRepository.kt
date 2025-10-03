@@ -6,6 +6,7 @@ import de.berlinskylarks.shared.data.enums.Gameday
 import de.berlinskylarks.shared.data.model.MatchBoxScore
 import de.berlinskylarks.shared.database.dao.GameDao
 import de.berlinskylarks.shared.database.model.GameEntity
+import de.berlinskylarks.shared.utility.BSMUtility
 import kotlinx.coroutines.flow.Flow
 
 class OfflineGameRepository(
@@ -45,16 +46,18 @@ class OfflineGameRepository(
             args.add(it)
         }
 
-//        gameday?.let {
-//            conditions.add("gameday = ?")
-//            args.add(it.value)
-//        }
+        gameday?.let {
+            val startEndDates = BSMUtility.getDatesForGameday(gameday)
+            conditions.add("datetime(datetime) >= datetime(${startEndDates.first})")
+            conditions.add("datetime(datetime) <= datetime(${startEndDates.second})")
+            args.add(it)
+        }
 
         if (conditions.isNotEmpty()) {
             queryBuilder.append(" WHERE ").append(conditions.joinToString(" AND "))
         }
 
-        //queryBuilder.append(" ORDER BY date DESC")
+        queryBuilder.append(" ORDER BY datetime(datetime) ASC")
 
         val query = RoomRawQuery(
             sql = queryBuilder.toString(),

@@ -5,4 +5,5 @@ enum class Gameday(val value: String) {
     CURRENT("current"),
     NEXT("next"),
     ANY("any"),
+    UPCOMING("upcoming")
 }

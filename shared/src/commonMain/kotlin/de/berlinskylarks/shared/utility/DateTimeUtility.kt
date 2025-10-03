@@ -4,10 +4,8 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.datetime.todayIn
 import kotlin.time.Clock
-import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
-@OptIn(ExperimentalTime::class)
 class DateTimeUtility {
     companion object {
         const val BSM_DATE_TIME_FORMAT_PATTERN = "y-M-dd HH:mm:ss Z"
@@ -35,5 +33,4 @@ class DateTimeUtility {
     }
 }
 
-@OptIn(ExperimentalTime::class)
 expect fun parseBSMDateTime(raw: String): Instant

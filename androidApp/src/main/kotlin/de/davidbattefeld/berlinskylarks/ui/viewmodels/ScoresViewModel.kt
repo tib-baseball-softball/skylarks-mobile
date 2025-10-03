@@ -36,7 +36,7 @@ class ScoresViewModel @AssistedInject constructor(
 ) : GenericViewModel(userPreferencesRepository) {
 
     var games: StateFlow<List<GameDecorator>> =
-        gameRepository.getAllGames()
+        gameRepository.getGamesByFilter()
             .map { dbEntities ->
                 dbEntities.map {
                     GameDecorator(game = it.json).decorate()
@@ -69,18 +69,18 @@ class ScoresViewModel @AssistedInject constructor(
     var userCalendars = mutableStateListOf<UserCalendar>()
     val calendarService = CalendarService()
 
-    init {
-        viewModelScope.launch {
-            val season = userPreferencesFlow.firstOrNull()?.season ?: BSMAPIClient.DEFAULT_SEASON
-            // one-time request to ensure up-to-date game data
-            workManagerTiBRepository.syncScores(season = season)
-
-            val existingLeagueGroup = leagueGroupRepository.getFirstItem().firstOrNull()
-            if (existingLeagueGroup == null) {
-                workManagerTiBRepository.syncLeagueGroups(season)
-            }
-        }
-    }
+//    init {
+//        viewModelScope.launch {
+//            val season = userPreferencesFlow.firstOrNull()?.season ?: BSMAPIClient.DEFAULT_SEASON
+//            // one-time request to ensure up-to-date game data
+//            workManagerTiBRepository.syncScores(season = season)
+//
+//            val existingLeagueGroup = leagueGroupRepository.getFirstItem().firstOrNull()
+//            if (existingLeagueGroup == null) {
+//                workManagerTiBRepository.syncLeagueGroups(season)
+//            }
+//        }
+//    }
 
     fun load() {
         viewModelScope.launch {

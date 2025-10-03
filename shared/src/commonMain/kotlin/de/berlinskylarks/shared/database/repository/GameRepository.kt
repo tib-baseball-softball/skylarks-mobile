@@ -8,9 +8,9 @@ interface GameRepository {
     suspend fun insertGame(game: GameEntity)
     fun getAllGames(): Flow<List<GameEntity>>
     fun getGamesByFilter(
-        leagueGroupID: Int?,
-        external: Boolean?,
-        season: Int?,
+        leagueGroupID: Int? = null,
+        external: Boolean? = null,
+        season: Int? = null,
         gameday: Gameday? = Gameday.CURRENT,
     ): Flow<List<GameEntity>>
 
