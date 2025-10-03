@@ -6,7 +6,10 @@ import de.berlinskylarks.shared.data.api.MatchAPIClient
 import de.berlinskylarks.shared.data.enums.Gameday
 import de.berlinskylarks.shared.database.model.GameEntity
 import de.berlinskylarks.shared.database.repository.GameRepository
+import de.berlinskylarks.shared.utility.DateTimeUtility
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 class GameSyncService(
     private val gameRepository: GameRepository,
     private val gameClient: MatchAPIClient,
@@ -26,6 +29,7 @@ class GameSyncService(
             )
 
             games.forEach { game ->
+                val dateTime = DateTimeUtility.parseBSMDateTimeString(game.time).toString()
                 gameRepository.insertGame(
                     GameEntity(
                         id = game.id,
@@ -37,6 +41,7 @@ class GameSyncService(
                             TeamGlobals.TEAM_NAME
                         )),
                         json = game,
+                        dateTime = dateTime,
                     )
                 )
             }

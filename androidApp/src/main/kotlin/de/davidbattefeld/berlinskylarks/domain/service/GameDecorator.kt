@@ -27,7 +27,14 @@ class GameDecorator(val game: Game) {
     @DrawableRes
     var roadLogo = R.drawable.app_road_team_logo
 
-    fun setCorrectLogos(): GameDecorator {
+    fun decorate(): GameDecorator {
+        addDate()
+        determineGameStatus()
+        setCorrectLogos()
+        return this
+    }
+
+    private fun setCorrectLogos(): GameDecorator {
         // quick fix to prevent crash, not sure why default value is not set here
         homeLogo = R.drawable.app_home_team_logo
         roadLogo = R.drawable.app_road_team_logo
@@ -50,7 +57,7 @@ class GameDecorator(val game: Game) {
      * The recommended approach on Android is to convert the Instant back to the java.time API
      * and use the platform's robust formatting capabilities.
      */
-    fun addDate(): GameDecorator {
+    private fun addDate(): GameDecorator {
         val gameInstant = DateTimeUtility.parseBSMDateTimeString(game.time)
 
         // Convert to a ZonedDateTime in the user's default time zone for display
@@ -62,7 +69,7 @@ class GameDecorator(val game: Game) {
         return this
     }
 
-    fun determineGameStatus(): GameDecorator {
+    private fun determineGameStatus(): GameDecorator {
         if (game.homeTeamName.contains("Skylarks") && (!game.awayTeamName.contains("Skylarks"))) {
             skyLarksAreHomeTeam = true
             isDerby = false

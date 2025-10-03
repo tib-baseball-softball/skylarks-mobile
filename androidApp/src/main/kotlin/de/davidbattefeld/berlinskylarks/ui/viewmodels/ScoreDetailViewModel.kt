@@ -30,10 +30,7 @@ class ScoreDetailViewModel @AssistedInject constructor(
         gameRepository.getGameByID(navKey.id)
             .map { game ->
                 if (game != null) {
-                    GameDecorator(game.json)
-                        .addDate()
-                        .determineGameStatus()
-                        .setCorrectLogos()
+                    GameDecorator(game.json).decorate()
                 } else {
                     null
                 }

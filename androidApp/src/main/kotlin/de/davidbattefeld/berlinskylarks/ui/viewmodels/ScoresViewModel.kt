@@ -39,10 +39,7 @@ class ScoresViewModel @AssistedInject constructor(
         gameRepository.getAllGames()
             .map { dbEntities ->
                 dbEntities.map {
-                    GameDecorator(game = it.json)
-                        .addDate()
-                        .determineGameStatus()
-                        .setCorrectLogos()
+                    GameDecorator(game = it.json).decorate()
                 }
             }
             .stateIn(

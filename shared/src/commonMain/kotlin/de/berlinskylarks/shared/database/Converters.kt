@@ -5,7 +5,9 @@ import de.berlinskylarks.shared.data.model.Game
 import de.berlinskylarks.shared.data.model.LeagueTable
 import de.berlinskylarks.shared.data.model.MatchBoxScore
 import kotlinx.serialization.json.Json
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 class Converters {
     val jsonBuilder = Json {
         ignoreUnknownKeys = true
