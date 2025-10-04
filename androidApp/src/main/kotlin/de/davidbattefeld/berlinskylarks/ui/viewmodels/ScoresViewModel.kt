@@ -16,12 +16,12 @@ import de.davidbattefeld.berlinskylarks.domain.model.UserCalendar
 import de.davidbattefeld.berlinskylarks.domain.service.CalendarService
 import de.davidbattefeld.berlinskylarks.domain.service.GameDecorator
 import de.davidbattefeld.berlinskylarks.testdata.LEAGUE_GROUP_ALL
-import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -32,8 +32,8 @@ import kotlinx.coroutines.launch
 class ScoresViewModel @AssistedInject constructor(
     gameRepository: GameRepository,
     userPreferencesRepository: UserPreferencesRepository,
-    workManagerTiBRepository: WorkManagerTiBRepository,
-    leagueGroupRepository: LeagueGroupRepository,
+    private val workManagerTiBRepository: WorkManagerTiBRepository,
+    private val leagueGroupRepository: LeagueGroupRepository,
     private val calendarService: CalendarService,
 ) : GenericViewModel(userPreferencesRepository) {
     // -----------------Calendar Handling------------------//
@@ -96,22 +96,15 @@ class ScoresViewModel @AssistedInject constructor(
                 initialValue = emptyList(),
             )
 
-//    init {
-//        viewModelScope.launch {
-//            val season = userPreferencesFlow.firstOrNull()?.season ?: BSMAPIClient.DEFAULT_SEASON
-//            // one-time request to ensure up-to-date game data
-//            workManagerTiBRepository.syncScores(season = season)
-//
-//            val existingLeagueGroup = leagueGroupRepository.getFirstItem().firstOrNull()
-//            if (existingLeagueGroup == null) {
-//                workManagerTiBRepository.syncLeagueGroups(season)
-//            }
-//        }
-//    }
-
-    fun load() {
+    fun refresh() {
         viewModelScope.launch {
-            viewState = if (games.value.isNotEmpty()) ViewState.Found else ViewState.NoResults
+            // one-time request to ensure up-to-date game data
+            workManagerTiBRepository.syncScores(season = selectedSeason.value)
+
+            val existingLeagueGroup = leagueGroupRepository.getFirstItem().firstOrNull()
+            if (existingLeagueGroup == null) {
+                workManagerTiBRepository.syncLeagueGroups(selectedSeason.value)
+            }
         }
     }
 
