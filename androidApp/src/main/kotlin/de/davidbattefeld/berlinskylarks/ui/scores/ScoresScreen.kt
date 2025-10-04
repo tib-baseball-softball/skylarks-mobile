@@ -60,7 +60,7 @@ fun ScoresScreen(
                         onClick = { vm.onGamedayChanged(gamedayOption) },
                         label = {
                             Text(
-                                text = gamedayOption.name,
+                                text = gamedayOption.value.replaceFirstChar { it.uppercase() },
                                 maxLines = 2,
                                 overflow = TextOverflow.Ellipsis
                             )
