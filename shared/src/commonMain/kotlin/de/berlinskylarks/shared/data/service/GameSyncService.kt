@@ -34,9 +34,9 @@ class GameSyncService(
                     GameEntity(
                         id = game.id,
                         matchID = game.matchID,
-                        leagueID = game.leagueID,
+                        leagueID = game.leagueID ?: game.league.id,
                         time = game.time,
-                        season = game.season,
+                        season = season,
                         external = !(game.awayTeamName.contains(TeamGlobals.TEAM_NAME) || game.homeTeamName.contains(
                             TeamGlobals.TEAM_NAME
                         )),
