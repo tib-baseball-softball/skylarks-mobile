@@ -55,7 +55,7 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import de.davidbattefeld.berlinskylarks.LocalSnackbarHostState
 import de.davidbattefeld.berlinskylarks.data.preferences.DEFAULT_SETTINGS
-import de.davidbattefeld.berlinskylarks.testdata.testLeagueGroup
+import de.davidbattefeld.berlinskylarks.testdata.LEAGUE_GROUP_ALL
 import de.davidbattefeld.berlinskylarks.ui.calendar.PermissionNotGrantedView
 import de.davidbattefeld.berlinskylarks.ui.utility.ConfirmationDialog
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
@@ -129,7 +129,7 @@ fun ScoresTopBar(
                     DropdownMenuItem(
                         text = { Text("All Leagues") },
                         onClick = {
-                            vm.onLeagueFilterChanged(testLeagueGroup)
+                            vm.onLeagueFilterChanged(LEAGUE_GROUP_ALL)
                             leagueFilterExpanded = false
                         },
                         leadingIcon = {
@@ -302,7 +302,7 @@ fun ScoresTopBar(
     LaunchedEffect(Unit) {
         // this is kinda hacky, but after 2h still no better way to invalidate filter on season change
         if (vm.filteredLeagueGroup.season != userPreferences.season) {
-            vm.filteredLeagueGroup = testLeagueGroup
+            vm.filteredLeagueGroup = LEAGUE_GROUP_ALL
         }
     }
 }

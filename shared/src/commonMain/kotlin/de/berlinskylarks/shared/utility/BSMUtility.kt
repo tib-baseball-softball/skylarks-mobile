@@ -15,6 +15,12 @@ import kotlin.time.Instant
 class BSMUtility {
     companion object {
         /**
+         * BSM is a Ruby on Rails application that uses incrementing Integers for primary keys.
+         * Zero is never a valid value for a filter that accepts an ID.
+         */
+        const val NON_EXISTENT_ID = 0
+
+        /**
          * Concept: the `current` gameday ranges from Thursday before the weekend to the Wednesday after.
          */
         fun getDatesForGameday(gameday: Gameday): Pair<Instant, Instant> {

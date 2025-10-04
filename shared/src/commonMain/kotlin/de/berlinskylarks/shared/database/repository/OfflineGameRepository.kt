@@ -32,8 +32,10 @@ class OfflineGameRepository(
         val conditions = mutableListOf<String>()
 
         leagueGroupID?.let {
-            conditions.add("leagueID = ?")
-            args.add(it)
+            if (leagueGroupID != BSMUtility.NON_EXISTENT_ID) {
+                conditions.add("leagueID = ?")
+                args.add(it)
+            }
         }
 
         external?.let {

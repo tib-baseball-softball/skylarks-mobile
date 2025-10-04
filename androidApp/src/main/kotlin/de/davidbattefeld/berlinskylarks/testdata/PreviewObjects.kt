@@ -4,10 +4,10 @@ import de.berlinskylarks.shared.data.model.League
 import de.berlinskylarks.shared.data.model.LeagueEntry
 import de.berlinskylarks.shared.data.model.LeagueGroup
 import de.berlinskylarks.shared.data.model.LeagueTable
-import de.davidbattefeld.berlinskylarks.global.BOGUS_ID
+import de.berlinskylarks.shared.utility.BSMUtility
 
 val testLeague = League(
-    id = BOGUS_ID,
+    id = BSMUtility.NON_EXISTENT_ID,
     name = "Kreisliga",
     season = 2099,
     classification = "Kreisliga",
@@ -26,10 +26,10 @@ val testEntry = LeagueEntry(
     league = testLeague
 )
 
-val testLeagueGroup = LeagueGroup(
-    id = BOGUS_ID,
+val LEAGUE_GROUP_ALL = LeagueGroup(
+    id = BSMUtility.NON_EXISTENT_ID,
     name = "All Leagues",
-    acronym = "KBD",
+    acronym = "ALL",
     season = 2099,
     league = testLeague
 )
@@ -81,7 +81,7 @@ val testRow2 = LeagueTable.Row(
 )
 
 val testTable = LeagueTable(
-    league_id = BOGUS_ID,
+    league_id = BSMUtility.NON_EXISTENT_ID,
     league_name = "Kreisliga Baseball",
     season = 1970,
     rows = listOf(testRow, testRow, testRow2)
