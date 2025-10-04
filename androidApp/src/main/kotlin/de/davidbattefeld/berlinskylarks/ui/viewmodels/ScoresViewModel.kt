@@ -1,14 +1,12 @@
 package de.davidbattefeld.berlinskylarks.ui.viewmodels
 
-import android.content.Context
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import de.berlinskylarks.shared.data.api.BSMAPIClient
+import de.berlinskylarks.shared.data.enums.Gameday
 import de.berlinskylarks.shared.data.model.LeagueGroup
 import de.berlinskylarks.shared.database.repository.GameRepository
 import de.berlinskylarks.shared.database.repository.LeagueGroupRepository
@@ -19,12 +17,17 @@ import de.davidbattefeld.berlinskylarks.domain.service.CalendarService
 import de.davidbattefeld.berlinskylarks.domain.service.GameDecorator
 import de.davidbattefeld.berlinskylarks.testdata.LEAGUE_GROUP_ALL
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel(assistedFactory = ScoresViewModel.Factory::class)
 class ScoresViewModel @AssistedInject constructor(
     gameRepository: GameRepository,
@@ -33,13 +36,46 @@ class ScoresViewModel @AssistedInject constructor(
     leagueGroupRepository: LeagueGroupRepository,
     private val calendarService: CalendarService,
 ) : GenericViewModel(userPreferencesRepository) {
+    // -----------------Calendar Handling------------------//
+    var userCalendars = mutableStateListOf<UserCalendar>()
+
+    // -----------------Game Filters------------------//
+    val selectedGameday = MutableStateFlow(Gameday.CURRENT)
+    val filteredLeagueGroup = MutableStateFlow(LEAGUE_GROUP_ALL)
+    val showExternalGames = MutableStateFlow(false)
+    val selectedSeason =
+        userPreferencesRepository.userPreferencesFlow.map { prefs ->
+            prefs.season
+        }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
+                initialValue = BSMAPIClient.DEFAULT_SEASON,
+            )
 
     var games: StateFlow<List<GameDecorator>> =
-        gameRepository.getGamesByFilter()
-            .map { dbEntities ->
-                dbEntities.map {
-                    GameDecorator(game = it.json).decorate()
-                }
+        combine(
+            selectedGameday,
+            filteredLeagueGroup,
+            showExternalGames,
+            selectedSeason,
+        ) { selectedGameday, filteredLeagueGroup, showExternalGames, selectedSeason ->
+            GameFilter(
+                selectedGameday, filteredLeagueGroup, showExternalGames, selectedSeason
+            )
+        }
+            .flatMapLatest { (selectedGameday, filteredLeagueGroup, showExternalGames) ->
+                gameRepository.getGamesByFilter(
+                    gameday = selectedGameday,
+                    leagueGroupID = filteredLeagueGroup.id,
+                    external = showExternalGames,
+                    season = selectedSeason.value,
+                )
+                    .map { dbEntities ->
+                        dbEntities.map {
+                            GameDecorator(game = it.json).decorate()
+                        }
+                    }
             }
             .stateIn(
                 scope = viewModelScope,
@@ -59,14 +95,6 @@ class ScoresViewModel @AssistedInject constructor(
                 started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
                 initialValue = emptyList(),
             )
-
-    var skylarksGames = mutableStateListOf<GameDecorator>()
-    var filteredLeagueGroup by mutableStateOf<LeagueGroup>(LEAGUE_GROUP_ALL)
-
-    var tabState by mutableStateOf(TabState.CURRENT)
-
-    var userCalendars = mutableStateListOf<UserCalendar>()
-    val calendarService = CalendarService()
 
 //    init {
 //        viewModelScope.launch {
@@ -88,7 +116,15 @@ class ScoresViewModel @AssistedInject constructor(
     }
 
     fun onLeagueFilterChanged(leagueGroup: LeagueGroup) {
-        filteredLeagueGroup = leagueGroup
+        filteredLeagueGroup.value = leagueGroup
+    }
+
+    fun onGamedayChanged(gameday: Gameday) {
+        selectedGameday.value = gameday
+    }
+
+    fun onShowExternalGamesChanged(showExternalGames: Boolean) {
+        this.showExternalGames.value = showExternalGames
     }
 
     fun loadCalendars() {
@@ -106,12 +142,12 @@ class ScoresViewModel @AssistedInject constructor(
         }
     }
 
-    enum class TabState {
-        PREVIOUS,
-        CURRENT,
-        NEXT,
-        ANY
-    }
+    data class GameFilter(
+        val selectedGameday: Gameday,
+        val filteredLeagueGroup: LeagueGroup,
+        val showExternalGames: Boolean,
+        val selectedSeason: Int,
+    )
 
     @AssistedFactory
     interface Factory {

@@ -22,20 +22,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.berlinskylarks.shared.data.enums.Gameday
 import de.davidbattefeld.berlinskylarks.ui.nav.ScoresDetail
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel.TabState
 
 @Composable
 fun ScoresScreen(
@@ -44,8 +41,8 @@ fun ScoresScreen(
     vm: ScoresViewModel,
 ) {
     val games by vm.games.collectAsState()
-    var showExternalGames by rememberSaveable { mutableStateOf(true) }
-    val tabTitles = listOf("Previous", "Current", "Next", "Any")
+    val showExternalGames by vm.showExternalGames.collectAsState()
+    val selectedGameday by vm.selectedGameday.collectAsState()
 
     LazyVerticalGrid(
         modifier = modifier.padding(horizontal = 6.dp),
@@ -53,21 +50,17 @@ fun ScoresScreen(
     ) {
         item(span = { GridItemSpan(maxCurrentLineSpan) }) {
             SingleChoiceSegmentedButtonRow(modifier = Modifier.padding(horizontal = 10.dp)) {
-                tabTitles.forEachIndexed { index, title ->
+                Gameday.entries.forEachIndexed { index, gamedayOption ->
                     SegmentedButton(
                         shape = SegmentedButtonDefaults.itemShape(
                             index = index,
-                            count = tabTitles.size
+                            count = Gameday.entries.size
                         ),
-                        selected = vm.tabState.ordinal == index,
-                        onClick = {
-                            vm.tabState = TabState.entries.toTypedArray()
-                                .getOrElse(index) { TabState.CURRENT }
-                            vm.load()
-                        },
+                        selected = selectedGameday == gamedayOption,
+                        onClick = { vm.onGamedayChanged(gamedayOption) },
                         label = {
                             Text(
-                                text = title,
+                                text = gamedayOption.name,
                                 maxLines = 2,
                                 overflow = TextOverflow.Ellipsis
                             )
@@ -100,10 +93,8 @@ fun ScoresScreen(
                         contentDescription = "Show external Games"
                     },
                     checked = showExternalGames,
-                    onCheckedChange = { showExternalGames = it },
-                    colors = SwitchDefaults.colors(
-
-                    )
+                    onCheckedChange = { vm.onShowExternalGamesChanged(it) },
+                    colors = SwitchDefaults.colors()
                 )
             }
         }

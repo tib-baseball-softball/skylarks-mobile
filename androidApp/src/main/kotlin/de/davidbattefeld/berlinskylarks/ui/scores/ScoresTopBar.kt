@@ -47,14 +47,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import de.davidbattefeld.berlinskylarks.LocalSnackbarHostState
-import de.davidbattefeld.berlinskylarks.data.preferences.DEFAULT_SETTINGS
 import de.davidbattefeld.berlinskylarks.testdata.LEAGUE_GROUP_ALL
 import de.davidbattefeld.berlinskylarks.ui.calendar.PermissionNotGrantedView
 import de.davidbattefeld.berlinskylarks.ui.utility.ConfirmationDialog
@@ -75,8 +73,8 @@ fun ScoresTopBar(
     )
 ) {
     val leagueGroups by vm.leagueGroups.collectAsState()
+    val filteredLeagueGroup by vm.filteredLeagueGroup.collectAsState()
     var leagueFilterExpanded by remember { mutableStateOf(false) }
-    val context = LocalContext.current
     val snackbarHostState = LocalSnackbarHostState.current
 
     val sheetState = rememberModalBottomSheetState()
@@ -87,8 +85,6 @@ fun ScoresTopBar(
     val readState = rememberPermissionState(Manifest.permission.READ_CALENDAR)
     val writeState = rememberPermissionState(Manifest.permission.WRITE_CALENDAR)
     var selectedCalID by remember { mutableStateOf<Long?>(null) }
-
-    val userPreferences by vm.userPreferencesFlow.collectAsState(initial = DEFAULT_SETTINGS)
 
     MediumTopAppBar(
         scrollBehavior = scrollBehavior,
@@ -114,7 +110,7 @@ fun ScoresTopBar(
                     onClick = { leagueFilterExpanded = !leagueFilterExpanded }
                 ) {
                     Text(
-                        text = "${vm.filteredLeagueGroup.name} (${vm.filteredLeagueGroup.acronym})",
+                        text = "${filteredLeagueGroup.name} (${filteredLeagueGroup.acronym})",
                     )
                     Icon(
                         modifier = Modifier.offset(x = 8.dp),
@@ -171,7 +167,7 @@ fun ScoresTopBar(
                         when {
                             readState.status.isGranted -> {
                                 LaunchedEffect(Unit) {
-                                    vm.loadCalendars(context)
+                                    vm.loadCalendars()
                                     writeState.launchPermissionRequest()
                                 }
 
@@ -279,7 +275,7 @@ fun ScoresTopBar(
                     onDismissRequest = { showConfirmationDialog = false },
                     onConfirmation = {
                         vm.addGamesToCalendar(
-                            context = context, selectedCalID!!
+                            selectedCalID!!
                         )
                         showConfirmationDialog = false
                         scope.launch {
@@ -299,10 +295,4 @@ fun ScoresTopBar(
             }
         }
     )
-    LaunchedEffect(Unit) {
-        // this is kinda hacky, but after 2h still no better way to invalidate filter on season change
-        if (vm.filteredLeagueGroup.season != userPreferences.season) {
-            vm.filteredLeagueGroup = LEAGUE_GROUP_ALL
-        }
-    }
 }
