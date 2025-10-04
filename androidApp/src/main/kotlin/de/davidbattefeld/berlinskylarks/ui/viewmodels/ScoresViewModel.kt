@@ -31,6 +31,7 @@ class ScoresViewModel @AssistedInject constructor(
     userPreferencesRepository: UserPreferencesRepository,
     workManagerTiBRepository: WorkManagerTiBRepository,
     leagueGroupRepository: LeagueGroupRepository,
+    private val calendarService: CalendarService,
 ) : GenericViewModel(userPreferencesRepository) {
 
     var games: StateFlow<List<GameDecorator>> =
@@ -90,18 +91,16 @@ class ScoresViewModel @AssistedInject constructor(
         filteredLeagueGroup = leagueGroup
     }
 
-    fun loadCalendars(context: Context) {
-        calendarService.context = context
+    fun loadCalendars() {
         viewModelScope.launch {
             userCalendars.clear()
             userCalendars.addAll(calendarService.loadUserCalendars())
         }
     }
 
-    fun addGamesToCalendar(context: Context, id: Long) {
+    fun addGamesToCalendar(id: Long) {
         val gamesToUse = games
 
-        calendarService.context = context
         viewModelScope.launch {
             calendarService.addGamesToCalendar(gameDecorators = gamesToUse.value, calendarID = id)
         }

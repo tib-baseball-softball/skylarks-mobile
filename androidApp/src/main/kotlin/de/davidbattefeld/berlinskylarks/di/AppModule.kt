@@ -56,6 +56,7 @@ import de.berlinskylarks.shared.database.repository.TiBTeamRepository
 import de.davidbattefeld.berlinskylarks.data.preferences.dataStore
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
 import de.davidbattefeld.berlinskylarks.data.repository.WorkManagerTiBRepository
+import de.davidbattefeld.berlinskylarks.domain.service.CalendarService
 import de.davidbattefeld.berlinskylarks.global.AUTH_HEADER
 import de.davidbattefeld.berlinskylarks.global.BSM_API_KEY
 import javax.inject.Singleton
@@ -256,4 +257,9 @@ object AppModule {
         playerRepository: PlayerRepository,
         tibTeamRepository: TiBTeamRepository,
     ): PlayerSyncService = PlayerSyncService(teamClient, playerRepository, tibTeamRepository)
+
+    @Provides
+    @Singleton
+    fun provideCalendarService(@ApplicationContext context: Context): CalendarService =
+        CalendarService(context)
 }

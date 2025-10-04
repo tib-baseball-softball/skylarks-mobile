@@ -13,9 +13,9 @@ import kotlin.time.toJavaInstant
  * Calendar-related operations. Permissions handling is carried out in the composables calling the
  * class methods.
  */
-class CalendarService {
-    var context: Context? = null
-
+class CalendarService(
+    private val context: Context
+) {
     /**
      * Loads all available calendars and returns them
      */
@@ -27,7 +27,7 @@ class CalendarService {
             CalendarContract.Calendars.ACCOUNT_NAME
         )
 
-        val cursor = context?.contentResolver?.query(
+        val cursor = context.contentResolver?.query(
             CalendarContract.Calendars.CONTENT_URI,
             projection,
             null,
@@ -91,7 +91,7 @@ Address: ${gameDecorator.game.field?.street ?: ""}, ${gameDecorator.game.field?.
                     "${gameDecorator.game.field?.name} - ${gameDecorator.game.field?.street ?: ""}, ${gameDecorator.game.field?.postalCode ?: ""} ${gameDecorator.game.field?.city ?: ""}\n (Lat: ${gameDecorator.game.field?.latitude}, Long: ${gameDecorator.game.field?.longitude})"
                 )
             }
-            context?.contentResolver?.insert(CalendarContract.Events.CONTENT_URI, calendarValues)
+            context.contentResolver?.insert(CalendarContract.Events.CONTENT_URI, calendarValues)
         }
     }
 }
