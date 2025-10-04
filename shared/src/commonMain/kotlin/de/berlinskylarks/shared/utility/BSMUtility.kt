@@ -47,7 +47,7 @@ class BSMUtility {
 
             var counter = 0
             while (true) {
-                startDate = startDate.minus(counter, DateTimeUnit.DAY, timeZone)
+                startDate = currentDateTime.toInstant(timeZone).minus(counter, DateTimeUnit.DAY, timeZone)
 
                 if (startDate.toLocalDateTime(timeZone).dayOfWeek == DayOfWeek.THURSDAY) {
                     val endDate = startDate.plus(6.days)

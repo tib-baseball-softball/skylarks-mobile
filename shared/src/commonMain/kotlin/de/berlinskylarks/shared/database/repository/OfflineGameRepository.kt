@@ -48,9 +48,10 @@ class OfflineGameRepository(
 
         gameday?.let {
             val startEndDates = BSMUtility.getDatesForGameday(gameday)
-            conditions.add("datetime(datetime) >= datetime(${startEndDates.first})")
-            conditions.add("datetime(datetime) <= datetime(${startEndDates.second})")
-            args.add(it)
+            conditions.add("datetime(datetime) >= datetime(?)")
+            args.add(startEndDates.first.toString())
+            conditions.add("datetime(datetime) <= datetime(?)")
+            args.add(startEndDates.second.toString())
         }
 
         if (conditions.isNotEmpty()) {
