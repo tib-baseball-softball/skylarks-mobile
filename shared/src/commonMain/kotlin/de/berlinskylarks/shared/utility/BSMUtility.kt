@@ -31,12 +31,23 @@ class BSMUtility {
             var gamedayStart: Instant
             var calculationStartingPoint: Instant
             when (gameday) {
+                /**
+                 * Caution: I tried dates with an arbitrary large amount of years in the future
+                 * (Kotlin has `Instant.DISTANT_PAST` and `Instant.DISTANT_FUTURE`),
+                 * but those don't work with SQLite.
+                 */
                 Gameday.ANY -> {
-                    return Pair(first = Instant.DISTANT_PAST, second = Instant.DISTANT_FUTURE)
+                    return Pair(
+                        first = currentMoment.minus(1, DateTimeUnit.YEAR, timeZone),
+                        second = currentMoment.plus(1, DateTimeUnit.YEAR, timeZone)
+                    )
                 }
 
                 Gameday.UPCOMING -> {
-                    return Pair(first = currentMoment, second = Instant.DISTANT_FUTURE)
+                    return Pair(
+                        first = currentMoment,
+                        second = currentMoment.plus(1, DateTimeUnit.YEAR, timeZone)
+                    )
                 }
 
                 Gameday.CURRENT -> {
@@ -44,11 +55,13 @@ class BSMUtility {
                 }
 
                 Gameday.NEXT -> {
-                    calculationStartingPoint = currentDateTime.toInstant(timeZone).plus(7, DateTimeUnit.DAY, timeZone)
+                    calculationStartingPoint =
+                        currentDateTime.toInstant(timeZone).plus(7, DateTimeUnit.DAY, timeZone)
                 }
 
                 Gameday.PREVIOUS -> {
-                    calculationStartingPoint = currentDateTime.toInstant(timeZone).minus(7, DateTimeUnit.DAY, timeZone)
+                    calculationStartingPoint =
+                        currentDateTime.toInstant(timeZone).minus(7, DateTimeUnit.DAY, timeZone)
                 }
             }
 
