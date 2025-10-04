@@ -22,7 +22,8 @@ class BSMUtility {
             val currentMoment = Clock.System.now()
             val currentDateTime = currentMoment.toLocalDateTime(timeZone)
 
-            var startDate: Instant
+            var gamedayStart: Instant
+            var calculationStartingPoint: Instant
             when (gameday) {
                 Gameday.ANY -> {
                     return Pair(first = Instant.DISTANT_PAST, second = Instant.DISTANT_FUTURE)
@@ -33,25 +34,25 @@ class BSMUtility {
                 }
 
                 Gameday.CURRENT -> {
-                    startDate = currentDateTime.toInstant(timeZone)
+                    calculationStartingPoint = currentDateTime.toInstant(timeZone)
                 }
 
                 Gameday.NEXT -> {
-                    startDate = currentDateTime.toInstant(timeZone).plus(7, DateTimeUnit.DAY, timeZone)
+                    calculationStartingPoint = currentDateTime.toInstant(timeZone).plus(7, DateTimeUnit.DAY, timeZone)
                 }
 
                 Gameday.PREVIOUS -> {
-                    startDate = currentDateTime.toInstant(timeZone).minus(7, DateTimeUnit.DAY, timeZone)
+                    calculationStartingPoint = currentDateTime.toInstant(timeZone).minus(7, DateTimeUnit.DAY, timeZone)
                 }
             }
 
             var counter = 0
             while (true) {
-                startDate = currentDateTime.toInstant(timeZone).minus(counter, DateTimeUnit.DAY, timeZone)
+                gamedayStart = calculationStartingPoint.minus(counter, DateTimeUnit.DAY, timeZone)
 
-                if (startDate.toLocalDateTime(timeZone).dayOfWeek == DayOfWeek.THURSDAY) {
-                    val endDate = startDate.plus(6.days)
-                    return Pair(first = startDate, second = endDate)
+                if (gamedayStart.toLocalDateTime(timeZone).dayOfWeek == DayOfWeek.THURSDAY) {
+                    val gamedayEnd = gamedayStart.plus(6.days)
+                    return Pair(first = gamedayStart, second = gamedayEnd)
                 } else {
                     counter++
                 }
