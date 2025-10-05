@@ -53,7 +53,12 @@ class MatchAPIClient(authKey: String) : BSMAPIClient(authKey) {
         }
 
         if (organizations != null) {
-            queryParameters.add(ORGANIZATION_FILTER to "federation_$organizations")
+            // DBV has special treatment in query parameter value
+            if (organizations == DBV_ORGANIZATION_ID) {
+                queryParameters.add(ORGANIZATION_FILTER to "federation_$organizations")
+            } else {
+                queryParameters.add(ORGANIZATION_FILTER to "organization_$organizations")
+            }
         }
 
         if (!search.isNullOrEmpty()) {
