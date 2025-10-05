@@ -1,6 +1,5 @@
 package de.davidbattefeld.berlinskylarks.ui.viewmodels
 
-import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.viewModelScope
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -36,8 +35,6 @@ class ScoresViewModel @AssistedInject constructor(
     private val leagueGroupRepository: LeagueGroupRepository,
     private val calendarService: CalendarService,
 ) : GenericViewModel(userPreferencesRepository) {
-    // -----------------Calendar Handling------------------//
-    var userCalendars = mutableStateListOf<UserCalendar>()
 
     // -----------------Game Filters------------------//
     val selectedGameday = MutableStateFlow(Gameday.CURRENT)
@@ -120,18 +117,19 @@ class ScoresViewModel @AssistedInject constructor(
         this.showExternalGames.value = showExternalGames
     }
 
-    fun loadCalendars() {
+    fun loadCalendars(): List<UserCalendar> {
+        var cals = emptyList<UserCalendar>()
         viewModelScope.launch {
-            userCalendars.clear()
-            userCalendars.addAll(calendarService.loadUserCalendars())
+            cals = calendarService.loadUserCalendars()
         }
+        return cals
     }
 
     fun addGamesToCalendar(id: Long) {
-        val gamesToUse = games
+        val gamesToUse = games.value
 
         viewModelScope.launch {
-            calendarService.addGamesToCalendar(gameDecorators = gamesToUse.value, calendarID = id)
+            calendarService.addGamesToCalendar(gameDecorators = gamesToUse, calendarID = id)
         }
     }
 

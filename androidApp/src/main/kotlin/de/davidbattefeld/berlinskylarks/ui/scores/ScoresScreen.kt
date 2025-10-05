@@ -11,14 +11,17 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -28,20 +31,17 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation3.runtime.NavKey
 import de.berlinskylarks.shared.data.enums.Gameday
+import de.davidbattefeld.berlinskylarks.ui.nav.NavigationType
+import de.davidbattefeld.berlinskylarks.ui.nav.Scores
 import de.davidbattefeld.berlinskylarks.ui.nav.ScoresDetail
+import de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar
+import de.davidbattefeld.berlinskylarks.ui.nav.TopLevelBackStack
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.navigation3.runtime.NavKey
-import de.davidbattefeld.berlinskylarks.ui.nav.NavigationType
-import de.davidbattefeld.berlinskylarks.ui.nav.TopLevelBackStack
-import de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar
 import de.davidbattefeld.berlinskylarks.ui.utility.SkylarksSnackbarHost
-import de.davidbattefeld.berlinskylarks.ui.nav.Scores
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,6 +53,8 @@ fun ScoresScreen(
     navigationType: NavigationType,
 ) {
     val games by vm.games.collectAsState()
+    val leagueGroups by vm.leagueGroups.collectAsState()
+    val filteredLeagueGroup by vm.filteredLeagueGroup.collectAsState()
     val showExternalGames by vm.showExternalGames.collectAsState()
     val selectedGameday by vm.selectedGameday.collectAsState()
 
@@ -63,6 +65,12 @@ fun ScoresScreen(
             ScoresTopBar(
                 scrollBehavior = scrollBehavior,
                 title = Scores.title,
+                leagueGroups = leagueGroups,
+                filteredLeagueGroup = filteredLeagueGroup,
+                games = games,
+                onLeagueFilterChanged = vm::onLeagueFilterChanged,
+                addGamesFunc = vm::addGamesToCalendar,
+                loadCalendarFunc = vm::loadCalendars,
             )
         },
         snackbarHost = { SkylarksSnackbarHost() },
@@ -148,13 +156,13 @@ fun ScoresScreen(
                 }
             }
 
-    //        item(span = { GridItemSpan(maxCurrentLineSpan) }) {
-    //            LoadingView()
-    //        }
+            //        item(span = { GridItemSpan(maxCurrentLineSpan) }) {
+            //            LoadingView()
+            //        }
 
-    //        item {
-    //            Text("An error occured loading data.")
-    //        }
+            //        item {
+            //            Text("An error occured loading data.")
+            //        }
         }
     }
 }

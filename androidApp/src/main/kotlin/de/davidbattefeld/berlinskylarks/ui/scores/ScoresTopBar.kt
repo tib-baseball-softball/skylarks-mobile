@@ -38,25 +38,27 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import de.berlinskylarks.shared.data.model.LeagueGroup
 import de.davidbattefeld.berlinskylarks.LocalSnackbarHostState
+import de.davidbattefeld.berlinskylarks.domain.model.UserCalendar
+import de.davidbattefeld.berlinskylarks.domain.service.GameDecorator
 import de.davidbattefeld.berlinskylarks.testdata.LEAGUE_GROUP_ALL
 import de.davidbattefeld.berlinskylarks.ui.calendar.PermissionNotGrantedView
 import de.davidbattefeld.berlinskylarks.ui.utility.ConfirmationDialog
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
 import kotlinx.coroutines.launch
 
 @Composable
@@ -64,16 +66,13 @@ import kotlinx.coroutines.launch
 fun ScoresTopBar(
     title: String,
     scrollBehavior: TopAppBarScrollBehavior,
-
-    // TODO: refactor, only pass necessary callbacks
-    vm: ScoresViewModel = hiltViewModel<ScoresViewModel, ScoresViewModel.Factory>(
-        creationCallback = { factory ->
-            factory.create()
-        }
-    )
+    leagueGroups: List<LeagueGroup>,
+    filteredLeagueGroup: LeagueGroup,
+    games: List<GameDecorator>,
+    onLeagueFilterChanged: (LeagueGroup) -> Unit,
+    addGamesFunc: (Long) -> Unit,
+    loadCalendarFunc: () -> List<UserCalendar>,
 ) {
-    val leagueGroups by vm.leagueGroups.collectAsState()
-    val filteredLeagueGroup by vm.filteredLeagueGroup.collectAsState()
     var leagueFilterExpanded by remember { mutableStateOf(false) }
     val snackbarHostState = LocalSnackbarHostState.current
 
@@ -84,6 +83,7 @@ fun ScoresTopBar(
 
     val readState = rememberPermissionState(Manifest.permission.READ_CALENDAR)
     val writeState = rememberPermissionState(Manifest.permission.WRITE_CALENDAR)
+    var userCalendars = remember { mutableStateListOf<UserCalendar>() }
     var selectedCalID by remember { mutableStateOf<Long?>(null) }
 
     MediumTopAppBar(
@@ -125,7 +125,7 @@ fun ScoresTopBar(
                     DropdownMenuItem(
                         text = { Text("All Leagues") },
                         onClick = {
-                            vm.onLeagueFilterChanged(LEAGUE_GROUP_ALL)
+                            onLeagueFilterChanged(LEAGUE_GROUP_ALL)
                             leagueFilterExpanded = false
                         },
                         leadingIcon = {
@@ -139,7 +139,7 @@ fun ScoresTopBar(
                         DropdownMenuItem(
                             text = { Text("${it.name} (${it.acronym})") },
                             onClick = {
-                                vm.onLeagueFilterChanged(it)
+                                onLeagueFilterChanged(it)
                                 leagueFilterExpanded = false
                             },
                             leadingIcon = {
@@ -167,7 +167,7 @@ fun ScoresTopBar(
                         when {
                             readState.status.isGranted -> {
                                 LaunchedEffect(Unit) {
-                                    vm.loadCalendars()
+                                    userCalendars = loadCalendarFunc().toMutableStateList()
                                     writeState.launchPermissionRequest()
                                 }
 
@@ -181,7 +181,7 @@ fun ScoresTopBar(
                                             style = MaterialTheme.typography.titleMedium
                                         )
                                     }
-                                    items(vm.userCalendars) { userCalendar ->
+                                    items(userCalendars) { userCalendar ->
                                         val isSelected = userCalendar.id == selectedCalID
                                         ListItem(
                                             modifier = Modifier
@@ -274,19 +274,19 @@ fun ScoresTopBar(
                     icon = Icons.Filled.CalendarMonth,
                     onDismissRequest = { showConfirmationDialog = false },
                     onConfirmation = {
-                        vm.addGamesToCalendar(
-                            selectedCalID!!
-                        )
-                        showConfirmationDialog = false
-                        scope.launch {
-                            snackbarHostState.showSnackbar("Events have been added. They might take some time to show up in your calendar.")
+                        selectedCalID?.let {
+                            addGamesFunc(selectedCalID!!)
+                            showConfirmationDialog = false
+                            scope.launch {
+                                snackbarHostState.showSnackbar("Events have been added. They might take some time to show up in your calendar.")
+                            }
                         }
                     },
                     dialogTitle = "Confirm adding events",
                     content = {
                         Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                             Text("The following events will be added:")
-                            vm.games.collectAsState().value.forEach {
+                            games.forEach {
                                 Text("${it.game.awayTeamName} @ ${it.game.homeTeamName} on ${it.localisedDate}")
                             }
                         }
