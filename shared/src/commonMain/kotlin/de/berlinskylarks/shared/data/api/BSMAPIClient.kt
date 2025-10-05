@@ -12,6 +12,7 @@ abstract class BSMAPIClient(authKey: String) : AbstractAPIClient(authKey) {
 
     companion object {
         const val CLUB_ID = 485
+
         // in BSM jargon an "organisation" is a Landesverband (BSVBB in this case)
         const val BSVBB_ORGANIZATION_ID = 9
         const val DBV_ORGANIZATION_ID = 1
@@ -22,9 +23,11 @@ abstract class BSMAPIClient(authKey: String) : AbstractAPIClient(authKey) {
         const val ORGANIZATION_FILTER = "filters[organizations][]"
         const val COMPACT_FILTER = "compact"
         const val TEAM_SEARCH = "search"
+        const val DBV_TIME_ZONE = "Europe/Berlin"
 
         @OptIn(ExperimentalTime::class)
-        val DEFAULT_SEASON = Clock.System.now().toLocalDateTime(timeZone = TimeZone.of("Europe/Berlin")).year
+        val DEFAULT_SEASON =
+            Clock.System.now().toLocalDateTime(timeZone = TimeZone.of(DBV_TIME_ZONE)).year
     }
 
     override fun URLBuilder.addAuthorizationParameters() {
