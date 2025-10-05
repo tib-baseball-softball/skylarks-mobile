@@ -12,12 +12,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -26,21 +30,17 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation3.runtime.NavKey
 import de.davidbattefeld.berlinskylarks.global.cardPadding
+import de.davidbattefeld.berlinskylarks.ui.nav.NavigationType
+import de.davidbattefeld.berlinskylarks.ui.nav.ScoresDetail
+import de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar
+import de.davidbattefeld.berlinskylarks.ui.nav.TopLevelBackStack
 import de.davidbattefeld.berlinskylarks.ui.scores.box.ScoresDetailBoxScoreSection
 import de.davidbattefeld.berlinskylarks.ui.scores.gamereport.ScoresDetailGameReportSection
 import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoreDetailViewModel
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.navigation3.runtime.NavKey
-import de.davidbattefeld.berlinskylarks.ui.nav.TopLevelBackStack
-import de.davidbattefeld.berlinskylarks.ui.nav.NavigationType
-import de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar
 import de.davidbattefeld.berlinskylarks.ui.utility.SkylarksSnackbarHost
-import de.davidbattefeld.berlinskylarks.ui.nav.ScoresDetail
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoreDetailViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -184,6 +184,7 @@ fun ScoresDetailScreen(
                                 onClick = { showGameReportSection = !showGameReportSection },
                                 label = { Text("Game Report") },
                                 selected = showGameReportSection,
+                                enabled = gameReport != null,
                                 leadingIcon = if (showGameReportSection) {
                                     {
                                         Icon(
