@@ -39,7 +39,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import de.berlinskylarks.shared.TeamGlobals
 import de.davidbattefeld.berlinskylarks.data.preferences.DEFAULT_SETTINGS
 import de.davidbattefeld.berlinskylarks.ui.nav.Info
@@ -61,207 +60,216 @@ fun SettingsScreen(
 
     var expanded by remember { mutableStateOf(false) }
 
-    val scrollBehavior = androidx.compose.material3.TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val scrollBehavior =
+        androidx.compose.material3.TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     androidx.compose.material3.Scaffold(
         topBar = {
             androidx.compose.material3.TopAppBar(
                 scrollBehavior = scrollBehavior,
-                title = { androidx.compose.material3.Text(text = de.davidbattefeld.berlinskylarks.ui.nav.Settings.title) },
+                title = { Text(text = de.davidbattefeld.berlinskylarks.ui.nav.Settings.title) },
             )
         },
         snackbarHost = { de.davidbattefeld.berlinskylarks.ui.utility.SkylarksSnackbarHost() },
-        bottomBar = { de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar(topLevelBackStack, navigationType) }
+        bottomBar = {
+            de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar(
+                topLevelBackStack,
+                navigationType
+            )
+        }
     ) { paddingValues ->
 
-    LazyColumn(
-        modifier = Modifier.padding(paddingValues)
-    ) {
-        item {
-            ListItem(
-                headlineContent = { Text("Selected Season") },
-                supportingContent = { Text(userPreferences.season.toString()) },
-                leadingContent = {
-                    Icon(
-                        Icons.Filled.CalendarMonth,
-                        contentDescription = "season icon",
-                    )
-                },
-                trailingContent = {
-                    Box(
-                        modifier = Modifier
-                            .wrapContentSize(Alignment.TopStart)
-                    ) {
-                        IconButton(onClick = { expanded = true }) {
-                            Icon(Icons.Default.Edit, contentDescription = "Localized description")
-                        }
-                        DropdownMenu(
-                            expanded = expanded,
-                            onDismissRequest = { expanded = false }
-                        ) {
-                            vm.possibleSeasons.forEach { selectionOption ->
-                                DropdownMenuItem(
-                                    text = { Text(selectionOption.toString()) },
-                                    onClick = {
-                                        vm.updateSelectedSeason(selectionOption)
-                                        expanded = false
-                                    },
-                                )
-                            }
-                        }
-                    }
-                }
-            )
-        }
-        item {
-            Text(
-                modifier = Modifier
-                    .padding(start = 8.dp, top = 8.dp),
-                text = "Information",
-                style = MaterialTheme.typography.titleSmall
-            )
-        }
-        item {
-            Column {
+        LazyColumn(
+            modifier = Modifier.padding(paddingValues)
+        ) {
+            item {
                 ListItem(
-                    modifier = Modifier
-                        .clickable { infoRoute() },
-                    headlineContent = { Text(Info.title) },
+                    headlineContent = { Text("Selected Season") },
+                    supportingContent = { Text(userPreferences.season.toString()) },
                     leadingContent = {
                         Icon(
-                            imageVector = Icons.Filled.Info,
+                            Icons.Filled.CalendarMonth,
                             contentDescription = "season icon",
                         )
                     },
-                )
-                HorizontalDivider()
-            }
-        }
-        item {
-            Column {
-                ListItem(
-                    modifier = Modifier
-                        .clickable { legalRoute() },
-                    headlineContent = { Text(LegalNotice.title) },
-                    leadingContent = {
-                        Icon(
-                            imageVector = Icons.Filled.Gavel,
-                            contentDescription = "legal icon",
-                        )
-                    },
-                )
-                HorizontalDivider()
-            }
-        }
-        item {
-            ListItem(
-                modifier = Modifier
-                    .clickable { privacyRoute() },
-                headlineContent = { Text(Privacy.title) },
-                leadingContent = {
-                    Icon(
-                        imageVector = Icons.Filled.Policy,
-                        contentDescription = "privacy icon",
-                    )
-                },
-            )
-        }
-        item {
-            Text(
-                modifier = Modifier
-                    .padding(start = 8.dp, top = 8.dp),
-                text = "Get in Touch",
-                style = MaterialTheme.typography.titleSmall
-            )
-        }
-        item {
-            Column {
-                ListItem(
-                    headlineContent = {
-                        Text(
-                            text = buildAnnotatedString {
-                                withStyle(
-                                    style = SpanStyle(
-                                        textDecoration = TextDecoration.Underline,
-                                        color = MaterialTheme.colorScheme.onSurface,
-                                        fontSize = 16.sp
-                                    )
-                                ) {
-                                    withLink(link = LinkAnnotation.Url(url = TeamGlobals.TEAM_WEBSITE_URL)) {
-                                        append("Visit the team website")
-                                    }
-                                }
-                            }
-                        )
-                    },
-                    leadingContent = {
-                        Icon(
-                            Icons.Filled.Web,
-                            contentDescription = "Localized description",
-                        )
-                    }
-                )
-                HorizontalDivider()
-            }
-        }
-        item {
-            Column {
-                ListItem(
-                    headlineContent = {
-                        Text(
-                            text = buildAnnotatedString {
-                                withStyle(
-                                    style = SpanStyle(
-                                        textDecoration = TextDecoration.Underline,
-                                        color = MaterialTheme.colorScheme.onSurface,
-                                        fontSize = 16.sp
-                                    )
-                                ) {
-                                    withLink(link = LinkAnnotation.Url(url = TeamGlobals.PROJECT_REPO)) {
-                                        append("Contribute to this app")
-                                    }
-                                }
-                            }
-                        )
-                    },
-                    leadingContent = {
-                        Icon(
-                            Icons.Filled.ForkLeft,
-                            contentDescription = "Localized description",
-                        )
-                    }
-                )
-                HorizontalDivider()
-            }
-        }
-        item {
-            ListItem(
-                headlineContent = {
-                    Text(
-                        text = buildAnnotatedString {
-                            withStyle(
-                                style = SpanStyle(
-                                    textDecoration = TextDecoration.Underline,
-                                    color = MaterialTheme.colorScheme.onSurface,
-                                    fontSize = 16.sp
+                    trailingContent = {
+                        Box(
+                            modifier = Modifier
+                                .wrapContentSize(Alignment.TopStart)
+                        ) {
+                            IconButton(onClick = { expanded = true }) {
+                                Icon(
+                                    Icons.Default.Edit,
+                                    contentDescription = "Localized description"
                                 )
+                            }
+                            DropdownMenu(
+                                expanded = expanded,
+                                onDismissRequest = { expanded = false }
                             ) {
-                                withLink(link = LinkAnnotation.Url(url = TeamGlobals.CONTACT_MAILTO_LINK)) {
-                                    append("Contact the developer")
+                                vm.possibleSeasons.forEach { selectionOption ->
+                                    DropdownMenuItem(
+                                        text = { Text(selectionOption.toString()) },
+                                        onClick = {
+                                            vm.updateSelectedSeason(selectionOption)
+                                            expanded = false
+                                        },
+                                    )
                                 }
                             }
                         }
+                    }
+                )
+            }
+            item {
+                Text(
+                    modifier = Modifier
+                        .padding(start = 8.dp, top = 8.dp),
+                    text = "Information",
+                    style = MaterialTheme.typography.titleSmall
+                )
+            }
+            item {
+                Column {
+                    ListItem(
+                        modifier = Modifier
+                            .clickable { infoRoute() },
+                        headlineContent = { Text(Info.title) },
+                        leadingContent = {
+                            Icon(
+                                imageVector = Icons.Filled.Info,
+                                contentDescription = "season icon",
+                            )
+                        },
                     )
-                },
-                leadingContent = {
-                    Icon(
-                        Icons.Filled.Mail,
-                        contentDescription = "Localized description",
-                    )
+                    HorizontalDivider()
                 }
-            )
+            }
+            item {
+                Column {
+                    ListItem(
+                        modifier = Modifier
+                            .clickable { legalRoute() },
+                        headlineContent = { Text(LegalNotice.title) },
+                        leadingContent = {
+                            Icon(
+                                imageVector = Icons.Filled.Gavel,
+                                contentDescription = "legal icon",
+                            )
+                        },
+                    )
+                    HorizontalDivider()
+                }
+            }
+            item {
+                ListItem(
+                    modifier = Modifier
+                        .clickable { privacyRoute() },
+                    headlineContent = { Text(Privacy.title) },
+                    leadingContent = {
+                        Icon(
+                            imageVector = Icons.Filled.Policy,
+                            contentDescription = "privacy icon",
+                        )
+                    },
+                )
+            }
+            item {
+                Text(
+                    modifier = Modifier
+                        .padding(start = 8.dp, top = 8.dp),
+                    text = "Get in Touch",
+                    style = MaterialTheme.typography.titleSmall
+                )
+            }
+            item {
+                Column {
+                    ListItem(
+                        headlineContent = {
+                            Text(
+                                text = buildAnnotatedString {
+                                    withStyle(
+                                        style = SpanStyle(
+                                            textDecoration = TextDecoration.Underline,
+                                            color = MaterialTheme.colorScheme.onSurface,
+                                            fontSize = 16.sp
+                                        )
+                                    ) {
+                                        withLink(link = LinkAnnotation.Url(url = TeamGlobals.TEAM_WEBSITE_URL)) {
+                                            append("Visit the team website")
+                                        }
+                                    }
+                                }
+                            )
+                        },
+                        leadingContent = {
+                            Icon(
+                                Icons.Filled.Web,
+                                contentDescription = "Localized description",
+                            )
+                        }
+                    )
+                    HorizontalDivider()
+                }
+            }
+            item {
+                Column {
+                    ListItem(
+                        headlineContent = {
+                            Text(
+                                text = buildAnnotatedString {
+                                    withStyle(
+                                        style = SpanStyle(
+                                            textDecoration = TextDecoration.Underline,
+                                            color = MaterialTheme.colorScheme.onSurface,
+                                            fontSize = 16.sp
+                                        )
+                                    ) {
+                                        withLink(link = LinkAnnotation.Url(url = TeamGlobals.PROJECT_REPO)) {
+                                            append("Contribute to this app")
+                                        }
+                                    }
+                                }
+                            )
+                        },
+                        leadingContent = {
+                            Icon(
+                                Icons.Filled.ForkLeft,
+                                contentDescription = "Localized description",
+                            )
+                        }
+                    )
+                    HorizontalDivider()
+                }
+            }
+            item {
+                ListItem(
+                    headlineContent = {
+                        Text(
+                            text = buildAnnotatedString {
+                                withStyle(
+                                    style = SpanStyle(
+                                        textDecoration = TextDecoration.Underline,
+                                        color = MaterialTheme.colorScheme.onSurface,
+                                        fontSize = 16.sp
+                                    )
+                                ) {
+                                    withLink(link = LinkAnnotation.Url(url = TeamGlobals.CONTACT_MAILTO_LINK)) {
+                                        append("Contact the developer")
+                                    }
+                                }
+                            }
+                        )
+                    },
+                    leadingContent = {
+                        Icon(
+                            Icons.Filled.Mail,
+                            contentDescription = "Localized description",
+                        )
+                    }
+                )
+            }
         }
-    }
     }
 }
 

@@ -10,7 +10,6 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.lifecycle.viewmodel.compose.viewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.LegalNoticeViewModel
 
 @androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,7 +24,8 @@ fun LegalNoticeScreen(
     val textColor = MaterialTheme.colorScheme.onSurface.toArgb()
     val backgroundColor = MaterialTheme.colorScheme.surface.toArgb()
 
-    val scrollBehavior = androidx.compose.material3.TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val scrollBehavior =
+        androidx.compose.material3.TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     androidx.compose.material3.Scaffold(
         topBar = {
@@ -35,25 +35,30 @@ fun LegalNoticeScreen(
             )
         },
         snackbarHost = { de.davidbattefeld.berlinskylarks.ui.utility.SkylarksSnackbarHost() },
-        bottomBar = { de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar(topLevelBackStack, navigationType) }
-    ) { paddingValues ->
-
-    LazyColumn(
-        modifier = Modifier
-            .padding(paddingValues)
-            .padding(horizontal = 16.dp),
-    ) {
-        item {
-            AndroidView(
-                factory = {
-                    TextView(it).apply {
-                        text = displayedText
-                        setTextColor(textColor)
-                        setBackgroundColor(backgroundColor)
-                    }
-                },
+        bottomBar = {
+            de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar(
+                topLevelBackStack,
+                navigationType
             )
         }
-    }
+    ) { paddingValues ->
+
+        LazyColumn(
+            modifier = Modifier
+                .padding(paddingValues)
+                .padding(horizontal = 16.dp),
+        ) {
+            item {
+                AndroidView(
+                    factory = {
+                        TextView(it).apply {
+                            text = displayedText
+                            setTextColor(textColor)
+                            setBackgroundColor(backgroundColor)
+                        }
+                    },
+                )
+            }
+        }
     }
 }

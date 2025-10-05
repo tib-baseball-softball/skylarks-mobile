@@ -26,58 +26,64 @@ fun AppInfoScreen(
         supportingColor = MaterialTheme.colorScheme.onSurface,
     )
 
-    val scrollBehavior = androidx.compose.material3.TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val scrollBehavior =
+        androidx.compose.material3.TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     androidx.compose.material3.Scaffold(
         topBar = {
             androidx.compose.material3.TopAppBar(
                 scrollBehavior = scrollBehavior,
-                title = { androidx.compose.material3.Text(text = de.davidbattefeld.berlinskylarks.ui.nav.Info.title) },
+                title = { Text(text = de.davidbattefeld.berlinskylarks.ui.nav.Info.title) },
             )
         },
         snackbarHost = { de.davidbattefeld.berlinskylarks.ui.utility.SkylarksSnackbarHost() },
-        bottomBar = { de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar(topLevelBackStack, navigationType) }
+        bottomBar = {
+            de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar(
+                topLevelBackStack,
+                navigationType
+            )
+        }
     ) { paddingValues ->
 
-    ElevatedCard(
-        modifier = Modifier
-            .padding(paddingValues)
-            .padding(bottom = 1.dp)
-            .padding(horizontal = 12.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainer,
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
-    ) {
-        ListItem(
-            headlineContent = { Text(text = "App ID") },
-            supportingContent = { Text(BuildConfig.APPLICATION_ID) },
-            colors = listItemColors
-        )
-        HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
-        ListItem(
-            headlineContent = { Text(text = "Version") },
-            supportingContent = { Text(BuildConfig.VERSION_NAME) },
-            colors = listItemColors
-        )
-        HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
-        ListItem(
-            headlineContent = { Text(text = "Build Number") },
-            supportingContent = { Text(BuildConfig.VERSION_CODE.toString()) },
-            colors = listItemColors
-        )
-        HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
-        ListItem(
-            headlineContent = { Text(text = "Build Type") },
-            supportingContent = { Text(BuildConfig.BUILD_TYPE) },
-            colors = listItemColors
-        )
-        HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
-        ListItem(
-            headlineContent = { Text(text = "Kotlin Multiplatform") },
-            supportingContent = { Text(Greeting().greet()) },
-            colors = listItemColors
-        )
-    }
+        ElevatedCard(
+            modifier = Modifier
+                .padding(paddingValues)
+                .padding(bottom = 1.dp)
+                .padding(horizontal = 12.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceContainer,
+            ),
+            elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+        ) {
+            ListItem(
+                headlineContent = { Text(text = "App ID") },
+                supportingContent = { Text(BuildConfig.APPLICATION_ID) },
+                colors = listItemColors
+            )
+            HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
+            ListItem(
+                headlineContent = { Text(text = "Version") },
+                supportingContent = { Text(BuildConfig.VERSION_NAME) },
+                colors = listItemColors
+            )
+            HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
+            ListItem(
+                headlineContent = { Text(text = "Build Number") },
+                supportingContent = { Text(BuildConfig.VERSION_CODE.toString()) },
+                colors = listItemColors
+            )
+            HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
+            ListItem(
+                headlineContent = { Text(text = "Build Type") },
+                supportingContent = { Text(BuildConfig.BUILD_TYPE) },
+                colors = listItemColors
+            )
+            HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
+            ListItem(
+                headlineContent = { Text(text = "Kotlin Multiplatform") },
+                supportingContent = { Text(Greeting().greet()) },
+                colors = listItemColors
+            )
+        }
     }
 }
