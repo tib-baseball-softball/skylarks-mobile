@@ -47,18 +47,36 @@ import de.davidbattefeld.berlinskylarks.ui.nav.LegalNotice
 import de.davidbattefeld.berlinskylarks.ui.nav.Privacy
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.SettingsViewModel
 
+@OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
-    vm: SettingsViewModel = viewModel(),
+    vm: SettingsViewModel,
     infoRoute: () -> Unit,
     privacyRoute: () -> Unit,
     legalRoute: () -> Unit,
+    topLevelBackStack: de.davidbattefeld.berlinskylarks.ui.nav.TopLevelBackStack<androidx.navigation3.runtime.NavKey>,
+    navigationType: de.davidbattefeld.berlinskylarks.ui.nav.NavigationType,
 ) {
     val userPreferences by vm.userPreferencesFlow.collectAsStateWithLifecycle(initialValue = DEFAULT_SETTINGS)
 
     var expanded by remember { mutableStateOf(false) }
 
-    LazyColumn {
+    val scrollBehavior = androidx.compose.material3.TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+
+    androidx.compose.material3.Scaffold(
+        topBar = {
+            androidx.compose.material3.TopAppBar(
+                scrollBehavior = scrollBehavior,
+                title = { androidx.compose.material3.Text(text = de.davidbattefeld.berlinskylarks.ui.nav.Settings.title) },
+            )
+        },
+        snackbarHost = { de.davidbattefeld.berlinskylarks.ui.utility.SkylarksSnackbarHost() },
+        bottomBar = { de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar(topLevelBackStack, navigationType) }
+    ) { paddingValues ->
+
+    LazyColumn(
+        modifier = Modifier.padding(paddingValues)
+    ) {
         item {
             ListItem(
                 headlineContent = { Text("Selected Season") },
@@ -243,6 +261,7 @@ fun SettingsScreen(
                 }
             )
         }
+    }
     }
 }
 

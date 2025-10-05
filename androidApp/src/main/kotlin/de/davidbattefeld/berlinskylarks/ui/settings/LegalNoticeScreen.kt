@@ -13,15 +13,34 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.LegalNoticeViewModel
 
+@androidx.compose.material3.ExperimentalMaterial3Api
 @Composable
-fun LegalNoticeScreen(vm: LegalNoticeViewModel = viewModel()) {
+fun LegalNoticeScreen(
+    vm: LegalNoticeViewModel,
+    topLevelBackStack: de.davidbattefeld.berlinskylarks.ui.nav.TopLevelBackStack<androidx.navigation3.runtime.NavKey>,
+    navigationType: de.davidbattefeld.berlinskylarks.ui.nav.NavigationType,
+) {
     val context = LocalContext.current
     val displayedText = vm.readStaticMarkdownFile(fileName = "app_impressum_en.md", context)
     val textColor = MaterialTheme.colorScheme.onSurface.toArgb()
     val backgroundColor = MaterialTheme.colorScheme.surface.toArgb()
 
+    val scrollBehavior = androidx.compose.material3.TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+
+    androidx.compose.material3.Scaffold(
+        topBar = {
+            androidx.compose.material3.TopAppBar(
+                scrollBehavior = scrollBehavior,
+                title = { androidx.compose.material3.Text(text = de.davidbattefeld.berlinskylarks.ui.nav.LegalNotice.title) },
+            )
+        },
+        snackbarHost = { de.davidbattefeld.berlinskylarks.ui.utility.SkylarksSnackbarHost() },
+        bottomBar = { de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar(topLevelBackStack, navigationType) }
+    ) { paddingValues ->
+
     LazyColumn(
         modifier = Modifier
+            .padding(paddingValues)
             .padding(horizontal = 16.dp),
     ) {
         item {
@@ -35,5 +54,6 @@ fun LegalNoticeScreen(vm: LegalNoticeViewModel = viewModel()) {
                 },
             )
         }
+    }
     }
 }

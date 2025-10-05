@@ -1,6 +1,7 @@
 package de.davidbattefeld.berlinskylarks.ui.nav
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.navigation3.ListDetailSceneStrategy
@@ -41,12 +42,12 @@ import de.davidbattefeld.berlinskylarks.ui.viewmodels.TablesViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.TeamDetailViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.TeamsViewModel
 
-@OptIn(ExperimentalMaterial3AdaptiveApi::class)
+@OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun NavGraph(
     modifier: Modifier,
     topLevelBackStack: TopLevelBackStack<NavKey>,
-    setFabOnClick: (() -> Unit) -> Unit
+    navigationType: NavigationType
 ) {
     val listDetailStrategy = rememberListDetailSceneStrategy<NavKey>()
 
@@ -62,7 +63,7 @@ fun NavGraph(
             ),
             entryProvider = entryProvider {
                 entry<Home> {
-                    HomeScreen()
+                    HomeScreen(topLevelBackStack, navigationType)
                 }
 
                 entry<Scores>(
@@ -82,6 +83,8 @@ fun NavGraph(
                             topLevelBackStack.add(key)
                         },
                         vm = vm,
+                        topLevelBackStack = topLevelBackStack,
+                        navigationType = navigationType,
                     )
                 }
                 entry<ScoresDetail>(
@@ -94,7 +97,9 @@ fun NavGraph(
                     )
                     ScoresDetailScreen(
                         matchID = key.id,
-                        vm = vm
+                        vm = vm,
+                        topLevelBackStack = topLevelBackStack,
+                        navigationType = navigationType,
                     )
                 }
 
@@ -109,6 +114,8 @@ fun NavGraph(
                             topLevelBackStack.add(StandingsDetail(id))
                         },
                         vm = vm,
+                        topLevelBackStack = topLevelBackStack,
+                        navigationType = navigationType,
                     )
                 }
 
@@ -120,7 +127,9 @@ fun NavGraph(
                     )
                     StandingsDetailScreen(
                         tableID = key.id,
-                        vm = vm
+                        vm = vm,
+                        topLevelBackStack = topLevelBackStack,
+                        navigationType = navigationType,
                     )
                 }
 
@@ -128,6 +137,8 @@ fun NavGraph(
                     ClubScreen(
                         teamsRoute = { topLevelBackStack.add(Teams) },
                         functionaryRoute = { topLevelBackStack.add(Functionary) },
+                        topLevelBackStack = topLevelBackStack,
+                        navigationType = navigationType,
                     )
                 }
 
@@ -142,6 +153,8 @@ fun NavGraph(
                             topLevelBackStack.add(TeamDetail(id))
                         },
                         vm = vm,
+                        topLevelBackStack = topLevelBackStack,
+                        navigationType = navigationType,
                     )
                 }
                 entry<TeamDetail> { key ->
@@ -156,6 +169,8 @@ fun NavGraph(
                             topLevelBackStack.add(PlayerDetail(playerDetailID))
                         },
                         vm = vm,
+                        topLevelBackStack = topLevelBackStack,
+                        navigationType = navigationType,
                     )
                 }
 
@@ -168,6 +183,8 @@ fun NavGraph(
                     PlayerDetailScreen(
                         playerID = key.id,
                         vm = vm,
+                        topLevelBackStack = topLevelBackStack,
+                        navigationType = navigationType,
                     )
                 }
 
@@ -177,7 +194,11 @@ fun NavGraph(
                             factory.create()
                         }
                     )
-                    FunctionaryScreen(vm = vm)
+                    FunctionaryScreen(
+                        vm = vm,
+                        topLevelBackStack = topLevelBackStack,
+                        navigationType = navigationType,
+                    )
                 }
 
                 entry<Settings> {
@@ -191,11 +212,16 @@ fun NavGraph(
                         privacyRoute = { topLevelBackStack.add(Privacy) },
                         legalRoute = { topLevelBackStack.add(LegalNotice) },
                         vm = vm,
+                        topLevelBackStack = topLevelBackStack,
+                        navigationType = navigationType,
                     )
                 }
 
                 entry<Info> {
-                    AppInfoScreen()
+                    AppInfoScreen(
+                        topLevelBackStack = topLevelBackStack,
+                        navigationType = navigationType,
+                    )
                 }
 
                 entry<LegalNotice> {
@@ -204,7 +230,11 @@ fun NavGraph(
                             factory.create()
                         }
                     )
-                    LegalNoticeScreen(vm = vm)
+                    LegalNoticeScreen(
+                        vm = vm,
+                        topLevelBackStack = topLevelBackStack,
+                        navigationType = navigationType,
+                    )
                 }
 
                 entry<Privacy> {
@@ -213,7 +243,11 @@ fun NavGraph(
                             factory.create()
                         }
                     )
-                    PrivacyPolicyScreen(vm = vm)
+                    PrivacyPolicyScreen(
+                        vm = vm,
+                        topLevelBackStack = topLevelBackStack,
+                        navigationType = navigationType,
+                    )
                 }
             }
         )

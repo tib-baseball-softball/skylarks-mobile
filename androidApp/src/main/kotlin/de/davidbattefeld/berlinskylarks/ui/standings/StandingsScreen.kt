@@ -27,83 +27,110 @@ import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
 import de.davidbattefeld.berlinskylarks.ui.utility.LoadingView
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.LeagueGroupsViewModel
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.navigation3.runtime.NavKey
+import de.davidbattefeld.berlinskylarks.ui.nav.TopLevelBackStack
+import de.davidbattefeld.berlinskylarks.ui.nav.NavigationType
+import de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar
+import de.davidbattefeld.berlinskylarks.ui.utility.SkylarksSnackbarHost
+import de.davidbattefeld.berlinskylarks.ui.nav.Standings
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StandingsScreen(
     vm: LeagueGroupsViewModel,
     detailRoute: (Int) -> Unit,
+    topLevelBackStack: TopLevelBackStack<NavKey>,
+    navigationType: NavigationType,
 ) {
     val leagueGroups by vm.leagueGroups.collectAsState()
 
-    Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier
-            .padding(8.dp)
-    ) {
-        Card(
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                scrollBehavior = scrollBehavior,
+                title = { Text(text = Standings.title) },
+            )
+        },
+        snackbarHost = { SkylarksSnackbarHost() },
+        bottomBar = { SkylarksBottomBar(topLevelBackStack, navigationType) }
+    ) { paddingValues ->
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier
-                .padding(horizontal = 8.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.tertiaryContainer
-            ),
-        ) {
-            Column(
-                modifier = Modifier
-                    .padding(clubCardPadding),
-                verticalArrangement = Arrangement.spacedBy(3.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.Insights,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary
-                )
-                Text(text = "Club Standings", style = MaterialTheme.typography.titleLarge)
-                Text(text = "See records for all Club teams at a glance and get an overview.")
-            }
-        }
-        Surface(
-            shape = RoundedCornerShape(size = 12.dp),
-            tonalElevation = 1.dp,
-            modifier = Modifier
+                .padding(paddingValues)
                 .padding(8.dp)
         ) {
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(10.dp)
+            Card(
+                modifier = Modifier
+                    .padding(horizontal = 8.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                ),
             ) {
-                when (vm.viewState) {
-                    ViewState.NoResults, ViewState.NotInitialised -> {
-                        item {
-                            ContentNotFoundView("tables")
+                Column(
+                    modifier = Modifier
+                        .padding(clubCardPadding),
+                    verticalArrangement = Arrangement.spacedBy(3.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Insights,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                    Text(text = "Club Standings", style = MaterialTheme.typography.titleLarge)
+                    Text(text = "See records for all Club teams at a glance and get an overview.")
+                }
+            }
+            Surface(
+                shape = RoundedCornerShape(size = 12.dp),
+                tonalElevation = 1.dp,
+                modifier = Modifier
+                    .padding(8.dp)
+            ) {
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    when (vm.viewState) {
+                        ViewState.NoResults, ViewState.NotInitialised -> {
+                            item {
+                                ContentNotFoundView("tables")
+                            }
                         }
-                    }
 
-                    ViewState.Loading -> {
-                        item {
-                            LoadingView()
+                        ViewState.Loading -> {
+                            item {
+                                LoadingView()
+                            }
                         }
-                    }
 
-                    ViewState.Found -> {
-                        itemsIndexed(leagueGroups) { index, league ->
-                            Column {
-                                StandingsLeagueRow(
-                                    leagueGroup = league,
-                                    modifier = Modifier
-                                        .clickable {
-                                            detailRoute(league.id)
-                                        }
-                                )
-                                // last item does not have a divider
-                                if (index + 1 != leagueGroups.size) {
-                                    HorizontalDivider(modifier = Modifier.padding(horizontal = 8.dp))
+                        ViewState.Found -> {
+                            itemsIndexed(leagueGroups) { index, league ->
+                                Column {
+                                    StandingsLeagueRow(
+                                        leagueGroup = league,
+                                        modifier = Modifier
+                                            .clickable {
+                                                detailRoute(league.id)
+                                            }
+                                    )
+                                    // last item does not have a divider
+                                    if (index + 1 != leagueGroups.size) {
+                                        HorizontalDivider(modifier = Modifier.padding(horizontal = 8.dp))
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    ViewState.Error -> {
-                        item {
-                            Text("An error occurred loading data.")
+                        ViewState.Error -> {
+                            item {
+                                Text("An error occurred loading data.")
+                            }
                         }
                     }
                 }

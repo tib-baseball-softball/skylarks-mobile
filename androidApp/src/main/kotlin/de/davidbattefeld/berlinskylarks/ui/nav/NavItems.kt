@@ -2,52 +2,11 @@ package de.davidbattefeld.berlinskylarks.ui.nav
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.navigation3.runtime.NavKey
-
-@Composable
-fun NavItemCollection(
-    topLevelBackStack: TopLevelBackStack<NavKey>,
-    navigationType: NavigationType,
-) {
-    when (navigationType) {
-        NavigationType.BOTTOM_NAVIGATION -> {
-            NavigationBar {
-                TOP_LEVEL_ROUTES.forEach { topLevelRoute ->
-                    val isSelected = topLevelRoute == topLevelBackStack.topLevelKey
-                    NavBarItem(
-                        selected = isSelected,
-                        screen = topLevelRoute,
-                        navigationAction = {
-                            topLevelBackStack.addTopLevel(topLevelRoute)
-                        }
-                    )
-                }
-            }
-        }
-
-        else -> {
-            TOP_LEVEL_ROUTES.forEach { topLevelRoute ->
-                val isSelected = topLevelRoute == topLevelBackStack.topLevelKey
-                NavSidebarItem(
-                    screen = topLevelRoute,
-                    navigationAction = {
-                        topLevelBackStack.addTopLevel(topLevelRoute)
-                    },
-                    navigationType = navigationType,
-                    selected = isSelected,
-                )
-            }
-        }
-    }
-
-
-}
 
 @Composable
 fun NavSidebarItem(

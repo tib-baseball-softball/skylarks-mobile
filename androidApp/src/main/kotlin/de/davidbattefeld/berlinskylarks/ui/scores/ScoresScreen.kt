@@ -33,102 +33,129 @@ import de.davidbattefeld.berlinskylarks.ui.nav.ScoresDetail
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.navigation3.runtime.NavKey
+import de.davidbattefeld.berlinskylarks.ui.nav.NavigationType
+import de.davidbattefeld.berlinskylarks.ui.nav.TopLevelBackStack
+import de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar
+import de.davidbattefeld.berlinskylarks.ui.utility.SkylarksSnackbarHost
+import de.davidbattefeld.berlinskylarks.ui.nav.Scores
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScoresScreen(
     modifier: Modifier = Modifier,
     detailRoute: (ScoresDetail) -> Unit,
     vm: ScoresViewModel,
+    topLevelBackStack: TopLevelBackStack<NavKey>,
+    navigationType: NavigationType,
 ) {
     val games by vm.games.collectAsState()
     val showExternalGames by vm.showExternalGames.collectAsState()
     val selectedGameday by vm.selectedGameday.collectAsState()
 
-    LazyVerticalGrid(
-        modifier = modifier.padding(horizontal = 6.dp),
-        columns = GridCells.Adaptive(minSize = 350.dp)
-    ) {
-        item(span = { GridItemSpan(maxCurrentLineSpan) }) {
-            SingleChoiceSegmentedButtonRow(modifier = Modifier.padding(horizontal = 10.dp)) {
-                Gameday.entries.forEachIndexed { index, gamedayOption ->
-                    SegmentedButton(
-                        shape = SegmentedButtonDefaults.itemShape(
-                            index = index,
-                            count = Gameday.entries.size
-                        ),
-                        selected = selectedGameday == gamedayOption,
-                        onClick = { vm.onGamedayChanged(gamedayOption) },
-                        label = {
-                            Text(
-                                text = gamedayOption.value.replaceFirstChar { it.uppercase() },
-                                maxLines = 2,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                        }
-                    )
-                }
-            }
-        }
-        item(span = { GridItemSpan(maxCurrentLineSpan) }) {
-            Row(
-                modifier = Modifier
-                    .padding(14.dp),
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth(0.8F)
-                ) {
-                    Text(
-                        text = "Show External Games",
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                    Text(
-                        text = "Controls whether the list is filtered by just Skylarks games.",
-                        style = MaterialTheme.typography.labelSmall,
-                    )
-                }
-                Spacer(modifier = Modifier.weight(1.0F))
-                Switch(
-                    modifier = Modifier.semantics {
-                        contentDescription = "Show external Games"
-                    },
-                    checked = showExternalGames,
-                    onCheckedChange = { vm.onShowExternalGamesChanged(it) },
-                    colors = SwitchDefaults.colors()
-                )
-            }
-        }
-        item(span = { GridItemSpan(maxCurrentLineSpan) }) {
-            HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
-        }
-        if (games.isEmpty()) {
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+
+    Scaffold(
+        topBar = {
+            ScoresTopBar(
+                scrollBehavior = scrollBehavior,
+                title = Scores.title,
+            )
+        },
+        snackbarHost = { SkylarksSnackbarHost() },
+        bottomBar = { SkylarksBottomBar(topLevelBackStack, navigationType) }
+    ) { paddingValues ->
+        LazyVerticalGrid(
+            modifier = modifier
+                .padding(paddingValues)
+                .padding(horizontal = 6.dp),
+            columns = GridCells.Adaptive(minSize = 350.dp)
+        ) {
             item(span = { GridItemSpan(maxCurrentLineSpan) }) {
-                ContentNotFoundView("games")
-            }
-        } else {
-            items(games) { gameDecorator ->
-                ScoresItem(
-                    gameDecorator = gameDecorator,
-                    modifier = Modifier
-                        .clickable {
-                            detailRoute(
-                                ScoresDetail(
-                                    id = gameDecorator.game.id.toInt(),
-                                    matchID = gameDecorator.game.matchID
+                SingleChoiceSegmentedButtonRow(modifier = Modifier.padding(horizontal = 10.dp)) {
+                    Gameday.entries.forEachIndexed { index, gamedayOption ->
+                        SegmentedButton(
+                            shape = SegmentedButtonDefaults.itemShape(
+                                index = index,
+                                count = Gameday.entries.size
+                            ),
+                            selected = selectedGameday == gamedayOption,
+                            onClick = { vm.onGamedayChanged(gamedayOption) },
+                            label = {
+                                Text(
+                                    text = gamedayOption.value.replaceFirstChar { it.uppercase() },
+                                    maxLines = 2,
+                                    overflow = TextOverflow.Ellipsis
                                 )
-                            )
-                        }
-                )
+                            }
+                        )
+                    }
+                }
             }
+            item(span = { GridItemSpan(maxCurrentLineSpan) }) {
+                Row(
+                    modifier = Modifier
+                        .padding(14.dp),
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth(0.8F)
+                    ) {
+                        Text(
+                            text = "Show External Games",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                        Text(
+                            text = "Controls whether the list is filtered by just Skylarks games.",
+                            style = MaterialTheme.typography.labelSmall,
+                        )
+                    }
+                    Spacer(modifier = Modifier.weight(1.0F))
+                    Switch(
+                        modifier = Modifier.semantics {
+                            contentDescription = "Show external Games"
+                        },
+                        checked = showExternalGames,
+                        onCheckedChange = { vm.onShowExternalGamesChanged(it) },
+                        colors = SwitchDefaults.colors()
+                    )
+                }
+            }
+            item(span = { GridItemSpan(maxCurrentLineSpan) }) {
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
+            }
+            if (games.isEmpty()) {
+                item(span = { GridItemSpan(maxCurrentLineSpan) }) {
+                    ContentNotFoundView("games")
+                }
+            } else {
+                items(games) { gameDecorator ->
+                    ScoresItem(
+                        gameDecorator = gameDecorator,
+                        modifier = Modifier
+                            .clickable {
+                                detailRoute(
+                                    ScoresDetail(
+                                        id = gameDecorator.game.id.toInt(),
+                                        matchID = gameDecorator.game.matchID
+                                    )
+                                )
+                            }
+                    )
+                }
+            }
+
+    //        item(span = { GridItemSpan(maxCurrentLineSpan) }) {
+    //            LoadingView()
+    //        }
+
+    //        item {
+    //            Text("An error occured loading data.")
+    //        }
         }
-
-//        item(span = { GridItemSpan(maxCurrentLineSpan) }) {
-//            LoadingView()
-//        }
-
-//        item {
-//            Text("An error occured loading data.")
-//        }
     }
 }
 

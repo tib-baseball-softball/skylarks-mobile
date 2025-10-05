@@ -20,59 +20,86 @@ import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
 import de.davidbattefeld.berlinskylarks.ui.utility.LoadingView
 import de.davidbattefeld.berlinskylarks.ui.utility.ViewState
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.TeamDetailViewModel
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.navigation3.runtime.NavKey
+import de.davidbattefeld.berlinskylarks.ui.nav.TopLevelBackStack
+import de.davidbattefeld.berlinskylarks.ui.nav.NavigationType
+import de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar
+import de.davidbattefeld.berlinskylarks.ui.utility.SkylarksSnackbarHost
+import de.davidbattefeld.berlinskylarks.ui.nav.TeamDetail
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TeamDetailScreen(
     teamID: Int,
     playerDetailRoute: (Int) -> Unit,
     vm: TeamDetailViewModel,
+    topLevelBackStack: TopLevelBackStack<NavKey>,
+    navigationType: NavigationType,
 ) {
     val listState = rememberLazyListState()
     val players by vm.players.collectAsState()
 
-    Surface(
-        shape = RoundedCornerShape(size = 12.dp),
-        tonalElevation = 1.dp,
-        modifier = Modifier
-            .padding(8.dp)
-    ) {
-        LazyColumn(
-            state = listState
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                scrollBehavior = scrollBehavior,
+                title = { Text(text = TeamDetail.title) },
+            )
+        },
+        snackbarHost = { SkylarksSnackbarHost() },
+        bottomBar = { SkylarksBottomBar(topLevelBackStack, navigationType) }
+    ) { paddingValues ->
+        Surface(
+            shape = RoundedCornerShape(size = 12.dp),
+            tonalElevation = 1.dp,
+            modifier = Modifier
+                .padding(paddingValues)
+                .padding(8.dp)
         ) {
-            when (vm.viewState) {
-                ViewState.NoResults, ViewState.NotInitialised -> {
-                    item {
-                        ContentNotFoundView("players")
+            LazyColumn(
+                state = listState
+            ) {
+                when (vm.viewState) {
+                    ViewState.NoResults, ViewState.NotInitialised -> {
+                        item {
+                            ContentNotFoundView("players")
+                        }
                     }
-                }
 
-                ViewState.Loading -> {
-                    item {
-                        LoadingView()
+                    ViewState.Loading -> {
+                        item {
+                            LoadingView()
+                        }
                     }
-                }
 
-                ViewState.Found -> {
-                    itemsIndexed(players) { index, player ->
-                        Column {
-                            PlayerRow(
-                                player = player,
-                                modifier = Modifier
-                                    .clickable {
-                                        playerDetailRoute(player.id.toInt())
-                                    }
-                            )
-                            // last item does not have a divider
-                            if (index + 1 != players.size) {
-                                HorizontalDivider(modifier = Modifier.padding(horizontal = 8.dp))
+                    ViewState.Found -> {
+                        itemsIndexed(players) { index, player ->
+                            Column {
+                                PlayerRow(
+                                    player = player,
+                                    modifier = Modifier
+                                        .clickable {
+                                            playerDetailRoute(player.id.toInt())
+                                        }
+                                )
+                                // last item does not have a divider
+                                if (index + 1 != players.size) {
+                                    HorizontalDivider(modifier = Modifier.padding(horizontal = 8.dp))
+                                }
                             }
                         }
                     }
-                }
 
-                ViewState.Error -> {
-                    item {
-                        Text("An error occurred loading data.")
+                    ViewState.Error -> {
+                        item {
+                            Text("An error occurred loading data.")
+                        }
                     }
                 }
             }
