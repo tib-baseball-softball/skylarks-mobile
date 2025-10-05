@@ -11,8 +11,12 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
@@ -25,6 +29,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -33,8 +38,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
 import de.berlinskylarks.shared.data.enums.Gameday
+import de.davidbattefeld.berlinskylarks.LocalSnackbarHostState
 import de.davidbattefeld.berlinskylarks.ui.nav.NavigationType
-import de.davidbattefeld.berlinskylarks.ui.nav.Scores
 import de.davidbattefeld.berlinskylarks.ui.nav.ScoresDetail
 import de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar
 import de.davidbattefeld.berlinskylarks.ui.nav.TopLevelBackStack
@@ -42,6 +47,7 @@ import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
 import de.davidbattefeld.berlinskylarks.ui.utility.SkylarksSnackbarHost
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,12 +65,13 @@ fun ScoresScreen(
     val selectedGameday by vm.selectedGameday.collectAsState()
 
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val snackbarHostState = LocalSnackbarHostState.current
+    val scope = rememberCoroutineScope()
 
     Scaffold(
         topBar = {
             ScoresTopBar(
                 scrollBehavior = scrollBehavior,
-                title = Scores.title,
                 leagueGroups = leagueGroups,
                 filteredLeagueGroup = filteredLeagueGroup,
                 games = games,
@@ -74,7 +81,19 @@ fun ScoresScreen(
             )
         },
         snackbarHost = { SkylarksSnackbarHost() },
-        bottomBar = { SkylarksBottomBar(topLevelBackStack, navigationType) }
+        bottomBar = { SkylarksBottomBar(topLevelBackStack, navigationType) },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    vm.refresh()
+                    scope.launch {
+                        snackbarHostState.showSnackbar(message = "Refreshing games - this can take a while.")
+                    }
+                },
+                containerColor = MaterialTheme.colorScheme.primary,
+                content = { Icon(Icons.Filled.Refresh, "refresh games list") },
+            )
+        }
     ) { paddingValues ->
         LazyVerticalGrid(
             modifier = modifier

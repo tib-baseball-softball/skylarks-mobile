@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -29,10 +28,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -58,13 +57,13 @@ import de.davidbattefeld.berlinskylarks.domain.model.UserCalendar
 import de.davidbattefeld.berlinskylarks.domain.service.GameDecorator
 import de.davidbattefeld.berlinskylarks.testdata.LEAGUE_GROUP_ALL
 import de.davidbattefeld.berlinskylarks.ui.calendar.PermissionNotGrantedView
+import de.davidbattefeld.berlinskylarks.ui.nav.Scores
 import de.davidbattefeld.berlinskylarks.ui.utility.ConfirmationDialog
 import kotlinx.coroutines.launch
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 fun ScoresTopBar(
-    title: String,
     scrollBehavior: TopAppBarScrollBehavior,
     leagueGroups: List<LeagueGroup>,
     filteredLeagueGroup: LeagueGroup,
@@ -86,10 +85,10 @@ fun ScoresTopBar(
     var userCalendars = remember { mutableStateListOf<UserCalendar>() }
     var selectedCalID by remember { mutableStateOf<Long?>(null) }
 
-    MediumTopAppBar(
+    TopAppBar(
         scrollBehavior = scrollBehavior,
         title = {
-            Text(text = title)
+            Text(text = Scores.title)
         },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.surface
@@ -103,7 +102,6 @@ fun ScoresTopBar(
                     contentDescription = "add games to calendar"
                 )
             }
-            Spacer(modifier = Modifier.weight(1.0F))
 
             Box {
                 OutlinedButton(

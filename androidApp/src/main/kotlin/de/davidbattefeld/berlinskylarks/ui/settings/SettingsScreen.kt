@@ -22,7 +22,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -39,11 +42,17 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation3.runtime.NavKey
 import de.berlinskylarks.shared.TeamGlobals
 import de.davidbattefeld.berlinskylarks.data.preferences.DEFAULT_SETTINGS
 import de.davidbattefeld.berlinskylarks.ui.nav.Info
 import de.davidbattefeld.berlinskylarks.ui.nav.LegalNotice
+import de.davidbattefeld.berlinskylarks.ui.nav.NavigationType
 import de.davidbattefeld.berlinskylarks.ui.nav.Privacy
+import de.davidbattefeld.berlinskylarks.ui.nav.Settings
+import de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar
+import de.davidbattefeld.berlinskylarks.ui.nav.TopLevelBackStack
+import de.davidbattefeld.berlinskylarks.ui.utility.SkylarksSnackbarHost
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.SettingsViewModel
 
 @OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
@@ -53,26 +62,25 @@ fun SettingsScreen(
     infoRoute: () -> Unit,
     privacyRoute: () -> Unit,
     legalRoute: () -> Unit,
-    topLevelBackStack: de.davidbattefeld.berlinskylarks.ui.nav.TopLevelBackStack<androidx.navigation3.runtime.NavKey>,
-    navigationType: de.davidbattefeld.berlinskylarks.ui.nav.NavigationType,
+    topLevelBackStack: TopLevelBackStack<NavKey>,
+    navigationType: NavigationType,
 ) {
     val userPreferences by vm.userPreferencesFlow.collectAsStateWithLifecycle(initialValue = DEFAULT_SETTINGS)
 
     var expanded by remember { mutableStateOf(false) }
 
-    val scrollBehavior =
-        androidx.compose.material3.TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
-    androidx.compose.material3.Scaffold(
+    Scaffold(
         topBar = {
-            androidx.compose.material3.TopAppBar(
+            TopAppBar(
                 scrollBehavior = scrollBehavior,
-                title = { Text(text = de.davidbattefeld.berlinskylarks.ui.nav.Settings.title) },
+                title = { Text(text = Settings.title) },
             )
         },
-        snackbarHost = { de.davidbattefeld.berlinskylarks.ui.utility.SkylarksSnackbarHost() },
+        snackbarHost = { SkylarksSnackbarHost() },
         bottomBar = {
-            de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar(
+            SkylarksBottomBar(
                 topLevelBackStack,
                 navigationType
             )
