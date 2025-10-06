@@ -4,12 +4,9 @@ import androidx.annotation.DrawableRes
 import de.berlinskylarks.shared.data.model.Game
 import de.berlinskylarks.shared.utility.DateTimeUtility
 import de.davidbattefeld.berlinskylarks.R
+import de.davidbattefeld.berlinskylarks.data.utility.AndroidDateTimeUtility
 import de.davidbattefeld.berlinskylarks.global.baseballClubList
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 import kotlin.time.ExperimentalTime
-import kotlin.time.toJavaInstant
 
 @OptIn(ExperimentalTime::class)
 class GameDecorator(val game: Game) {
@@ -59,13 +56,7 @@ class GameDecorator(val game: Game) {
      */
     private fun addDate(): GameDecorator {
         val gameInstant = DateTimeUtility.parseBSMDateTimeString(game.time)
-
-        // Convert to a ZonedDateTime in the user's default time zone for display
-        val zonedDateTime = gameInstant.toJavaInstant().atZone(ZoneId.systemDefault())
-
-        // Use the platform's localized formatter
-        val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
-        localisedDate = zonedDateTime.format(formatter)
+        localisedDate = AndroidDateTimeUtility.formatDate(gameInstant)
         return this
     }
 
