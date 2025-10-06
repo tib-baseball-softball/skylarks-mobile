@@ -11,7 +11,7 @@ class GameReportSyncService(
     private val mediaRepository: MediaRepository,
     private val gameReportClient: GameReportAPIClient,
 ) {
-    suspend fun syncGameReports() {
+    suspend fun syncGameReports(): Int {
         val gameReports = gameReportClient.loadGameReports()
 
         gameReports.forEach { gameReport ->
@@ -98,5 +98,6 @@ class GameReportSyncService(
                 )
             }
         }
+        return gameReports.size
     }
 }

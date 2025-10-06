@@ -16,11 +16,13 @@ class GameReportWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted workerParams: WorkerParameters,
     private val gameReportSyncService: GameReportSyncService,
-    ): CoroutineWorker(appContext, workerParams) {
+) : CoroutineWorker(appContext, workerParams) {
 
     override suspend fun doWork(): Result {
         return try {
-            gameReportSyncService.syncGameReports()
+            val count = gameReportSyncService.syncGameReports()
+            Log.i(TAG, "Synced $count game reports")
+
             Result.success()
         } catch (throwable: Throwable) {
             Log.e(

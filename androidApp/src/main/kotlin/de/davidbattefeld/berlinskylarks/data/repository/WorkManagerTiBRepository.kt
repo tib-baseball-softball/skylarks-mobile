@@ -8,6 +8,7 @@ import androidx.work.workDataOf
 import de.davidbattefeld.berlinskylarks.data.sync.ClubDataWorker
 import de.davidbattefeld.berlinskylarks.data.sync.FieldDataWorker
 import de.davidbattefeld.berlinskylarks.data.sync.GameDataWorker
+import de.davidbattefeld.berlinskylarks.data.sync.GameReportWorker
 import de.davidbattefeld.berlinskylarks.data.sync.LeagueGroupWorker
 import de.davidbattefeld.berlinskylarks.data.sync.LicenseDataWorker
 import de.davidbattefeld.berlinskylarks.data.sync.PlayerDataWorker
@@ -24,6 +25,13 @@ class WorkManagerTiBRepository(
             .setInputData(workDataOf("season" to season))
             .build()
         workManager.enqueue(syncScoresRequest)
+    }
+
+    fun syncGameReports() {
+        val syncGameReportsRequest = OneTimeWorkRequestBuilder<GameReportWorker>()
+            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+            .build()
+        workManager.enqueue(syncGameReportsRequest)
     }
 
     fun syncLeagueGroups(season: Int) {

@@ -25,7 +25,7 @@ fun ScoresDetailGameReportSection(
         if (gameReport == null) {
             ContentNotFoundView("game reports")
         } else {
-            Text(gameReport.reportFirst)
+            Text(gameReport.reportFirstPlain)
         }
     }
 }

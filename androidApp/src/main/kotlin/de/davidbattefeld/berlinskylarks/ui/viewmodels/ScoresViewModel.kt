@@ -97,6 +97,7 @@ class ScoresViewModel @AssistedInject constructor(
         viewModelScope.launch {
             // one-time request to ensure up-to-date game data
             workManagerTiBRepository.syncScores(season = selectedSeason.value)
+            workManagerTiBRepository.syncGameReports()
 
             val existingLeagueGroup = leagueGroupRepository.getFirstItem().firstOrNull()
             if (existingLeagueGroup == null) {
