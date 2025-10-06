@@ -33,7 +33,7 @@ fun PlayerHeaderSection(player: Player) {
     ) {
         if (player.media.isNotEmpty()) {
             AsyncImage(
-                model = player.media.first().url,
+                model = player.media.firstOrNull()?.url,
                 contentDescription = player.media.firstOrNull()?.alt,
                 modifier = Modifier
                     .fillMaxWidth(),

@@ -6,7 +6,7 @@ import kotlinx.datetime.todayIn
 import kotlin.time.Clock
 import kotlin.time.Instant
 
-class DateTimeUtility {
+open class DateTimeUtility {
     companion object {
         const val BSM_DATE_TIME_FORMAT_PATTERN = "y-M-dd HH:mm:ss Z"
 

@@ -12,6 +12,7 @@ plugins {
 kotlin {
     compilerOptions {
         optIn.add("kotlin.RequiresOptIn")
+        optIn.add("kotlin.time.ExperimentalTime")
         jvmTarget = JvmTarget.fromTarget("17")
     }
 }
