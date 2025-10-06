@@ -12,6 +12,7 @@ class Converters {
     val jsonBuilder = Json {
         ignoreUnknownKeys = true
         explicitNulls = false
+        isLenient = true
     }
 
     @TypeConverter

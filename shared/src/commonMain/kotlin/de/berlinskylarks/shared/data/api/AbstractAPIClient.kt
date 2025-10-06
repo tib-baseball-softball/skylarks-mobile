@@ -16,6 +16,7 @@ abstract class AbstractAPIClient(protected val authKey: String) {
     protected val jsonBuilder = Json {
         ignoreUnknownKeys = true
         explicitNulls = false
+        isLenient = true
     }
 
     protected abstract fun URLBuilder.addAuthorizationParameters()
