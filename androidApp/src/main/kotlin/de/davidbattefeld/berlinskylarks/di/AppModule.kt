@@ -230,7 +230,7 @@ object AppModule {
         gameRepository: GameRepository,
         gameClient: MatchAPIClient,
         boxScoreRepository: BoxScoreRepository,
-    ): GameSyncService = GameSyncService(gameRepository, gameClient)
+    ): GameSyncService = GameSyncService(gameRepository, boxScoreRepository, gameClient)
 
     @Provides
     @Singleton

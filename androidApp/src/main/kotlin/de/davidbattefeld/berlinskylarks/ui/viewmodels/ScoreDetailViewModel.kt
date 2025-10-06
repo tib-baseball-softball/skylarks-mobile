@@ -7,6 +7,7 @@ import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.berlinskylarks.shared.data.model.MatchBoxScore
 import de.berlinskylarks.shared.data.model.tib.GameReport
+import de.berlinskylarks.shared.data.service.GameSyncService
 import de.berlinskylarks.shared.database.repository.BoxScoreRepository
 import de.berlinskylarks.shared.database.repository.GameReportRepository
 import de.berlinskylarks.shared.database.repository.GameRepository
@@ -17,6 +18,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 @HiltViewModel(assistedFactory = ScoreDetailViewModel.Factory::class)
 class ScoreDetailViewModel @AssistedInject constructor(
@@ -25,6 +27,7 @@ class ScoreDetailViewModel @AssistedInject constructor(
     gameRepository: GameRepository,
     gameReportRepository: GameReportRepository,
     boxScoreRepository: BoxScoreRepository,
+    private val gameSyncService: GameSyncService,
 ) : GenericViewModel(userPreferencesRepository) {
     var game: StateFlow<GameDecorator?> =
         gameRepository.getGameByID(navKey.id)
@@ -58,6 +61,15 @@ class ScoreDetailViewModel @AssistedInject constructor(
                 started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
                 initialValue = null
             )
+
+    init {
+        viewModelScope.launch {
+            gameSyncService.syncSingleBoxScore(
+                matchID = navKey.matchID,
+                id = navKey.id
+            )
+        }
+    }
 
     @AssistedFactory
     interface Factory {

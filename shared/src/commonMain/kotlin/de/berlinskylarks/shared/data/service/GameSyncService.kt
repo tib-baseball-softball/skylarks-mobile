@@ -4,14 +4,18 @@ import de.berlinskylarks.shared.TeamGlobals
 import de.berlinskylarks.shared.data.api.BSMAPIClient
 import de.berlinskylarks.shared.data.api.MatchAPIClient
 import de.berlinskylarks.shared.data.enums.Gameday
+import de.berlinskylarks.shared.database.model.BoxScoreEntity
 import de.berlinskylarks.shared.database.model.GameEntity
+import de.berlinskylarks.shared.database.repository.BoxScoreRepository
 import de.berlinskylarks.shared.database.repository.GameRepository
 import de.berlinskylarks.shared.utility.DateTimeUtility
+import kotlinx.coroutines.flow.firstOrNull
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
 class GameSyncService(
     private val gameRepository: GameRepository,
+    private val boxScoreRepository: BoxScoreRepository,
     private val gameClient: MatchAPIClient,
 ) {
     suspend fun syncGamesForSeason(season: Int): Int {
@@ -48,5 +52,27 @@ class GameSyncService(
             totalGamesSynced += games.size
         }
         return totalGamesSynced
+    }
+
+    suspend fun syncSingleBoxScore(matchID: String, id: Int): Boolean {
+        val existingBoxScore = boxScoreRepository.getBoxScoreByMatchID(matchID).firstOrNull()
+        if (existingBoxScore != null) {
+            println("Found boxScore for matchID $matchID, return early.")
+            return true
+        }
+
+        val boxScore = gameClient.getBoxScoreForGame(gameID = id)
+        if (boxScore != null) {
+            boxScoreRepository.insertBoxScore(
+                BoxScoreEntity(
+                    matchID = boxScore.header.matchID,
+                    json = boxScore,
+                )
+            )
+            println("Inserted boxScore for matchID $matchID")
+            return true
+        }
+        println("No boxScore found for matchID $matchID")
+        return false
     }
 }

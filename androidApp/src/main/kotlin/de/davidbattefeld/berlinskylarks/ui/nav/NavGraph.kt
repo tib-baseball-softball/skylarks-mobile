@@ -96,7 +96,6 @@ fun NavGraph(
                         }
                     )
                     ScoresDetailScreen(
-                        matchID = key.id,
                         vm = vm,
                         topLevelBackStack = topLevelBackStack,
                         navigationType = navigationType,

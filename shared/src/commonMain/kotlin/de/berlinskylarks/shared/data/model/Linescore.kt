@@ -17,7 +17,7 @@ data class Linescore(
 data class LinescoreEntry(
     @SerialName("league_entry")
     val leagueEntry: LeagueEntry,
-    val innings: List<Int>,
+    val innings: List<String>,
     val runs: Int,
     val hits: Int,
     val errors: Int

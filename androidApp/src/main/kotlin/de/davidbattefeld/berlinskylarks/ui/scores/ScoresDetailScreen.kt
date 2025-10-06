@@ -45,7 +45,6 @@ import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoreDetailViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScoresDetailScreen(
-    matchID: Int,
     vm: ScoreDetailViewModel,
     topLevelBackStack: TopLevelBackStack<NavKey>,
     navigationType: NavigationType,
