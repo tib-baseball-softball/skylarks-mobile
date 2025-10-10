@@ -17,6 +17,12 @@ import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
 import de.davidbattefeld.berlinskylarks.ui.club.ClubScreen
+import de.davidbattefeld.berlinskylarks.ui.club.ClubDetailScreen
+import de.davidbattefeld.berlinskylarks.ui.club.field.FieldDetailScreen
+import de.davidbattefeld.berlinskylarks.ui.club.field.FieldsScreen
+import de.davidbattefeld.berlinskylarks.ui.club.licenses.LicenseDetailScreen
+import de.davidbattefeld.berlinskylarks.ui.club.licenses.ScorersScreen
+import de.davidbattefeld.berlinskylarks.ui.club.licenses.UmpiresScreen
 import de.davidbattefeld.berlinskylarks.ui.club.functionary.FunctionaryDetailScreen
 import de.davidbattefeld.berlinskylarks.ui.club.functionary.FunctionaryScreen
 import de.davidbattefeld.berlinskylarks.ui.club.teams.PlayerDetailScreen
@@ -32,6 +38,12 @@ import de.davidbattefeld.berlinskylarks.ui.settings.SettingsScreen
 import de.davidbattefeld.berlinskylarks.ui.standings.StandingsDetailScreen
 import de.davidbattefeld.berlinskylarks.ui.standings.StandingsScreen
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.ClubViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.ClubDetailViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.FieldDetailViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.FieldsViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.LicenseDetailViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScorersViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.UmpiresViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.FunctionaryDetailViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.FunctionaryViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.LeagueGroupsViewModel
@@ -220,6 +232,93 @@ fun NavGraph(
                             }
                         )
                     FunctionaryDetailScreen(
+                        vm = vm,
+                        topLevelBackStack = topLevelBackStack,
+                        navigationType = navigationType,
+                    )
+                }
+
+                entry<ClubDetail> { key ->
+                    val vm = hiltViewModel<ClubDetailViewModel, ClubDetailViewModel.Factory>(
+                        creationCallback = { factory ->
+                            factory.create(key)
+                        }
+                    )
+                    ClubDetailScreen(
+                        vm = vm,
+                        topLevelBackStack = topLevelBackStack,
+                        navigationType = navigationType,
+                    )
+                }
+
+                entry<Umpires> {
+                    val vm = hiltViewModel<UmpiresViewModel, UmpiresViewModel.Factory>(
+                        creationCallback = { factory ->
+                            factory.create()
+                        }
+                    )
+                    UmpiresScreen(
+                        vm = vm,
+                        detailRoute = { id ->
+                            topLevelBackStack.add(LicenseDetail(id))
+                        },
+                        topLevelBackStack = topLevelBackStack,
+                        navigationType = navigationType,
+                    )
+                }
+
+                entry<Scorers> {
+                    val vm = hiltViewModel<ScorersViewModel, ScorersViewModel.Factory>(
+                        creationCallback = { factory ->
+                            factory.create()
+                        }
+                    )
+                    ScorersScreen(
+                        vm = vm,
+                        detailRoute = { id ->
+                            topLevelBackStack.add(LicenseDetail(id))
+                        },
+                        topLevelBackStack = topLevelBackStack,
+                        navigationType = navigationType,
+                    )
+                }
+
+                entry<LicenseDetail> { key ->
+                    val vm = hiltViewModel<LicenseDetailViewModel, LicenseDetailViewModel.Factory>(
+                        creationCallback = { factory ->
+                            factory.create(key)
+                        }
+                    )
+                    LicenseDetailScreen(
+                        vm = vm,
+                        topLevelBackStack = topLevelBackStack,
+                        navigationType = navigationType,
+                    )
+                }
+
+                entry<Field> {
+                    val vm = hiltViewModel<FieldsViewModel, FieldsViewModel.Factory>(
+                        creationCallback = { factory ->
+                            factory.create()
+                        }
+                    )
+                    FieldsScreen(
+                        vm = vm,
+                        detailRoute = { id ->
+                            topLevelBackStack.add(FieldDetail(id))
+                        },
+                        topLevelBackStack = topLevelBackStack,
+                        navigationType = navigationType,
+                    )
+                }
+
+                entry<FieldDetail> { key ->
+                    val vm = hiltViewModel<FieldDetailViewModel, FieldDetailViewModel.Factory>(
+                        creationCallback = { factory ->
+                            factory.create(key)
+                        }
+                    )
+                    FieldDetailScreen(
                         vm = vm,
                         topLevelBackStack = topLevelBackStack,
                         navigationType = navigationType,

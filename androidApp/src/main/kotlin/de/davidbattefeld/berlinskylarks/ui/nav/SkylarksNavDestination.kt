@@ -155,3 +155,17 @@ data object Privacy : SkylarksNavDestination {
 data object LegalNotice : SkylarksNavDestination {
     override val title = "Legal Notice"
 }
+
+@Serializable
+data object Field : SkylarksNavDestination {
+    override val title = "Fields"
+}
+
+@Serializable
+data class FieldDetail(val id: Int) : SkylarksNavDestination {
+    override val title = "Field Detail"
+
+    companion object {
+        val title = "Field Detail"
+    }
+}

@@ -1,0 +1,51 @@
+package de.davidbattefeld.berlinskylarks.ui.club.field
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.navigation3.runtime.NavKey
+import de.davidbattefeld.berlinskylarks.ui.nav.FieldDetail
+import de.davidbattefeld.berlinskylarks.ui.nav.NavigationType
+import de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar
+import de.davidbattefeld.berlinskylarks.ui.nav.TopLevelBackStack
+import de.davidbattefeld.berlinskylarks.ui.utility.SkylarksSnackbarHost
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.FieldDetailViewModel
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun FieldDetailScreen(
+    vm: FieldDetailViewModel,
+    topLevelBackStack: TopLevelBackStack<NavKey>,
+    navigationType: NavigationType,
+) {
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val field by vm.field.collectAsState()
+
+    if (field == null) {
+        return
+    }
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                scrollBehavior = scrollBehavior,
+                title = { Text(text = FieldDetail.title) },
+            )
+        },
+        snackbarHost = { SkylarksSnackbarHost() },
+        bottomBar = { SkylarksBottomBar(topLevelBackStack, navigationType) }
+    ) { paddingValues ->
+        Column(modifier = Modifier.padding(paddingValues)) {
+            Text(text = field?.name ?: "")
+            Text(text = (field?.street ?: "") + ", " + (field?.postalCode ?: "") + " " + (field?.city ?: ""))
+        }
+    }
+}
