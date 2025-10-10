@@ -2,6 +2,8 @@ package de.berlinskylarks.shared.database
 
 import androidx.room.TypeConverter
 import de.berlinskylarks.shared.data.model.Game
+import de.berlinskylarks.shared.data.model.HomeDataset
+import de.berlinskylarks.shared.data.model.LeagueEntry
 import de.berlinskylarks.shared.data.model.LeagueTable
 import de.berlinskylarks.shared.data.model.MatchBoxScore
 import kotlinx.serialization.json.Json
@@ -43,5 +45,25 @@ class Converters {
     @TypeConverter
     fun tableToJSONString(table: LeagueTable): String {
         return jsonBuilder.encodeToString(table)
+    }
+
+    @TypeConverter
+    fun leagueEntryListFromJSONString(value: String): List<LeagueEntry> {
+        return jsonBuilder.decodeFromString<List<LeagueEntry>>(value)
+    }
+
+    @TypeConverter
+    fun leagueEntryListToJSONString(leagueEntries: List<LeagueEntry>): String {
+        return jsonBuilder.encodeToString(leagueEntries)
+    }
+
+    @TypeConverter
+    fun homeDatasetFromJSOnString(value: String): HomeDataset {
+        return jsonBuilder.decodeFromString<HomeDataset>(value)
+    }
+
+    @TypeConverter
+    fun homeDatasetToJSONString(dataset: HomeDataset): String {
+        return jsonBuilder.encodeToString(dataset)
     }
 }

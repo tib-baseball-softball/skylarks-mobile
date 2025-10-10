@@ -8,10 +8,14 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class BSMTeam(
-    var id: Int,
-    var name: String,
+    val id: Int,
+    val name: String,
+    val season: Int,
+    val pool: Boolean,
+    @SerialName("human_state")
+    val humanState: String,
     @SerialName("short_name")
-    var shortName: String,
+    val shortName: String,
     @SerialName("league_entries")
-    var leagueEntries: List<LeagueEntry>?,
+    val leagueEntries: List<LeagueEntry>?,
 )

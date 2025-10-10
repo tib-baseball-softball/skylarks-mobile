@@ -16,6 +16,7 @@ import de.berlinskylarks.shared.database.dao.LicenseDao
 import de.berlinskylarks.shared.database.dao.MediaDao
 import de.berlinskylarks.shared.database.dao.PlayerDao
 import de.berlinskylarks.shared.database.dao.TiBTeamDao
+import de.berlinskylarks.shared.database.model.BSMTeamEntity
 import de.berlinskylarks.shared.database.model.BoxScoreEntity
 import de.berlinskylarks.shared.database.model.ClubEntity
 import de.berlinskylarks.shared.database.model.FieldEntity
@@ -23,6 +24,7 @@ import de.berlinskylarks.shared.database.model.FunctionaryEntity
 import de.berlinskylarks.shared.database.model.GameEntity
 import de.berlinskylarks.shared.database.model.GameReportEntity
 import de.berlinskylarks.shared.database.model.GameReportMediaCrossRef
+import de.berlinskylarks.shared.database.model.HomeDatasetEntity
 import de.berlinskylarks.shared.database.model.LeagueEntity
 import de.berlinskylarks.shared.database.model.LeagueGroupEntity
 import de.berlinskylarks.shared.database.model.LicenseEntity
@@ -53,8 +55,10 @@ expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
         LicenseEntity::class,
         PlayerEntity::class,
         TiBTeamEntity::class,
+        BSMTeamEntity::class,
+        HomeDatasetEntity::class,
     ],
-    version = 9,
+    version = 10,
     exportSchema = false,
 )
 @TypeConverters(Converters::class)
