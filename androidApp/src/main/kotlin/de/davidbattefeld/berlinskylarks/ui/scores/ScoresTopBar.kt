@@ -28,10 +28,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -85,7 +85,7 @@ fun ScoresTopBar(
     var userCalendars = remember { mutableStateListOf<UserCalendar>() }
     var selectedCalID by remember { mutableStateOf<Long?>(null) }
 
-    TopAppBar(
+    MediumTopAppBar(
         scrollBehavior = scrollBehavior,
         title = {
             Text(text = Scores.title)

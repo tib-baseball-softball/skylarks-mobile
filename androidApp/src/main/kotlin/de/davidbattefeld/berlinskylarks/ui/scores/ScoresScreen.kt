@@ -3,6 +3,7 @@ package de.davidbattefeld.berlinskylarks.ui.scores
 import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -102,24 +103,28 @@ fun ScoresScreen(
             columns = GridCells.Adaptive(minSize = 350.dp)
         ) {
             item(span = { GridItemSpan(maxCurrentLineSpan) }) {
-                SingleChoiceSegmentedButtonRow(modifier = Modifier.padding(horizontal = 10.dp)) {
-                    Gameday.entries.forEachIndexed { index, gamedayOption ->
-                        SegmentedButton(
-                            shape = SegmentedButtonDefaults.itemShape(
-                                index = index,
-                                count = Gameday.entries.size
-                            ),
-                            selected = selectedGameday == gamedayOption,
-                            onClick = { vm.onGamedayChanged(gamedayOption) },
-                            label = {
-                                Text(
-                                    text = gamedayOption.value.replaceFirstChar { it.uppercase() },
-                                    maxLines = 2,
-                                    overflow = TextOverflow.Ellipsis
-                                )
-                            }
-                        )
-                    }
+                SingleChoiceSegmentedButtonRow(
+                    modifier = Modifier.padding(8.dp)
+                ) {
+                    Gameday.entries.filterNot { it == Gameday.NEXT }
+                        .forEachIndexed { index, gamedayOption ->
+                            SegmentedButton(
+                                shape = SegmentedButtonDefaults.itemShape(
+                                    index = index,
+                                    count = Gameday.entries.size
+                                ),
+                                contentPadding = PaddingValues(4.dp),
+                                selected = selectedGameday == gamedayOption,
+                                onClick = { vm.onGamedayChanged(gamedayOption) },
+                                label = {
+                                    Text(
+                                        text = gamedayOption.value.replaceFirstChar { it.uppercase() },
+                                        maxLines = 2,
+                                        overflow = TextOverflow.Ellipsis
+                                    )
+                                }
+                            )
+                        }
                 }
             }
             item(span = { GridItemSpan(maxCurrentLineSpan) }) {
