@@ -5,6 +5,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class HomeDataset(
+    @SerialName("team_id")
+    val teamID: Int,
+    val season: Int,
+    @SerialName("league_group_id")
+    val leagueGroupID: Int,
     @SerialName("league_group")
     val leagueGroup: LeagueGroup,
     @SerialName("next_game")

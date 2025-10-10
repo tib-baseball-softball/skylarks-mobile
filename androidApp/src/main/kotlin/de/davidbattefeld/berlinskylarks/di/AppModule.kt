@@ -32,6 +32,8 @@ import de.berlinskylarks.shared.database.dao.LicenseDao
 import de.berlinskylarks.shared.database.dao.MediaDao
 import de.berlinskylarks.shared.database.dao.PlayerDao
 import de.berlinskylarks.shared.database.dao.TiBTeamDao
+import de.berlinskylarks.shared.database.dao.HomeDatasetDao
+import de.berlinskylarks.shared.database.dao.BSMTeamDao
 import de.berlinskylarks.shared.database.getDatabase
 import de.berlinskylarks.shared.database.repository.BoxScoreRepository
 import de.berlinskylarks.shared.database.repository.ClubRepository
@@ -53,8 +55,12 @@ import de.berlinskylarks.shared.database.repository.OfflineLicenseRepository
 import de.berlinskylarks.shared.database.repository.OfflineMediaRepository
 import de.berlinskylarks.shared.database.repository.OfflinePlayerRepository
 import de.berlinskylarks.shared.database.repository.OfflineTiBTeamRepository
+import de.berlinskylarks.shared.database.repository.OfflineHomeDatasetRepository
+import de.berlinskylarks.shared.database.repository.OfflineBSMTeamRepository
 import de.berlinskylarks.shared.database.repository.PlayerRepository
 import de.berlinskylarks.shared.database.repository.TiBTeamRepository
+import de.berlinskylarks.shared.database.repository.HomeDatasetRepository
+import de.berlinskylarks.shared.database.repository.BSMTeamRepository
 import de.davidbattefeld.berlinskylarks.data.preferences.dataStore
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
 import de.davidbattefeld.berlinskylarks.data.repository.WorkManagerTiBRepository
@@ -157,6 +163,14 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideHomeDatasetDao(db: AppDatabase): HomeDatasetDao = db.homeDatasetDao()
+
+    @Provides
+    @Singleton
+    fun provideBSMTeamDao(db: AppDatabase): BSMTeamDao = db.bsmTeamDao()
+
+    @Provides
+    @Singleton
     fun provideUserPreferencesRepository(dataStore: DataStore<Preferences>): UserPreferencesRepository =
         UserPreferencesRepository(dataStore)
 
@@ -222,6 +236,18 @@ object AppModule {
     fun provideTiBTeamRepository(
         tiBTeamDao: TiBTeamDao
     ): TiBTeamRepository = OfflineTiBTeamRepository(tiBTeamDao)
+
+    @Provides
+    @Singleton
+    fun provideHomeDatasetRepository(
+        homeDatasetDao: HomeDatasetDao
+    ): HomeDatasetRepository = OfflineHomeDatasetRepository(homeDatasetDao)
+
+    @Provides
+    @Singleton
+    fun provideBSMTeamRepository(
+        bsmTeamDao: BSMTeamDao
+    ): BSMTeamRepository = OfflineBSMTeamRepository(bsmTeamDao)
 
     @Provides
     @Singleton
