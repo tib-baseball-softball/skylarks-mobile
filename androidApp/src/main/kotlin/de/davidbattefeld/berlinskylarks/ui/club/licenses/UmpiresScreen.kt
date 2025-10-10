@@ -45,9 +45,9 @@ fun UmpiresScreen(
     ) { paddingValues ->
         Column(modifier = Modifier.padding(paddingValues)) {
             licenses.forEach { license ->
-                val name = "${'$'}{license.person.firstName} ${'$'}{license.person.lastName}"
+                val name = "${license.person.firstName} ${license.person.lastName}"
                 Text(
-                    text = "$name - ${'$'}{license.level}",
+                    text = "$name - ${license.level}",
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable { detailRoute(license.id.toInt()) }

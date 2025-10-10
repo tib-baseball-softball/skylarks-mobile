@@ -44,9 +44,9 @@ fun LicenseDetailScreen(
         bottomBar = { SkylarksBottomBar(topLevelBackStack, navigationType) }
     ) { paddingValues ->
         Column(modifier = Modifier.padding(paddingValues)) {
-            Text(text = "${'$'}{license?.person?.firstName} ${'$'}{license?.person?.lastName}")
-            Text(text = "License No.: ${'$'}{license?.number}")
-            Text(text = "Level: ${'$'}{license?.level}")
+            Text(text = "${license?.person?.firstName} ${license?.person?.lastName}")
+            Text(text = "License No.: ${license?.number}")
+            Text(text = "Level: ${license?.level}")
         }
     }
 }
