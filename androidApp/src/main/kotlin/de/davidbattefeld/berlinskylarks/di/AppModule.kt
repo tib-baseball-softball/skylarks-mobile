@@ -8,12 +8,14 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import de.berlinskylarks.shared.data.api.ClubAPIClient
 import de.berlinskylarks.shared.data.api.FunctionaryAPIClient
 import de.berlinskylarks.shared.data.api.GameReportAPIClient
 import de.berlinskylarks.shared.data.api.LeagueGroupsAPIClient
 import de.berlinskylarks.shared.data.api.MatchAPIClient
 import de.berlinskylarks.shared.data.api.TablesAPIClient
 import de.berlinskylarks.shared.data.api.TeamsAPIClient
+import de.berlinskylarks.shared.data.service.ClubDataSyncService
 import de.berlinskylarks.shared.data.service.GameReportSyncService
 import de.berlinskylarks.shared.data.service.GameSyncService
 import de.berlinskylarks.shared.data.service.LeagueGroupSyncService
@@ -172,8 +174,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideFunctionaryRepository(
-        functionaryDao: FunctionaryDao,
-        functionaryClient: FunctionaryAPIClient
+        functionaryDao: FunctionaryDao, functionaryClient: FunctionaryAPIClient
     ): FunctionaryRepository = OfflineFunctionaryRepository(functionaryDao, functionaryClient)
 
     @Provides
@@ -231,6 +232,24 @@ object AppModule {
         gameClient: MatchAPIClient,
         boxScoreRepository: BoxScoreRepository,
     ): GameSyncService = GameSyncService(gameRepository, boxScoreRepository, gameClient)
+
+    @Provides
+    @Singleton
+    fun provideClubDataSyncService(
+        clubRepository: ClubRepository,
+        fieldRepository: FieldRepository,
+        licenseRepository: LicenseRepository,
+        functionaryRepository: FunctionaryRepository,
+        clubAPIClient: ClubAPIClient,
+        functionaryAPIClient: FunctionaryAPIClient,
+    ): ClubDataSyncService = ClubDataSyncService(
+        clubRepository,
+        functionaryRepository,
+        licenseRepository,
+        fieldRepository,
+        clubAPIClient,
+        functionaryAPIClient
+    )
 
     @Provides
     @Singleton

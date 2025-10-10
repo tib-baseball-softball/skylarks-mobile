@@ -6,11 +6,9 @@ import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import de.davidbattefeld.berlinskylarks.data.sync.ClubDataWorker
-import de.davidbattefeld.berlinskylarks.data.sync.FieldDataWorker
 import de.davidbattefeld.berlinskylarks.data.sync.GameDataWorker
 import de.davidbattefeld.berlinskylarks.data.sync.GameReportWorker
 import de.davidbattefeld.berlinskylarks.data.sync.LeagueGroupWorker
-import de.davidbattefeld.berlinskylarks.data.sync.LicenseDataWorker
 import de.davidbattefeld.berlinskylarks.data.sync.PlayerDataWorker
 import de.davidbattefeld.berlinskylarks.data.sync.TiBTeamDataWorker
 
@@ -42,22 +40,8 @@ class WorkManagerTiBRepository(
         workManager.enqueue(syncLeagueGroupsRequest)
     }
 
-    fun syncClubs() {
+    fun syncClubData() {
         val request = OneTimeWorkRequestBuilder<ClubDataWorker>()
-            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-            .build()
-        workManager.enqueue(request)
-    }
-
-    fun syncFields() {
-        val request = OneTimeWorkRequestBuilder<FieldDataWorker>()
-            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-            .build()
-        workManager.enqueue(request)
-    }
-
-    fun syncLicenses() {
-        val request = OneTimeWorkRequestBuilder<LicenseDataWorker>()
             .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
             .build()
         workManager.enqueue(request)

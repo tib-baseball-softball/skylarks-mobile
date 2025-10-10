@@ -2,6 +2,7 @@ package de.berlinskylarks.shared.database.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import de.berlinskylarks.shared.data.model.Club
 
 @Entity(tableName = "clubs")
 data class ClubEntity(
@@ -25,4 +26,28 @@ data class ClubEntity(
     val latitude: Double,
     val longitude: Double,
     val successes: String,
-)
+) {
+    fun toClub(): Club {
+        return Club(
+            id = id,
+            name = name,
+            shortName = shortName,
+            acronym = acronym,
+            organizationId = organizationId,
+            number = number,
+            headquarter = headquarter,
+            mainClub = mainClub,
+            chairman = chairman,
+            registeredAssociation = registeredAssociation,
+            court = court,
+            addressAddon = addressAddon,
+            street = street,
+            postalCode = postalCode,
+            city = city,
+            country = country,
+            latitude = latitude,
+            longitude = longitude,
+            successes = successes,
+        )
+    }
+}

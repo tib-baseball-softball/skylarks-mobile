@@ -11,7 +11,7 @@ abstract class BSMAPIClient(authKey: String) : AbstractAPIClient(authKey) {
     override val API_URL = "https://bsm.baseball-softball.de"
 
     companion object {
-        const val CLUB_ID = 485
+        const val SKYLARKS_CLUB_ID = 485
 
         // in BSM jargon an "organisation" is a Landesverband (BSVBB in this case)
         const val BSVBB_ORGANIZATION_ID = 9
