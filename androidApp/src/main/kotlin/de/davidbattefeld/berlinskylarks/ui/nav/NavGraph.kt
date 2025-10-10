@@ -16,15 +16,15 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
-import de.davidbattefeld.berlinskylarks.ui.club.ClubScreen
 import de.davidbattefeld.berlinskylarks.ui.club.ClubDetailScreen
+import de.davidbattefeld.berlinskylarks.ui.club.ClubScreen
 import de.davidbattefeld.berlinskylarks.ui.club.field.FieldDetailScreen
 import de.davidbattefeld.berlinskylarks.ui.club.field.FieldsScreen
+import de.davidbattefeld.berlinskylarks.ui.club.functionary.FunctionaryDetailScreen
+import de.davidbattefeld.berlinskylarks.ui.club.functionary.FunctionaryScreen
 import de.davidbattefeld.berlinskylarks.ui.club.licenses.LicenseDetailScreen
 import de.davidbattefeld.berlinskylarks.ui.club.licenses.ScorersScreen
 import de.davidbattefeld.berlinskylarks.ui.club.licenses.UmpiresScreen
-import de.davidbattefeld.berlinskylarks.ui.club.functionary.FunctionaryDetailScreen
-import de.davidbattefeld.berlinskylarks.ui.club.functionary.FunctionaryScreen
 import de.davidbattefeld.berlinskylarks.ui.club.teams.PlayerDetailScreen
 import de.davidbattefeld.berlinskylarks.ui.club.teams.TeamDetailScreen
 import de.davidbattefeld.berlinskylarks.ui.club.teams.TeamsScreen
@@ -37,25 +37,25 @@ import de.davidbattefeld.berlinskylarks.ui.settings.PrivacyPolicyScreen
 import de.davidbattefeld.berlinskylarks.ui.settings.SettingsScreen
 import de.davidbattefeld.berlinskylarks.ui.standings.StandingsDetailScreen
 import de.davidbattefeld.berlinskylarks.ui.standings.StandingsScreen
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.ClubViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.ClubDetailViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.ClubViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.FieldDetailViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.FieldsViewModel
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.LicenseDetailViewModel
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScorersViewModel
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.UmpiresViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.FunctionaryDetailViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.FunctionaryViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.LeagueGroupsViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.LegalNoticeViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.LicenseDetailViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.PlayerDetailViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.PrivacyPolicyViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoreDetailViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScorersViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.SettingsViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.TablesViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.TeamDetailViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.TeamsViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.UmpiresViewModel
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -159,6 +159,10 @@ fun NavGraph(
                         functionaryRoute = { topLevelBackStack.add(Functionary) },
                         topLevelBackStack = topLevelBackStack,
                         navigationType = navigationType,
+                        clubDetailRoute = { id -> topLevelBackStack.add(ClubDetail(id)) },
+                        umpireRoute = { topLevelBackStack.add(Umpires) },
+                        scorersRoute = { topLevelBackStack.add(Scorers) },
+                        fieldsRoute = { topLevelBackStack.add(Field) },
                     )
                 }
 

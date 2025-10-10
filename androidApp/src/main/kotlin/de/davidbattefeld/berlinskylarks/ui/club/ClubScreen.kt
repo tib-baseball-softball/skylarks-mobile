@@ -15,11 +15,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Badge
-import androidx.compose.material.icons.outlined.Create
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Shield
-import androidx.compose.material.icons.outlined.Sports
-import androidx.compose.material.icons.outlined.Stadium
 import androidx.compose.material.icons.outlined.Tag
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -54,7 +50,11 @@ import de.davidbattefeld.berlinskylarks.ui.viewmodels.ClubViewModel
 @Composable
 fun ClubScreen(
     vm: ClubViewModel,
+    clubDetailRoute: (Int) -> Unit,
     teamsRoute: () -> Unit,
+    umpireRoute: () -> Unit,
+    scorersRoute: () -> Unit,
+    fieldsRoute: () -> Unit,
     functionaryRoute: () -> Unit,
     topLevelBackStack: TopLevelBackStack<NavKey>,
     navigationType: NavigationType,
@@ -151,95 +151,19 @@ fun ClubScreen(
                 horizontalArrangement = Arrangement.spacedBy(cardGridSpacing)
             ) {
                 item {
-                    Card(
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-                        ),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .padding(clubCardPadding),
-                            verticalArrangement = Arrangement.spacedBy(1.dp)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Outlined.Info,
-                                contentDescription = "",
-                                tint = MaterialTheme.colorScheme.primary
-                            )
-                            Text(text = "Details", style = MaterialTheme.typography.titleLarge)
-                            Text(text = "More Info")
-                        }
-                    }
+                    ClubDetailCard { clubDetailRoute(club?.id ?: 0) }
                 }
                 item {
                     ClubTeamsCard(teamsRoute)
                 }
                 item {
-                    Card(
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-                        ),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .padding(clubCardPadding),
-                            verticalArrangement = Arrangement.spacedBy(1.dp)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Outlined.Create,
-                                contentDescription = "",
-                                tint = MaterialTheme.colorScheme.tertiary
-                            )
-                            Text(text = "Scorer", style = MaterialTheme.typography.titleLarge)
-                            Text(text = "Keeping statistics")
-                        }
-                    }
+                    ClubScorersCard(scorersRoute)
                 }
                 item {
-                    Card(
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-                        ),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .padding(clubCardPadding),
-                            verticalArrangement = Arrangement.spacedBy(1.dp)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Outlined.Sports,
-                                contentDescription = "",
-                                tint = MaterialTheme.colorScheme.tertiary
-                            )
-                            Text(text = "Umpire", style = MaterialTheme.typography.titleLarge)
-                            Text(text = "Our referees")
-                        }
-                    }
+                    ClubUmpiresCard(umpireRoute)
                 }
                 item {
-                    Card(
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-                        ),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .padding(clubCardPadding),
-                            verticalArrangement = Arrangement.spacedBy(1.dp)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Outlined.Stadium,
-                                contentDescription = "",
-                                tint = MaterialTheme.colorScheme.secondary
-                            )
-                            Text(text = "Ballpark", style = MaterialTheme.typography.titleLarge)
-                            Text(text = "The Larks' Nest")
-                        }
-                    }
+                    ClubFieldsCard(fieldsRoute)
                 }
                 item {
                     FunctionaryCard(functionaryRoute)
