@@ -22,4 +22,7 @@ interface FunctionaryDao {
 
     @Query("SELECT * from functionaries")
     fun getAllFunctionaries(): Flow<List<FunctionaryEntity>>
+
+    @Query("SELECT * FROM functionaries WHERE id = :id")
+    fun getFunctionaryByID(id: Int): Flow<FunctionaryEntity?>
 }

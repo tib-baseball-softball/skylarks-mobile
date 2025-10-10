@@ -1,15 +1,11 @@
 package de.berlinskylarks.shared.database.repository
 
-import de.berlinskylarks.shared.data.api.BSMAPIClient.Companion.SKYLARKS_CLUB_ID
-import de.berlinskylarks.shared.data.api.FunctionaryAPIClient
 import de.berlinskylarks.shared.database.dao.FunctionaryDao
 import de.berlinskylarks.shared.database.model.FunctionaryEntity
-import de.berlinskylarks.shared.database.model.PersonEntity
 import kotlinx.coroutines.flow.Flow
 
 class OfflineFunctionaryRepository(
     private val functionaryDao: FunctionaryDao,
-    private val functionaryClient: FunctionaryAPIClient,
 ) :
     FunctionaryRepository {
     override suspend fun insertFunctionary(functionary: FunctionaryEntity) =
@@ -24,25 +20,6 @@ class OfflineFunctionaryRepository(
     override fun getAllFunctionariesStream(): Flow<List<FunctionaryEntity>> =
         functionaryDao.getAllFunctionaries()
 
-    override suspend fun syncFunctionaries() {
-        val functionaries = functionaryClient.loadFunctionaries(SKYLARKS_CLUB_ID)
-
-        functionaries.forEach { functionary ->
-            insertFunctionary(
-                FunctionaryEntity(
-                    id = functionary.id,
-                    category = functionary.category,
-                    function = functionary.function,
-                    mail = functionary.mail,
-                    admission_date = functionary.admission_date,
-                    personEntity = PersonEntity(
-                        id = functionary.person.id,
-                        firstName = functionary.person.firstName,
-                        lastName = functionary.person.lastName,
-                        birthDate = functionary.person.birthDate ?: ""
-                    )
-                )
-            )
-        }
-    }
+    override fun getFunctionaryByID(id: Int): Flow<FunctionaryEntity?> =
+        functionaryDao.getFunctionaryByID(id)
 }

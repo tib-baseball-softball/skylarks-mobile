@@ -1,35 +1,35 @@
 package de.davidbattefeld.berlinskylarks.ui.viewmodels
 
 import androidx.lifecycle.viewModelScope
+import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.berlinskylarks.shared.data.model.Functionary
 import de.berlinskylarks.shared.database.repository.FunctionaryRepository
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
+import de.davidbattefeld.berlinskylarks.ui.nav.FunctionaryDetail
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
-@HiltViewModel(assistedFactory = FunctionaryViewModel.Factory::class)
-class FunctionaryViewModel @AssistedInject constructor(
+@HiltViewModel(assistedFactory = FunctionaryDetailViewModel.Factory::class)
+class FunctionaryDetailViewModel @AssistedInject constructor(
+    @Assisted val navKey: FunctionaryDetail,
+    userPreferencesRepository: UserPreferencesRepository,
     functionaryRepository: FunctionaryRepository,
-    userPreferencesRepository: UserPreferencesRepository
 ) : GenericViewModel(userPreferencesRepository) {
-    val functionariesList: StateFlow<List<Functionary>> =
-        functionaryRepository.getAllFunctionariesStream()
-            .map { dbFunctionaries ->
-                dbFunctionaries.map { it.toFunctionary() }
-            }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
-                initialValue = emptyList(),
-            )
+    val functionary: StateFlow<Functionary?> = functionaryRepository.getFunctionaryByID(navKey.id)
+        .map { it?.toFunctionary() }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = null
+        )
 
     @AssistedFactory
     interface Factory {
-        fun create(): FunctionaryViewModel
+        fun create(navKey: FunctionaryDetail): FunctionaryDetailViewModel
     }
 }

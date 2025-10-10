@@ -70,6 +70,15 @@ data object Club : TopLevelDestination {
 }
 
 @Serializable
+data class ClubDetail(val id: Int) : SkylarksNavDestination {
+    override val title = "Club Detail"
+
+    companion object {
+        val title = "Club Detail"
+    }
+}
+
+@Serializable
 data object Teams : TopLevelDestination {
     override val title = "Teams"
     override val icon = Icons.Outlined.Groups
@@ -94,8 +103,36 @@ data class PlayerDetail(val id: Int) : SkylarksNavDestination {
 }
 
 @Serializable
+data object Scorers : SkylarksNavDestination {
+    override val title = "Scorers"
+}
+
+@Serializable
+data object Umpires : SkylarksNavDestination {
+    override val title = "Umpires"
+}
+
+@Serializable
+data class LicenseDetail(val id: Int) : SkylarksNavDestination {
+    override val title = "License Detail"
+
+    companion object {
+        val title = "License Detail"
+    }
+}
+
+@Serializable
 data object Functionary : SkylarksNavDestination {
     override val title = "Team Officials"
+}
+
+@Serializable
+data class FunctionaryDetail(val id: Int) : SkylarksNavDestination {
+    override val title = "Official Detail"
+
+    companion object {
+        val title = "Official Detail"
+    }
 }
 
 @Serializable

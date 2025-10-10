@@ -178,8 +178,8 @@ object AppModule {
     @Provides
     @Singleton
     fun provideFunctionaryRepository(
-        functionaryDao: FunctionaryDao, functionaryClient: FunctionaryAPIClient
-    ): FunctionaryRepository = OfflineFunctionaryRepository(functionaryDao, functionaryClient)
+        functionaryDao: FunctionaryDao
+    ): FunctionaryRepository = OfflineFunctionaryRepository(functionaryDao)
 
     @Provides
     @Singleton

@@ -17,6 +17,7 @@ import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
 import de.davidbattefeld.berlinskylarks.ui.club.ClubScreen
+import de.davidbattefeld.berlinskylarks.ui.club.functionary.FunctionaryDetailScreen
 import de.davidbattefeld.berlinskylarks.ui.club.functionary.FunctionaryScreen
 import de.davidbattefeld.berlinskylarks.ui.club.teams.PlayerDetailScreen
 import de.davidbattefeld.berlinskylarks.ui.club.teams.TeamDetailScreen
@@ -31,6 +32,7 @@ import de.davidbattefeld.berlinskylarks.ui.settings.SettingsScreen
 import de.davidbattefeld.berlinskylarks.ui.standings.StandingsDetailScreen
 import de.davidbattefeld.berlinskylarks.ui.standings.StandingsScreen
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.ClubViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.FunctionaryDetailViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.FunctionaryViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.LeagueGroupsViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.LegalNoticeViewModel
@@ -201,6 +203,23 @@ fun NavGraph(
                         }
                     )
                     FunctionaryScreen(
+                        vm = vm,
+                        detailRoute = {
+                            topLevelBackStack.add(FunctionaryDetail(it))
+                        },
+                        topLevelBackStack = topLevelBackStack,
+                        navigationType = navigationType,
+                    )
+                }
+
+                entry<FunctionaryDetail> {
+                    val vm =
+                        hiltViewModel<FunctionaryDetailViewModel, FunctionaryDetailViewModel.Factory>(
+                            creationCallback = { factory ->
+                                factory.create(it)
+                            }
+                        )
+                    FunctionaryDetailScreen(
                         vm = vm,
                         topLevelBackStack = topLevelBackStack,
                         navigationType = navigationType,

@@ -8,6 +8,5 @@ interface FunctionaryRepository {
     suspend fun updateFunctionary(functionary: FunctionaryEntity)
     suspend fun deleteFunctionary(functionary: FunctionaryEntity)
     fun getAllFunctionariesStream(): Flow<List<FunctionaryEntity>>
-
-    suspend fun syncFunctionaries()
+    fun getFunctionaryByID(id: Int): Flow<FunctionaryEntity?>
 }

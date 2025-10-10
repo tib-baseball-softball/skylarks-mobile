@@ -1,5 +1,6 @@
 package de.davidbattefeld.berlinskylarks.ui.club.functionary
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -11,39 +12,41 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.NavKey
-import de.davidbattefeld.berlinskylarks.ui.nav.Functionary
+import de.davidbattefeld.berlinskylarks.ui.nav.FunctionaryDetail
 import de.davidbattefeld.berlinskylarks.ui.nav.NavigationType
 import de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar
 import de.davidbattefeld.berlinskylarks.ui.nav.TopLevelBackStack
 import de.davidbattefeld.berlinskylarks.ui.utility.SkylarksSnackbarHost
-import de.davidbattefeld.berlinskylarks.ui.viewmodels.FunctionaryViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.FunctionaryDetailViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FunctionaryScreen(
-    vm: FunctionaryViewModel,
-    detailRoute: (Int) -> Unit,
+fun FunctionaryDetailScreen(
+    vm: FunctionaryDetailViewModel,
     topLevelBackStack: TopLevelBackStack<NavKey>,
     navigationType: NavigationType,
 ) {
-    val functionaries by vm.functionariesList.collectAsState()
-
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val functionary by vm.functionary.collectAsState()
+
+    if (functionary == null) {
+        return
+    }
 
     Scaffold(
         topBar = {
             TopAppBar(
                 scrollBehavior = scrollBehavior,
-                title = { Text(text = Functionary.title) },
+                title = { Text(text = FunctionaryDetail.title) },
             )
         },
         snackbarHost = { SkylarksSnackbarHost() },
         bottomBar = { SkylarksBottomBar(topLevelBackStack, navigationType) }
     ) { paddingValues ->
-        FunctionariesList(
-            functionaries = functionaries,
-            onFunctionaryClick = { detailRoute(it.id) },
-            modifier = Modifier.padding(paddingValues),
-        )
+        Column(
+            modifier = Modifier.padding(paddingValues)
+        ) {
+            Text(text = "${functionary?.mail}")
+        }
     }
 }
