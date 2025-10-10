@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.intPreferencesKey
 import de.berlinskylarks.shared.data.api.BSMAPIClient
+import de.berlinskylarks.shared.utility.BSMUtility
 import de.davidbattefeld.berlinskylarks.data.preferences.UserPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -16,7 +17,8 @@ import kotlinx.io.IOException
 
 class UserPreferencesRepository(private val dataStore: DataStore<Preferences>) {
     private object PreferencesKeys {
-        val SEASON = intPreferencesKey("season")
+        val SEASON_KEY = intPreferencesKey("season")
+        val FAVORITE_TEAM_KEY = intPreferencesKey("favoriteTeamID")
     }
 
     companion object {
@@ -38,7 +40,7 @@ class UserPreferencesRepository(private val dataStore: DataStore<Preferences>) {
 
     suspend fun updateSelectedSeason(season: Int) {
         dataStore.edit { preferences ->
-            preferences[PreferencesKeys.SEASON] = season
+            preferences[PreferencesKeys.SEASON_KEY] = season
         }
     }
 
@@ -46,8 +48,10 @@ class UserPreferencesRepository(private val dataStore: DataStore<Preferences>) {
         mapUserPreferences(dataStore.data.first().toPreferences())
 
     private fun mapUserPreferences(preferences: Preferences): UserPreferences {
-        val season = preferences[PreferencesKeys.SEASON] ?: BSMAPIClient.DEFAULT_SEASON
+        val season = preferences[PreferencesKeys.SEASON_KEY] ?: BSMAPIClient.DEFAULT_SEASON
+        val favoriteTeamID =
+            preferences[PreferencesKeys.FAVORITE_TEAM_KEY] ?: BSMUtility.NON_EXISTENT_ID
 
-        return UserPreferences(season)
+        return UserPreferences(season, favoriteTeamID)
     }
 }
