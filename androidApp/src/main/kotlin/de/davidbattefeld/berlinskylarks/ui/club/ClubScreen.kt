@@ -23,11 +23,17 @@ import androidx.compose.material.icons.outlined.Stadium
 import androidx.compose.material.icons.outlined.Tag
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -37,25 +43,24 @@ import de.davidbattefeld.berlinskylarks.R
 import de.davidbattefeld.berlinskylarks.global.cardGridSpacing
 import de.davidbattefeld.berlinskylarks.global.clubCardPadding
 import de.davidbattefeld.berlinskylarks.ui.club.functionary.FunctionaryCard
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import de.davidbattefeld.berlinskylarks.ui.nav.TopLevelBackStack
+import de.davidbattefeld.berlinskylarks.ui.nav.Club
 import de.davidbattefeld.berlinskylarks.ui.nav.NavigationType
 import de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar
+import de.davidbattefeld.berlinskylarks.ui.nav.TopLevelBackStack
 import de.davidbattefeld.berlinskylarks.ui.utility.SkylarksSnackbarHost
-import de.davidbattefeld.berlinskylarks.ui.nav.Club
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.ClubViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ClubScreen(
+    vm: ClubViewModel,
     teamsRoute: () -> Unit,
     functionaryRoute: () -> Unit,
     topLevelBackStack: TopLevelBackStack<NavKey>,
     navigationType: NavigationType,
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val club by vm.club.collectAsState()
 
     Scaffold(
         topBar = {
@@ -116,7 +121,7 @@ fun ClubScreen(
                         contentDescription = "",
                         tint = MaterialTheme.colorScheme.primary
                     )
-                    Text(text = "09 01100")
+                    Text(text = "0${club?.organizationId} ${club?.number}")
                 }
                 HorizontalDivider(
                     modifier = Modifier.padding(horizontal = 12.dp),
@@ -132,7 +137,7 @@ fun ClubScreen(
                         contentDescription = "",
                         tint = MaterialTheme.colorScheme.primary
                     )
-                    Text(text = "Turngemeinde in Berlin e.V.")
+                    Text(text = club?.mainClub ?: "None")
                 }
             }
 
@@ -240,8 +245,6 @@ fun ClubScreen(
                     FunctionaryCard(functionaryRoute)
                 }
             }
-
-            Text("under construction")
         }
     }
 }

@@ -20,7 +20,7 @@ import de.davidbattefeld.berlinskylarks.global.clubCardPadding
 fun ClubTeamsCard(teamsRoute: () -> Unit) {
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
         modifier = Modifier

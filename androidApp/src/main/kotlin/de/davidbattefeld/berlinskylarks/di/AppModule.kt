@@ -105,6 +105,10 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideClubApiClient(): ClubAPIClient = ClubAPIClient(authKey = BSM_API_KEY)
+
+    @Provides
+    @Singleton
     fun provideDatabase(@ApplicationContext context: Context) = getDatabase(context)
 
     @Provides

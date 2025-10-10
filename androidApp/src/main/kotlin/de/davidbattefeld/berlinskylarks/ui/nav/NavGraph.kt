@@ -30,6 +30,7 @@ import de.davidbattefeld.berlinskylarks.ui.settings.PrivacyPolicyScreen
 import de.davidbattefeld.berlinskylarks.ui.settings.SettingsScreen
 import de.davidbattefeld.berlinskylarks.ui.standings.StandingsDetailScreen
 import de.davidbattefeld.berlinskylarks.ui.standings.StandingsScreen
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.ClubViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.FunctionaryViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.LeagueGroupsViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.LegalNoticeViewModel
@@ -132,8 +133,14 @@ fun NavGraph(
                     )
                 }
 
-                entry<Club> {
+                entry<Club> { key ->
+                    val vm = hiltViewModel<ClubViewModel, ClubViewModel.Factory>(
+                        creationCallback = { factory ->
+                            factory.create(key)
+                        }
+                    )
                     ClubScreen(
+                        vm = vm,
                         teamsRoute = { topLevelBackStack.add(Teams) },
                         functionaryRoute = { topLevelBackStack.add(Functionary) },
                         topLevelBackStack = topLevelBackStack,
