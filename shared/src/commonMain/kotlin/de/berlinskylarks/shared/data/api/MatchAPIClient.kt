@@ -9,6 +9,7 @@ import de.berlinskylarks.shared.data.model.MatchBoxScore
  */
 class MatchAPIClient(authKey: String) : BSMAPIClient(authKey) {
     suspend fun loadGamesForClub(
+        clubID: Int,
         season: Int?,
         gamedays: String?,
         compact: Boolean? = false
@@ -23,9 +24,9 @@ class MatchAPIClient(authKey: String) : BSMAPIClient(authKey) {
         }
 
         return apiCall<List<Game>>(
-            resource = "clubs/$CLUB_ID/matches.json",
+            resource = "clubs/$clubID/matches.json",
             queryParameters = queryParameters
-        ) ?: listOf()
+        ) ?: emptyList()
     }
 
     /**
