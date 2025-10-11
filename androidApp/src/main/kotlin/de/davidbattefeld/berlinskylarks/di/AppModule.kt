@@ -8,9 +8,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import de.berlinskylarks.shared.data.api.BSMTeamsAPIClient
 import de.berlinskylarks.shared.data.api.ClubAPIClient
 import de.berlinskylarks.shared.data.api.FunctionaryAPIClient
 import de.berlinskylarks.shared.data.api.GameReportAPIClient
+import de.berlinskylarks.shared.data.api.HomeDatasetAPIClient
 import de.berlinskylarks.shared.data.api.LeagueGroupsAPIClient
 import de.berlinskylarks.shared.data.api.MatchAPIClient
 import de.berlinskylarks.shared.data.api.SkylarksTeamsAPIClient
@@ -18,6 +20,7 @@ import de.berlinskylarks.shared.data.api.TablesAPIClient
 import de.berlinskylarks.shared.data.service.ClubDataSyncService
 import de.berlinskylarks.shared.data.service.GameReportSyncService
 import de.berlinskylarks.shared.data.service.GameSyncService
+import de.berlinskylarks.shared.data.service.HomeDataSyncService
 import de.berlinskylarks.shared.data.service.LeagueGroupSyncService
 import de.berlinskylarks.shared.data.service.PlayerSyncService
 import de.berlinskylarks.shared.database.AppDatabase
@@ -98,7 +101,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideTeamsApiClient(): SkylarksTeamsAPIClient =
+    fun provideSkylarksTeamsApiClient(): SkylarksTeamsAPIClient =
         SkylarksTeamsAPIClient(authKey = AUTH_HEADER)
 
     @Provides
@@ -113,6 +116,14 @@ object AppModule {
     @Provides
     @Singleton
     fun provideClubApiClient(): ClubAPIClient = ClubAPIClient(authKey = BSM_API_KEY)
+
+    @Provides
+    @Singleton
+    fun provideBSMTeamsAPIClient(): BSMTeamsAPIClient = BSMTeamsAPIClient(authKey = BSM_API_KEY)
+
+    @Provides
+    @Singleton
+    fun provideHomeDatasetAPIClient(): HomeDatasetAPIClient = HomeDatasetAPIClient()
 
     @Provides
     @Singleton
@@ -258,6 +269,14 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideHomeDataSyncService(
+        homeDatasetRepository: HomeDatasetRepository,
+        homeDatasetAPIClient: HomeDatasetAPIClient,
+    ): HomeDataSyncService = HomeDataSyncService(homeDatasetRepository, homeDatasetAPIClient)
+
+
+    @Provides
+    @Singleton
     fun provideGameSyncService(
         gameRepository: GameRepository,
         gameClient: MatchAPIClient,
@@ -271,15 +290,19 @@ object AppModule {
         fieldRepository: FieldRepository,
         licenseRepository: LicenseRepository,
         functionaryRepository: FunctionaryRepository,
+        bsmTeamRepository: BSMTeamRepository,
         clubAPIClient: ClubAPIClient,
         functionaryAPIClient: FunctionaryAPIClient,
+        bsmTeamAPIClient: BSMTeamsAPIClient,
     ): ClubDataSyncService = ClubDataSyncService(
         clubRepository,
         functionaryRepository,
         licenseRepository,
         fieldRepository,
+        bsmTeamRepository,
         clubAPIClient,
-        functionaryAPIClient
+        functionaryAPIClient,
+        bsmTeamAPIClient
     )
 
     @Provides

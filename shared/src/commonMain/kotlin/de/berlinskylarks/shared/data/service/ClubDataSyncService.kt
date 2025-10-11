@@ -1,12 +1,15 @@
 package de.berlinskylarks.shared.data.service
 
+import de.berlinskylarks.shared.data.api.BSMTeamsAPIClient
 import de.berlinskylarks.shared.data.api.ClubAPIClient
 import de.berlinskylarks.shared.data.api.FunctionaryAPIClient
+import de.berlinskylarks.shared.database.model.BSMTeamEntity
 import de.berlinskylarks.shared.database.model.ClubEntity
 import de.berlinskylarks.shared.database.model.FieldEntity
 import de.berlinskylarks.shared.database.model.FunctionaryEntity
 import de.berlinskylarks.shared.database.model.LicenseEntity
 import de.berlinskylarks.shared.database.model.PersonEntity
+import de.berlinskylarks.shared.database.repository.BSMTeamRepository
 import de.berlinskylarks.shared.database.repository.ClubRepository
 import de.berlinskylarks.shared.database.repository.FieldRepository
 import de.berlinskylarks.shared.database.repository.FunctionaryRepository
@@ -17,9 +20,29 @@ class ClubDataSyncService(
     private val functionaryRepository: FunctionaryRepository,
     private val licenseRepository: LicenseRepository,
     private val fieldRepository: FieldRepository,
+    private val bsmTeamRepository: BSMTeamRepository,
     private val clubAPIClient: ClubAPIClient,
     private val functionaryAPIClient: FunctionaryAPIClient,
+    private val bsmTeamAPIClient: BSMTeamsAPIClient,
 ) {
+    suspend fun syncClubTeams(clubID: Int, season: Int): Int {
+        val teams = bsmTeamAPIClient.loadBSMTeamsForClub(clubID, season)
+        teams.forEach { team ->
+            bsmTeamRepository.insertTeam(
+                BSMTeamEntity(
+                    id = team.id,
+                    name = team.name,
+                    season = team.season,
+                    pool = team.pool,
+                    humanState = team.humanState,
+                    shortName = team.shortName,
+                    leagueEntries = team.leagueEntries ?: emptyList(),
+                )
+            )
+        }
+        return teams.size
+    }
+
     suspend fun syncClubData(clubID: Int) {
         val club = clubAPIClient.getClubData(clubID)
 
