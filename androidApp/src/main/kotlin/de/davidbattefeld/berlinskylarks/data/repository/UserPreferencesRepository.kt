@@ -44,6 +44,12 @@ class UserPreferencesRepository(private val dataStore: DataStore<Preferences>) {
         }
     }
 
+    suspend fun updateFavoriteTeam(teamID: Int) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.FAVORITE_TEAM_KEY] = teamID
+        }
+    }
+
     suspend fun fetchInitialPreferences() =
         mapUserPreferences(dataStore.data.first().toPreferences())
 

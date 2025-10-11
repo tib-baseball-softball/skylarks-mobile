@@ -44,20 +44,23 @@ fun LinescoreTable(linescore: Linescore, cellWidth: Dp = 25.dp) {
                 HeaderCell(text = "H", minWidth = cellWidth)
                 HeaderCell(text = "E", minWidth = cellWidth)
             }
-            HorizontalDivider(modifier = Modifier
-                .padding(vertical = 4.dp)
-                .width(350.dp,
-            ))
+            HorizontalDivider(
+                modifier = Modifier
+                    .padding(vertical = 4.dp)
+                    .width(
+                        350.dp,
+                    )
+            )
 
             // Away row
             Row(verticalAlignment = Alignment.CenterVertically) {
                 BodyCell(
-                    text = linescore.away.leagueEntry.team.name,
+                    text = linescore.away.leagueEntry.team?.name ?: "",
                     minWidth = 100.dp,
                 )
                 linescore.away.innings.forEach { valStr ->
                     BodyCell(
-                        text = valStr.toString(),
+                        text = valStr,
                         minWidth = cellWidth
                     )
                 }
@@ -69,12 +72,12 @@ fun LinescoreTable(linescore: Linescore, cellWidth: Dp = 25.dp) {
             // Home row
             Row(verticalAlignment = Alignment.CenterVertically) {
                 BodyCell(
-                    text = linescore.home.leagueEntry.team.name,
+                    text = linescore.home.leagueEntry.team?.name ?: "",
                     minWidth = 100.dp,
                 )
                 linescore.home.innings.forEach { valStr ->
                     BodyCell(
-                        text = valStr.toString(),
+                        text = valStr,
                         minWidth = cellWidth
                     )
                 }

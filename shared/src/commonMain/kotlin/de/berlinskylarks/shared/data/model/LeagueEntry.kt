@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class LeagueEntry(
-    var team: LeagueEntryTeam,
+    var team: LeagueEntryTeam?,
     var league: League?,
 ) {
     /**

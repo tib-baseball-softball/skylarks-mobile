@@ -43,6 +43,7 @@ import de.davidbattefeld.berlinskylarks.ui.viewmodels.FieldDetailViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.FieldsViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.FunctionaryDetailViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.FunctionaryViewModel
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.HomeViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.LeagueGroupsViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.LegalNoticeViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.LicenseDetailViewModel
@@ -77,8 +78,17 @@ fun NavGraph(
                 rememberViewModelStoreNavEntryDecorator()
             ),
             entryProvider = entryProvider {
+                val vm = hiltViewModel<HomeViewModel, HomeViewModel.Factory>(
+                    creationCallback = { factory ->
+                        factory.create()
+                    }
+                )
                 entry<Home> {
-                    HomeScreen(topLevelBackStack, navigationType)
+                    HomeScreen(
+                        vm = vm,
+                        topLevelBackStack = topLevelBackStack,
+                        navigationType = navigationType
+                    )
                 }
 
                 entry<Scores>(

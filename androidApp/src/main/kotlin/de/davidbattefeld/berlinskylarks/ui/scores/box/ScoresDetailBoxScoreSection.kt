@@ -37,8 +37,8 @@ fun ScoresDetailBoxScoreSection(
 
 @Composable
 private fun BoxScoreContent(box: MatchBoxScore) {
-    val awayTeamName = box.linescore.away.leagueEntry.team.name
-    val homeTeamName = box.linescore.home.leagueEntry.team.name
+    val awayTeamName = box.linescore.away.leagueEntry.team?.name ?: ""
+    val homeTeamName = box.linescore.home.leagueEntry.team?.name ?: ""
 
     Column(modifier = Modifier.fillMaxWidth()) {
         SectionHeader(text = "Linescore")
