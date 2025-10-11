@@ -1,6 +1,6 @@
 package de.berlinskylarks.shared.data.service
 
-import de.berlinskylarks.shared.data.api.TeamsAPIClient
+import de.berlinskylarks.shared.data.api.SkylarksTeamsAPIClient
 import de.berlinskylarks.shared.database.model.MediaEntity
 import de.berlinskylarks.shared.database.model.PlayerEntity
 import de.berlinskylarks.shared.database.model.TiBTeamEntity
@@ -8,7 +8,7 @@ import de.berlinskylarks.shared.database.repository.PlayerRepository
 import de.berlinskylarks.shared.database.repository.TiBTeamRepository
 
 class PlayerSyncService(
-    private val teamClient: TeamsAPIClient,
+    private val teamClient: SkylarksTeamsAPIClient,
     private val playerRepository: PlayerRepository,
     private val tibTeamRepository: TiBTeamRepository,
 ) {

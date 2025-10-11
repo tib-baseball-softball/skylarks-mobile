@@ -13,54 +13,54 @@ import de.berlinskylarks.shared.data.api.FunctionaryAPIClient
 import de.berlinskylarks.shared.data.api.GameReportAPIClient
 import de.berlinskylarks.shared.data.api.LeagueGroupsAPIClient
 import de.berlinskylarks.shared.data.api.MatchAPIClient
+import de.berlinskylarks.shared.data.api.SkylarksTeamsAPIClient
 import de.berlinskylarks.shared.data.api.TablesAPIClient
-import de.berlinskylarks.shared.data.api.TeamsAPIClient
 import de.berlinskylarks.shared.data.service.ClubDataSyncService
 import de.berlinskylarks.shared.data.service.GameReportSyncService
 import de.berlinskylarks.shared.data.service.GameSyncService
 import de.berlinskylarks.shared.data.service.LeagueGroupSyncService
 import de.berlinskylarks.shared.data.service.PlayerSyncService
 import de.berlinskylarks.shared.database.AppDatabase
+import de.berlinskylarks.shared.database.dao.BSMTeamDao
 import de.berlinskylarks.shared.database.dao.BoxScoreDao
 import de.berlinskylarks.shared.database.dao.ClubDao
 import de.berlinskylarks.shared.database.dao.FieldDao
 import de.berlinskylarks.shared.database.dao.FunctionaryDao
 import de.berlinskylarks.shared.database.dao.GameDao
 import de.berlinskylarks.shared.database.dao.GameReportDao
+import de.berlinskylarks.shared.database.dao.HomeDatasetDao
 import de.berlinskylarks.shared.database.dao.LeagueGroupDao
 import de.berlinskylarks.shared.database.dao.LicenseDao
 import de.berlinskylarks.shared.database.dao.MediaDao
 import de.berlinskylarks.shared.database.dao.PlayerDao
 import de.berlinskylarks.shared.database.dao.TiBTeamDao
-import de.berlinskylarks.shared.database.dao.HomeDatasetDao
-import de.berlinskylarks.shared.database.dao.BSMTeamDao
 import de.berlinskylarks.shared.database.getDatabase
+import de.berlinskylarks.shared.database.repository.BSMTeamRepository
 import de.berlinskylarks.shared.database.repository.BoxScoreRepository
 import de.berlinskylarks.shared.database.repository.ClubRepository
 import de.berlinskylarks.shared.database.repository.FieldRepository
 import de.berlinskylarks.shared.database.repository.FunctionaryRepository
 import de.berlinskylarks.shared.database.repository.GameReportRepository
 import de.berlinskylarks.shared.database.repository.GameRepository
+import de.berlinskylarks.shared.database.repository.HomeDatasetRepository
 import de.berlinskylarks.shared.database.repository.LeagueGroupRepository
 import de.berlinskylarks.shared.database.repository.LicenseRepository
 import de.berlinskylarks.shared.database.repository.MediaRepository
+import de.berlinskylarks.shared.database.repository.OfflineBSMTeamRepository
 import de.berlinskylarks.shared.database.repository.OfflineBoxScoreRepository
 import de.berlinskylarks.shared.database.repository.OfflineClubRepository
 import de.berlinskylarks.shared.database.repository.OfflineFieldRepository
 import de.berlinskylarks.shared.database.repository.OfflineFunctionaryRepository
 import de.berlinskylarks.shared.database.repository.OfflineGameReportRepository
 import de.berlinskylarks.shared.database.repository.OfflineGameRepository
+import de.berlinskylarks.shared.database.repository.OfflineHomeDatasetRepository
 import de.berlinskylarks.shared.database.repository.OfflineLeagueGroupRepository
 import de.berlinskylarks.shared.database.repository.OfflineLicenseRepository
 import de.berlinskylarks.shared.database.repository.OfflineMediaRepository
 import de.berlinskylarks.shared.database.repository.OfflinePlayerRepository
 import de.berlinskylarks.shared.database.repository.OfflineTiBTeamRepository
-import de.berlinskylarks.shared.database.repository.OfflineHomeDatasetRepository
-import de.berlinskylarks.shared.database.repository.OfflineBSMTeamRepository
 import de.berlinskylarks.shared.database.repository.PlayerRepository
 import de.berlinskylarks.shared.database.repository.TiBTeamRepository
-import de.berlinskylarks.shared.database.repository.HomeDatasetRepository
-import de.berlinskylarks.shared.database.repository.BSMTeamRepository
 import de.davidbattefeld.berlinskylarks.data.preferences.dataStore
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
 import de.davidbattefeld.berlinskylarks.data.repository.WorkManagerTiBRepository
@@ -98,7 +98,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideTeamsApiClient(): TeamsAPIClient = TeamsAPIClient(authKey = AUTH_HEADER)
+    fun provideTeamsApiClient(): SkylarksTeamsAPIClient =
+        SkylarksTeamsAPIClient(authKey = AUTH_HEADER)
 
     @Provides
     @Singleton
@@ -302,7 +303,7 @@ object AppModule {
     @Provides
     @Singleton
     fun providePlayerSyncService(
-        teamClient: TeamsAPIClient,
+        teamClient: SkylarksTeamsAPIClient,
         playerRepository: PlayerRepository,
         tibTeamRepository: TiBTeamRepository,
     ): PlayerSyncService = PlayerSyncService(teamClient, playerRepository, tibTeamRepository)
