@@ -12,4 +12,7 @@ class OfflineBSMTeamRepository(
     override fun getAllTeams(): Flow<List<BSMTeamEntity>> = bsmTeamDao.getAllTeams()
 
     override fun getTeamByID(id: Int): Flow<BSMTeamEntity?> = bsmTeamDao.getTeamByID(id)
+
+    override fun getTeamsBySeason(season: Int): Flow<List<BSMTeamEntity>> =
+        bsmTeamDao.getTeamsBySeason(season)
 }

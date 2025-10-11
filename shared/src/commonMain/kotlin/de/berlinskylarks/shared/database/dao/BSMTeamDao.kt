@@ -17,4 +17,7 @@ interface BSMTeamDao {
 
     @Query("SELECT * FROM bsm_teams")
     fun getAllTeams(): Flow<List<BSMTeamEntity>>
+
+    @Query("SELECT * FROM bsm_teams WHERE season = :season")
+    fun getTeamsBySeason(season: Int): Flow<List<BSMTeamEntity>>
 }

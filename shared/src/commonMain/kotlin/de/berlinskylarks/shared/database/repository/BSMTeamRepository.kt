@@ -7,4 +7,5 @@ interface BSMTeamRepository {
     suspend fun insertTeam(team: BSMTeamEntity)
     fun getAllTeams(): Flow<List<BSMTeamEntity>>
     fun getTeamByID(id: Int): Flow<BSMTeamEntity?>
+    fun getTeamsBySeason(season: Int): Flow<List<BSMTeamEntity>>
 }
