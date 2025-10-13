@@ -9,6 +9,7 @@ import de.davidbattefeld.berlinskylarks.data.sync.BSMTeamDataWorker
 import de.davidbattefeld.berlinskylarks.data.sync.ClubDataWorker
 import de.davidbattefeld.berlinskylarks.data.sync.GameDataWorker
 import de.davidbattefeld.berlinskylarks.data.sync.GameReportWorker
+import de.davidbattefeld.berlinskylarks.data.sync.HomeDataWorker
 import de.davidbattefeld.berlinskylarks.data.sync.LeagueGroupWorker
 import de.davidbattefeld.berlinskylarks.data.sync.PlayerDataWorker
 import de.davidbattefeld.berlinskylarks.data.sync.TiBTeamDataWorker
@@ -22,6 +23,14 @@ class WorkManagerTiBRepository(
         val request = OneTimeWorkRequestBuilder<BSMTeamDataWorker>()
             .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
             .setInputData(workDataOf("season" to season))
+            .build()
+        workManager.enqueue(request)
+    }
+
+    fun syncHomeDatasets(teamID: Int, season: Int) {
+        val request = OneTimeWorkRequestBuilder<HomeDataWorker>()
+            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+            .setInputData(workDataOf("teamID" to teamID, "season" to season))
             .build()
         workManager.enqueue(request)
     }

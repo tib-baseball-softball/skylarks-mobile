@@ -11,7 +11,6 @@ import de.berlinskylarks.shared.utility.BSMUtility
 import de.davidbattefeld.berlinskylarks.data.preferences.UserPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.io.IOException
 
@@ -49,9 +48,6 @@ class UserPreferencesRepository(private val dataStore: DataStore<Preferences>) {
             preferences[PreferencesKeys.FAVORITE_TEAM_KEY] = teamID
         }
     }
-
-    suspend fun fetchInitialPreferences() =
-        mapUserPreferences(dataStore.data.first().toPreferences())
 
     private fun mapUserPreferences(preferences: Preferences): UserPreferences {
         val season = preferences[PreferencesKeys.SEASON_KEY] ?: BSMAPIClient.DEFAULT_SEASON

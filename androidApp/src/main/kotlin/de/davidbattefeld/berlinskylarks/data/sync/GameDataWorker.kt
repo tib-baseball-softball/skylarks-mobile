@@ -19,10 +19,6 @@ class GameDataWorker @AssistedInject constructor(
     private val gameSyncService: GameSyncService,
 ) : CoroutineWorker(ctx, params) {
 
-    init {
-        Log.d("dev", "Game Data Worker: Initiated")
-    }
-
     override suspend fun doWork(): Result {
         val season = inputData.getInt(key = "season", defaultValue = DEFAULT_SEASON)
 

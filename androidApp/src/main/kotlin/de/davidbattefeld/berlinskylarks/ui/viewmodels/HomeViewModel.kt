@@ -23,8 +23,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel(assistedFactory = HomeViewModel.Factory::class)
 class HomeViewModel @AssistedInject constructor(
     userPreferencesRepository: UserPreferencesRepository,
-    bsmTeamRepository: BSMTeamRepository,
-    workManagerTiBRepository: WorkManagerTiBRepository,
+    private val bsmTeamRepository: BSMTeamRepository,
+    private val workManagerTiBRepository: WorkManagerTiBRepository,
 ) : GenericViewModel(userPreferencesRepository) {
     val favoriteTeamID = userPreferencesRepository.userPreferencesFlow.map {
         it.favoriteTeamID
@@ -73,6 +73,15 @@ class HomeViewModel @AssistedInject constructor(
     fun onTeamFilterChanged(teamID: Int) {
         viewModelScope.launch {
             userPreferencesRepository.updateFavoriteTeam(teamID)
+        }
+    }
+
+    fun loadHomeData() {
+        viewModelScope.launch {
+            workManagerTiBRepository.syncHomeDatasets(
+                teamID = favoriteTeamID.value,
+                season = selectedSeason.value,
+            )
         }
     }
 
