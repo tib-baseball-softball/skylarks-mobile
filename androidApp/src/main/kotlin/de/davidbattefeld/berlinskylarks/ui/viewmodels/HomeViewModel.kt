@@ -7,12 +7,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import de.berlinskylarks.shared.data.api.BSMAPIClient
 import de.berlinskylarks.shared.data.model.BSMTeam
 import de.berlinskylarks.shared.database.repository.BSMTeamRepository
+import de.berlinskylarks.shared.database.repository.HomeDatasetRepository
 import de.berlinskylarks.shared.utility.BSMUtility
 import de.davidbattefeld.berlinskylarks.data.repository.UserPreferencesRepository
 import de.davidbattefeld.berlinskylarks.data.repository.WorkManagerTiBRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
@@ -24,6 +26,7 @@ import kotlinx.coroutines.launch
 class HomeViewModel @AssistedInject constructor(
     userPreferencesRepository: UserPreferencesRepository,
     private val bsmTeamRepository: BSMTeamRepository,
+    private val homeDatasetRepository: HomeDatasetRepository,
     private val workManagerTiBRepository: WorkManagerTiBRepository,
 ) : GenericViewModel(userPreferencesRepository) {
     val favoriteTeamID = userPreferencesRepository.userPreferencesFlow.map {
@@ -55,6 +58,28 @@ class HomeViewModel @AssistedInject constructor(
                 started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
                 initialValue = BSMAPIClient.DEFAULT_SEASON,
             )
+
+    val homeDatasets = combine(
+        favoriteTeamID,
+        selectedSeason
+    ) { favoriteTeamID, selectedSeason ->
+        Pair(first = favoriteTeamID, second = selectedSeason)
+    }
+        .flatMapLatest {
+            homeDatasetRepository.getHomeDatasetsByTeamIDAndSeason(
+                teamID = it.first,
+                season = it.second
+            )
+        }.map { homeDatasetEntities ->
+            homeDatasetEntities.map {
+                it.toHomeDataset()
+            }
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
+            initialValue = emptyList(),
+        )
 
     val teamOptions: StateFlow<List<BSMTeam>> =
         selectedSeason.flatMapLatest { season ->

@@ -1,6 +1,8 @@
 package de.davidbattefeld.berlinskylarks.ui.home
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -8,7 +10,6 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -32,10 +33,12 @@ fun HomeScreen(
     navigationType: NavigationType,
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-    val selectedTeam by vm.favoriteTeam.collectAsState()
-    val teamOptions by vm.teamOptions.collectAsState()
     val scope = rememberCoroutineScope()
     val snackbarHostState = LocalSnackbarHostState.current
+
+    val selectedTeam by vm.favoriteTeam.collectAsState()
+    val teamOptions by vm.teamOptions.collectAsState()
+    val homeDatasets by vm.homeDatasets.collectAsState()
 
     Scaffold(
         topBar = {
@@ -63,6 +66,12 @@ fun HomeScreen(
             )
         }
     ) { padding ->
-        Text(text = "Home", modifier = Modifier.padding(padding))
+        LazyColumn(
+            modifier = Modifier.padding(padding)
+        ) {
+            items(homeDatasets) {
+                HomeDatasetItem(dataset = it)
+            }
+        }
     }
 }
