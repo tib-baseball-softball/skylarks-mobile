@@ -48,8 +48,8 @@ fun ScoreDetailOfficialsSection(
                 text = "Umpires",
                 style = MaterialTheme.typography.titleMedium,
             )
-            if (game.umpireAssignments.isNotEmpty()) {
-                game.umpireAssignments.forEach {
+            if (game.umpireAssignments?.isNotEmpty() == true) {
+                game.umpireAssignments?.forEach {
                     ListItem(
                         headlineContent = { Text("${it.license.person.lastName}, ${it.license.person.firstName}") },
                         supportingContent = { Text(it.license.number) },
@@ -82,8 +82,8 @@ fun ScoreDetailOfficialsSection(
                 text = "Scorers",
                 style = MaterialTheme.typography.titleMedium,
             )
-            if (game.scorerAssignments.isNotEmpty()) {
-                game.scorerAssignments.forEach {
+            if (game.scorerAssignments?.isNotEmpty() == true) {
+                game.scorerAssignments?.forEach {
                     ListItem(
                         headlineContent = { Text("${it.license.person.lastName}, ${it.license.person.firstName}") },
                         supportingContent = { Text(it.license.number) },

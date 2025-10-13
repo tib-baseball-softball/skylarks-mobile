@@ -37,7 +37,7 @@ data class Game(
     @SerialName("away_league_entry")
     var awayLeagueEntry: LeagueEntry,
     @SerialName("umpire_assignments")
-    var umpireAssignments: List<Assignment>,
+    var umpireAssignments: List<Assignment>?,
     @SerialName("scorer_assignments")
-    var scorerAssignments: List<Assignment>,
+    var scorerAssignments: List<Assignment>?,
 ) : JSONDataObject
