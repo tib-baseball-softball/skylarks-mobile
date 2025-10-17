@@ -20,7 +20,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -98,11 +97,7 @@ class ScoresViewModel @AssistedInject constructor(
             // one-time request to ensure up-to-date game data
             workManagerTiBRepository.syncScores(season = selectedSeason.value)
             workManagerTiBRepository.syncGameReports()
-
-            val existingLeagueGroup = leagueGroupRepository.getFirstItem().firstOrNull()
-            if (existingLeagueGroup == null) {
-                workManagerTiBRepository.syncLeagueGroups(selectedSeason.value)
-            }
+            workManagerTiBRepository.syncLeagueGroups(selectedSeason.value)
         }
     }
 
