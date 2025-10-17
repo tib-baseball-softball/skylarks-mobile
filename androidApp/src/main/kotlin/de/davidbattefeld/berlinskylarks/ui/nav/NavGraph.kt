@@ -11,11 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavKey
-import androidx.navigation3.runtime.entry
 import androidx.navigation3.runtime.entryProvider
-import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
-import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
 import de.davidbattefeld.berlinskylarks.ui.club.ClubDetailScreen
 import de.davidbattefeld.berlinskylarks.ui.club.ClubScreen
 import de.davidbattefeld.berlinskylarks.ui.club.field.FieldDetailScreen
@@ -73,9 +71,8 @@ fun NavGraph(
             onBack = { topLevelBackStack.removeLast() },
             sceneStrategy = listDetailStrategy,
             entryDecorators = listOf(
-                rememberSceneSetupNavEntryDecorator(),
-                rememberSavedStateNavEntryDecorator(),
-                rememberViewModelStoreNavEntryDecorator()
+                rememberSaveableStateHolderNavEntryDecorator(),
+                rememberViewModelStoreNavEntryDecorator(),
             ),
             entryProvider = entryProvider {
                 val vm = hiltViewModel<HomeViewModel, HomeViewModel.Factory>(
