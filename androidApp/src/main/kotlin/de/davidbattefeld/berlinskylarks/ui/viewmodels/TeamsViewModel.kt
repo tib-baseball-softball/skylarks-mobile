@@ -27,6 +27,8 @@ class TeamsViewModel @AssistedInject constructor(
                     name = it.name,
                     leagueID = it.leagueID,
                     bsmShortName = it.bsmShortName,
+                    sport = it.sport,
+                    ageGroup = it.ageGroup,
                 )
             }
         }

@@ -9,5 +9,7 @@ data class TiBTeamEntity(
     val id: Int,
     val name: String,
     val leagueID: Int?,
-    val bsmShortName: String?
+    val bsmShortName: String?,
+    val sport: String,
+    val ageGroup: String,
 )

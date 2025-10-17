@@ -8,10 +8,11 @@ data class SkylarksTeam(
     @SerialName("uid")
     val id: Int,
     val name: String,
-
     @SerialName("league_id")
     val leagueID: Int?,
-
     @SerialName("bsm_short_name")
-    val bsmShortName: String?
+    val bsmShortName: String?,
+    val sport: String,
+    @SerialName("age_group")
+    val ageGroup: String,
 )
