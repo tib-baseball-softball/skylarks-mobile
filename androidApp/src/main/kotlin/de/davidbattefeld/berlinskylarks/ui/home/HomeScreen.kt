@@ -94,7 +94,7 @@ fun HomeScreen(
                 backgroundColor = MaterialTheme.colorScheme.primaryContainer,
             )
 
-            Text(text = "Data per League", style = MaterialTheme.typography.headlineMedium)
+            Text(text = "Data per League", style = MaterialTheme.typography.headlineSmall)
 
             homeDatasets.forEach {
                 HomeDatasetItem(dataset = it)

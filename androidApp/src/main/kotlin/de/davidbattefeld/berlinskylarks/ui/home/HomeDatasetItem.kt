@@ -40,9 +40,7 @@ fun HomeDatasetItem(
         }
     }
 
-    if (dataset.lastGame != null || dataset.nextGame != null) {
-        Text(text = "Games", style = MaterialTheme.typography.headlineMedium)
-    }
+    Text(text = "Games", style = MaterialTheme.typography.headlineSmall)
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerLow
