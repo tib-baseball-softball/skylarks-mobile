@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -27,13 +28,18 @@ import de.davidbattefeld.berlinskylarks.domain.service.GameDecorator
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 
 @Composable
-fun ScoresItem(gameDecorator: GameDecorator, modifier: Modifier = Modifier) {
+fun ScoresItem(
+    gameDecorator: GameDecorator,
+    modifier: Modifier = Modifier,
+    elevation: CardElevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+    containerColor: Color = MaterialTheme.colorScheme.surfaceContainer
+) {
     Card(
         modifier = modifier.padding(8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainer
+            containerColor = containerColor
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        elevation = elevation,
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
             Row(

@@ -2,10 +2,14 @@ package de.davidbattefeld.berlinskylarks.ui.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import de.berlinskylarks.shared.data.model.Game
 import de.berlinskylarks.shared.data.model.HomeDataset
@@ -36,25 +40,39 @@ fun HomeDatasetItem(
         }
     }
 
-    Column(
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+    if (dataset.lastGame != null || dataset.nextGame != null) {
+        Text(text = "Games", style = MaterialTheme.typography.headlineMedium)
+    }
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+        )
     ) {
-        if (dataset.lastGame != null || dataset.nextGame != null) {
-            Text(text = "Games", style = MaterialTheme.typography.headlineMedium)
-        }
+        Column(
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            modifier = Modifier.padding(14.dp)
+        ) {
+            Text(text = "Last Game", style = MaterialTheme.typography.titleSmall)
+            if (dataset.lastGame is Game) {
+                ScoresItem(
+                    gameDecorator = GameDecorator(game = dataset.lastGame!!).decorate(),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
+                )
+            } else {
+                ContentNotFoundView("last Game")
+            }
 
-        if (dataset.lastGame is Game) {
-            Text(text = "Last Game", style = MaterialTheme.typography.headlineSmall)
-            ScoresItem(gameDecorator = GameDecorator(game = dataset.lastGame!!).decorate())
-        } else {
-            ContentNotFoundView("last Game")
-        }
-
-        if (dataset.nextGame is Game) {
-            Text(text = "Next Game", style = MaterialTheme.typography.headlineSmall)
-            ScoresItem(gameDecorator = GameDecorator(game = dataset.nextGame!!).decorate())
-        } else {
-            ContentNotFoundView("next Game")
+            Text(text = "Next Game", style = MaterialTheme.typography.titleSmall)
+            if (dataset.nextGame is Game) {
+                ScoresItem(
+                    gameDecorator = GameDecorator(game = dataset.nextGame!!).decorate(),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
+                )
+            } else {
+                ContentNotFoundView("next Game")
+            }
         }
     }
 }
