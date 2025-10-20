@@ -195,7 +195,6 @@ fun NavGraph(
                         }
                     )
                     TeamDetailScreen(
-                        teamID = key.id,
                         playerDetailRoute = { playerDetailID ->
                             topLevelBackStack.add(PlayerDetail(playerDetailID))
                         },

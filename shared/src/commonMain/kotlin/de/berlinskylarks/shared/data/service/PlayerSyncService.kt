@@ -22,6 +22,8 @@ class PlayerSyncService(
                     name = team.name,
                     leagueID = team.leagueID,
                     bsmShortName = team.bsmShortName,
+                    sport = team.sport,
+                    ageGroup = team.ageGroup,
                 )
             )
         }
