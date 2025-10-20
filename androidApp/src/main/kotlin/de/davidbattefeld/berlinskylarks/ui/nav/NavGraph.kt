@@ -84,7 +84,13 @@ fun NavGraph(
                     HomeScreen(
                         vm = vm,
                         topLevelBackStack = topLevelBackStack,
-                        navigationType = navigationType
+                        navigationType = navigationType,
+                        scoresDetailRoute = { key ->
+                            topLevelBackStack.add(key)
+                        },
+                        standingsDetailRoute = { key ->
+                            topLevelBackStack.add(key)
+                        },
                     )
                 }
 

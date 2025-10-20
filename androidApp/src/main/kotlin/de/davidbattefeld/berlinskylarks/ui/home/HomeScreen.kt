@@ -26,7 +26,9 @@ import de.berlinskylarks.shared.data.model.tib.SkylarksTeam
 import de.davidbattefeld.berlinskylarks.LocalSnackbarHostState
 import de.davidbattefeld.berlinskylarks.ui.club.teams.TeamInfoCard
 import de.davidbattefeld.berlinskylarks.ui.nav.NavigationType
+import de.davidbattefeld.berlinskylarks.ui.nav.ScoresDetail
 import de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar
+import de.davidbattefeld.berlinskylarks.ui.nav.StandingsDetail
 import de.davidbattefeld.berlinskylarks.ui.nav.TopLevelBackStack
 import de.davidbattefeld.berlinskylarks.ui.utility.SkylarksSnackbarHost
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.HomeViewModel
@@ -38,6 +40,8 @@ fun HomeScreen(
     vm: HomeViewModel,
     topLevelBackStack: TopLevelBackStack<NavKey>,
     navigationType: NavigationType,
+    scoresDetailRoute: (ScoresDetail) -> Unit,
+    standingsDetailRoute: (StandingsDetail) -> Unit,
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     val scope = rememberCoroutineScope()
@@ -97,7 +101,11 @@ fun HomeScreen(
             Text(text = "Data per League", style = MaterialTheme.typography.headlineSmall)
 
             homeDatasets.forEach {
-                HomeDatasetItem(dataset = it)
+                HomeDatasetItem(
+                    dataset = it,
+                    scoresDetailRoute = scoresDetailRoute,
+                    standingsDetailRoute = standingsDetailRoute,
+                )
                 HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
             }
         }
