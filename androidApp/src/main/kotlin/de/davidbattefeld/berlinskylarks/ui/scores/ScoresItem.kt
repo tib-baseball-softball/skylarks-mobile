@@ -27,7 +27,7 @@ import de.davidbattefeld.berlinskylarks.domain.service.GameDecorator
 import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 
 @Composable
-fun ScoresItem(gameDecorator: GameDecorator, modifier: Modifier) {
+fun ScoresItem(gameDecorator: GameDecorator, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier.padding(8.dp),
         colors = CardDefaults.cardColors(
@@ -41,8 +41,11 @@ fun ScoresItem(gameDecorator: GameDecorator, modifier: Modifier) {
                 horizontalArrangement = Arrangement.Center
             ) {
                 Column() {
-                    Text(text = gameDecorator.game.league.name, style = MaterialTheme.typography.titleSmall)
-                    Row{
+                    Text(
+                        text = gameDecorator.game.league.name,
+                        style = MaterialTheme.typography.titleSmall
+                    )
+                    Row {
                         Text(
                             text = gameDecorator.localisedDate ?: gameDecorator.game.time,
                             style = MaterialTheme.typography.bodySmall
@@ -62,13 +65,22 @@ fun ScoresItem(gameDecorator: GameDecorator, modifier: Modifier) {
                             .padding(4.dp)
                             .size(35.dp)
                     )
-                    Text(text = gameDecorator.game.awayTeamName, style = MaterialTheme.typography.bodyMedium)
+                    Text(
+                        text = gameDecorator.game.awayTeamName,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
                     Spacer(modifier = Modifier.weight(1.0F))
-                    Text(text = (gameDecorator.game.awayRuns ?: "").toString(), style = MaterialTheme.typography.titleMedium.copy(
-                        fontWeight = FontWeight.Bold,
-                        color = if ((gameDecorator.game.homeRuns ?: 0) < (gameDecorator.game.awayRuns ?: 0)) MaterialTheme.colorScheme.onSurfaceVariant else Color.Gray,
-                        fontSize = 18.sp,
-                    ), modifier = Modifier.padding(end = 6.dp))
+                    Text(
+                        text = (gameDecorator.game.awayRuns ?: "").toString(),
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            fontWeight = FontWeight.Bold,
+                            color = if ((gameDecorator.game.homeRuns
+                                    ?: 0) < (gameDecorator.game.awayRuns ?: 0)
+                            ) MaterialTheme.colorScheme.onSurfaceVariant else Color.Gray,
+                            fontSize = 18.sp,
+                        ),
+                        modifier = Modifier.padding(end = 6.dp)
+                    )
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
@@ -78,13 +90,22 @@ fun ScoresItem(gameDecorator: GameDecorator, modifier: Modifier) {
                             .padding(4.dp)
                             .size(35.dp)
                     )
-                    Text(text = gameDecorator.game.homeTeamName, style = MaterialTheme.typography.bodyMedium)
+                    Text(
+                        text = gameDecorator.game.homeTeamName,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
                     Spacer(modifier = Modifier.weight(1.0F))
-                    Text(text = (gameDecorator.game.homeRuns ?: "").toString(), style = MaterialTheme.typography.titleMedium.copy(
-                        fontWeight = FontWeight.Bold,
-                        color = if ((gameDecorator.game.homeRuns ?: 0) > (gameDecorator.game.awayRuns ?: 0)) MaterialTheme.colorScheme.onSurfaceVariant else Color.Gray,
-                        fontSize = 18.sp,
-                    ), modifier = Modifier.padding(end = 6.dp))
+                    Text(
+                        text = (gameDecorator.game.homeRuns ?: "").toString(),
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            fontWeight = FontWeight.Bold,
+                            color = if ((gameDecorator.game.homeRuns
+                                    ?: 0) > (gameDecorator.game.awayRuns ?: 0)
+                            ) MaterialTheme.colorScheme.onSurfaceVariant else Color.Gray,
+                            fontSize = 18.sp,
+                        ),
+                        modifier = Modifier.padding(end = 6.dp)
+                    )
                 }
             }
         }
@@ -107,7 +128,7 @@ fun ScoresItemPreview() {
         Surface(
             color = MaterialTheme.colorScheme.surface
         ) {
-           // ScoresItem(game = testGame)
+            // ScoresItem(game = testGame)
         }
 
     }

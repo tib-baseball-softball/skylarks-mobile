@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,7 +19,10 @@ fun ContentNotFoundView(content: String, modifier: Modifier = Modifier) {
     Card(
         modifier = Modifier
             .padding(8.dp)
-            .fillMaxWidth()
+            .fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainer,
+        )
     ) {
         Column(
             modifier = Modifier
@@ -29,7 +34,7 @@ fun ContentNotFoundView(content: String, modifier: Modifier = Modifier) {
                 modifier = Modifier.padding(bottom = 8.dp)
             )
             Text(
-                text = "There are no $content to display.",
+                text = "No $content to display.",
             )
         }
     }

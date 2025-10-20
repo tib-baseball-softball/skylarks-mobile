@@ -1,14 +1,12 @@
 package de.davidbattefeld.berlinskylarks.ui.standings
 
-import android.content.res.Configuration
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import de.berlinskylarks.shared.data.model.LeagueTable
 import de.davidbattefeld.berlinskylarks.testdata.testTable
@@ -16,32 +14,18 @@ import de.davidbattefeld.berlinskylarks.ui.theme.BerlinSkylarksTheme
 
 @Composable
 fun StandingsTable(table: LeagueTable?) {
-    LazyColumn(
+    Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        item {
-            StandingsTableHeader()
-        }
-        items(table?.rows ?: listOf()) { row ->
+        StandingsTableHeader()
+        table?.rows?.forEach { row ->
             StandingsTableRow(row)
             HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
-        }
-        item {
-            StandingsTableLegend()
         }
     }
 }
 
-@Preview(
-    showBackground = true,
-    widthDp = 400,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    name = "Dark"
-)
-@Preview(
-    showBackground = true,
-    widthDp = 400
-)
+@PreviewLightDark
 @Composable
 fun StandingsTablePreview() {
     BerlinSkylarksTheme {
