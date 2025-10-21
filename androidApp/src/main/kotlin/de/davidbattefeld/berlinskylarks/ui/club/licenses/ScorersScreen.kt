@@ -1,6 +1,8 @@
 package de.davidbattefeld.berlinskylarks.ui.club.licenses
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -28,6 +30,7 @@ fun ScorersScreen(
 ) {
     val licenses by vm.licenses.collectAsState()
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val scrollState = rememberScrollState()
 
     Scaffold(
         topBar = {
@@ -43,7 +46,9 @@ fun ScorersScreen(
             licenses = licenses,
             showSoftballSection = false,
             onLicenseClick = { detailRoute(it.id.toInt()) },
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier
+                .padding(paddingValues)
+                .verticalScroll(scrollState)
         )
     }
 }

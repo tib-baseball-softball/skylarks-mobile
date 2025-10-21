@@ -19,7 +19,7 @@ class UmpiresViewModel @AssistedInject constructor(
 ) : GenericViewModel(userPreferencesRepository) {
     val licenses: StateFlow<List<License>> =
         licenseRepository.getUmpireLicenses()
-            .map { list -> list.map { it.toLicense() } }
+            .map { list -> list.map { it.toLicense() }.sortedBy { it.level } }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),

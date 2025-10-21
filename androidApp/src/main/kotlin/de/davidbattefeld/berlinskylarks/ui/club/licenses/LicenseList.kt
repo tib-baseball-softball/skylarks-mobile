@@ -61,7 +61,9 @@ fun LicenseList(
         }
 
         if (showSoftballSection) {
-            Column {
+            Column(
+                modifier = Modifier.padding(bottom = 16.dp)
+            ) {
                 Text(
                     text = "Softball",
                     style = MaterialTheme.typography.titleLarge,

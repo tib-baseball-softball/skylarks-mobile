@@ -33,6 +33,15 @@ fun LicenseLevelIndicator(
             .background(bg),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = (level ?: "").take(2), fontWeight = FontWeight.SemiBold)
+        Text(
+            text = (level ?: "").take(2),
+            color = when (bg) {
+                MaterialTheme.colorScheme.primary -> MaterialTheme.colorScheme.onPrimary
+                MaterialTheme.colorScheme.secondary -> MaterialTheme.colorScheme.onSecondary
+                MaterialTheme.colorScheme.tertiary -> MaterialTheme.colorScheme.onTertiary
+                else -> MaterialTheme.colorScheme.onSurfaceVariant
+            },
+            fontWeight = FontWeight.SemiBold
+        )
     }
 }
