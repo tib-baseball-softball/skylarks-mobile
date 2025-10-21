@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
 import de.davidbattefeld.berlinskylarks.ui.nav.FieldDetail
 import de.davidbattefeld.berlinskylarks.ui.nav.NavigationType
@@ -44,8 +45,10 @@ fun FieldDetailScreen(
         bottomBar = { SkylarksBottomBar(topLevelBackStack, navigationType) }
     ) { paddingValues ->
         Column(modifier = Modifier.padding(paddingValues)) {
-            Text(text = field?.name ?: "")
-            Text(text = (field?.street ?: "") + ", " + (field?.postalCode ?: "") + " " + (field?.city ?: ""))
+            field?.let { f ->
+                FieldDetailInfoCard(field = f, modifier = Modifier.padding(12.dp))
+                FieldTrafficCard(field = f, modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp))
+            }
         }
     }
 }

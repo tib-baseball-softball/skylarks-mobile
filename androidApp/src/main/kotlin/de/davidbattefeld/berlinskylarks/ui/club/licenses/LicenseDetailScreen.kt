@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
 import de.davidbattefeld.berlinskylarks.ui.nav.LicenseDetail
 import de.davidbattefeld.berlinskylarks.ui.nav.NavigationType
@@ -44,9 +45,10 @@ fun LicenseDetailScreen(
         bottomBar = { SkylarksBottomBar(topLevelBackStack, navigationType) }
     ) { paddingValues ->
         Column(modifier = Modifier.padding(paddingValues)) {
-            Text(text = "${license?.person?.firstName} ${license?.person?.lastName}")
-            Text(text = "License No.: ${license?.number}")
-            Text(text = "Level: ${license?.level}")
+            license?.let { l ->
+                LicenseDetailCard(license = l, modifier = Modifier.padding(12.dp))
+                LicenseDetailHolderCard(license = l, modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp))
+            }
         }
     }
 }

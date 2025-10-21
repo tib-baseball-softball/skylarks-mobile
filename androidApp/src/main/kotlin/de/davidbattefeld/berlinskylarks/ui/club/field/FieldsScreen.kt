@@ -43,16 +43,10 @@ fun FieldsScreen(
         snackbarHost = { SkylarksSnackbarHost() },
         bottomBar = { SkylarksBottomBar(topLevelBackStack, navigationType) }
     ) { paddingValues ->
-        Column(modifier = Modifier.padding(paddingValues)) {
-            fields.forEach { f ->
-                Text(
-                    text = f.name + " - " + (f.city ?: ""),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { detailRoute(f.id) }
-                        .padding(horizontal = 16.dp, vertical = 12.dp)
-                )
-            }
-        }
+        FieldGrid(
+            fields = fields,
+            onFieldClick = { detailRoute(it.id) },
+            modifier = Modifier.padding(paddingValues)
+        )
     }
 }

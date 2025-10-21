@@ -43,17 +43,11 @@ fun UmpiresScreen(
         snackbarHost = { SkylarksSnackbarHost() },
         bottomBar = { SkylarksBottomBar(topLevelBackStack, navigationType) }
     ) { paddingValues ->
-        Column(modifier = Modifier.padding(paddingValues)) {
-            licenses.forEach { license ->
-                val name = "${license.person.firstName} ${license.person.lastName}"
-                Text(
-                    text = "$name - ${license.level}",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { detailRoute(license.id.toInt()) }
-                        .padding(horizontal = 16.dp, vertical = 12.dp)
-                )
-            }
-        }
+        LicenseList(
+            licenses = licenses,
+            showSoftballSection = true,
+            onLicenseClick = { detailRoute(it.id.toInt()) },
+            modifier = Modifier.padding(paddingValues)
+        )
     }
 }

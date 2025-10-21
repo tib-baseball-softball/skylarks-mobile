@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
 import de.davidbattefeld.berlinskylarks.ui.nav.FunctionaryDetail
 import de.davidbattefeld.berlinskylarks.ui.nav.NavigationType
@@ -46,7 +47,9 @@ fun FunctionaryDetailScreen(
         Column(
             modifier = Modifier.padding(paddingValues)
         ) {
-            Text(text = "${functionary?.mail}")
+            functionary?.let { f ->
+                FunctionaryDetailCard(functionary = f, modifier = Modifier.padding(12.dp))
+            }
         }
     }
 }

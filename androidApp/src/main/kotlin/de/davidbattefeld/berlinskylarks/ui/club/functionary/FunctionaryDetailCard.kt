@@ -45,13 +45,13 @@ fun formatDate(dateString: String): String {
         val date = parser.parse(dateString)
         date?.let { formatter.format(it) } ?: dateString
     } catch (e: Exception) {
-        Log.e("FunctionaryDetailScreen", "Error formatting date: $e")
+        Log.e("FunctionaryDetailCard", "Error formatting date: $e")
         dateString
     }
 }
 
 @Composable
-fun FunctionaryDetailScreen(
+fun FunctionaryDetailCard(
     functionary: Functionary,
     modifier: Modifier = Modifier
 ) {

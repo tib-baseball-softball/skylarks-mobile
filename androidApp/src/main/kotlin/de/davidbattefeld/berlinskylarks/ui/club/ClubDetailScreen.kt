@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
 import de.davidbattefeld.berlinskylarks.ui.nav.ClubDetail
 import de.davidbattefeld.berlinskylarks.ui.nav.NavigationType
@@ -42,8 +43,12 @@ fun ClubDetailScreen(
         bottomBar = { SkylarksBottomBar(topLevelBackStack, navigationType) }
     ) { paddingValues ->
         Column(modifier = Modifier.padding(paddingValues)) {
-            Text(text = club?.name ?: "")
-            Text(text = club?.mainClub ?: "")
+            club?.let { c ->
+                ClubBasicsCard(club = c, modifier = Modifier.padding(12.dp))
+                ClubAchievementsCard(club = c, modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp))
+                ClubLegalInfoCard(club = c, modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp))
+                ClubLocationCard(club = c, modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp))
+            }
         }
     }
 }
