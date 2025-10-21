@@ -68,15 +68,15 @@ fun FunctionaryDetailCard(
 
     Column(
         modifier = modifier
-            .padding(16.dp)
+            .padding(8.dp)
             .verticalScroll(rememberScrollState())
     ) {
         Card(
             modifier = Modifier.fillMaxWidth(),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
         ) {
-            Column(modifier = Modifier.padding(12.dp)) {
+            Column(modifier = Modifier.padding(4.dp)) {
                 ListItem(
                     headlineContent = {
                         Text(
@@ -173,10 +173,10 @@ fun FunctionaryDetailCard(
                     context.startActivity(intent)
                 },
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
         ) {
             ListItem(
-                modifier = Modifier.padding(12.dp),
+                modifier = Modifier.padding(8.dp),
                 supportingContent = { Text("Contact") },
                 headlineContent = { Text(functionary.mail) },
                 leadingContent = { Icon(Icons.Filled.Email, contentDescription = "Contact") },
