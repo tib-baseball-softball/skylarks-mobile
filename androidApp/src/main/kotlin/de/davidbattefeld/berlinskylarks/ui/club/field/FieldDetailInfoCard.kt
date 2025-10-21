@@ -45,9 +45,9 @@ fun FieldDetailInfoCard(
     Card(
         modifier = modifier,
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
     ) {
-        Column(modifier = Modifier.padding(12.dp)) {
+        Column(modifier = Modifier.padding(4.dp)) {
             ListItem(
                 headlineContent = {
                     Text(field.name, style = MaterialTheme.typography.titleMedium)

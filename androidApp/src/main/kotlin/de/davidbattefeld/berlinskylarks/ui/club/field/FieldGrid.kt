@@ -18,7 +18,7 @@ fun FieldGrid(
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
+        columns = GridCells.Adaptive(minSize = 200.dp),
         modifier = modifier.padding(10.dp),
         verticalArrangement = Arrangement.spacedBy(cardGridSpacing),
         horizontalArrangement = Arrangement.spacedBy(cardGridSpacing)

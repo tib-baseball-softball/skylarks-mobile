@@ -2,6 +2,8 @@ package de.davidbattefeld.berlinskylarks.ui.club.field
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -28,6 +30,7 @@ fun FieldDetailScreen(
     navigationType: NavigationType,
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val scrollState = rememberScrollState()
     val field by vm.field.collectAsState()
 
     if (field == null) {
@@ -44,10 +47,15 @@ fun FieldDetailScreen(
         snackbarHost = { SkylarksSnackbarHost() },
         bottomBar = { SkylarksBottomBar(topLevelBackStack, navigationType) }
     ) { paddingValues ->
-        Column(modifier = Modifier.padding(paddingValues)) {
+        Column(modifier = Modifier
+            .padding(paddingValues)
+            .verticalScroll(scrollState)) {
             field?.let { f ->
                 FieldDetailInfoCard(field = f, modifier = Modifier.padding(12.dp))
-                FieldTrafficCard(field = f, modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp))
+                FieldTrafficCard(
+                    field = f,
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+                )
             }
         }
     }

@@ -24,12 +24,13 @@ fun FieldTrafficCard(
     Card(
         modifier = modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
     ) {
-        Column(modifier = Modifier.padding(12.dp)) {
+        Column(modifier = Modifier.padding(16.dp)) {
             if (!description.isNullOrBlank()) {
                 // Split on double newlines for paragraphs
-                val paragraphs = description.split("\n\n").map { it.trim() }.filter { it.isNotEmpty() }
+                val paragraphs =
+                    description.split("\n\n").map { it.trim() }.filter { it.isNotEmpty() }
                 paragraphs.forEachIndexed { index, para ->
                     Text(text = para.replace("\n", "\n\n"))
                     if (index < paragraphs.lastIndex) Spacer(Modifier.height(8.dp))
