@@ -3,7 +3,6 @@ package de.davidbattefeld.berlinskylarks.ui.club.licenses
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.EmojiEvents
 import androidx.compose.material.icons.outlined.SportsBaseball
 import androidx.compose.material.icons.outlined.SportsHandball
@@ -36,17 +35,39 @@ fun LicenseDetailCard(
         Column(modifier = Modifier.padding(12.dp)) {
             ListItem(
                 leadingContent = { LicenseLevelIndicator(level = license.level) },
-                headlineContent = { Text(text = license.level, style = MaterialTheme.typography.bodyLarge) },
-                supportingContent = { Text("Level", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                headlineContent = {
+                    Text(
+                        text = license.level,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                },
+                supportingContent = {
+                    Text(
+                        "Level",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                },
                 colors = listItemColors
             )
 
             if (license.baseball == true) {
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
                 ListItem(
-                    leadingContent = { Icon(Icons.Outlined.SportsBaseball, contentDescription = null) },
+                    leadingContent = {
+                        Icon(
+                            Icons.Outlined.SportsBaseball,
+                            contentDescription = null
+                        )
+                    },
                     headlineContent = { Text("yes", style = MaterialTheme.typography.bodyLarge) },
-                    supportingContent = { Text("Baseball", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                    supportingContent = {
+                        Text(
+                            "Baseball",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    },
                     colors = listItemColors
                 )
             }
@@ -54,9 +75,20 @@ fun LicenseDetailCard(
             if (license.softball == true) {
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
                 ListItem(
-                    leadingContent = { Icon(Icons.Outlined.SportsHandball, contentDescription = null) },
+                    leadingContent = {
+                        Icon(
+                            Icons.Outlined.SportsHandball,
+                            contentDescription = null
+                        )
+                    },
                     headlineContent = { Text("yes", style = MaterialTheme.typography.bodyLarge) },
-                    supportingContent = { Text("Softball", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                    supportingContent = {
+                        Text(
+                            "Softball",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    },
                     colors = listItemColors
                 )
             }
@@ -64,9 +96,25 @@ fun LicenseDetailCard(
             license.sleeveNumber?.let { num ->
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
                 ListItem(
-                    leadingContent = { Icon(Icons.Outlined.EmojiEvents, contentDescription = null) },
-                    headlineContent = { Text(num.toString(), style = MaterialTheme.typography.bodyLarge) },
-                    supportingContent = { Text("Sleeve Number", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                    leadingContent = {
+                        Icon(
+                            Icons.Outlined.EmojiEvents,
+                            contentDescription = null
+                        )
+                    },
+                    headlineContent = {
+                        Text(
+                            num.toString(),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    },
+                    supportingContent = {
+                        Text(
+                            "Sleeve Number",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    },
                     colors = listItemColors
                 )
             }

@@ -6,10 +6,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ReceiptLong
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material.icons.outlined.People
-import androidx.compose.material.icons.outlined.ReceiptLong
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import de.berlinskylarks.shared.data.model.Field
 
 @Composable
@@ -36,7 +37,10 @@ fun FieldDetailInfoCard(
         containerColor = Color.Transparent
     )
 
-    val addressLine = listOfNotNull(field.street, listOfNotNull(field.postalCode, field.city).filter { it.isNotBlank() }.joinToString(" ").ifBlank { null }).joinToString(", ")
+    val addressLine = listOfNotNull(
+        field.street,
+        listOfNotNull(field.postalCode, field.city).filter { it.isNotBlank() }.joinToString(" ")
+            .ifBlank { null }).joinToString(", ")
 
     Card(
         modifier = modifier,
@@ -48,8 +52,20 @@ fun FieldDetailInfoCard(
                 headlineContent = {
                     Text(field.name, style = MaterialTheme.typography.titleMedium)
                 },
-                supportingContent = { Text("Ballpark Name", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant) },
-                leadingContent = { Icon(imageVector = Icons.Outlined.ReceiptLong, contentDescription = null, tint = MaterialTheme.colorScheme.primary) },
+                supportingContent = {
+                    Text(
+                        "Ballpark Name",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                },
+                leadingContent = {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Outlined.ReceiptLong,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                },
                 colors = listItemColors
             )
 
@@ -60,8 +76,19 @@ fun FieldDetailInfoCard(
                     headlineContent = {
                         Text(field.addressAddon, style = MaterialTheme.typography.bodyLarge)
                     },
-                    supportingContent = { Text("Address Addon", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant) },
-                    leadingContent = { Icon(imageVector = Icons.Outlined.Info, contentDescription = null) },
+                    supportingContent = {
+                        Text(
+                            "Address Addon",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    },
+                    leadingContent = {
+                        Icon(
+                            imageVector = Icons.Outlined.Info,
+                            contentDescription = null
+                        )
+                    },
                     colors = listItemColors
                 )
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
@@ -70,9 +97,25 @@ fun FieldDetailInfoCard(
             val total = field.spectatorTotal
             if (total != null) {
                 ListItem(
-                    headlineContent = { Text(total.toString(), style = MaterialTheme.typography.bodyLarge) },
-                    supportingContent = { Text("Capacity", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant) },
-                    leadingContent = { Icon(imageVector = Icons.Outlined.People, contentDescription = null) },
+                    headlineContent = {
+                        Text(
+                            total.toString(),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    },
+                    supportingContent = {
+                        Text(
+                            "Capacity",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    },
+                    leadingContent = {
+                        Icon(
+                            imageVector = Icons.Outlined.People,
+                            contentDescription = null
+                        )
+                    },
                     colors = listItemColors
                 )
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
@@ -81,9 +124,25 @@ fun FieldDetailInfoCard(
             val seats = field.spectatorSeats
             if (seats != null) {
                 ListItem(
-                    headlineContent = { Text(seats.toString(), style = MaterialTheme.typography.bodyLarge) },
-                    supportingContent = { Text("Seats", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant) },
-                    leadingContent = { Icon(imageVector = Icons.Outlined.ReceiptLong, contentDescription = null) },
+                    headlineContent = {
+                        Text(
+                            seats.toString(),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    },
+                    supportingContent = {
+                        Text(
+                            "Seats",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    },
+                    leadingContent = {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Outlined.ReceiptLong,
+                            contentDescription = null
+                        )
+                    },
                     colors = listItemColors
                 )
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
@@ -92,14 +151,38 @@ fun FieldDetailInfoCard(
             if (addressLine.isNotBlank()) {
                 ListItem(
                     modifier = Modifier.clickable {
-                        val q = Uri.encode(listOfNotNull(field.name, field.street, field.postalCode, field.city).joinToString(", "))
-                        val uri = Uri.parse("https://www.google.com/maps/search/?api=1&query=$q")
+                        val q = Uri.encode(
+                            listOfNotNull(
+                                field.name,
+                                field.street,
+                                field.postalCode,
+                                field.city
+                            ).joinToString(", ")
+                        )
+                        val uri = "https://www.google.com/maps/search/?api=1&query=$q".toUri()
                         val intent = Intent(Intent.ACTION_VIEW, uri)
                         context.startActivity(intent)
                     },
-                    headlineContent = { Text(addressLine, style = MaterialTheme.typography.bodyLarge) },
-                    supportingContent = { Text("Address", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant) },
-                    leadingContent = { Icon(imageVector = Icons.Outlined.LocationOn, contentDescription = null, tint = MaterialTheme.colorScheme.tertiary) },
+                    headlineContent = {
+                        Text(
+                            addressLine,
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    },
+                    supportingContent = {
+                        Text(
+                            "Address",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    },
+                    leadingContent = {
+                        Icon(
+                            imageVector = Icons.Outlined.LocationOn,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.tertiary
+                        )
+                    },
                     colors = listItemColors
                 )
             }
