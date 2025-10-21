@@ -31,13 +31,24 @@ fun ClubLegalInfoCard(
     Card(
         modifier = modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
     ) {
-        Column(modifier = Modifier.padding(12.dp)) {
+        Column(modifier = Modifier.padding(4.dp)) {
             ListItem(
                 leadingContent = { Icon(Icons.Outlined.Person, contentDescription = null) },
-                headlineContent = { Text(text = club.chairman, style = MaterialTheme.typography.bodyLarge) },
-                supportingContent = { Text("Chairman", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                headlineContent = {
+                    Text(
+                        text = club.chairman,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                },
+                supportingContent = {
+                    Text(
+                        "Chairman",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                },
                 colors = listItemColors
             )
 
@@ -45,8 +56,19 @@ fun ClubLegalInfoCard(
 
             ListItem(
                 leadingContent = { Icon(Icons.Outlined.Badge, contentDescription = null) },
-                headlineContent = { Text(text = club.registeredAssociation, style = MaterialTheme.typography.bodyLarge) },
-                supportingContent = { Text("Registered Association", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                headlineContent = {
+                    Text(
+                        text = club.registeredAssociation,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                },
+                supportingContent = {
+                    Text(
+                        "Registered Association",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                },
                 colors = listItemColors
             )
 
@@ -54,8 +76,19 @@ fun ClubLegalInfoCard(
 
             ListItem(
                 leadingContent = { Icon(Icons.Outlined.AccountBalance, contentDescription = null) },
-                headlineContent = { Text(text = club.court, style = MaterialTheme.typography.bodyLarge) },
-                supportingContent = { Text("Court", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                headlineContent = {
+                    Text(
+                        text = club.court,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                },
+                supportingContent = {
+                    Text(
+                        "Court",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                },
                 colors = listItemColors
             )
         }

@@ -2,6 +2,8 @@ package de.davidbattefeld.berlinskylarks.ui.club
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -28,6 +30,7 @@ fun ClubDetailScreen(
     navigationType: NavigationType,
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val scrollState = rememberScrollState()
     val club by vm.club.collectAsState()
 
     if (club == null) return
@@ -42,12 +45,23 @@ fun ClubDetailScreen(
         snackbarHost = { SkylarksSnackbarHost() },
         bottomBar = { SkylarksBottomBar(topLevelBackStack, navigationType) }
     ) { paddingValues ->
-        Column(modifier = Modifier.padding(paddingValues)) {
+        Column(modifier = Modifier
+            .padding(paddingValues)
+            .verticalScroll(scrollState)) {
             club?.let { c ->
                 ClubBasicsCard(club = c, modifier = Modifier.padding(12.dp))
-                ClubAchievementsCard(club = c, modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp))
-                ClubLegalInfoCard(club = c, modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp))
-                ClubLocationCard(club = c, modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp))
+                ClubAchievementsCard(
+                    club = c,
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+                )
+                ClubLegalInfoCard(
+                    club = c,
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+                )
+                ClubLocationCard(
+                    club = c,
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+                )
             }
         }
     }

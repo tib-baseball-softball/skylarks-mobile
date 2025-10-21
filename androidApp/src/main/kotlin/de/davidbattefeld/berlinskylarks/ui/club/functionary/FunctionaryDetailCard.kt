@@ -74,7 +74,7 @@ fun FunctionaryDetailCard(
         Card(
             modifier = Modifier.fillMaxWidth(),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
         ) {
             Column(modifier = Modifier.padding(12.dp)) {
                 ListItem(
@@ -173,13 +173,14 @@ fun FunctionaryDetailCard(
                     context.startActivity(intent)
                 },
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
         ) {
             ListItem(
                 modifier = Modifier.padding(12.dp),
                 supportingContent = { Text("Contact") },
                 headlineContent = { Text(functionary.mail) },
-                leadingContent = { Icon(Icons.Filled.Email, contentDescription = "Contact") }
+                leadingContent = { Icon(Icons.Filled.Email, contentDescription = "Contact") },
+                colors = listItemColors,
             )
         }
     }

@@ -1,7 +1,6 @@
 package de.davidbattefeld.berlinskylarks.ui.club
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -38,10 +37,15 @@ fun ClubBasicsCard(
     Card(
         modifier = modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
     ) {
-        Column(modifier = Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-            Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            modifier = Modifier.padding(4.dp),
+        ) {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Image(
                     painter = painterResource(id = R.drawable.logo_rondell),
                     contentDescription = "Skylarks Club Logo",
@@ -53,8 +57,19 @@ fun ClubBasicsCard(
 
             ListItem(
                 leadingContent = { Icon(Icons.Outlined.Info, contentDescription = null) },
-                headlineContent = { Text(text = club.name, style = MaterialTheme.typography.bodyLarge) },
-                supportingContent = { Text("Name", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                headlineContent = {
+                    Text(
+                        text = club.name,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                },
+                supportingContent = {
+                    Text(
+                        "Name",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                },
                 colors = listItemColors
             )
 
@@ -62,8 +77,19 @@ fun ClubBasicsCard(
 
             ListItem(
                 leadingContent = { Icon(Icons.Outlined.Badge, contentDescription = null) },
-                headlineContent = { Text(text = "${club.acronym} / 0${club.organizationId} ${club.number}", style = MaterialTheme.typography.bodyLarge) },
-                supportingContent = { Text("Acronym / IDs", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                headlineContent = {
+                    Text(
+                        text = "${club.acronym} / 0${club.organizationId} ${club.number}",
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                },
+                supportingContent = {
+                    Text(
+                        "Acronym / IDs",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                },
                 colors = listItemColors
             )
 
@@ -71,8 +97,19 @@ fun ClubBasicsCard(
 
             ListItem(
                 leadingContent = { Icon(Icons.Outlined.Shield, contentDescription = null) },
-                headlineContent = { Text(text = club.mainClub, style = MaterialTheme.typography.bodyLarge) },
-                supportingContent = { Text("Main Club", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                headlineContent = {
+                    Text(
+                        text = club.mainClub,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                },
+                supportingContent = {
+                    Text(
+                        "Main Club",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                },
                 colors = listItemColors
             )
         }

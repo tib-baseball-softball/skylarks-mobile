@@ -28,19 +28,31 @@ fun ClubLocationCard(
     val listItemColors = ListItemDefaults.colors(containerColor = Color.Transparent)
 
     val address = club.addressAddon
-    val streetLine = listOfNotNull(club.street, "${club.postalCode} ${club.city}").joinToString(", ")
+    val streetLine =
+        listOfNotNull(club.street, "${club.postalCode} ${club.city}").joinToString(", ")
     val country = club.country
 
     Card(
         modifier = modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
     ) {
-        Column(modifier = Modifier.padding(12.dp)) {
+        Column(modifier = Modifier.padding(4.dp)) {
             ListItem(
                 leadingContent = { Icon(Icons.Outlined.Info, contentDescription = null) },
-                headlineContent = { Text(text = address, style = MaterialTheme.typography.bodyLarge) },
-                supportingContent = { Text("Address", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                headlineContent = {
+                    Text(
+                        text = address,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                },
+                supportingContent = {
+                    Text(
+                        "Address",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                },
                 colors = listItemColors
             )
 
@@ -48,8 +60,19 @@ fun ClubLocationCard(
 
             ListItem(
                 leadingContent = { Icon(Icons.Outlined.LocationOn, contentDescription = null) },
-                headlineContent = { Text(text = streetLine, style = MaterialTheme.typography.bodyLarge) },
-                supportingContent = { Text("Street / City", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                headlineContent = {
+                    Text(
+                        text = streetLine,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                },
+                supportingContent = {
+                    Text(
+                        "Street / City",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                },
                 colors = listItemColors
             )
 
@@ -57,8 +80,19 @@ fun ClubLocationCard(
 
             ListItem(
                 leadingContent = { Icon(Icons.Outlined.LocationOn, contentDescription = null) },
-                headlineContent = { Text(text = country, style = MaterialTheme.typography.bodyLarge) },
-                supportingContent = { Text("Country", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                headlineContent = {
+                    Text(
+                        text = country,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                },
+                supportingContent = {
+                    Text(
+                        "Country",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                },
                 colors = listItemColors
             )
         }

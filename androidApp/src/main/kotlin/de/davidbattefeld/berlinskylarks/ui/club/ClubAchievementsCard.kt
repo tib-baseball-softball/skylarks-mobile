@@ -28,12 +28,17 @@ fun ClubAchievementsCard(
     Card(
         modifier = modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
     ) {
-        Column(modifier = Modifier.padding(12.dp)) {
+        Column(modifier = Modifier.padding(4.dp)) {
             ListItem(
                 leadingContent = { Icon(Icons.Outlined.EmojiEvents, contentDescription = null) },
-                headlineContent = { Text("Achievements", style = MaterialTheme.typography.titleMedium) },
+                headlineContent = {
+                    Text(
+                        "Achievements",
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                },
                 colors = listItemColors
             )
             val text = club.successes.ifBlank { "No achievements listed." }
