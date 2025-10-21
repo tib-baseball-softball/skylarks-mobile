@@ -15,6 +15,9 @@ interface LicenseDao {
     @Query("SELECT * FROM licenses")
     fun getAllLicenses(): Flow<List<LicenseEntity>>
 
+    @Query("SELECT * FROM licenses WHERE category = :category")
+    fun getLicensesByCategory(category: String): Flow<List<LicenseEntity>>
+
     @Query("SELECT * FROM licenses WHERE id = :id")
     fun getLicenseByID(id: Int): Flow<LicenseEntity?>
 }

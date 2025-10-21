@@ -18,7 +18,7 @@ class UmpiresViewModel @AssistedInject constructor(
     userPreferencesRepository: UserPreferencesRepository,
 ) : GenericViewModel(userPreferencesRepository) {
     val licenses: StateFlow<List<License>> =
-        licenseRepository.getAllLicenses()
+        licenseRepository.getUmpireLicenses()
             .map { list -> list.map { it.toLicense() } }
             .stateIn(
                 scope = viewModelScope,

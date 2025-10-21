@@ -11,5 +11,11 @@ class OfflineLicenseRepository(
 
     override fun getAllLicenses(): Flow<List<LicenseEntity>> = licenseDao.getAllLicenses()
 
+    override fun getUmpireLicenses(): Flow<List<LicenseEntity>> =
+        licenseDao.getLicensesByCategory("Umpire")
+
+    override fun getScorerLicenses(): Flow<List<LicenseEntity>> =
+        licenseDao.getLicensesByCategory("Scorer")
+
     override fun getLicenseByID(id: Int): Flow<LicenseEntity?> = licenseDao.getLicenseByID(id)
 }
