@@ -36,7 +36,7 @@ fun HomeDatasetItem(
             record = "${dataset.tableRow?.wins_count?.toInt()} - ${dataset.tableRow?.losses_count?.toInt()}",
             percentage = dataset.tableRow?.quota ?: "",
             rank = dataset.tableRow?.rank ?: "",
-            backgroundColor = MaterialTheme.colorScheme.surfaceContainerHighest
+            backgroundColor = MaterialTheme.colorScheme.surfaceContainerLow
         )
         OutlinedButton(
             onClick = {

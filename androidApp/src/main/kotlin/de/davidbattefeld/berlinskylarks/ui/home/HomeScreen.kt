@@ -95,7 +95,7 @@ fun HomeScreen(
                     sport = favoriteTeam?.leagueEntries?.firstOrNull()?.league?.sport ?: "",
                     ageGroup = favoriteTeam?.leagueEntries?.firstOrNull()?.league?.ageGroup ?: "",
                 ),
-                backgroundColor = MaterialTheme.colorScheme.primaryContainer,
+                backgroundColor = MaterialTheme.colorScheme.surfaceContainerLow,
             )
 
             Text(text = "Data per League", style = MaterialTheme.typography.headlineSmall)

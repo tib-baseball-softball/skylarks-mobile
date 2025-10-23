@@ -3,11 +3,13 @@ package de.davidbattefeld.berlinskylarks.ui.utility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -17,7 +19,8 @@ fun InfoRowWithIcon(
     icon: ImageVector,
     label: String,
     value: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    iconColor: Color = LocalContentColor.current,
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -26,6 +29,7 @@ fun InfoRowWithIcon(
         Icon(
             imageVector = icon,
             contentDescription = null,
+            tint = iconColor,
         )
         Text(
             text = label,

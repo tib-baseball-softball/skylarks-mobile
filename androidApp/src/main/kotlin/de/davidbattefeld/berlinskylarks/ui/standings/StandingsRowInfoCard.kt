@@ -46,28 +46,36 @@ fun StandingsRowInfoCard(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                 modifier = Modifier.padding(bottom = 8.dp)
             ) {
-                Icon(imageVector = Icons.Filled.Info, contentDescription = null)
+                Icon(
+                    imageVector = Icons.Filled.Info,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.secondary
+                )
                 Text(text = name, style = MaterialTheme.typography.titleMedium)
             }
             InfoRowWithIcon(
                 icon = Icons.Outlined.Signpost,
                 label = "Acronym",
-                value = acronym
+                value = acronym,
+                iconColor = MaterialTheme.colorScheme.secondary
             )
             InfoRowWithIcon(
                 icon = Icons.Outlined.Analytics,
                 label = "Record",
-                value = record
+                value = record,
+                iconColor = MaterialTheme.colorScheme.secondary
             )
             InfoRowWithIcon(
                 icon = Icons.Outlined.Percent,
                 label = "Percentage",
-                value = percentage
+                value = percentage,
+                iconColor = MaterialTheme.colorScheme.secondary
             )
             InfoRowWithIcon(
                 icon = Icons.Outlined.Tag,
                 label = "Rank",
-                value = rank
+                value = rank,
+                iconColor = MaterialTheme.colorScheme.secondary
             )
         }
     }
@@ -82,7 +90,8 @@ fun TeamInfoCardPreview() {
             acronym = "TEA",
             record = "12 - 4",
             percentage = ".376",
-            rank = "3."
+            rank = "3.",
+            backgroundColor = MaterialTheme.colorScheme.surfaceContainerLow,
         )
     }
 }

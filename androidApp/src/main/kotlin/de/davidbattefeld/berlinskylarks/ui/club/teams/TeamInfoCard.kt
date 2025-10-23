@@ -27,7 +27,7 @@ import de.davidbattefeld.berlinskylarks.ui.utility.InfoRowWithIcon
 fun TeamInfoCard(
     team: SkylarksTeam,
     modifier: Modifier = Modifier,
-    backgroundColor: Color = MaterialTheme.colorScheme.tertiaryContainer,
+    backgroundColor: Color = MaterialTheme.colorScheme.surfaceContainerLow,
 ) {
     ElevatedCard(
         colors = CardDefaults.cardColors(
@@ -42,28 +42,36 @@ fun TeamInfoCard(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                 modifier = Modifier.padding(bottom = 8.dp)
             ) {
-                Icon(imageVector = Icons.Filled.Info, contentDescription = null)
+                Icon(
+                    imageVector = Icons.Filled.Info,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary
+                )
                 Text(text = team.name, style = MaterialTheme.typography.titleMedium)
             }
             InfoRowWithIcon(
                 icon = Icons.Outlined.Group,
                 label = "Name",
-                value = team.name
+                value = team.name,
+                iconColor = MaterialTheme.colorScheme.primary,
             )
             InfoRowWithIcon(
                 icon = Icons.Outlined.Tag,
                 label = "Acronym",
-                value = team.bsmShortName ?: "None"
+                value = team.bsmShortName ?: "None",
+                iconColor = MaterialTheme.colorScheme.primary,
             )
             InfoRowWithIcon(
                 icon = Icons.Outlined.SportsBaseball,
                 label = "Sport",
-                value = team.sport.replaceFirstChar { it.uppercase() }
+                value = team.sport.replaceFirstChar { it.uppercase() },
+                iconColor = MaterialTheme.colorScheme.primary,
             )
             InfoRowWithIcon(
                 icon = Icons.Outlined.Group,
                 label = "Age Group",
-                value = team.ageGroup.replaceFirstChar { it.uppercase() }
+                value = team.ageGroup.replaceFirstChar { it.uppercase() },
+                iconColor = MaterialTheme.colorScheme.primary,
             )
         }
     }
