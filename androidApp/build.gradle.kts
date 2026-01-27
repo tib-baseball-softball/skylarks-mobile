@@ -11,6 +11,52 @@ kotlin {
         optIn.add("kotlin.RequiresOptIn")
         optIn.add("kotlin.time.ExperimentalTime")
     }
+
+    dependencies {
+        implementation(project(":shared"))
+        implementation(libs.androidx.core.ktx)
+        implementation(libs.androidx.lifecycle.runtime.ktx)
+        implementation(libs.androidx.activity.compose)
+        implementation(libs.compose.ui)
+        implementation(libs.compose.ui.tooling.preview)
+        implementation(libs.compose.material3.android)
+        implementation(libs.compose.material3.window.size)
+        implementation(libs.compose.material.icons.extended)
+        implementation(libs.androidx.lifecycle.viewmodel.compose)
+        implementation(libs.coroutines.android)
+        implementation(libs.androidx.datastore.preferences)
+        implementation(libs.androidx.lifecycle.runtime.compose)
+        implementation(libs.androidx.room.runtime)
+        implementation(libs.hilt.android)
+        implementation(libs.androidx.hilt.navigation.compose)
+        implementation(libs.androidx.hilt.compiler)
+        implementation(libs.androidx.hilt.work)
+        ksp(libs.hilt.android.compiler)
+        ksp(libs.androidx.hilt.compiler)
+
+        implementation(libs.androidx.navigation3.ui)
+        implementation(libs.androidx.navigation3.runtime)
+        implementation(libs.androidx.lifecycle.viewmodel.navigation3)
+        implementation(libs.androidx.material3.adaptive.navigation3)
+        implementation(libs.androidx.work.runtime.ktx)
+
+        testImplementation(libs.junit)
+
+        androidTestImplementation(libs.androidx.testExt.junit)
+        androidTestImplementation(libs.androidx.espresso.core)
+        androidTestImplementation(libs.compose.ui.test.junit4)
+
+        debugImplementation(libs.compose.ui.tooling)
+        debugImplementation(libs.compose.ui.test.manifest)
+
+        implementation(libs.serialization.json)
+        implementation(libs.ktor.client.core)
+        implementation(libs.ktor.client.android)
+        implementation(libs.coil)
+        implementation(libs.coil.compose)
+        implementation(libs.jetbrains.markdown)
+        implementation(libs.accompanist.permissions)
+    }
 }
 
 android {
@@ -59,50 +105,4 @@ android {
             excludes += "DebugProbesKt.bin"
         }
     }
-}
-
-dependencies {
-    implementation(project(":shared"))
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.compose.ui)
-    implementation(libs.compose.ui.tooling.preview)
-    implementation(libs.compose.material3.android)
-    implementation(libs.compose.material3.window.size)
-    implementation(libs.compose.material.icons.extended)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(libs.coroutines.android)
-    implementation(libs.androidx.datastore.preferences)
-    implementation(libs.androidx.lifecycle.runtime.compose)
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.hilt.android)
-    implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.androidx.hilt.compiler)
-    implementation(libs.androidx.hilt.work)
-    ksp(libs.hilt.android.compiler)
-    ksp(libs.androidx.hilt.compiler)
-
-    implementation(libs.androidx.navigation3.ui)
-    implementation(libs.androidx.navigation3.runtime)
-    implementation(libs.androidx.lifecycle.viewmodel.navigation3)
-    implementation(libs.androidx.material3.adaptive.navigation3)
-    implementation(libs.androidx.work.runtime.ktx)
-
-    testImplementation(libs.junit)
-
-    androidTestImplementation(libs.androidx.testExt.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.compose.ui.test.junit4)
-
-    debugImplementation(libs.compose.ui.tooling)
-    debugImplementation(libs.compose.ui.test.manifest)
-
-    implementation(libs.serialization.json)
-    implementation(libs.ktor.client.core)
-    implementation(libs.ktor.client.android)
-    implementation(libs.coil)
-    implementation(libs.coil.compose)
-    implementation(libs.jetbrains.markdown)
-    implementation(libs.accompanist.permissions)
 }
