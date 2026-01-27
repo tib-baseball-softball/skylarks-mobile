@@ -1,9 +1,6 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
@@ -13,7 +10,6 @@ kotlin {
     compilerOptions {
         optIn.add("kotlin.RequiresOptIn")
         optIn.add("kotlin.time.ExperimentalTime")
-        jvmTarget = JvmTarget.fromTarget("17")
     }
 }
 
