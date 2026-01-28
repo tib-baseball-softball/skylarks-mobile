@@ -22,4 +22,8 @@ class OfflineFunctionaryRepository(
 
     override fun getFunctionaryByID(id: Int): Flow<FunctionaryEntity?> =
         functionaryDao.getFunctionaryByID(id)
+
+    override suspend fun deleteAllFunctionaries() {
+        functionaryDao.truncateTable()
+    }
 }

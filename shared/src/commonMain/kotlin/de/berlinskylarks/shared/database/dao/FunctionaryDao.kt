@@ -25,4 +25,7 @@ interface FunctionaryDao {
 
     @Query("SELECT * FROM functionaries WHERE id = :id")
     fun getFunctionaryByID(id: Int): Flow<FunctionaryEntity?>
+
+    @Query("DELETE FROM functionaries")
+    suspend fun truncateTable()
 }

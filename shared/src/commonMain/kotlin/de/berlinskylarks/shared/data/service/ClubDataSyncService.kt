@@ -71,6 +71,9 @@ class ClubDataSyncService(
                 )
             )
 
+            // we have to reset here since the local database might contain stale data
+            functionaryRepository.deleteAllFunctionaries()
+
             val functionaries = functionaryAPIClient.loadFunctionaries(clubID)
             functionaries.forEach { f ->
                 functionaryRepository.insertFunctionary(
