@@ -18,7 +18,7 @@ class ScorersViewModel @AssistedInject constructor(
     userPreferencesRepository: UserPreferencesRepository,
 ) : GenericViewModel(userPreferencesRepository) {
     val licenses: StateFlow<List<License>> =
-        licenseRepository.getScorerLicenses()
+        licenseRepository.getValidScorerLicenses()
             .map { list -> list.map { it.toLicense() }.sortedBy { it.level } }
             .stateIn(
                 scope = viewModelScope,
