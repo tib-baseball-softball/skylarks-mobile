@@ -40,7 +40,6 @@ class BerlinSkylarksApplication() : Application(), Configuration.Provider {
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.UNMETERED)
             .setRequiresBatteryNotLow(true)
-            .setRequiresDeviceIdle(true)
             .build()
 
         makeGameSyncRequest(constraints)
