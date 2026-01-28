@@ -12,6 +12,7 @@ import androidx.work.workDataOf
 import dagger.hilt.android.HiltAndroidApp
 import de.berlinskylarks.shared.data.api.BSMAPIClient.Companion.DEFAULT_SEASON
 import de.davidbattefeld.berlinskylarks.data.sync.BSMTeamDataWorker
+import de.davidbattefeld.berlinskylarks.data.sync.ClubDataWorker
 import de.davidbattefeld.berlinskylarks.data.sync.GameDataWorker
 import de.davidbattefeld.berlinskylarks.data.sync.GameReportWorker
 import de.davidbattefeld.berlinskylarks.data.sync.HomeDataWorker
@@ -50,6 +51,7 @@ class BerlinSkylarksApplication() : Application(), Configuration.Provider {
         makeTibTeamsSyncRequest(constraints)
         makeBSMTeamsSyncRequest(constraints)
         makePlayersSyncRequest(constraints)
+        makeClubSyncRequest(constraints)
     }
 
     private fun makeBSMTeamsSyncRequest(constraints: Constraints) {
@@ -178,6 +180,22 @@ class BerlinSkylarksApplication() : Application(), Configuration.Provider {
         )
     }
 
+    private fun makeClubSyncRequest(constraints: Constraints) {
+        val workManager = WorkManager.getInstance(applicationContext)
+        val syncRequest = PeriodicWorkRequestBuilder<ClubDataWorker>(
+            repeatInterval = 24,
+            repeatIntervalTimeUnit = TimeUnit.HOURS
+        )
+            .setConstraints(constraints)
+            .build()
+
+        workManager.enqueueUniquePeriodicWork(
+            uniqueWorkName = SYNC_CLUB_DATA_WORK_NAME,
+            existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
+            request = syncRequest,
+        )
+    }
+
     companion object {
         const val SYNC_GAME_DATA_WORK_NAME = "sync_game_data_work"
         const val SYNC_GAME_REPORT_DATA_WORK_NAME = "sync_game_report_data_work"
@@ -186,5 +204,6 @@ class BerlinSkylarksApplication() : Application(), Configuration.Provider {
         const val SYNC_PLAYER_DATA_WORK_NAME = "sync_player_data_work"
         const val SYNC_TEAMS_DATA_WORK_NAME = "sync_teams_data_work"
         const val SYNC_HOME_DATA_WORK_NAME = "sync_home_data_work"
+        const val SYNC_CLUB_DATA_WORK_NAME = "sync_club_data_work"
     }
 }
