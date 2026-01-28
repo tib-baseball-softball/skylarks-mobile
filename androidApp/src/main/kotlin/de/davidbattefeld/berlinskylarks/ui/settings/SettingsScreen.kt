@@ -1,6 +1,7 @@
 package de.davidbattefeld.berlinskylarks.ui.settings
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -15,6 +16,7 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material.icons.filled.Policy
 import androidx.compose.material.icons.filled.Web
+import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
@@ -276,6 +278,20 @@ fun SettingsScreen(
                         )
                     }
                 )
+            }
+            item {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    modifier = Modifier.padding(10.dp)
+                ) {
+                    Button(onClick = { vm.onDataFullUpdateRequest(userPreferences.season) }) {
+                        Text("Update Offline Data")
+                    }
+                    Text(
+                        text = "This requests a full update of all cached app data and may take a while.",
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
             }
         }
     }
