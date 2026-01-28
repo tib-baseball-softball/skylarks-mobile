@@ -16,6 +16,7 @@ import de.davidbattefeld.berlinskylarks.data.sync.GameDataWorker
 import de.davidbattefeld.berlinskylarks.data.sync.GameReportWorker
 import de.davidbattefeld.berlinskylarks.data.sync.HomeDataWorker
 import de.davidbattefeld.berlinskylarks.data.sync.LeagueGroupWorker
+import de.davidbattefeld.berlinskylarks.data.sync.PlayerDataWorker
 import de.davidbattefeld.berlinskylarks.data.sync.TiBTeamDataWorker
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -147,7 +148,7 @@ class BerlinSkylarksApplication() : Application(), Configuration.Provider {
 
     private fun makeTibTeamsSyncRequest(constraints: Constraints) {
         val workManager = WorkManager.getInstance(applicationContext)
-        val leagueGroupSyncRequest = PeriodicWorkRequestBuilder<TiBTeamDataWorker>(
+        val syncRequest = PeriodicWorkRequestBuilder<TiBTeamDataWorker>(
             repeatInterval = 24,
             repeatIntervalTimeUnit = TimeUnit.HOURS
         )
@@ -157,13 +158,13 @@ class BerlinSkylarksApplication() : Application(), Configuration.Provider {
         workManager.enqueueUniquePeriodicWork(
             uniqueWorkName = SYNC_TIB_TEAMS_DATA_WORK_NAME,
             existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
-            request = leagueGroupSyncRequest,
+            request = syncRequest,
         )
     }
 
     private fun makePlayersSyncRequest(constraints: Constraints) {
         val workManager = WorkManager.getInstance(applicationContext)
-        val leagueGroupSyncRequest = PeriodicWorkRequestBuilder<TiBTeamDataWorker>(
+        val playerSyncRequest = PeriodicWorkRequestBuilder<PlayerDataWorker>(
             repeatInterval = 24,
             repeatIntervalTimeUnit = TimeUnit.HOURS
         )
@@ -173,7 +174,7 @@ class BerlinSkylarksApplication() : Application(), Configuration.Provider {
         workManager.enqueueUniquePeriodicWork(
             uniqueWorkName = SYNC_PLAYER_DATA_WORK_NAME,
             existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
-            request = leagueGroupSyncRequest,
+            request = playerSyncRequest,
         )
     }
 
