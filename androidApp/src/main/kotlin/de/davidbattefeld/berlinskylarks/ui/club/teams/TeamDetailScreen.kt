@@ -6,12 +6,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -56,59 +54,53 @@ fun TeamDetailScreen(
         snackbarHost = { SkylarksSnackbarHost() },
         bottomBar = { SkylarksBottomBar(topLevelBackStack, navigationType) }
     ) { paddingValues ->
-        Surface(
-            shape = RoundedCornerShape(size = 12.dp),
-            tonalElevation = 1.dp,
-            modifier = Modifier
-                .padding(paddingValues)
-                .padding(12.dp),
+        LazyColumn(
+            state = listState,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.padding(paddingValues)
         ) {
-            LazyColumn(
-                state = listState,
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-            ) {
-                when (vm.viewState) {
-                    ViewState.NoResults, ViewState.NotInitialised -> {
-                        item {
-                            ContentNotFoundView("players")
-                        }
+            when (vm.viewState) {
+                ViewState.NoResults, ViewState.NotInitialised -> {
+                    item {
+                        ContentNotFoundView("players")
                     }
+                }
 
-                    ViewState.Loading -> {
-                        item {
-                            LoadingView()
-                        }
+                ViewState.Loading -> {
+                    item {
+                        LoadingView()
                     }
+                }
 
-                    ViewState.Found -> {
-                        team?.let {
-                            item {
-                                TeamInfoCard(
-                                    team = team!!,
-                                    backgroundColor = MaterialTheme.colorScheme.tertiaryContainer
-                                )
-                            }
-                        }
-
-                        itemsIndexed(players) { index, player ->
-                            PlayerRow(
-                                player = player,
-                                modifier = Modifier
-                                    .clickable {
-                                        playerDetailRoute(player.id.toInt())
-                                    }
+                ViewState.Found -> {
+                    team?.let {
+                        item {
+                            TeamInfoCard(
+                                team = team!!,
+                                backgroundColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                                modifier = Modifier.padding(horizontal = 16.dp)
                             )
-                            // last item does not have a divider
-                            if (index + 1 != players.size) {
-                                HorizontalDivider(modifier = Modifier.padding(horizontal = 8.dp))
-                            }
                         }
                     }
 
-                    ViewState.Error -> {
-                        item {
-                            Text("An error occurred loading data.")
+                    itemsIndexed(players) { index, player ->
+                        PlayerRow(
+                            player = player,
+                            modifier = Modifier
+                                .clickable {
+                                    playerDetailRoute(player.id.toInt())
+                                }
+                        )
+                        // last item does not have a divider
+                        if (index + 1 != players.size) {
+                            HorizontalDivider(modifier = Modifier.padding(horizontal = 8.dp))
                         }
+                    }
+                }
+
+                ViewState.Error -> {
+                    item {
+                        Text("An error occurred loading data.")
                     }
                 }
             }

@@ -32,7 +32,6 @@ import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -90,9 +89,6 @@ fun ScoresTopBar(
         title = {
             Text(text = Scores.title)
         },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
         actions = {
             IconButton(onClick = {
                 showBottomSheet = true

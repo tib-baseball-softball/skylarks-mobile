@@ -33,6 +33,7 @@ fun TeamInfoCard(
         colors = CardDefaults.cardColors(
             containerColor = backgroundColor
         ),
+        modifier = modifier
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
