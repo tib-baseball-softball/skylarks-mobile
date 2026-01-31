@@ -10,7 +10,7 @@ import io.ktor.http.URLBuilder
  * MARK: no authentication
  */
 abstract class DiamondPlannerAPIClient(authKey: String = "") : AbstractAPIClient(authKey) {
-    override val API_URL = "https://pb.berlinskylarks.de"
+    override val API_URL = "https://app.berlinskylarks.de"
 
     override fun URLBuilder.addAuthorizationParameters() {}
 
