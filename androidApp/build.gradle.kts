@@ -67,8 +67,8 @@ android {
         applicationId = "de.davidbattefeld.berlinskylarks"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 10
-        versionName = "2.0.0"
+        versionCode = 11
+        versionName = "2.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
