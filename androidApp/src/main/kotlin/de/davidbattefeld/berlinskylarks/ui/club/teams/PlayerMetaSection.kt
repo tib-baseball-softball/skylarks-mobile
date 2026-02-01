@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Event
 import androidx.compose.material.icons.outlined.Groups
-import androidx.compose.material.icons.outlined.Tag
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.HorizontalDivider
@@ -44,18 +43,6 @@ fun PlayerMetaSection(player: Player) {
                     leadingContent = {
                         Icon(
                             imageVector = Icons.Outlined.Groups,
-                            contentDescription = null,
-                        )
-                    },
-                    colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
-                )
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
-                ListItem(
-                    headlineContent = { Text(text = "Age") },
-                    supportingContent = { Text(player.getAge().toString()) },
-                    leadingContent = {
-                        Icon(
-                            imageVector = Icons.Outlined.Tag,
                             contentDescription = null,
                         )
                     },

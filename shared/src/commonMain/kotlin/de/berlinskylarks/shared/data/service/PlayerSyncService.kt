@@ -53,7 +53,6 @@ class PlayerSyncService(
                     lastName = player.lastName,
                     bsmID = player.bsmID,
                     fullName = player.fullName,
-                    birthday = player.birthday,
                     admission = player.admission,
                     number = player.number,
                     throwing = player.throwing,

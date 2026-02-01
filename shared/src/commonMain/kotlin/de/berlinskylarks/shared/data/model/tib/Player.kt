@@ -1,6 +1,5 @@
 package de.berlinskylarks.shared.data.model.tib
 
-import de.berlinskylarks.shared.utility.DateTimeUtility
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -16,7 +15,6 @@ data class Player(
     val firstName: String,
     @SerialName("lastname")
     val lastName: String,
-    val birthday: Long,
     val admission: String,
     val number: String,
     val throwing: String,
@@ -31,9 +29,5 @@ data class Player(
 ) {
     fun isCoach(): Boolean {
         return number == "C" || positions.isEmpty()
-    }
-
-    fun getAge(): Int {
-        return DateTimeUtility.getAge(birthday)
     }
 }
