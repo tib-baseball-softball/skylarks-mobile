@@ -14,7 +14,7 @@ class AndroidDateTimeUtility : DateTimeUtility() {
     companion object {
         fun formatDate(
             instant: Instant,
-            style: FormatStyle? = FormatStyle.MEDIUM
+            style: FormatStyle? = FormatStyle.SHORT
         ): String {
             val zonedDateTime = instant.toJavaInstant().atZone(ZoneId.systemDefault())
             val formatter = DateTimeFormatter.ofLocalizedDateTime(style)
