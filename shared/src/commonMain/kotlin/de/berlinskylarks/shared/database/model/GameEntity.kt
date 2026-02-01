@@ -3,9 +3,7 @@ package de.berlinskylarks.shared.database.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import de.berlinskylarks.shared.data.model.Game
-import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalTime::class)
 @Entity(tableName = "games")
 data class GameEntity(
     @PrimaryKey

@@ -43,4 +43,6 @@ data class Club(
     val longitude: Double,
     @SerialName("successes")
     val successes: String,
+    @SerialName("logo_url")
+    val logoURL: String?,
 )

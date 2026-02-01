@@ -26,6 +26,7 @@ data class ClubEntity(
     val latitude: Double,
     val longitude: Double,
     val successes: String,
+    val logoURL: String?,
 ) {
     fun toClub(): Club {
         return Club(
@@ -48,6 +49,7 @@ data class ClubEntity(
             latitude = latitude,
             longitude = longitude,
             successes = successes,
+            logoURL = logoURL,
         )
     }
 }

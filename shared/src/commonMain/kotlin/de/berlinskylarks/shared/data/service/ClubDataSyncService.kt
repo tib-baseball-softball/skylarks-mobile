@@ -68,6 +68,7 @@ class ClubDataSyncService(
                     latitude = club.latitude,
                     longitude = club.longitude,
                     successes = club.successes,
+                    logoURL = club.logoURL,
                 )
             )
 

@@ -22,6 +22,7 @@ val testEntry = LeagueEntry(
         id = 0,
         short_name = "TES",
         league_entries = listOf(),
+        clubs = listOf(),
     ),
     league = testLeague
 )
