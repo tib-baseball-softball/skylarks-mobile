@@ -44,7 +44,9 @@ fun PlayerHeaderSection(player: Player) {
         } else {
             Image(
                 painter = fallbackImage,
-                contentDescription = "Player placeholder image"
+                contentDescription = "Player placeholder image",
+                modifier = Modifier
+                    .fillMaxWidth()
             )
         }
         Row(
