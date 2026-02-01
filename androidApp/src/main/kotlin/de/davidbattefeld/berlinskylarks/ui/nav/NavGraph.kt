@@ -1,5 +1,8 @@
 package de.davidbattefeld.berlinskylarks.ui.nav
 
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -65,6 +68,17 @@ fun NavGraph(
 ) {
     val listDetailStrategy = rememberListDetailSceneStrategy<NavKey>()
 
+    val genericSlideRightLeft = NavDisplay.transitionSpec {
+        slideInHorizontally(initialOffsetX = { it }) togetherWith
+                slideOutHorizontally(targetOffsetX = { -it })
+    } + NavDisplay.popTransitionSpec {
+        slideInHorizontally(initialOffsetX = { -it }) togetherWith
+                slideOutHorizontally(targetOffsetX = { it })
+    } + NavDisplay.predictivePopTransitionSpec {
+        slideInHorizontally(initialOffsetX = { -it }) togetherWith
+                slideOutHorizontally(targetOffsetX = { it })
+    }
+
     Box(modifier = modifier) {
         NavDisplay(
             backStack = topLevelBackStack.backStack,
@@ -116,7 +130,7 @@ fun NavGraph(
                     )
                 }
                 entry<ScoresDetail>(
-                    metadata = ListDetailSceneStrategy.detailPane()
+                    metadata = ListDetailSceneStrategy.detailPane() + genericSlideRightLeft
                 ) { key ->
                     val vm = hiltViewModel<ScoreDetailViewModel, ScoreDetailViewModel.Factory>(
                         creationCallback = { factory ->
@@ -146,7 +160,9 @@ fun NavGraph(
                     )
                 }
 
-                entry<StandingsDetail> { key ->
+                entry<StandingsDetail>(
+                    metadata = genericSlideRightLeft
+                ) { key ->
                     val vm = hiltViewModel<TablesViewModel, TablesViewModel.Factory>(
                         creationCallback = { factory ->
                             factory.create(key)
@@ -179,7 +195,9 @@ fun NavGraph(
                     )
                 }
 
-                entry<Teams> {
+                entry<Teams>(
+                    metadata = genericSlideRightLeft
+                ) {
                     val vm = hiltViewModel<TeamsViewModel, TeamsViewModel.Factory>(
                         creationCallback = { factory ->
                             factory.create()
@@ -194,7 +212,9 @@ fun NavGraph(
                         navigationType = navigationType,
                     )
                 }
-                entry<TeamDetail> { key ->
+                entry<TeamDetail>(
+                    metadata = genericSlideRightLeft
+                ) { key ->
                     val vm = hiltViewModel<TeamDetailViewModel, TeamDetailViewModel.Factory>(
                         creationCallback = { factory ->
                             factory.create(key)
@@ -210,7 +230,9 @@ fun NavGraph(
                     )
                 }
 
-                entry<PlayerDetail> { key ->
+                entry<PlayerDetail>(
+                    metadata = genericSlideRightLeft
+                ) { key ->
                     val vm = hiltViewModel<PlayerDetailViewModel, PlayerDetailViewModel.Factory>(
                         creationCallback = { factory ->
                             factory.create(key)
@@ -224,7 +246,9 @@ fun NavGraph(
                     )
                 }
 
-                entry<Functionary> {
+                entry<Functionary>(
+                    metadata = genericSlideRightLeft
+                ) {
                     val vm = hiltViewModel<FunctionaryViewModel, FunctionaryViewModel.Factory>(
                         creationCallback = { factory ->
                             factory.create()
@@ -240,7 +264,9 @@ fun NavGraph(
                     )
                 }
 
-                entry<FunctionaryDetail> {
+                entry<FunctionaryDetail>(
+                    metadata = genericSlideRightLeft
+                ) {
                     val vm =
                         hiltViewModel<FunctionaryDetailViewModel, FunctionaryDetailViewModel.Factory>(
                             creationCallback = { factory ->
@@ -254,7 +280,9 @@ fun NavGraph(
                     )
                 }
 
-                entry<ClubDetail> { key ->
+                entry<ClubDetail>(
+                    metadata = genericSlideRightLeft
+                ) { key ->
                     val vm = hiltViewModel<ClubDetailViewModel, ClubDetailViewModel.Factory>(
                         creationCallback = { factory ->
                             factory.create(key)
@@ -267,7 +295,9 @@ fun NavGraph(
                     )
                 }
 
-                entry<Umpires> {
+                entry<Umpires>(
+                    metadata = genericSlideRightLeft
+                ) {
                     val vm = hiltViewModel<UmpiresViewModel, UmpiresViewModel.Factory>(
                         creationCallback = { factory ->
                             factory.create()
@@ -283,7 +313,9 @@ fun NavGraph(
                     )
                 }
 
-                entry<Scorers> {
+                entry<Scorers>(
+                    metadata = genericSlideRightLeft
+                ) {
                     val vm = hiltViewModel<ScorersViewModel, ScorersViewModel.Factory>(
                         creationCallback = { factory ->
                             factory.create()
@@ -299,7 +331,9 @@ fun NavGraph(
                     )
                 }
 
-                entry<LicenseDetail> { key ->
+                entry<LicenseDetail>(
+                    metadata = genericSlideRightLeft
+                ) { key ->
                     val vm = hiltViewModel<LicenseDetailViewModel, LicenseDetailViewModel.Factory>(
                         creationCallback = { factory ->
                             factory.create(key)
@@ -312,7 +346,9 @@ fun NavGraph(
                     )
                 }
 
-                entry<Field> {
+                entry<Field>(
+                    metadata = genericSlideRightLeft
+                ) {
                     val vm = hiltViewModel<FieldsViewModel, FieldsViewModel.Factory>(
                         creationCallback = { factory ->
                             factory.create()
@@ -328,7 +364,9 @@ fun NavGraph(
                     )
                 }
 
-                entry<FieldDetail> { key ->
+                entry<FieldDetail>(
+                    metadata = genericSlideRightLeft
+                ) { key ->
                     val vm = hiltViewModel<FieldDetailViewModel, FieldDetailViewModel.Factory>(
                         creationCallback = { factory ->
                             factory.create(key)
@@ -357,14 +395,18 @@ fun NavGraph(
                     )
                 }
 
-                entry<Info> {
+                entry<Info>(
+                    metadata = genericSlideRightLeft
+                ) {
                     AppInfoScreen(
                         topLevelBackStack = topLevelBackStack,
                         navigationType = navigationType,
                     )
                 }
 
-                entry<LegalNotice> {
+                entry<LegalNotice>(
+                    metadata = genericSlideRightLeft
+                ) {
                     val vm = hiltViewModel<LegalNoticeViewModel, LegalNoticeViewModel.Factory>(
                         creationCallback = { factory ->
                             factory.create()
@@ -377,7 +419,9 @@ fun NavGraph(
                     )
                 }
 
-                entry<Privacy> {
+                entry<Privacy>(
+                    metadata = genericSlideRightLeft
+                ) {
                     val vm = hiltViewModel<PrivacyPolicyViewModel, PrivacyPolicyViewModel.Factory>(
                         creationCallback = { factory ->
                             factory.create()
@@ -389,7 +433,7 @@ fun NavGraph(
                         navigationType = navigationType,
                     )
                 }
-            }
+            },
         )
     }
 }
