@@ -79,13 +79,12 @@ class ScoresViewModel @AssistedInject constructor(
                 initialValue = emptyList(),
             )
 
-    var leagueGroups: StateFlow<List<LeagueGroup>> =
-        leagueGroupRepository.getAllLeagueGroups()
-            .map { dbEntities ->
-                dbEntities.map {
-                    it.toLeagueGroup()
-                }
+    val leagueGroups: StateFlow<List<LeagueGroup>> =
+        selectedSeason.flatMapLatest { season ->
+            leagueGroupRepository.getLeagueGroupsBySeason(season).map { dbLeagueGroups ->
+                dbLeagueGroups.map { it.toLeagueGroup() }
             }
+        }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
