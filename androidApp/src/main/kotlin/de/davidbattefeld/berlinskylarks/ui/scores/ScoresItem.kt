@@ -1,7 +1,6 @@
 package de.davidbattefeld.berlinskylarks.ui.scores
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,7 +18,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -61,21 +59,28 @@ fun ScoresItem(
                 Spacer(modifier = Modifier.weight(1.0F))
                 GameResultIndicator(gameDecorator = gameDecorator)
             }
+
             HorizontalDivider()
-            Column() {
+
+            Column {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Image(
-                        painter = painterResource(id = gameDecorator.roadLogo),
-                        contentDescription = "Road Team Logo",
+                    TeamLogo(
+                        teamLogoType = TeamLogoType.ROAD,
                         modifier = Modifier
                             .padding(4.dp)
-                            .size(35.dp)
+                            .size(35.dp),
+                        logo = gameDecorator.roadLogo,
+                        logoURL = gameDecorator.game.awayLeagueEntry.team?.clubs?.firstOrNull()?.logoURL,
+                        teamName = gameDecorator.game.awayTeamName
                     )
+
                     Text(
                         text = gameDecorator.game.awayTeamName,
                         style = MaterialTheme.typography.bodyMedium
                     )
+
                     Spacer(modifier = Modifier.weight(1.0F))
+
                     Text(
                         text = (gameDecorator.game.awayRuns ?: "").toString(),
                         style = MaterialTheme.typography.titleMedium.copy(
@@ -88,19 +93,25 @@ fun ScoresItem(
                         modifier = Modifier.padding(end = 6.dp)
                     )
                 }
+
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Image(
-                        painter = painterResource(id = gameDecorator.homeLogo),
-                        contentDescription = "Home Team Logo",
+                    TeamLogo(
+                        teamLogoType = TeamLogoType.HOME,
                         modifier = Modifier
                             .padding(4.dp)
-                            .size(35.dp)
+                            .size(35.dp),
+                        logo = gameDecorator.homeLogo,
+                        logoURL = gameDecorator.game.homeLeagueEntry.team?.clubs?.firstOrNull()?.logoURL,
+                        teamName = gameDecorator.game.homeTeamName
                     )
+
                     Text(
                         text = gameDecorator.game.homeTeamName,
                         style = MaterialTheme.typography.bodyMedium
                     )
+
                     Spacer(modifier = Modifier.weight(1.0F))
+
                     Text(
                         text = (gameDecorator.game.homeRuns ?: "").toString(),
                         style = MaterialTheme.typography.titleMedium.copy(

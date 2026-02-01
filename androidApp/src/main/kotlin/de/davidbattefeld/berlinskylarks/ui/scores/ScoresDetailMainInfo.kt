@@ -46,6 +46,9 @@ fun ScoresDetailMainInfo(gameDecorator: GameDecorator) {
         ) {
             ScoresDetailMainLogoSection(
                 logo = gameDecorator.roadLogo,
+                teamLogoType = TeamLogoType.ROAD,
+                teamName = gameDecorator.game.awayTeamName,
+                logoURL = gameDecorator.game.awayLeagueEntry.team?.clubs?.firstOrNull()?.logoURL
             )
             if (gameDecorator.game.awayRuns != null && gameDecorator.game.homeRuns != null) {
                 Row(
@@ -59,7 +62,12 @@ fun ScoresDetailMainInfo(gameDecorator: GameDecorator) {
                     )
                 }
             }
-            ScoresDetailMainLogoSection(logo = gameDecorator.homeLogo)
+            ScoresDetailMainLogoSection(
+                logo = gameDecorator.homeLogo,
+                teamLogoType = TeamLogoType.HOME,
+                teamName = gameDecorator.game.homeTeamName,
+                logoURL = gameDecorator.game.homeLeagueEntry.team?.clubs?.firstOrNull()?.logoURL
+            )
         }
         Row(
             modifier = Modifier
@@ -104,7 +112,6 @@ fun ScoresDetailMainInfo(gameDecorator: GameDecorator) {
         ) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(6.dp),
-                //horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .padding(8.dp)
             ) {
