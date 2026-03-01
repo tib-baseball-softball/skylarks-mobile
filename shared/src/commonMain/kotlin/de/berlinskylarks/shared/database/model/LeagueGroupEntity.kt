@@ -3,7 +3,7 @@ package de.berlinskylarks.shared.database.model
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import de.berlinskylarks.shared.data.model.League
+import de.berlinskylarks.shared.data.model.GameClass
 import de.berlinskylarks.shared.data.model.LeagueGroup
 
 @Entity(tableName = "league_groups")
@@ -12,9 +12,18 @@ data class LeagueGroupEntity(
     val id: Int,
     val name: String,
     val acronym: String,
+    val classification: String?,
+    val humanClassification: String?,
+    val humanClassificationShort: String?,
+    val sport: String,
+    val humanSport: String,
+    val humanSportShort: String,
+    val ageGroup: String,
+    val humanAgeGroupShort: String,
+    val plannedInnings: Long,
     val season: Int,
-    @Embedded(prefix = "league_")
-    val league: LeagueEntity,
+    @Embedded(prefix = "game_class_")
+    val gameClass: GameClassEntity,
     @Embedded(prefix = "table_")
     val table: TableEntity?,
 ) {
@@ -23,16 +32,25 @@ data class LeagueGroupEntity(
             id = id,
             name = name,
             acronym = acronym,
-            league = League(
-                id = league.id,
-                name = league.name,
-                acronym = league.acronym,
-                season = league.season,
-                sport = league.sport,
-                classification = league.classification,
-                ageGroup = league.ageGroup,
+            gameClass = GameClass(
+                id = gameClass.id,
+                name = gameClass.name,
+                acronym = gameClass.acronym,
+                season = gameClass.season,
+                sport = gameClass.sport,
+                classification = gameClass.classification,
+                ageGroup = gameClass.ageGroup,
             ),
-            season = season
+            season = season,
+            classification = classification,
+            humanClassification = humanClassification,
+            humanClassificationShort = humanClassificationShort,
+            sport = sport,
+            humanSport = humanSport,
+            humanSportShort = humanSportShort,
+            ageGroup = ageGroup,
+            plannedInnings = plannedInnings,
+            humanAgeGroupShort = humanAgeGroupShort,
         )
     }
 }

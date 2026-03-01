@@ -1,5 +1,6 @@
 package de.davidbattefeld.berlinskylarks.testdata
 
+import de.berlinskylarks.shared.data.model.GameClass
 import de.berlinskylarks.shared.data.model.League
 import de.berlinskylarks.shared.data.model.LeagueEntry
 import de.berlinskylarks.shared.data.model.LeagueGroup
@@ -7,6 +8,16 @@ import de.berlinskylarks.shared.data.model.LeagueTable
 import de.berlinskylarks.shared.utility.BSMUtility
 
 val testLeague = League(
+    id = BSMUtility.NON_EXISTENT_ID,
+    name = "Kreisliga",
+    season = 2099,
+    classification = "Kreisliga",
+    sport = "Baseball",
+    acronym = "KRL",
+    ageGroup = "Erwachsene"
+)
+
+val testGameClass = GameClass(
     id = BSMUtility.NON_EXISTENT_ID,
     name = "Kreisliga",
     season = 2099,
@@ -32,7 +43,16 @@ val LEAGUE_GROUP_ALL = LeagueGroup(
     name = "All Leagues",
     acronym = "ALL",
     season = 2099,
-    league = testLeague
+    gameClass = testGameClass,
+    classification = "Kreisliga",
+    humanClassification = "Kreisliga",
+    humanClassificationShort = "KR",
+    sport = "Baseball",
+    humanSport = "Baseball",
+    humanSportShort = "BB",
+    ageGroup = "Erwachsene",
+    plannedInnings = 7,
+    humanAgeGroupShort = "ERW"
 )
 
 //val testGame = Game(

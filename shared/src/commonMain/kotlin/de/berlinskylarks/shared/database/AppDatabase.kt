@@ -60,7 +60,7 @@ expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
         BSMTeamEntity::class,
         HomeDatasetEntity::class,
     ],
-    version = 14,
+    version = 17,
     exportSchema = false,
 )
 @TypeConverters(Converters::class)
