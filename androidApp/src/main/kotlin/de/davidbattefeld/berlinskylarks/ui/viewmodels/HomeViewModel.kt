@@ -60,14 +60,14 @@ class HomeViewModel @AssistedInject constructor(
             )
 
     val homeDatasets = combine(
-        favoriteTeamID,
-        selectedSeason
-    ) { favoriteTeamID, selectedSeason ->
-        Pair(first = favoriteTeamID, second = selectedSeason)
+        favoriteTeam,
+        selectedSeason,
+    ) { favoriteTeam, selectedSeason ->
+        Pair(first = favoriteTeam?.leagueEntries?.firstOrNull()?.id, second = selectedSeason)
     }
         .flatMapLatest {
             homeDatasetRepository.getHomeDatasetsByTeamIDAndSeason(
-                teamID = it.first,
+                teamID = it.first ?: BSMUtility.NON_EXISTENT_ID,
                 season = it.second
             )
         }.map { homeDatasetEntities ->
