@@ -22,14 +22,15 @@ class HomeDataWorker @AssistedInject constructor(
     override suspend fun doWork(): Result {
         val teamID = inputData.getInt("teamID", defaultValue = BSMUtility.NON_EXISTENT_ID)
         val season = inputData.getInt("season", defaultValue = BSMAPIClient.DEFAULT_SEASON)
+        val gameClass = inputData.getInt("gameClass", defaultValue = BSMUtility.NON_EXISTENT_ID)
 
-        if (teamID == BSMUtility.NON_EXISTENT_ID) {
+        if (teamID == BSMUtility.NON_EXISTENT_ID || gameClass == BSMUtility.NON_EXISTENT_ID) {
             Log.e(TAG, "Team ID is invalid")
             return Result.failure()
         }
 
         return try {
-            homeDataSyncService.syncHomeDatasets(teamID, season)
+            homeDataSyncService.syncHomeDatasets(teamID, season, gameClass)
             Log.i(TAG, "Successfully synced home datasets")
             Result.success()
         } catch (throwable: Throwable) {

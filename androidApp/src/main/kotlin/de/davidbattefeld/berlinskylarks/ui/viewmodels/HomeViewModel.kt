@@ -104,8 +104,11 @@ class HomeViewModel @AssistedInject constructor(
     fun loadHomeData() {
         viewModelScope.launch {
             workManagerTiBRepository.syncHomeDatasets(
-                teamID = favoriteTeamID.value,
+                teamID = favoriteTeam.value?.leagueEntries?.firstOrNull()?.id
+                    ?: BSMUtility.NON_EXISTENT_ID,
                 season = selectedSeason.value,
+                gameClass = favoriteTeam.value?.leagueEntries?.firstOrNull()?.league?.id
+                    ?: BSMUtility.NON_EXISTENT_ID,
             )
         }
     }

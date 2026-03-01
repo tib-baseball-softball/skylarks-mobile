@@ -27,10 +27,16 @@ class WorkManagerTiBRepository(
         workManager.enqueue(request)
     }
 
-    fun syncHomeDatasets(teamID: Int, season: Int) {
+    fun syncHomeDatasets(teamID: Int, season: Int, gameClass: Int) {
         val request = OneTimeWorkRequestBuilder<HomeDataWorker>()
             .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-            .setInputData(workDataOf("teamID" to teamID, "season" to season))
+            .setInputData(
+                workDataOf(
+                    "teamID" to teamID,
+                    "season" to season,
+                    "gameClass" to gameClass,
+                )
+            )
             .build()
         workManager.enqueue(request)
     }

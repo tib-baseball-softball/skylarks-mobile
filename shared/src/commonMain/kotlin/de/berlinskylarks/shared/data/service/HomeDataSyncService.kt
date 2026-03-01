@@ -8,8 +8,12 @@ class HomeDataSyncService(
     private val homeDatasetRepository: HomeDatasetRepository,
     private val homeDatasetAPIClient: HomeDatasetAPIClient,
 ) {
-    suspend fun syncHomeDatasets(teamID: Int, season: Int): Int {
-        val datasets = homeDatasetAPIClient.loadHomeDatasetsForTeam(teamID, season)
+    suspend fun syncHomeDatasets(teamID: Int, season: Int, gameClass: Int): Int {
+        val datasets = homeDatasetAPIClient.loadHomeDatasetsForTeam(
+            teamID = teamID,
+            season = season,
+            gameClass = gameClass,
+        )
         datasets.forEach {
             homeDatasetRepository.insert(
                 HomeDatasetEntity(

@@ -14,7 +14,7 @@ data class GameClass(
     var season: Int?,
     var name: String,
     var acronym: String,
-    var sport: String,
+    var sport: String?,
     var classification: String?,
     @SerialName("age_group")
     var ageGroup: String?

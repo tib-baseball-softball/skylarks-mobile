@@ -10,7 +10,7 @@ data class GameClassEntity(
     val name: String,
     val season: Int?,
     val classification: String?,
-    val sport: String,
+    val sport: String?,
     val acronym: String,
     val ageGroup: String?
 )

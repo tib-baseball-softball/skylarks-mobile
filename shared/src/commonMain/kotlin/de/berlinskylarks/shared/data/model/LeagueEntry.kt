@@ -5,19 +5,22 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class LeagueEntry(
-    var team: LeagueEntryTeam?,
-    var league: League?,
+    val id: Int,
+    val team: LeagueEntryTeam?,
+    val league: League?,
 ) {
     /**
      * Custom class because fields differ too much in different responses.
      */
     @Serializable
     data class LeagueEntryTeam(
-        var id: Int?,
-        var name: String,
-        var short_name: String,
-        var clubs: List<CompactClub>,
-        var league_entries: List<LeagueEntry>? = null,
+        val id: Int?,
+        val name: String,
+        @SerialName("short_name")
+        val shortName: String,
+        val clubs: List<CompactClub>,
+        @SerialName("league_entries")
+        val leagueEntries: List<LeagueEntry>? = null,
     )
 
     /**
