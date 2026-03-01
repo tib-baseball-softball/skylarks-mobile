@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class LeagueEntry(
-    val id: Int,
+    val id: Int?,
     val team: LeagueEntryTeam?,
     val league: League?,
 ) {
