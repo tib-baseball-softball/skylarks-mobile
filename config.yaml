@@ -1,0 +1,8 @@
+artifactId: app-config-client
+apiSuffix: API
+dateLibrary: kotlinx-datetime
+groupId: de.berlinskylarks
+library: multiplatform
+packageName: de.berlinskylarks.appconfigclient
+serializableModel: true
+serializationLibrary: kotlinx_serialization
