@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "Berlin Skylarks"
 include(":androidApp")
 include(":shared")
+include(":skylarksAppConfigClient")

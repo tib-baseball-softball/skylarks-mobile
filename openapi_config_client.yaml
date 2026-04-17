@@ -1,0 +1,162 @@
+openapi: "3.1.2"
+info:
+  title: "Skylarks App Config"
+  version: "1.0.0"
+  description: "Microservice to supply runtime configuration to the Skylarks mobile apps"
+  contact:
+    name: "Skylarks App Dev"
+    url: "https://www.tib-baseball.de/app-support"
+    email: "app@tib-baseball.de"
+  license:
+    name: "AGPL"
+    url: "https://opensource.org/licenses/AGPL"
+servers:
+  - url: "https://configs.app.berlinskylarks.de/api/v1"
+    description: "Production Server"
+  - url: "http://localhost:8080/api/v1"
+    description: "Development Server"
+paths:
+  /configs:
+    get:
+      summary: "List all configurations"
+      description: "Provides a list of all configurations with their associated feature flags."
+      operationId: "getConfigs"
+      parameters:
+        - name: context
+          in: query
+          description: "Optional application context to filter for."
+          required: false
+          schema:
+            $ref: "#/components/schemas/ApplicationContext"
+      responses:
+        '200':
+          description: "A list of configurations"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ConfigurationDTO"
+        '400':
+          description: "Bad request"
+        '500':
+          description: "Internal server error"
+      security: []
+  /flags:
+    get:
+      summary: "List all feature flags"
+      description: "Provides an API list of feature flags, optionally filtering out those already linked to a configuration."
+      operationId: "getFlags"
+      parameters:
+        - name: excludedConfigID
+          in: query
+          description: "Optional UUID to filter out flags already linked to this configuration."
+          required: false
+          schema:
+            type: string
+            format: uuid
+            example: "123e4567-e89b-12d3-a456-426655440000"
+      responses:
+        '200':
+          description: "A list of feature flags"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FeatureFlagDTO"
+        '400':
+          description: "Bad request"
+        '500':
+          description: "Internal server error"
+      security: []
+
+components:
+  schemas:
+    ApplicationContext:
+      type: string
+      enum:
+        - production
+        - staging
+        - development
+      description: "The environment or context in which the application is running."
+
+    FeatureFlagDTO:
+      type: object
+      required:
+        - key
+      properties:
+        id:
+          type:
+            - string
+            - "null"
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426655440000"
+        key:
+          type: string
+          example: "ALLOW_USER_REGISTRATION"
+        description:
+          type:
+            - string
+            - "null"
+          example: "Users may register on the app"
+
+    FlagWithStatusDTO:
+      type: object
+      required:
+        - flag
+        - enabled
+      properties:
+        flag:
+          $ref: "#/components/schemas/FeatureFlagDTO"
+        enabled:
+          type: boolean
+
+    ConfigurationDTO:
+      type: object
+      required:
+        - updatedAt
+        - name
+        - applicationContext
+        - apiURLS
+      properties:
+        id:
+          type:
+            - string
+            - "null"
+          format: uuid
+        updatedAt:
+          type: string
+          format: date-time
+        name:
+          type: string
+          example: "Android - Production"
+        applicationContext:
+          $ref: "#/components/schemas/ApplicationContext"
+        description:
+          type:
+            - string
+            - "null"
+          example: "Production environment for Android"
+        apiURLS:
+          type: object
+          required:
+            - bsmURL
+            - cmsURL
+            - dpURL
+          properties:
+            bsmURL:
+              type: string
+              example: "https://bsm.berlinskylarks.de"
+            cmsURL:
+              type: string
+              example: "https://cms.berlinskylarks.de"
+            dpURL:
+              type: string
+              example: "https://dp.berlinskylarks.de"
+        flagRelations:
+          type:
+            - object
+            - "null"
+          additionalProperties:
+            $ref: '#/components/schemas/FlagWithStatusDTO'
