@@ -1,13 +1,20 @@
 package de.berlinskylarks.shared.data.api
 
+import de.berlinskylarks.appconfigclient.models.ApplicationContext
+import de.berlinskylarks.shared.database.repository.ConfigurationRepository
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.http.URLBuilder
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
-abstract class BSMAPIClient(authKey: String) : AbstractAPIClient(authKey) {
+abstract class BSMAPIClient(
+    configurationRepository: ConfigurationRepository,
+    authKey: String
+) : AbstractAPIClient(configurationRepository, authKey) {
     override val API_URL = "https://bsm.baseball-softball.de"
 
     companion object {
@@ -35,4 +42,12 @@ abstract class BSMAPIClient(authKey: String) : AbstractAPIClient(authKey) {
     }
 
     override fun HttpRequestBuilder.addRequestHeaders() {}
+
+    override suspend fun getAPIURLFromRemoteConfiguration(): String? {
+        val config = configurationRepository.getConfigurationsByApplicationContext(
+            ApplicationContext.production
+        ).firstOrNull()?.map { it.toConfigurationDTO() }?.firstOrNull() ?: return null
+
+        return config.apiURLS.bsmURL
+    }
 }

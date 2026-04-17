@@ -92,39 +92,74 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideFunctionaryApiClient(): FunctionaryAPIClient =
-        FunctionaryAPIClient(authKey = BSM_API_KEY)
+    fun provideFunctionaryApiClient(
+        configurationRepository: ConfigurationRepository
+    ): FunctionaryAPIClient =
+        FunctionaryAPIClient(
+            authKey = BSM_API_KEY,
+            configurationRepository = configurationRepository
+        )
 
     @Provides
     @Singleton
-    fun provideTablesApiClient(): TablesAPIClient = TablesAPIClient(authKey = BSM_API_KEY)
+    fun provideTablesApiClient(
+        configurationRepository: ConfigurationRepository
+    ): TablesAPIClient = TablesAPIClient(
+        authKey = BSM_API_KEY,
+        configurationRepository = configurationRepository
+    )
 
     @Provides
     @Singleton
-    fun provideLeagueGroupsApiClient(): LeagueGroupsAPIClient =
-        LeagueGroupsAPIClient(authKey = BSM_API_KEY)
+    fun provideLeagueGroupsApiClient(
+        configurationRepository: ConfigurationRepository
+    ): LeagueGroupsAPIClient = LeagueGroupsAPIClient(
+        authKey = BSM_API_KEY,
+        configurationRepository = configurationRepository
+    )
 
     @Provides
     @Singleton
-    fun provideSkylarksTeamsApiClient(): SkylarksTeamsAPIClient =
-        SkylarksTeamsAPIClient(authKey = AUTH_HEADER)
+    fun provideSkylarksTeamsApiClient(
+        configurationRepository: ConfigurationRepository
+    ): SkylarksTeamsAPIClient =
+        SkylarksTeamsAPIClient(
+            authKey = AUTH_HEADER,
+            configurationRepository = configurationRepository
+        )
 
     @Provides
     @Singleton
-    fun provideGameReportAPIClient(): GameReportAPIClient =
-        GameReportAPIClient(authKey = BSM_API_KEY)
+    fun provideGameReportAPIClient(
+        configurationRepository: ConfigurationRepository
+    ): GameReportAPIClient =
+        GameReportAPIClient(
+            authKey = BSM_API_KEY,
+            configurationRepository = configurationRepository
+        )
 
     @Provides
     @Singleton
-    fun provideMatchApiClient(): MatchAPIClient = MatchAPIClient(authKey = BSM_API_KEY)
+    fun provideMatchApiClient(
+        configurationRepository: ConfigurationRepository
+    ): MatchAPIClient = MatchAPIClient(
+        authKey = BSM_API_KEY,
+        configurationRepository = configurationRepository
+    )
 
     @Provides
     @Singleton
-    fun provideClubApiClient(): ClubAPIClient = ClubAPIClient(authKey = BSM_API_KEY)
+    fun provideClubApiClient(
+        configurationRepository: ConfigurationRepository
+    ): ClubAPIClient =
+        ClubAPIClient(authKey = BSM_API_KEY, configurationRepository = configurationRepository)
 
     @Provides
     @Singleton
-    fun provideBSMTeamsAPIClient(): BSMTeamsAPIClient = BSMTeamsAPIClient(authKey = BSM_API_KEY)
+    fun provideBSMTeamsAPIClient(
+        configurationRepository: ConfigurationRepository
+    ): BSMTeamsAPIClient =
+        BSMTeamsAPIClient(authKey = BSM_API_KEY, configurationRepository = configurationRepository)
 
     @Provides
     @Singleton
@@ -132,7 +167,11 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideHomeDatasetAPIClient(): HomeDatasetAPIClient = HomeDatasetAPIClient()
+    fun provideHomeDatasetAPIClient(
+        configurationRepository: ConfigurationRepository
+    ): HomeDatasetAPIClient = HomeDatasetAPIClient(
+        configurationRepository = configurationRepository
+    )
 
     @Provides
     @Singleton

@@ -1,8 +1,11 @@
 package de.berlinskylarks.shared.data.api
 
 import de.berlinskylarks.shared.data.model.HomeDataset
+import de.berlinskylarks.shared.database.repository.ConfigurationRepository
 
-class HomeDatasetAPIClient : DiamondPlannerAPIClient() {
+class HomeDatasetAPIClient(
+    configurationRepository: ConfigurationRepository,
+) : DiamondPlannerAPIClient(configurationRepository) {
     suspend fun loadHomeDatasetsForTeam(
         teamID: Int,
         season: Int,

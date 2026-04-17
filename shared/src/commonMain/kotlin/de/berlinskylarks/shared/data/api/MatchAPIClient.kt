@@ -3,11 +3,15 @@ package de.berlinskylarks.shared.data.api
 import de.berlinskylarks.shared.data.enums.Gameday
 import de.berlinskylarks.shared.data.model.Game
 import de.berlinskylarks.shared.data.model.MatchBoxScore
+import de.berlinskylarks.shared.database.repository.ConfigurationRepository
 
 /**
  * Gets games limited to our own club.
  */
-class MatchAPIClient(authKey: String) : BSMAPIClient(authKey) {
+class MatchAPIClient(
+    configurationRepository: ConfigurationRepository,
+    authKey: String
+) : BSMAPIClient(configurationRepository, authKey) {
     suspend fun loadGamesForClub(
         clubID: Int,
         season: Int?,

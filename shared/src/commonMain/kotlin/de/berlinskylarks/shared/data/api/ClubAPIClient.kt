@@ -3,8 +3,11 @@ package de.berlinskylarks.shared.data.api
 import de.berlinskylarks.shared.data.model.Club
 import de.berlinskylarks.shared.data.model.Field
 import de.berlinskylarks.shared.data.model.License
+import de.berlinskylarks.shared.database.repository.ConfigurationRepository
 
-class ClubAPIClient(authKey: String) : BSMAPIClient(authKey) {
+class ClubAPIClient(
+    configurationRepository: ConfigurationRepository,
+    authKey: String) : BSMAPIClient(configurationRepository, authKey) {
     suspend fun getClubData(id: Int): Club? {
         return apiCall<Club>(
             resource = "clubs/$id.json"

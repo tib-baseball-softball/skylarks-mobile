@@ -1,5 +1,6 @@
 package de.berlinskylarks.shared.data.api
 
+import de.berlinskylarks.shared.database.repository.ConfigurationRepository
 import io.ktor.client.call.body
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
@@ -10,7 +11,13 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
-abstract class AbstractAPIClient(protected val authKey: String) {
+abstract class AbstractAPIClient(
+    protected val configurationRepository: ConfigurationRepository,
+    protected val authKey: String
+) {
+    /**
+     * Hardcoded fallback URL in case a remote configuration is not available.
+     */
     protected abstract val API_URL: String
 
     protected val jsonBuilder = Json {
@@ -23,6 +30,8 @@ abstract class AbstractAPIClient(protected val authKey: String) {
 
     protected abstract fun HttpRequestBuilder.addRequestHeaders()
 
+    protected abstract suspend fun getAPIURLFromRemoteConfiguration(): String?
+
     /**
      * Generic API call method. queryParameters is not a Map because duplicate query parameters
      * need to be possible.
@@ -34,7 +43,7 @@ abstract class AbstractAPIClient(protected val authKey: String) {
         var result: T? = null
         withContext(Dispatchers.IO) {
             try {
-                val response = APIClient.client.get(API_URL) {
+                val response = APIClient.client.get(getAPIURLFromRemoteConfiguration() ?: API_URL) {
                     url {
                         appendPathSegments(resource)
                         queryParameters.forEach {
