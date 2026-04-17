@@ -1,9 +1,9 @@
 package de.davidbattefeld.berlinskylarks.ui.settings
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.CardDefaults
@@ -26,7 +26,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavKey
 import de.berlinskylarks.shared.Greeting
 import de.davidbattefeld.berlinskylarks.BuildConfig
-import de.davidbattefeld.berlinskylarks.data.utility.AndroidDateTimeUtility
 import de.davidbattefeld.berlinskylarks.ui.nav.Info
 import de.davidbattefeld.berlinskylarks.ui.nav.NavigationType
 import de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar
@@ -46,6 +45,8 @@ fun AppInfoScreen(
         headlineColor = MaterialTheme.colorScheme.onSurface,
         supportingColor = MaterialTheme.colorScheme.onSurface,
     )
+
+    val listState = rememberLazyListState()
 
     val activeConfig by vm.activeConfig.collectAsStateWithLifecycle(initialValue = null)
 
@@ -80,6 +81,7 @@ fun AppInfoScreen(
         }
     ) { paddingValues ->
         LazyColumn(
+            state = listState,
             modifier = Modifier
                 .padding(paddingValues),
             verticalArrangement = Arrangement.spacedBy(20.dp)
@@ -129,76 +131,22 @@ fun AppInfoScreen(
             item {
                 if (activeConfig != null) {
                     activeConfig?.let { config ->
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(12.dp),
-                            modifier = Modifier
-                                .padding(horizontal = 12.dp)
-                                .padding(bottom = 20.dp),
-                        ) {
-                            Text(
-                                text = "Active Configuration",
-                                style = MaterialTheme.typography.headlineSmall
-                            )
-                            ElevatedCard(
-                                modifier = Modifier,
-                                colors = CardDefaults.cardColors(
-                                    containerColor = MaterialTheme.colorScheme.surfaceContainer,
-                                ),
-                                elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
-                            ) {
-                                ListItem(
-                                    headlineContent = { Text(text = "Application Context") },
-                                    supportingContent = { Text(config.applicationContext.value.replaceFirstChar { it.uppercase() }) },
-                                    colors = listItemColors
-                                )
-                                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
-                                ListItem(
-                                    headlineContent = { Text(text = "Name") },
-                                    supportingContent = { Text(config.name) },
-                                    colors = listItemColors
-                                )
-                                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
-                                ListItem(
-                                    headlineContent = { Text(text = "Last Updated") },
-                                    supportingContent = {
-                                        Text(
-                                            AndroidDateTimeUtility.formatDate(
-                                                config.updatedAt
-                                            )
-                                        )
-                                    },
-                                    colors = listItemColors
-                                )
-                                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
-                                ListItem(
-                                    headlineContent = { Text(text = "Description") },
-                                    supportingContent = { Text(config.description ?: "None") },
-                                    colors = listItemColors
-                                )
-                                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
-                                ListItem(
-                                    headlineContent = { Text(text = "BSM API URL") },
-                                    supportingContent = { Text(config.apiURLS.bsmURL) },
-                                    colors = listItemColors
-                                )
-                                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
-                                ListItem(
-                                    headlineContent = { Text(text = "CMS API URL") },
-                                    supportingContent = { Text(config.apiURLS.cmsURL) },
-                                    colors = listItemColors
-                                )
-                                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
-                                ListItem(
-                                    headlineContent = { Text(text = "DP API URL") },
-                                    supportingContent = { Text(config.apiURLS.dpURL) },
-                                    colors = listItemColors
-                                )
-                                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
-                            }
-                        }
+                        ApplicationConfigCard(
+                            config = config,
+                            listItemColors = listItemColors
+                        )
                     }
                 } else {
                     LoadingIndicator()
+                }
+            }
+
+            item {
+                activeConfig?.flagRelations?.let { relations ->
+                    FlagRelationCard(
+                        relations = relations,
+                        listItemColors = listItemColors
+                    )
                 }
             }
         }
