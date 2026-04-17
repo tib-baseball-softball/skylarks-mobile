@@ -23,7 +23,7 @@ class ConfigurationWorker @AssistedInject constructor(
             Log.i(TAG, "Synced configuration with $count items")
             Result.success()
         } catch (t: Throwable) {
-            Log.e(TAG, "Error in teams data worker", t)
+            Log.e(TAG, "Error in config data worker", t)
             Result.retry()
         }
     }

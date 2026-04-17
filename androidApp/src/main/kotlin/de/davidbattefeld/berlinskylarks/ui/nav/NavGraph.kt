@@ -38,6 +38,7 @@ import de.davidbattefeld.berlinskylarks.ui.settings.PrivacyPolicyScreen
 import de.davidbattefeld.berlinskylarks.ui.settings.SettingsScreen
 import de.davidbattefeld.berlinskylarks.ui.standings.StandingsDetailScreen
 import de.davidbattefeld.berlinskylarks.ui.standings.StandingsScreen
+import de.davidbattefeld.berlinskylarks.ui.viewmodels.AppInfoViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.ClubDetailViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.ClubViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.FieldDetailViewModel
@@ -399,7 +400,13 @@ fun NavGraph(
                 entry<Info>(
                     metadata = genericSlideRightLeft
                 ) {
+                    val vm = hiltViewModel<AppInfoViewModel, AppInfoViewModel.Factory>(
+                        creationCallback = { factory ->
+                            factory.create()
+                        }
+                    )
                     AppInfoScreen(
+                        vm = vm,
                         topLevelBackStack = topLevelBackStack,
                         navigationType = navigationType,
                     )

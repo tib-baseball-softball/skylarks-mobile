@@ -10,6 +10,7 @@ import de.berlinskylarks.shared.data.model.LeagueTable
 import de.berlinskylarks.shared.data.model.MatchBoxScore
 import kotlinx.serialization.json.Json
 import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 @OptIn(ExperimentalTime::class)
 class Converters {
@@ -87,5 +88,15 @@ class Converters {
     @TypeConverter
     fun flagRelationsFromJSONString(value: String): Map<String, FlagWithStatusDTO> {
         return jsonBuilder.decodeFromString<Map<String, FlagWithStatusDTO>>(value)
+    }
+
+    @TypeConverter
+    fun instantToString(instant: Instant): String {
+        return instant.toString()
+    }
+
+    @TypeConverter
+    fun stringToInstant(string: String): Instant {
+        return Instant.parse(string)
     }
 }
