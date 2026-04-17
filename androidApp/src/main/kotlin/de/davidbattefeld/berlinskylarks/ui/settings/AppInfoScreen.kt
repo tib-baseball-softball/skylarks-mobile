@@ -1,5 +1,7 @@
 package de.davidbattefeld.berlinskylarks.ui.settings
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -24,6 +26,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavKey
 import de.berlinskylarks.shared.Greeting
 import de.davidbattefeld.berlinskylarks.BuildConfig
+import de.davidbattefeld.berlinskylarks.data.utility.AndroidDateTimeUtility
 import de.davidbattefeld.berlinskylarks.ui.nav.Info
 import de.davidbattefeld.berlinskylarks.ui.nav.NavigationType
 import de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar
@@ -78,7 +81,8 @@ fun AppInfoScreen(
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier
-                .padding(paddingValues)
+                .padding(paddingValues),
+            verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
             item {
                 ElevatedCard(
@@ -125,22 +129,72 @@ fun AppInfoScreen(
             item {
                 if (activeConfig != null) {
                     activeConfig?.let { config ->
-                        ElevatedCard(
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(12.dp),
                             modifier = Modifier
-                                .padding(bottom = 1.dp)
-                                .padding(horizontal = 12.dp),
-                            colors = CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.surfaceContainer,
-                            ),
-                            elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+                                .padding(horizontal = 12.dp)
+                                .padding(bottom = 20.dp),
                         ) {
-                            ListItem(
-                                headlineContent = { Text(text = "Application Context") },
-                                supportingContent = { Text(config.applicationContext.value.replaceFirstChar { it.uppercase() }) },
-                                colors = listItemColors
+                            Text(
+                                text = "Active Configuration",
+                                style = MaterialTheme.typography.headlineSmall
                             )
-                            HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
-
+                            ElevatedCard(
+                                modifier = Modifier,
+                                colors = CardDefaults.cardColors(
+                                    containerColor = MaterialTheme.colorScheme.surfaceContainer,
+                                ),
+                                elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+                            ) {
+                                ListItem(
+                                    headlineContent = { Text(text = "Application Context") },
+                                    supportingContent = { Text(config.applicationContext.value.replaceFirstChar { it.uppercase() }) },
+                                    colors = listItemColors
+                                )
+                                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
+                                ListItem(
+                                    headlineContent = { Text(text = "Name") },
+                                    supportingContent = { Text(config.name) },
+                                    colors = listItemColors
+                                )
+                                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
+                                ListItem(
+                                    headlineContent = { Text(text = "Last Updated") },
+                                    supportingContent = {
+                                        Text(
+                                            AndroidDateTimeUtility.formatDate(
+                                                config.updatedAt
+                                            )
+                                        )
+                                    },
+                                    colors = listItemColors
+                                )
+                                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
+                                ListItem(
+                                    headlineContent = { Text(text = "Description") },
+                                    supportingContent = { Text(config.description ?: "None") },
+                                    colors = listItemColors
+                                )
+                                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
+                                ListItem(
+                                    headlineContent = { Text(text = "BSM API URL") },
+                                    supportingContent = { Text(config.apiURLS.bsmURL) },
+                                    colors = listItemColors
+                                )
+                                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
+                                ListItem(
+                                    headlineContent = { Text(text = "CMS API URL") },
+                                    supportingContent = { Text(config.apiURLS.cmsURL) },
+                                    colors = listItemColors
+                                )
+                                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
+                                ListItem(
+                                    headlineContent = { Text(text = "DP API URL") },
+                                    supportingContent = { Text(config.apiURLS.dpURL) },
+                                    colors = listItemColors
+                                )
+                                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
+                            }
                         }
                     }
                 } else {
