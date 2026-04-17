@@ -58,6 +58,7 @@ import de.davidbattefeld.berlinskylarks.ui.viewmodels.TablesViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.TeamDetailViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.TeamsViewModel
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.UmpiresViewModel
+import kotlin.collections.listOf
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -83,7 +84,7 @@ fun NavGraph(
         NavDisplay(
             backStack = topLevelBackStack.backStack,
             onBack = { topLevelBackStack.removeLast() },
-            sceneStrategy = listDetailStrategy,
+            sceneStrategies = listOf(listDetailStrategy),
             entryDecorators = listOf(
                 rememberSaveableStateHolderNavEntryDecorator(),
                 rememberViewModelStoreNavEntryDecorator(),
