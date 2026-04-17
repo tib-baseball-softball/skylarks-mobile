@@ -8,6 +8,7 @@ import androidx.room.TypeConverters
 import de.berlinskylarks.shared.database.dao.BSMTeamDao
 import de.berlinskylarks.shared.database.dao.BoxScoreDao
 import de.berlinskylarks.shared.database.dao.ClubDao
+import de.berlinskylarks.shared.database.dao.ConfigurationDao
 import de.berlinskylarks.shared.database.dao.FieldDao
 import de.berlinskylarks.shared.database.dao.FunctionaryDao
 import de.berlinskylarks.shared.database.dao.GameDao
@@ -21,6 +22,7 @@ import de.berlinskylarks.shared.database.dao.TiBTeamDao
 import de.berlinskylarks.shared.database.model.BSMTeamEntity
 import de.berlinskylarks.shared.database.model.BoxScoreEntity
 import de.berlinskylarks.shared.database.model.ClubEntity
+import de.berlinskylarks.shared.database.model.ConfigurationEntity
 import de.berlinskylarks.shared.database.model.FieldEntity
 import de.berlinskylarks.shared.database.model.FunctionaryEntity
 import de.berlinskylarks.shared.database.model.GameEntity
@@ -59,8 +61,9 @@ expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
         TiBTeamEntity::class,
         BSMTeamEntity::class,
         HomeDatasetEntity::class,
+        ConfigurationEntity::class,
     ],
-    version = 19,
+    version = 20,
     exportSchema = false,
 )
 @TypeConverters(Converters::class)
@@ -79,4 +82,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun tibTeamDao(): TiBTeamDao
     abstract fun homeDatasetDao(): HomeDatasetDao
     abstract fun bsmTeamDao(): BSMTeamDao
+
+    abstract fun configurationDao(): ConfigurationDao
 }

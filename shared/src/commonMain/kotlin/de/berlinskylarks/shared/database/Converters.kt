@@ -1,6 +1,8 @@
 package de.berlinskylarks.shared.database
 
 import androidx.room.TypeConverter
+import de.berlinskylarks.appconfigclient.models.ConfigurationDTOApiURLS
+import de.berlinskylarks.appconfigclient.models.FlagWithStatusDTO
 import de.berlinskylarks.shared.data.model.Game
 import de.berlinskylarks.shared.data.model.HomeDataset
 import de.berlinskylarks.shared.data.model.LeagueEntry
@@ -65,5 +67,25 @@ class Converters {
     @TypeConverter
     fun homeDatasetToJSONString(dataset: HomeDataset): String {
         return jsonBuilder.encodeToString(dataset)
+    }
+
+    @TypeConverter
+    fun configAPIURLsToJSONString(urls: ConfigurationDTOApiURLS): String {
+        return jsonBuilder.encodeToString(urls)
+    }
+
+    @TypeConverter
+    fun configAPIURLsFromJSONString(value: String): ConfigurationDTOApiURLS {
+        return jsonBuilder.decodeFromString<ConfigurationDTOApiURLS>(value)
+    }
+
+    @TypeConverter
+    fun flagRelationsToJSONString(rels: Map<String, FlagWithStatusDTO>): String {
+        return jsonBuilder.encodeToString(rels)
+    }
+
+    @TypeConverter
+    fun flagRelationsFromJSONString(value: String): Map<String, FlagWithStatusDTO> {
+        return jsonBuilder.decodeFromString<Map<String, FlagWithStatusDTO>>(value)
     }
 }

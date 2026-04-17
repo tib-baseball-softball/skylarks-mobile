@@ -10,6 +10,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import de.berlinskylarks.shared.data.api.BSMTeamsAPIClient
 import de.berlinskylarks.shared.data.api.ClubAPIClient
+import de.berlinskylarks.shared.data.api.ConfigurationAPIClient
 import de.berlinskylarks.shared.data.api.FunctionaryAPIClient
 import de.berlinskylarks.shared.data.api.GameReportAPIClient
 import de.berlinskylarks.shared.data.api.HomeDatasetAPIClient
@@ -18,6 +19,7 @@ import de.berlinskylarks.shared.data.api.MatchAPIClient
 import de.berlinskylarks.shared.data.api.SkylarksTeamsAPIClient
 import de.berlinskylarks.shared.data.api.TablesAPIClient
 import de.berlinskylarks.shared.data.service.ClubDataSyncService
+import de.berlinskylarks.shared.data.service.ConfigurationSyncService
 import de.berlinskylarks.shared.data.service.GameReportSyncService
 import de.berlinskylarks.shared.data.service.GameSyncService
 import de.berlinskylarks.shared.data.service.HomeDataSyncService
@@ -27,6 +29,7 @@ import de.berlinskylarks.shared.database.AppDatabase
 import de.berlinskylarks.shared.database.dao.BSMTeamDao
 import de.berlinskylarks.shared.database.dao.BoxScoreDao
 import de.berlinskylarks.shared.database.dao.ClubDao
+import de.berlinskylarks.shared.database.dao.ConfigurationDao
 import de.berlinskylarks.shared.database.dao.FieldDao
 import de.berlinskylarks.shared.database.dao.FunctionaryDao
 import de.berlinskylarks.shared.database.dao.GameDao
@@ -41,6 +44,7 @@ import de.berlinskylarks.shared.database.getDatabase
 import de.berlinskylarks.shared.database.repository.BSMTeamRepository
 import de.berlinskylarks.shared.database.repository.BoxScoreRepository
 import de.berlinskylarks.shared.database.repository.ClubRepository
+import de.berlinskylarks.shared.database.repository.ConfigurationRepository
 import de.berlinskylarks.shared.database.repository.FieldRepository
 import de.berlinskylarks.shared.database.repository.FunctionaryRepository
 import de.berlinskylarks.shared.database.repository.GameReportRepository
@@ -52,6 +56,7 @@ import de.berlinskylarks.shared.database.repository.MediaRepository
 import de.berlinskylarks.shared.database.repository.OfflineBSMTeamRepository
 import de.berlinskylarks.shared.database.repository.OfflineBoxScoreRepository
 import de.berlinskylarks.shared.database.repository.OfflineClubRepository
+import de.berlinskylarks.shared.database.repository.OfflineConfigurationRepository
 import de.berlinskylarks.shared.database.repository.OfflineFieldRepository
 import de.berlinskylarks.shared.database.repository.OfflineFunctionaryRepository
 import de.berlinskylarks.shared.database.repository.OfflineGameReportRepository
@@ -123,6 +128,10 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideConfigurationAPIClient(): ConfigurationAPIClient = ConfigurationAPIClient()
+
+    @Provides
+    @Singleton
     fun provideHomeDatasetAPIClient(): HomeDatasetAPIClient = HomeDatasetAPIClient()
 
     @Provides
@@ -180,6 +189,10 @@ object AppModule {
     @Provides
     @Singleton
     fun provideBSMTeamDao(db: AppDatabase): BSMTeamDao = db.bsmTeamDao()
+
+    @Provides
+    @Singleton
+    fun provideConfigurationDao(db: AppDatabase): ConfigurationDao = db.configurationDao()
 
     @Provides
     @Singleton
@@ -263,6 +276,12 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideConfigurationRepository(
+        configurationDao: ConfigurationDao
+    ): ConfigurationRepository = OfflineConfigurationRepository(configurationDao)
+
+    @Provides
+    @Singleton
     fun provideWorkManagerTiBRepository(
         @ApplicationContext context: Context
     ): WorkManagerTiBRepository = WorkManagerTiBRepository(context)
@@ -330,6 +349,14 @@ object AppModule {
         playerRepository: PlayerRepository,
         tibTeamRepository: TiBTeamRepository,
     ): PlayerSyncService = PlayerSyncService(teamClient, playerRepository, tibTeamRepository)
+
+    @Provides
+    @Singleton
+    fun provideConfigurationSyncService(
+        configurationRepository: ConfigurationRepository,
+        configurationAPIClient: ConfigurationAPIClient,
+    ): ConfigurationSyncService =
+        ConfigurationSyncService(configurationAPIClient, configurationRepository)
 
     @Provides
     @Singleton

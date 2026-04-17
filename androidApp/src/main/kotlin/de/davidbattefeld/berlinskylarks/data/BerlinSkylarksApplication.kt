@@ -13,6 +13,7 @@ import dagger.hilt.android.HiltAndroidApp
 import de.berlinskylarks.shared.data.api.BSMAPIClient.Companion.DEFAULT_SEASON
 import de.davidbattefeld.berlinskylarks.data.sync.BSMTeamDataWorker
 import de.davidbattefeld.berlinskylarks.data.sync.ClubDataWorker
+import de.davidbattefeld.berlinskylarks.data.sync.ConfigurationWorker
 import de.davidbattefeld.berlinskylarks.data.sync.GameDataWorker
 import de.davidbattefeld.berlinskylarks.data.sync.GameReportWorker
 import de.davidbattefeld.berlinskylarks.data.sync.HomeDataWorker
@@ -23,7 +24,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltAndroidApp
-class BerlinSkylarksApplication() : Application(), Configuration.Provider {
+class BerlinSkylarksApplication : Application(), Configuration.Provider {
     @Inject
     lateinit var workerFactory: HiltWorkerFactory
 
@@ -52,6 +53,7 @@ class BerlinSkylarksApplication() : Application(), Configuration.Provider {
         makeBSMTeamsSyncRequest(constraints)
         makePlayersSyncRequest(constraints)
         makeClubSyncRequest(constraints)
+        makeConfigurationSyncRequest(constraints)
     }
 
     private fun makeBSMTeamsSyncRequest(constraints: Constraints) {
@@ -196,6 +198,22 @@ class BerlinSkylarksApplication() : Application(), Configuration.Provider {
         )
     }
 
+    private fun makeConfigurationSyncRequest(constraints: Constraints) {
+        val workManager = WorkManager.getInstance(applicationContext)
+        val configurationSyncRequest = PeriodicWorkRequestBuilder<ConfigurationWorker>(
+            repeatInterval = 24,
+            repeatIntervalTimeUnit = TimeUnit.HOURS
+        )
+            .setConstraints(constraints)
+            .build()
+
+        workManager.enqueueUniquePeriodicWork(
+            uniqueWorkName = CONFIGURATION_WORK_NAME,
+            existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
+            request = configurationSyncRequest,
+        )
+    }
+
     companion object {
         const val SYNC_GAME_DATA_WORK_NAME = "sync_game_data_work"
         const val SYNC_GAME_REPORT_DATA_WORK_NAME = "sync_game_report_data_work"
@@ -205,5 +223,6 @@ class BerlinSkylarksApplication() : Application(), Configuration.Provider {
         const val SYNC_TEAMS_DATA_WORK_NAME = "sync_teams_data_work"
         const val SYNC_HOME_DATA_WORK_NAME = "sync_home_data_work"
         const val SYNC_CLUB_DATA_WORK_NAME = "sync_club_data_work"
+        const val CONFIGURATION_WORK_NAME = "sync_configuration_work"
     }
 }

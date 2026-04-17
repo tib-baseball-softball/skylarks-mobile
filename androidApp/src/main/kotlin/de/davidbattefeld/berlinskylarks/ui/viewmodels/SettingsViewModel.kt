@@ -27,6 +27,7 @@ class SettingsViewModel @AssistedInject constructor(
         workManagerTiBRepository.syncGameReports()
         workManagerTiBRepository.syncLeagueGroups(season)
         workManagerTiBRepository.syncTiBTeams()
+        workManagerTiBRepository.syncConfiguration()
     }
 
     @AssistedFactory

@@ -7,6 +7,7 @@ import androidx.work.WorkManager
 import androidx.work.workDataOf
 import de.davidbattefeld.berlinskylarks.data.sync.BSMTeamDataWorker
 import de.davidbattefeld.berlinskylarks.data.sync.ClubDataWorker
+import de.davidbattefeld.berlinskylarks.data.sync.ConfigurationWorker
 import de.davidbattefeld.berlinskylarks.data.sync.GameDataWorker
 import de.davidbattefeld.berlinskylarks.data.sync.GameReportWorker
 import de.davidbattefeld.berlinskylarks.data.sync.HomeDataWorker
@@ -80,6 +81,13 @@ class WorkManagerTiBRepository(
 
     fun syncTiBTeams() {
         val request = OneTimeWorkRequestBuilder<TiBTeamDataWorker>()
+            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+            .build()
+        workManager.enqueue(request)
+    }
+
+    fun syncConfiguration() {
+        val request = OneTimeWorkRequestBuilder<ConfigurationWorker>()
             .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
             .build()
         workManager.enqueue(request)
