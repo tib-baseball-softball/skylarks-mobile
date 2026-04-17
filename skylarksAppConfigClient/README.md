@@ -33,7 +33,7 @@ This runs all tests and packages the library.
 <a id="documentation-for-api-endpoints"></a>
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://configs.app.berlinskylarks.de/api/v1*
+All URIs are relative to *https://config.app.berlinskylarks.de/api/v1*
 
 | Class | Method | HTTP request | Description |
 | ------------ | ------------- | ------------- | ------------- |

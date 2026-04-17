@@ -1,6 +1,6 @@
 # DefaultAPI
 
-All URIs are relative to *https://configs.app.berlinskylarks.de/api/v1*
+All URIs are relative to *https://config.app.berlinskylarks.de/api/v1*
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
