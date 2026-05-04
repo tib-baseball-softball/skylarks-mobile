@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonDecodingException
 
 abstract class AbstractAPIClient(
     protected val configurationRepository: ConfigurationRepository,
@@ -52,12 +53,15 @@ abstract class AbstractAPIClient(
                         addAuthorizationParameters()
                     }
                     addRequestHeaders()
-                    println(url)
+                    println("AbstractAPIClient: Calling URL $url")
                 }
                 result = jsonBuilder.decodeFromString<T>(response.body())
             } catch (e: Exception) {
-                println(e.message)
+                println("AbstractAPIClient: Error during API call - ${e.message}")
                 e.printStackTrace()
+            } catch (e: JsonDecodingException) {
+                println("Error decoding JSON:")
+                println(e.message)
             }
         }
         return result
