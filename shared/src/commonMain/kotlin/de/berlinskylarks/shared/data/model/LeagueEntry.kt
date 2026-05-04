@@ -32,7 +32,7 @@ data class LeagueEntry(
     @Serializable
     data class CompactClub(
         val id: Long,
-        val name: String,
+        val name: String?,
         val acronym: String,
         @SerialName("short_name")
         val shortName: String,
