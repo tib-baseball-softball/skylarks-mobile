@@ -15,7 +15,7 @@ interface GameReportDao {
     suspend fun insert(gameReport: GameReportEntity)
 
     @Transaction
-    @Query("SELECT * FROM game_reports")
+    @Query("SELECT * FROM game_reports ORDER BY datetime(date) DESC")
     fun getAllGameReports(): Flow<List<GameReportEntityWithMedia>>
 
     /**
