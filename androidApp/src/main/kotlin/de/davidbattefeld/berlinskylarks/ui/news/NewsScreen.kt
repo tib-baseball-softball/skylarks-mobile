@@ -1,6 +1,7 @@
 package de.davidbattefeld.berlinskylarks.ui.news
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -20,12 +21,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
+import de.davidbattefeld.berlinskylarks.data.utility.AndroidDateTimeUtility
 import de.davidbattefeld.berlinskylarks.ui.nav.GameReportDetail
-import de.davidbattefeld.berlinskylarks.ui.nav.Info
 import de.davidbattefeld.berlinskylarks.ui.nav.NavigationType
+import de.davidbattefeld.berlinskylarks.ui.nav.News
 import de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar
 import de.davidbattefeld.berlinskylarks.ui.nav.TopLevelBackStack
 import de.davidbattefeld.berlinskylarks.ui.utility.SkylarksSnackbarHost
+import kotlin.time.Instant
 
 @Composable
 fun NewsScreen(
@@ -42,7 +45,7 @@ fun NewsScreen(
         topBar = {
             TopAppBar(
                 scrollBehavior = scrollBehavior,
-                title = { Text(text = Info.title) },
+                title = { Text(text = News.title) },
             )
         },
         snackbarHost = { SkylarksSnackbarHost() },
@@ -68,12 +71,16 @@ fun NewsScreen(
         LazyVerticalGrid(
             modifier = modifier
                 .padding(paddingValues)
-                .padding(horizontal = 6.dp),
-            columns = GridCells.Adaptive(minSize = 350.dp)
+                .padding(horizontal = 12.dp),
+            columns = GridCells.Adaptive(minSize = 350.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
             items(gameReports) {
-                GameReportCard(
-                    gameReport = it,
+                NewsItemCard(
+                    title = it.title,
+                    date = AndroidDateTimeUtility.formatDate(Instant.parse(it.date)),
+                    teaser = it.teaserText,
+                    image = it.gallery?.firstOrNull(),
                     modifier = Modifier
                         .clickable {
                             detailRoute(
