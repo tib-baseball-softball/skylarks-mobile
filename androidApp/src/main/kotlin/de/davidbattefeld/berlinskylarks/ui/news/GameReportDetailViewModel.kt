@@ -22,7 +22,7 @@ class GameReportDetailViewModel @AssistedInject constructor(
     @Assisted private val key: GameReportDetail
 ) : GenericViewModel(userPreferencesRepository) {
 
-    val gameReport: StateFlow<GameReport?> = gameReportRepository.getGameReportByGameID(key.id.toString())
+    val gameReport: StateFlow<GameReport?> = gameReportRepository.getGameReportByGameID(key.matchID)
         .map { it?.toGameReport() }
         .stateIn(
             scope = viewModelScope,

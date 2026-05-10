@@ -41,7 +41,7 @@ data object News : TopLevelDestination {
 }
 
 @Serializable
-data class GameReportDetail(val id: Int) : SkylarksNavDestination {
+data class GameReportDetail(val matchID: String) : SkylarksNavDestination {
     override val title = "News Detail"
 }
 
