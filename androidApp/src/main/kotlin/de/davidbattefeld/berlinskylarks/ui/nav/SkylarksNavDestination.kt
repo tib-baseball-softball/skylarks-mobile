@@ -2,6 +2,7 @@ package de.davidbattefeld.berlinskylarks.ui.nav
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Groups
+import androidx.compose.material.icons.outlined.Newspaper
 import androidx.compose.material.icons.outlined.Scoreboard
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Shield
@@ -11,7 +12,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
-val TOP_LEVEL_ROUTES: List<TopLevelDestination> = listOf(Home, Scores, Standings, Club, Settings)
+val TOP_LEVEL_ROUTES: List<TopLevelDestination> = listOf(Home, News, Scores, Standings, Club, Settings)
 
 /**
  * Sealed interface defining the contract for all navigation destinations.
@@ -31,6 +32,17 @@ sealed interface TopLevelDestination : SkylarksNavDestination {
 data object Home : TopLevelDestination {
     override val title = "Home"
     override val icon = Icons.Outlined.Stars
+}
+
+@Serializable
+data object News : TopLevelDestination {
+    override val title = "News"
+    override val icon = Icons.Outlined.Newspaper
+}
+
+@Serializable
+data class GameReportDetail(val id: Int) : SkylarksNavDestination {
+    override val title = "News Detail"
 }
 
 @Serializable

@@ -30,6 +30,10 @@ import de.davidbattefeld.berlinskylarks.ui.club.teams.PlayerDetailScreen
 import de.davidbattefeld.berlinskylarks.ui.club.teams.TeamDetailScreen
 import de.davidbattefeld.berlinskylarks.ui.club.teams.TeamsScreen
 import de.davidbattefeld.berlinskylarks.ui.home.HomeScreen
+import de.davidbattefeld.berlinskylarks.ui.news.GameReportDetailScreen
+import de.davidbattefeld.berlinskylarks.ui.news.GameReportDetailViewModel
+import de.davidbattefeld.berlinskylarks.ui.news.NewsScreen
+import de.davidbattefeld.berlinskylarks.ui.news.NewsViewModel
 import de.davidbattefeld.berlinskylarks.ui.scores.ScoresDetailScreen
 import de.davidbattefeld.berlinskylarks.ui.scores.ScoresScreen
 import de.davidbattefeld.berlinskylarks.ui.settings.AppInfoScreen
@@ -107,6 +111,42 @@ fun NavGraph(
                         standingsDetailRoute = { key ->
                             topLevelBackStack.add(key)
                         },
+                    )
+                }
+
+                entry<News>(
+                    metadata = ListDetailSceneStrategy.listPane(
+                        detailPlaceholder = {
+                            Text("Choose a game report from the list")
+                        }
+                    )
+                ) {
+                    val vm = hiltViewModel<NewsViewModel, NewsViewModel.Factory>(
+                        creationCallback = { factory ->
+                            factory.create()
+                        }
+                    )
+                    NewsScreen(
+                        vm = vm,
+                        topLevelBackStack = topLevelBackStack,
+                        navigationType = navigationType,
+                        detailRoute = { key ->
+                            topLevelBackStack.add(key)
+                        }
+                    )
+                }
+                entry<GameReportDetail>(
+                    metadata = ListDetailSceneStrategy.detailPane() + genericSlideRightLeft
+                ) { key ->
+                    val vm = hiltViewModel<GameReportDetailViewModel, GameReportDetailViewModel.Factory>(
+                        creationCallback = { factory ->
+                            factory.create(key)
+                        }
+                    )
+                    GameReportDetailScreen(
+                        vm = vm,
+                        topLevelBackStack = topLevelBackStack,
+                        navigationType = navigationType,
                     )
                 }
 
