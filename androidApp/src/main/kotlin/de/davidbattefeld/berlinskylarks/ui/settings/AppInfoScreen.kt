@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -33,6 +34,7 @@ import de.davidbattefeld.berlinskylarks.ui.nav.TopLevelBackStack
 import de.davidbattefeld.berlinskylarks.ui.utility.SkylarksSnackbarHost
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.AppInfoViewModel
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @androidx.compose.material3.ExperimentalMaterial3Api
 @Composable
 fun AppInfoScreen(
