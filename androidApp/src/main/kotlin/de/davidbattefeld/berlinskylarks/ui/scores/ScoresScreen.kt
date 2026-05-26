@@ -2,8 +2,9 @@ package de.davidbattefeld.berlinskylarks.ui.scores
 
 import android.content.res.Configuration
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,29 +15,34 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.ToggleButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavKey
 import de.berlinskylarks.shared.data.enums.Gameday
 import de.davidbattefeld.berlinskylarks.LocalSnackbarHostState
@@ -50,7 +56,7 @@ import de.davidbattefeld.berlinskylarks.ui.utility.SkylarksSnackbarHost
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.ScoresViewModel
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ScoresScreen(
     modifier: Modifier = Modifier,
@@ -59,11 +65,11 @@ fun ScoresScreen(
     topLevelBackStack: TopLevelBackStack<NavKey>,
     navigationType: NavigationType,
 ) {
-    val games by vm.games.collectAsState()
-    val leagueGroups by vm.leagueGroups.collectAsState()
-    val filteredLeagueGroup by vm.filteredLeagueGroup.collectAsState()
-    val showExternalGames by vm.showExternalGames.collectAsState()
-    val selectedGameday by vm.selectedGameday.collectAsState()
+    val games by vm.games.collectAsStateWithLifecycle()
+    val leagueGroups by vm.leagueGroups.collectAsStateWithLifecycle()
+    val filteredLeagueGroup by vm.filteredLeagueGroup.collectAsStateWithLifecycle()
+    val showExternalGames by vm.showExternalGames.collectAsStateWithLifecycle()
+    val selectedGameday by vm.selectedGameday.collectAsStateWithLifecycle()
 
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     val snackbarHostState = LocalSnackbarHostState.current
@@ -103,28 +109,37 @@ fun ScoresScreen(
             columns = GridCells.Adaptive(minSize = 350.dp)
         ) {
             item(span = { GridItemSpan(maxCurrentLineSpan) }) {
-                SingleChoiceSegmentedButtonRow(
-                    modifier = Modifier.padding(8.dp)
+                val options = Gameday.entries.filterNot { it == Gameday.NEXT }
+                FlowRow(
+                    Modifier
+                        .padding(horizontal = 8.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
+                    verticalArrangement = Arrangement.spacedBy(2.dp),
                 ) {
-                    Gameday.entries.filterNot { it == Gameday.NEXT }
-                        .forEachIndexed { index, gamedayOption ->
-                            SegmentedButton(
-                                shape = SegmentedButtonDefaults.itemShape(
-                                    index = index,
-                                    count = Gameday.entries.size
-                                ),
-                                contentPadding = PaddingValues(4.dp),
-                                selected = selectedGameday == gamedayOption,
-                                onClick = { vm.onGamedayChanged(gamedayOption) },
-                                label = {
-                                    Text(
-                                        text = gamedayOption.value.replaceFirstChar { it.uppercase() },
-                                        maxLines = 2,
-                                        overflow = TextOverflow.Ellipsis
-                                    )
-                                }
+                    options.forEachIndexed { index, gamedayOption ->
+                        ToggleButton(
+                            checked = selectedGameday == gamedayOption,
+                            onCheckedChange = { vm.onGamedayChanged(gamedayOption) },
+                            shapes =
+                                when (index) {
+                                    0 -> ButtonGroupDefaults.connectedLeadingButtonShapes()
+                                    options.lastIndex -> ButtonGroupDefaults.connectedTrailingButtonShapes()
+                                    else -> ButtonGroupDefaults.connectedMiddleButtonShapes()
+                                },
+                            modifier = Modifier
+                                .semantics { role = Role.RadioButton }
+                                .weight(0.25F)
+                            ,
+                        ) {
+                            Text(
+                                text = gamedayOption.value.replaceFirstChar { it.uppercase() },
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                fontSize = 13.sp
                             )
                         }
+                    }
                 }
             }
             item(span = { GridItemSpan(maxCurrentLineSpan) }) {
