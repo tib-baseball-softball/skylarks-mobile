@@ -30,6 +30,7 @@ import de.davidbattefeld.berlinskylarks.ui.nav.ScoresDetail
 import de.davidbattefeld.berlinskylarks.ui.nav.SkylarksBottomBar
 import de.davidbattefeld.berlinskylarks.ui.nav.StandingsDetail
 import de.davidbattefeld.berlinskylarks.ui.nav.TopLevelBackStack
+import de.davidbattefeld.berlinskylarks.ui.utility.ContentNotFoundView
 import de.davidbattefeld.berlinskylarks.ui.utility.SkylarksSnackbarHost
 import de.davidbattefeld.berlinskylarks.ui.viewmodels.HomeViewModel
 import kotlinx.coroutines.launch
@@ -100,12 +101,18 @@ fun HomeScreen(
             Text(text = "Data per League", style = MaterialTheme.typography.headlineSmall)
 
             homeDatasets.forEach {
+                if (it.tableRow == null) {
+                    return@forEach
+                }
                 HomeDatasetItem(
                     dataset = it,
                     scoresDetailRoute = scoresDetailRoute,
                     standingsDetailRoute = standingsDetailRoute,
                 )
                 HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
+            }
+            if (homeDatasets.isEmpty()) {
+                ContentNotFoundView("additional data")
             }
         }
     }
