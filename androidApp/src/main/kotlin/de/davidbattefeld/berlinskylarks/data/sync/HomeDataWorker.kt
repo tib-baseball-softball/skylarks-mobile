@@ -26,6 +26,7 @@ class HomeDataWorker @AssistedInject constructor(
 
         if (teamID == BSMUtility.NON_EXISTENT_ID || gameClass == BSMUtility.NON_EXISTENT_ID) {
             Log.e(TAG, "Team ID is invalid")
+            Log.i(TAG, "Team ID: $teamID, Game Class: $gameClass")
             return Result.failure()
         }
 

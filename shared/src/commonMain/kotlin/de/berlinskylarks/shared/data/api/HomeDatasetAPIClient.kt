@@ -5,14 +5,14 @@ import de.berlinskylarks.shared.database.repository.ConfigurationRepository
 
 class HomeDatasetAPIClient(
     configurationRepository: ConfigurationRepository,
-) : DiamondPlannerAPIClient(configurationRepository) {
+) : BSMRelayAPIClient(configurationRepository) {
     suspend fun loadHomeDatasetsForTeam(
         teamID: Int,
         season: Int,
         gameClass: Int
     ): List<HomeDataset> {
         return apiCall<List<HomeDataset>>(
-            resource = "api/team/favorite",
+            resource = "api/bsm/relay/favorite-team",
             queryParameters = mutableListOf(
                 "team" to teamID.toString(),
                 "season" to season.toString(),

@@ -16,11 +16,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavKey
 import de.berlinskylarks.shared.data.model.tib.SkylarksTeam
 import de.davidbattefeld.berlinskylarks.LocalSnackbarHostState
@@ -48,10 +48,9 @@ fun HomeScreen(
     val snackbarHostState = LocalSnackbarHostState.current
     val scrollState = rememberScrollState()
 
-    val selectedTeam by vm.favoriteTeam.collectAsState()
-    val teamOptions by vm.teamOptions.collectAsState()
-    val homeDatasets by vm.homeDatasets.collectAsState()
-    val favoriteTeam by vm.favoriteTeam.collectAsState()
+    val teamOptions by vm.teamOptions.collectAsStateWithLifecycle()
+    val homeDatasets by vm.homeDatasets.collectAsStateWithLifecycle()
+    val favoriteTeam by vm.favoriteTeam.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
@@ -59,7 +58,7 @@ fun HomeScreen(
                 scrollBehavior = scrollBehavior,
                 bsmTeams = teamOptions,
                 onTeamFilterChanged = vm::onTeamFilterChanged,
-                selectedTeam = selectedTeam,
+                selectedTeam = favoriteTeam,
             )
         },
         snackbarHost = { SkylarksSnackbarHost() },
