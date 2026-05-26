@@ -61,7 +61,11 @@ class NewsViewModel @AssistedInject constructor(
         GameReportFilter(season, teamID)
     }.flatMapLatest { filter ->
         gameReportRepository.getGameReportsStream(
-            season = filter.season.toString(),
+            season = if (filter.season == null) {
+                filter.season
+            } else {
+                filter.season.toString()
+            },
             team = filter.team
         )
             .map { entities ->
