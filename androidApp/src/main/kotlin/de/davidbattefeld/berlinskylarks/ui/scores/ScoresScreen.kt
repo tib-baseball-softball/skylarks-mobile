@@ -29,7 +29,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.ToggleButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -39,9 +38,7 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavKey
 import de.berlinskylarks.shared.data.enums.Gameday
@@ -109,11 +106,8 @@ fun ScoresScreen(
             columns = GridCells.Adaptive(minSize = 350.dp)
         ) {
             item(span = { GridItemSpan(maxCurrentLineSpan) }) {
-                val options = Gameday.entries.filterNot { it == Gameday.NEXT }
+                val options = Gameday.entries
                 FlowRow(
-                    Modifier
-                        .padding(horizontal = 8.dp)
-                        .fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
                     verticalArrangement = Arrangement.spacedBy(2.dp),
                 ) {
@@ -129,14 +123,11 @@ fun ScoresScreen(
                                 },
                             modifier = Modifier
                                 .semantics { role = Role.RadioButton }
-                                .weight(0.25F)
-                            ,
                         ) {
                             Text(
                                 text = gamedayOption.value.replaceFirstChar { it.uppercase() },
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
-                                fontSize = 13.sp
                             )
                         }
                     }
@@ -145,7 +136,7 @@ fun ScoresScreen(
             item(span = { GridItemSpan(maxCurrentLineSpan) }) {
                 Row(
                     modifier = Modifier
-                        .padding(14.dp),
+                        .padding(8.dp),
                 ) {
                     Column(
                         modifier = Modifier
