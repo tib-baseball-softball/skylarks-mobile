@@ -1,6 +1,7 @@
 package de.davidbattefeld.berlinskylarks.ui.settings
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,14 +17,18 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material.icons.filled.Policy
 import androidx.compose.material.icons.filled.Web
+import androidx.compose.material.icons.outlined.CalendarMonth
+import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -113,18 +118,45 @@ fun SettingsScreen(
                                     contentDescription = "Localized description"
                                 )
                             }
-                            DropdownMenu(
+                            val groupInteractionSource = remember { MutableInteractionSource() }
+                            DropdownMenuPopup(
                                 expanded = expanded,
                                 onDismissRequest = { expanded = false }
                             ) {
-                                vm.possibleSeasons.forEach { selectionOption ->
-                                    DropdownMenuItem(
-                                        text = { Text(selectionOption.toString()) },
-                                        onClick = {
-                                            vm.updateSelectedSeason(selectionOption)
-                                            expanded = false
-                                        },
-                                    )
+                                DropdownMenuGroup(
+                                    shapes = MenuDefaults.groupShape(0, 1),
+                                    interactionSource = groupInteractionSource,
+                                ) {
+                                    val groupItemCount = vm.possibleSeasons.size
+                                    vm.possibleSeasons.forEachIndexed { itemIndex, selectionOption ->
+                                        DropdownMenuItem(
+                                            text = { Text(selectionOption.toString()) },
+                                            onCheckedChange = {
+                                                vm.updateSelectedSeason(selectionOption)
+                                                expanded = false
+                                            },
+                                            shapes = MenuDefaults.itemShape(itemIndex, groupItemCount),
+                                            leadingIcon = {
+                                                if (userPreferences.season == selectionOption) {
+                                                    Icon(
+                                                        Icons.Outlined.Check,
+                                                        contentDescription = null
+                                                    )
+                                                } else {
+                                                    Icon(
+                                                        Icons.Outlined.CalendarMonth,
+                                                        contentDescription = null
+                                                    )
+                                                }
+                                            },
+                                            checked = userPreferences.season == selectionOption,
+                                            colors = MenuDefaults.selectableItemColors(
+                                                selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                                selectedTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                                selectedLeadingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                            )
+                                        )
+                                    }
                                 }
                             }
                         }

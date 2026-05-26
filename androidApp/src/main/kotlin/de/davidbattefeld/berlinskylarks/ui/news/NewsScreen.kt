@@ -1,8 +1,10 @@
 package de.davidbattefeld.berlinskylarks.ui.news
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.offset
@@ -14,13 +16,17 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.outlined.CalendarMonth
+import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material.icons.outlined.UnfoldMore
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -90,138 +96,227 @@ fun NewsScreen(
             }
         }
     ) { paddingValues ->
-        LazyVerticalGrid(
+        Column(
             modifier = modifier
                 .padding(paddingValues)
                 .padding(horizontal = 12.dp),
-            columns = GridCells.Adaptive(minSize = 350.dp),
-            verticalArrangement = Arrangement.spacedBy(20.dp)
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            item {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                ) {
-                    Spacer(modifier = Modifier.weight(1f))
-                    Box {
-                        OutlinedButton(
-                            onClick = { seasonFilterExpanded = !seasonFilterExpanded }
-                        ) {
-                            if (selectedSeason == null) {
-                                Text(text = "All Seasons")
-                            } else {
-                                Text(text = selectedSeason.toString())
-                            }
-                            Icon(
-                                modifier = Modifier.offset(x = 8.dp),
-                                imageVector = Icons.Outlined.UnfoldMore,
-                                contentDescription = ""
-                            )
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                Spacer(modifier = Modifier.weight(1f))
+                Box {
+                    OutlinedButton(
+                        onClick = { seasonFilterExpanded = !seasonFilterExpanded }
+                    ) {
+                        if (selectedSeason == null) {
+                            Text(text = "All Seasons")
+                        } else {
+                            Text(text = selectedSeason.toString())
                         }
-                        DropdownMenu(
-                            expanded = seasonFilterExpanded,
-                            onDismissRequest = { seasonFilterExpanded = false }
+                        Icon(
+                            modifier = Modifier.offset(x = 8.dp),
+                            imageVector = Icons.Outlined.UnfoldMore,
+                            contentDescription = ""
+                        )
+                    }
+
+                    val groupInteractionSource = remember { MutableInteractionSource() }
+                    DropdownMenuPopup(
+                        expanded = seasonFilterExpanded,
+                        onDismissRequest = { seasonFilterExpanded = false }
+                    ) {
+                        DropdownMenuGroup(
+                            shapes = MenuDefaults.groupShape(0, 2),
+                            interactionSource = groupInteractionSource,
                         ) {
                             DropdownMenuItem(
                                 text = { Text("All Seasons") },
-                                onClick = {
+                                onCheckedChange = {
                                     vm.onSeasonChanged(null)
                                     seasonFilterExpanded = false
                                 },
+                                shapes = MenuDefaults.itemShape(0, 1),
                                 leadingIcon = {
-                                    Icon(
-                                        Icons.Outlined.CalendarMonth,
-                                        contentDescription = null
-                                    )
-                                }
-                            )
-                            seasonOptions.forEach {
-                                DropdownMenuItem(
-                                    text = { Text(it.toString()) },
-                                    onClick = {
-                                        vm.onSeasonChanged(it)
-                                        seasonFilterExpanded = false
-                                    },
-                                    leadingIcon = {
+                                    if (selectedSeason == null) {
+                                        Icon(
+                                            Icons.Outlined.Check,
+                                            contentDescription = null
+                                        )
+                                    } else {
                                         Icon(
                                             Icons.Outlined.CalendarMonth,
                                             contentDescription = null
                                         )
                                     }
+                                },
+                                checked = selectedSeason == null,
+                                colors = MenuDefaults.selectableItemColors(
+                                    selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                    selectedTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    selectedLeadingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                )
+                            )
+                        }
+                        HorizontalDivider(
+                            modifier = Modifier.padding(MenuDefaults.HorizontalDividerPadding)
+                        )
+                        DropdownMenuGroup(
+                            shapes = MenuDefaults.groupShape(1, 2),
+                            interactionSource = groupInteractionSource,
+                        ) {
+                            val groupItemCount = seasonOptions.size
+                            seasonOptions.forEachIndexed { itemIndex, season ->
+                                DropdownMenuItem(
+                                    text = { Text(season.toString()) },
+                                    onCheckedChange = {
+                                        vm.onSeasonChanged(season)
+                                        seasonFilterExpanded = false
+                                    },
+                                    shapes = MenuDefaults.itemShape(itemIndex, groupItemCount),
+                                    leadingIcon = {
+                                        if (selectedSeason == season) {
+                                            Icon(
+                                                Icons.Outlined.Check,
+                                                contentDescription = null
+                                            )
+                                        } else {
+                                            Icon(
+                                                Icons.Outlined.CalendarMonth,
+                                                contentDescription = null
+                                            )
+                                        }
+                                    },
+                                    checked = selectedSeason == season,
+                                    colors = MenuDefaults.selectableItemColors(
+                                        selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                        selectedTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                        selectedLeadingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    )
                                 )
                             }
                         }
                     }
-                    Box {
-                        OutlinedButton(
-                            onClick = { teamFilterExpanded = !teamFilterExpanded }
-                        ) {
-                            if (selectedTeam == null) {
-                                Text(text = "All Teams")
-                            } else {
-                                Text(
-                                    text = "${selectedTeam!!.name} (${selectedTeam!!.bsmShortName})",
-                                )
-                            }
-                            Icon(
-                                modifier = Modifier.offset(x = 8.dp),
-                                imageVector = Icons.Outlined.UnfoldMore,
-                                contentDescription = ""
+                }
+                Box {
+                    OutlinedButton(
+                        onClick = { teamFilterExpanded = !teamFilterExpanded }
+                    ) {
+                        if (selectedTeam == null) {
+                            Text(text = "All Teams")
+                        } else {
+                            Text(
+                                text = "${selectedTeam!!.name} (${selectedTeam!!.bsmShortName})",
                             )
                         }
-                        DropdownMenu(
-                            expanded = teamFilterExpanded,
-                            onDismissRequest = { teamFilterExpanded = false }
+                        Icon(
+                            modifier = Modifier.offset(x = 8.dp),
+                            imageVector = Icons.Outlined.UnfoldMore,
+                            contentDescription = ""
+                        )
+                    }
+                    val teamGroupInteractionSource = remember { MutableInteractionSource() }
+                    DropdownMenuPopup(
+                        expanded = teamFilterExpanded,
+                        onDismissRequest = { teamFilterExpanded = false }
+                    ) {
+                        DropdownMenuGroup(
+                            shapes = MenuDefaults.groupShape(0, 2),
+                            interactionSource = teamGroupInteractionSource,
                         ) {
                             DropdownMenuItem(
                                 text = { Text("All Teams") },
-                                onClick = {
+                                onCheckedChange = {
                                     vm.onTeamFilterChanged(null)
                                     teamFilterExpanded = false
                                 },
+                                shapes = MenuDefaults.itemShape(0, 1),
                                 leadingIcon = {
-                                    Icon(
-                                        Icons.Outlined.Groups,
-                                        contentDescription = null
-                                    )
-                                }
-                            )
-                            teams.forEach {
-                                DropdownMenuItem(
-                                    text = { Text("${it.name} (${it.bsmShortName})") },
-                                    onClick = {
-                                        vm.onTeamFilterChanged(it.id)
-                                        teamFilterExpanded = false
-                                    },
-                                    leadingIcon = {
+                                    if (selectedTeam == null) {
+                                        Icon(
+                                            Icons.Outlined.Check,
+                                            contentDescription = null
+                                        )
+                                    } else {
                                         Icon(
                                             Icons.Outlined.Groups,
                                             contentDescription = null
                                         )
                                     }
+                                },
+                                checked = selectedTeam == null,
+                                colors = MenuDefaults.selectableItemColors(
+                                    selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                    selectedTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    selectedLeadingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                )
+                            )
+                        }
+                        HorizontalDivider(
+                            modifier = Modifier.padding(MenuDefaults.HorizontalDividerPadding)
+                        )
+                        DropdownMenuGroup(
+                            shapes = MenuDefaults.groupShape(1, 2),
+                            interactionSource = teamGroupInteractionSource,
+                        ) {
+                            val groupItemCount = teams.size
+                            teams.forEachIndexed { itemIndex, team ->
+                                DropdownMenuItem(
+                                    text = { Text("${team.name} (${team.bsmShortName})") },
+                                    onCheckedChange = {
+                                        vm.onTeamFilterChanged(team.id)
+                                        teamFilterExpanded = false
+                                    },
+                                    shapes = MenuDefaults.itemShape(itemIndex, groupItemCount),
+                                    leadingIcon = {
+                                        if (selectedTeam?.id == team.id) {
+                                            Icon(
+                                                Icons.Outlined.Check,
+                                                contentDescription = null
+                                            )
+                                        } else {
+                                            Icon(
+                                                Icons.Outlined.Groups,
+                                                contentDescription = null
+                                            )
+                                        }
+                                    },
+                                    checked = selectedTeam?.id == team.id,
+                                    colors = MenuDefaults.selectableItemColors(
+                                        selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                        selectedTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                        selectedLeadingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    )
                                 )
                             }
                         }
                     }
                 }
             }
-            if (gameReports.isEmpty()) {
-                item(span = { GridItemSpan(maxCurrentLineSpan) }) {
-                    ContentNotFoundView("game reports")
-                }
-            } else {
-                items(gameReports) {
-                    NewsItemCard(
-                        title = it.title,
-                        date = AndroidDateTimeUtility.formatDate(Instant.parse(it.date)),
-                        teaser = it.teaserText,
-                        image = it.gallery?.firstOrNull(),
-                        modifier = Modifier
-                            .clickable {
-                                detailRoute(
-                                    GameReportDetail(it.gameId)
-                                )
-                            }
-                    )
+            LazyVerticalGrid(
+                columns = GridCells.Adaptive(minSize = 350.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp)
+            ) {
+                if (gameReports.isEmpty()) {
+                    item(span = { GridItemSpan(maxCurrentLineSpan) }) {
+                        ContentNotFoundView("game reports")
+                    }
+                } else {
+                    items(gameReports) {
+                        NewsItemCard(
+                            title = it.title,
+                            date = AndroidDateTimeUtility.formatDate(Instant.parse(it.date)),
+                            teaser = it.teaserText,
+                            image = it.gallery?.firstOrNull(),
+                            modifier = Modifier
+                                .clickable {
+                                    detailRoute(
+                                        GameReportDetail(it.gameId)
+                                    )
+                                }
+                        )
+                    }
                 }
             }
         }

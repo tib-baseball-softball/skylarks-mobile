@@ -1,15 +1,22 @@
 package de.davidbattefeld.berlinskylarks.ui.home
 
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material.icons.outlined.UnfoldMore
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarScrollBehavior
@@ -51,37 +58,80 @@ fun HomeTopBar(
                         contentDescription = ""
                     )
                 }
-                DropdownMenu(
+                val teamGroupInteractionSource = remember { MutableInteractionSource() }
+                DropdownMenuPopup(
                     expanded = teamFilterExpanded,
                     onDismissRequest = { teamFilterExpanded = false }
                 ) {
-                    DropdownMenuItem(
-                        text = { Text("None selected") },
-                        onClick = {
-                            onTeamFilterChanged(BSMUtility.NON_EXISTENT_ID)
-                            teamFilterExpanded = false
-                        },
-                        leadingIcon = {
-                            Icon(
-                                Icons.Outlined.Groups,
-                                contentDescription = null
-                            )
-                        }
-                    )
-                    bsmTeams.forEach {
+                    DropdownMenuGroup(
+                        shapes = MenuDefaults.groupShape(0, 2),
+                        interactionSource = teamGroupInteractionSource,
+                    ) {
                         DropdownMenuItem(
-                            text = { Text("${it.name} (${it.leagueEntries?.firstOrNull()?.league?.acronym})") },
-                            onClick = {
-                                onTeamFilterChanged(it.id)
+                            text = { Text("None selected") },
+                            onCheckedChange = {
+                                onTeamFilterChanged(BSMUtility.NON_EXISTENT_ID)
                                 teamFilterExpanded = false
                             },
+                            shapes = MenuDefaults.itemShape(0, 1),
                             leadingIcon = {
-                                Icon(
-                                    Icons.Outlined.Groups,
-                                    contentDescription = null
-                                )
-                            }
+                                if (selectedTeam == null) {
+                                    Icon(
+                                        Icons.Outlined.Check,
+                                        contentDescription = null
+                                    )
+                                } else {
+                                    Icon(
+                                        Icons.Outlined.Groups,
+                                        contentDescription = null
+                                    )
+                                }
+                            },
+                            checked = selectedTeam == null,
+                            colors = MenuDefaults.selectableItemColors(
+                                selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                selectedTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                selectedLeadingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                            )
                         )
+                    }
+                    HorizontalDivider(
+                        modifier = Modifier.padding(MenuDefaults.HorizontalDividerPadding)
+                    )
+                    DropdownMenuGroup(
+                        shapes = MenuDefaults.groupShape(1, 2),
+                        interactionSource = teamGroupInteractionSource,
+                    ) {
+                        val groupItemCount = bsmTeams.size
+                        bsmTeams.forEachIndexed { itemIndex, team ->
+                            DropdownMenuItem(
+                                text = { Text("${team.name} (${team.leagueEntries?.firstOrNull()?.league?.acronym})") },
+                                onCheckedChange = {
+                                    onTeamFilterChanged(team.id)
+                                    teamFilterExpanded = false
+                                },
+                                shapes = MenuDefaults.itemShape(itemIndex, groupItemCount),
+                                leadingIcon = {
+                                    if (selectedTeam?.id == team.id) {
+                                        Icon(
+                                            Icons.Outlined.Check,
+                                            contentDescription = null
+                                        )
+                                    } else {
+                                        Icon(
+                                            Icons.Outlined.Groups,
+                                            contentDescription = null
+                                        )
+                                    }
+                                },
+                                checked = selectedTeam?.id == team.id,
+                                colors = MenuDefaults.selectableItemColors(
+                                    selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                    selectedTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    selectedLeadingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                )
+                            )
+                        }
                     }
                 }
             }
