@@ -11,8 +11,8 @@ class OfflineGameReportRepository(
     override suspend fun insertGameReport(gameReport: GameReportEntity) =
         gameReportDao.insert(gameReport)
 
-    override fun getAllGameReportsStream(): Flow<List<GameReportEntityWithMedia>> =
-        gameReportDao.getAllGameReports()
+    override fun getGameReportsStream(season: String?, team: Int?): Flow<List<GameReportEntityWithMedia>> =
+        gameReportDao.getAllGameReports(season, team)
 
     override fun getGameReportByGameID(gameID: String): Flow<GameReportEntityWithMedia?> =
         gameReportDao.getGameReportByGameID(gameID)

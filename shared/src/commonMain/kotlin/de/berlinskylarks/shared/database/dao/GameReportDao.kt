@@ -15,8 +15,17 @@ interface GameReportDao {
     suspend fun insert(gameReport: GameReportEntity)
 
     @Transaction
-    @Query("SELECT * FROM game_reports ORDER BY datetime(date) DESC")
-    fun getAllGameReports(): Flow<List<GameReportEntityWithMedia>>
+    @Query(
+"""
+SELECT * 
+FROM game_reports
+WHERE 1 = 1
+AND (:season IS NULL OR strftime('%Y', date) = :season)
+AND (:team IS NULL OR team = :team)
+ORDER BY datetime(date) DESC
+"""
+    )
+    fun getAllGameReports(season: String?, team: Int?): Flow<List<GameReportEntityWithMedia>>
 
     /**
      * The field `gameID` can contain multiple values separated by a comma.

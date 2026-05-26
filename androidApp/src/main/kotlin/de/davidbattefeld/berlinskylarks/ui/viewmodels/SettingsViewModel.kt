@@ -12,8 +12,8 @@ class SettingsViewModel @AssistedInject constructor(
     userPreferencesRepository: UserPreferencesRepository,
     private val workManagerTiBRepository: WorkManagerTiBRepository,
 ) : GenericViewModel(userPreferencesRepository) {
-    // 2021 is the first year with the new team name
-    val possibleSeasons = (2021..Calendar.getInstance().get(Calendar.YEAR)).toList()
+    // 2020 is the first year with the new team name
+    val possibleSeasons = (2020..Calendar.getInstance().get(Calendar.YEAR)).toList()
 
     /**
      * Requests a full update of all data for the given season.

@@ -6,6 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface GameReportRepository {
     suspend fun insertGameReport(gameReport: GameReportEntity)
-    fun getAllGameReportsStream(): Flow<List<GameReportEntityWithMedia>>
+    fun getGameReportsStream(season: String?, team: Int?): Flow<List<GameReportEntityWithMedia>>
     fun getGameReportByGameID(gameID: String): Flow<GameReportEntityWithMedia?>
 }
