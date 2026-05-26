@@ -1,6 +1,8 @@
 package de.davidbattefeld.berlinskylarks.ui.news
 
 import android.icu.util.Calendar
+import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -17,6 +19,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -71,6 +74,14 @@ class NewsViewModel @AssistedInject constructor(
             initialValue = emptyList()
         )
 
+    val selectedTeam: StateFlow<SkylarksTeam?> = combine(filteredTeamID, tibTeams) { id, teams ->
+        teams.find { it.id == id }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = null
+    )
+
     fun refresh() {
         viewModelScope.launch {
             workManagerTiBRepository.syncTiBTeams()
@@ -78,7 +89,7 @@ class NewsViewModel @AssistedInject constructor(
         }
     }
 
-    fun onSeasonChanged(season: Int) {
+    fun onSeasonChanged(season: Int?) {
         selectedSeason.value = season
     }
 
