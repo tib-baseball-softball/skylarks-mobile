@@ -46,8 +46,7 @@ module.
 - [x] **Image Loading:** Upgrade **Coil** from 2.x to **3.x** to support CMP.
 - [ ] **Logging:** Replace `android.util.Log` with a multiplatform logger like **Napier** or *
   *Kermit**.
-- [ ] **Markdown:** Evaluate rendering. Currently, `android.text.Html` and `TextView` via
-  `AndroidView` are used. Switch to a pure Compose Markdown renderer.
+- [x] **Markdown:** Switched to a pure Compose Markdown renderer.
 
 ---
 

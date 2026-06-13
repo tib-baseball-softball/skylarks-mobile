@@ -65,7 +65,8 @@ kotlin {
         implementation(libs.ktor.client.core)
         implementation(libs.ktor.client.android)
         implementation(libs.coil.compose)
-        implementation(libs.jetbrains.markdown)
+        implementation(libs.markdown.renderer)
+        implementation(libs.markdown.renderer.m3)
         implementation(libs.accompanist.permissions)
     }
 }

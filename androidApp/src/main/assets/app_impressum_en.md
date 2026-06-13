@@ -1,17 +1,17 @@
-# Information according to § 5 TMG
+## Information according to § 5 TMG
 
 David Battefeld  
 Reichenberger Straße 5C  
 13055 Berlin  
 E-Mail:[app@tib-baseball.de](mailto:app@tib-baseball.de)
 
-## Responsible for the content according to § 55 Abs. 2 RstV
+### Responsible for the content according to § 55 Abs. 2 RstV
 
 David Battefeld  
 Reichenberger Straße 5C  
 13055 Berlin
 
-## Content warning.
+### Content warning.
 
 The freely accessible content of this app was created with the greatest possible care. However, the
 provider of this app does not guarantee the accuracy and timeliness of the provided freely
@@ -21,7 +21,7 @@ reading the freely accessible content, no contractual relationship whatsoever is
 the user and the provider; in this respect, there is no intention on the part of the provider to be
 legally bound.
 
-## Liability for contents
+### Liability for contents
 
 As a service provider, we are responsible for our own content in this app in accordance with § 7
 paragraph 1 TMG under the general laws. According to §§ 8 to 10 TMG, however, we are not obligated
@@ -31,7 +31,7 @@ under the general laws remain unaffected. However, liability in this regard is o
 the point in time at which a concrete infringement of the law becomes known. If we become aware of
 any such infringement, we will remove the content in question immediately.
 
-## Liability for links
+### Liability for links
 
 Our app contains links to external websites of third parties, on whose contents we have no
 influence. Therefore, we cannot assume any liability for these external contents. The respective
@@ -41,7 +41,7 @@ were not recognizable at the time of linking. However, a permanent control of th
 linked pages is not reasonable without concrete evidence of a violation of the law. If we become
 aware of any infringements, we will remove such links immediately.
 
-## Copyright
+### Copyright
 
 The content and works created by the app operators on these pages are subject to German copyright
 law. The reproduction, editing, distribution and any kind of exploitation outside the limits of
