@@ -43,7 +43,7 @@ module.
 - [ ] **Dependency Injection:** Replace **Hilt** (Android-only) with **Koin** or **manual DI** in
   the shared module. Hilt's `@HiltViewModel` and `@AssistedInject` will need to be refactored to a
   platform-agnostic approach.
-- [ ] **Image Loading:** Upgrade **Coil** from 2.x to **3.x** to support CMP.
+- [x] **Image Loading:** Upgrade **Coil** from 2.x to **3.x** to support CMP.
 - [ ] **Logging:** Replace `android.util.Log` with a multiplatform logger like **Napier** or *
   *Kermit**.
 - [ ] **Markdown:** Evaluate rendering. Currently, `android.text.Html` and `TextView` via

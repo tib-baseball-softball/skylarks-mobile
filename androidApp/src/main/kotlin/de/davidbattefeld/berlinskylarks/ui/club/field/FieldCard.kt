@@ -17,7 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
+import coil3.compose.AsyncImage
 import de.berlinskylarks.shared.data.model.Field
 
 @Composable
@@ -53,7 +53,11 @@ fun FieldCard(
                 Text(text = field.name, style = MaterialTheme.typography.titleMedium)
                 val city = field.city ?: ""
                 if (city.isNotBlank()) {
-                    Text(text = city, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(
+                        text = city,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
                 }
             }
         }

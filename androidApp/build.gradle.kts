@@ -6,6 +6,17 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
+// TODO(kotlin-2.4): Hilt 2.59.2's annotation-processor classpath bundles
+// kotlin-metadata-jvm 2.2.20, which can't parse Kotlin 2.4.0 class metadata
+// (`hiltJavaCompile*` fails with "maximum supported version is 2.3.0"). Force the
+// matching kotlin-metadata-jvm onto every configuration until Hilt releases a
+// version that bundles >= 2.4.0. See https://github.com/google/dagger/issues/5001.
+configurations.configureEach {
+    resolutionStrategy {
+        force(libs.kotlin.metadata.jvm)
+    }
+}
+
 kotlin {
     compilerOptions {
         optIn.add("kotlin.RequiresOptIn")
@@ -53,7 +64,6 @@ kotlin {
         implementation(libs.serialization.json)
         implementation(libs.ktor.client.core)
         implementation(libs.ktor.client.android)
-        implementation(libs.coil)
         implementation(libs.coil.compose)
         implementation(libs.jetbrains.markdown)
         implementation(libs.accompanist.permissions)
