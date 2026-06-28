@@ -2,11 +2,12 @@ README.md
 docs/ApplicationContext.md
 docs/ConfigurationDTO.md
 docs/ConfigurationDTOApiURLS.md
-docs/DefaultAPI.md
+docs/DefaultApi.md
 docs/FeatureFlagDTO.md
 docs/FlagWithStatusDTO.md
+docs/HealthCheck.md
 settings.gradle.kts
-src/commonMain/kotlin/de/berlinskylarks/appconfigclient/apis/DefaultAPI.kt
+src/commonMain/kotlin/de/berlinskylarks/appconfigclient/apis/DefaultApi.kt
 src/commonMain/kotlin/de/berlinskylarks/appconfigclient/auth/ApiKeyAuth.kt
 src/commonMain/kotlin/de/berlinskylarks/appconfigclient/auth/Authentication.kt
 src/commonMain/kotlin/de/berlinskylarks/appconfigclient/auth/HttpBasicAuth.kt
@@ -25,3 +26,11 @@ src/commonMain/kotlin/de/berlinskylarks/appconfigclient/models/ConfigurationDTO.
 src/commonMain/kotlin/de/berlinskylarks/appconfigclient/models/ConfigurationDTOApiURLS.kt
 src/commonMain/kotlin/de/berlinskylarks/appconfigclient/models/FeatureFlagDTO.kt
 src/commonMain/kotlin/de/berlinskylarks/appconfigclient/models/FlagWithStatusDTO.kt
+src/commonMain/kotlin/de/berlinskylarks/appconfigclient/models/HealthCheck.kt
+src/test/kotlin/de/berlinskylarks/appconfigclient/apis/DefaultApiTest.kt
+src/test/kotlin/de/berlinskylarks/appconfigclient/models/ApplicationContextTest.kt
+src/test/kotlin/de/berlinskylarks/appconfigclient/models/ConfigurationDTOApiURLSTest.kt
+src/test/kotlin/de/berlinskylarks/appconfigclient/models/ConfigurationDTOTest.kt
+src/test/kotlin/de/berlinskylarks/appconfigclient/models/FeatureFlagDTOTest.kt
+src/test/kotlin/de/berlinskylarks/appconfigclient/models/FlagWithStatusDTOTest.kt
+src/test/kotlin/de/berlinskylarks/appconfigclient/models/HealthCheckTest.kt

@@ -31,22 +31,13 @@ import kotlinx.serialization.encoding.*
 /**
  * 
  *
- * @param bsmURL 
- * @param cmsURL 
- * @param dpURL 
- * @param errorReportingURL 
+ * @param message 
  */
 @Serializable
 
-data class ConfigurationDTOApiURLS (
+data class HealthCheck (
 
-    @SerialName(value = "bsmURL") @Required val bsmURL: kotlin.String,
-
-    @SerialName(value = "cmsURL") @Required val cmsURL: kotlin.String,
-
-    @SerialName(value = "dpURL") @Required val dpURL: kotlin.String,
-
-    @SerialName(value = "errorReportingURL") val errorReportingURL: kotlin.String? = null
+    @SerialName(value = "message") @Required val message: kotlin.String
 
 ) {
 

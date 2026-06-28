@@ -9,10 +9,6 @@ version = "1.0.0"
 kotlin {
     jvm()
 
-    iosArm64()
-    macosArm64()
-    iosSimulatorArm64()
-
     sourceSets {
         commonMain {
             dependencies {

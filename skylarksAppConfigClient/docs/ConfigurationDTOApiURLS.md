@@ -7,6 +7,7 @@
 | **bsmURL** | **kotlin.String** |  |  |
 | **cmsURL** | **kotlin.String** |  |  |
 | **dpURL** | **kotlin.String** |  |  |
+| **errorReportingURL** | **kotlin.String** |  |  [optional] |
 
 
 

@@ -26,15 +26,16 @@ package de.berlinskylarks.appconfigclient.apis
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.ShouldSpec
 
-import de.berlinskylarks.appconfigclient.apis.DefaultAPI
+import de.berlinskylarks.appconfigclient.apis.DefaultApi
 import de.berlinskylarks.appconfigclient.models.ApplicationContext
 import de.berlinskylarks.appconfigclient.models.ConfigurationDTO
 import de.berlinskylarks.appconfigclient.models.FeatureFlagDTO
+import de.berlinskylarks.appconfigclient.models.HealthCheck
 
-class DefaultAPITest : ShouldSpec() {
+class DefaultApiTest : ShouldSpec() {
     init {
-        // uncomment below to create an instance of DefaultAPI
-        //val apiInstance = DefaultAPI()
+        // uncomment below to create an instance of DefaultApi
+        //val apiInstance = DefaultApi()
 
         // to test getConfigs
         should("test getConfigs") {
@@ -49,6 +50,13 @@ class DefaultAPITest : ShouldSpec() {
             // uncomment below to test getFlags
             //val excludedConfigID : kotlin.String = 123e4567-e89b-12d3-a456-426655440000 // kotlin.String | Optional UUID to filter out flags already linked to this configuration.
             //val result : kotlin.collections.List<FeatureFlagDTO> = apiInstance.getFlags(excludedConfigID)
+            //result shouldBe ("TODO")
+        }
+
+        // to test healthCheck
+        should("test healthCheck") {
+            // uncomment below to test healthCheck
+            //val result : HealthCheck = apiInstance.healthCheck()
             //result shouldBe ("TODO")
         }
 

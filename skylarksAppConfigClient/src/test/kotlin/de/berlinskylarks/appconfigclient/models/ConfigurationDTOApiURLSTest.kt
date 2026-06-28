@@ -51,5 +51,11 @@ class ConfigurationDTOApiURLSTest : ShouldSpec() {
             //modelInstance.dpURL shouldBe ("TODO")
         }
 
+        // to test the property `errorReportingURL`
+        should("test errorReportingURL") {
+            // uncomment below to test the property
+            //modelInstance.errorReportingURL shouldBe ("TODO")
+        }
+
     }
 }

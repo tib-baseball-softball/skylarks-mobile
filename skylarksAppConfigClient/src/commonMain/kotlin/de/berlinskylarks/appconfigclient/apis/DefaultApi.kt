@@ -26,6 +26,7 @@ package de.berlinskylarks.appconfigclient.apis
 import de.berlinskylarks.appconfigclient.models.ApplicationContext
 import de.berlinskylarks.appconfigclient.models.ConfigurationDTO
 import de.berlinskylarks.appconfigclient.models.FeatureFlagDTO
+import de.berlinskylarks.appconfigclient.models.HealthCheck
 
 import de.berlinskylarks.appconfigclient.infrastructure.*
 import io.ktor.client.HttpClient
@@ -42,7 +43,7 @@ import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
 
-open class DefaultAPI : ApiClient {
+open class DefaultApi : ApiClient {
 
     constructor(
         baseUrl: String = ApiClient.BASE_URL,
@@ -141,5 +142,37 @@ open class DefaultAPI : ApiClient {
             override fun deserialize(decoder: Decoder) = GetFlagsResponse(serializer.deserialize(decoder))
         }
     }
+
+    /**
+     * Health Check
+     * Returns a simple health check message.
+     * @return HealthCheck
+     */
+    @Suppress("UNCHECKED_CAST")
+    open suspend fun healthCheck(): HttpResponse<HealthCheck> {
+
+        val localVariableAuthNames = listOf<String>()
+
+        val localVariableBody = 
+            io.ktor.client.utils.EmptyContent
+
+        val localVariableQuery = mutableMapOf<String, List<String>>()
+        val localVariableHeaders = mutableMapOf<String, String>()
+
+        val localVariableConfig = RequestConfig<kotlin.Any?>(
+            RequestMethod.GET,
+            "/health",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            requiresAuthentication = false,
+        )
+
+        return request(
+            localVariableConfig,
+            localVariableBody,
+            localVariableAuthNames
+        ).wrap()
+    }
+
 
 }
