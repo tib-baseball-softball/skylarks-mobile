@@ -22,6 +22,8 @@ fun GameReportDetailScreen(
     navigationType: NavigationType,
 ) {
     val gameReport by vm.gameReport.collectAsState()
+    val game1 = vm.games.firstOrNull()?.collectAsState()
+    val game2 = vm.games.lastOrNull()?.collectAsState()
 
     Scaffold(
         snackbarHost = { SkylarksSnackbarHost() },
@@ -41,7 +43,7 @@ fun GameReportDetailScreen(
                 if (gameReport == null) {
                     ContentNotFoundView("game report")
                 } else {
-                    GameReportDetailContent(gameReport = gameReport!!)
+                    GameReportDetailContent(gameReport = gameReport!!, game1?.value, game2?.value)
                 }
             }
         }

@@ -24,11 +24,16 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import de.berlinskylarks.shared.data.model.tib.GameReport
 import de.davidbattefeld.berlinskylarks.data.utility.AndroidDateTimeUtility
+import de.davidbattefeld.berlinskylarks.domain.service.GameDecorator
+import de.davidbattefeld.berlinskylarks.global.cardPadding
+import de.davidbattefeld.berlinskylarks.ui.scores.ScoresDetailMainInfo
 import kotlin.time.Instant
 
 @Composable
 fun GameReportDetailContent(
     gameReport: GameReport,
+    game1: GameDecorator? = null,
+    game2: GameDecorator? = null,
 ) {
     Column(
         modifier = Modifier
@@ -95,13 +100,39 @@ fun GameReportDetailContent(
         )
         Text(gameReport.introductionPlain)
 
+        game1?.let {
+            Card(
+                modifier = Modifier
+                    .padding(cardPadding),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+                ),
+                elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+            ) {
+                ScoresDetailMainInfo(gameDecorator = game1)
+            }
+        }
+
         Text(
             text = "Report Game 1",
             style = MaterialTheme.typography.titleMedium,
         )
         Text(gameReport.reportFirstPlain)
 
+
         gameReport.reportSecondPlain?.let { reportSecond ->
+            game2?.let {
+                Card(
+                    modifier = Modifier
+                        .padding(cardPadding),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+                    ),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+                ) {
+                    ScoresDetailMainInfo(gameDecorator = game2)
+                }
+            }
             HorizontalDivider()
             Text(
                 text = "Report Game 2",
