@@ -6,8 +6,8 @@ import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
 import io.ktor.http.URLBuilder
 import io.ktor.http.appendPathSegments
+import io.sentry.kotlin.multiplatform.Sentry
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonDecodingException
@@ -59,9 +59,11 @@ abstract class AbstractAPIClient(
             } catch (e: Exception) {
                 println("AbstractAPIClient: Error during API call - ${e.message}")
                 e.printStackTrace()
+                Sentry.captureException(e)
             } catch (e: JsonDecodingException) {
                 println("Error decoding JSON:")
                 println(e.message)
+                Sentry.captureException(e)
             }
         }
         return result

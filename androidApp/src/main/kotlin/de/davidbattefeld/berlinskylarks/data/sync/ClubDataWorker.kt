@@ -9,6 +9,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import de.berlinskylarks.shared.data.api.BSMAPIClient
 import de.berlinskylarks.shared.data.service.ClubDataSyncService
+import io.sentry.kotlin.multiplatform.Sentry
 
 private const val TAG = "ClubDataWorker"
 
@@ -25,7 +26,7 @@ class ClubDataWorker @AssistedInject constructor(
             Log.d(TAG, "Club Data Worker executed")
             Result.success()
         } catch (t: Throwable) {
-            Log.e(TAG, "Error in club data worker", t)
+            Sentry.captureException(t)
             Result.retry()
         }
     }

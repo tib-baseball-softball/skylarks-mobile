@@ -1,6 +1,7 @@
 package de.davidbattefeld.berlinskylarks.data.utility
 
 import de.berlinskylarks.shared.utility.DateTimeUtility
+import io.sentry.kotlin.multiplatform.Sentry
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -32,7 +33,8 @@ class AndroidDateTimeUtility : DateTimeUtility() {
             for (p in patterns) {
                 try {
                     return LocalDate.parse(dateStr, DateTimeFormatter.ofPattern(p))
-                } catch (_: DateTimeParseException) {
+                } catch (e: DateTimeParseException) {
+                    Sentry.captureException(e)
                 }
             }
             return null

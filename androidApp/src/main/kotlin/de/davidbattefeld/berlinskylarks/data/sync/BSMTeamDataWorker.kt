@@ -10,6 +10,7 @@ import dagger.assisted.AssistedInject
 import de.berlinskylarks.shared.data.api.BSMAPIClient
 import de.berlinskylarks.shared.data.api.BSMAPIClient.Companion.DEFAULT_SEASON
 import de.berlinskylarks.shared.data.service.ClubDataSyncService
+import io.sentry.kotlin.multiplatform.Sentry
 
 private const val TAG = "BSMTeamDataWorker"
 
@@ -30,7 +31,7 @@ class BSMTeamDataWorker @AssistedInject constructor(
             Log.i(TAG, "Synced $count teams for ")
             Result.success()
         } catch (t: Throwable) {
-            Log.e(TAG, "Error in teams data worker", t)
+            Sentry.captureException(t)
             Result.retry()
         }
     }

@@ -11,6 +11,7 @@ import androidx.work.WorkManager
 import androidx.work.workDataOf
 import dagger.hilt.android.HiltAndroidApp
 import de.berlinskylarks.shared.data.api.BSMAPIClient.Companion.DEFAULT_SEASON
+import de.berlinskylarks.shared.errors.initializeSentry
 import de.davidbattefeld.berlinskylarks.data.sync.BSMTeamDataWorker
 import de.davidbattefeld.berlinskylarks.data.sync.ClubDataWorker
 import de.davidbattefeld.berlinskylarks.data.sync.ConfigurationWorker
@@ -37,6 +38,7 @@ class BerlinSkylarksApplication : Application(), Configuration.Provider {
     override fun onCreate() {
         super.onCreate()
         setupRecurringWork()
+        initializeSentry()
     }
 
     private fun setupRecurringWork() {

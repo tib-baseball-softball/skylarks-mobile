@@ -10,6 +10,7 @@ import dagger.assisted.AssistedInject
 import de.berlinskylarks.shared.data.api.BSMAPIClient
 import de.berlinskylarks.shared.data.service.HomeDataSyncService
 import de.berlinskylarks.shared.utility.BSMUtility
+import io.sentry.kotlin.multiplatform.Sentry
 
 private const val TAG = "HomeDataWorker"
 
@@ -34,8 +35,8 @@ class HomeDataWorker @AssistedInject constructor(
             homeDataSyncService.syncHomeDatasets(teamID, season, gameClass)
             Log.i(TAG, "Successfully synced home datasets")
             Result.success()
-        } catch (throwable: Throwable) {
-            Log.e(TAG, "Failed to sync home datasets", throwable)
+        } catch (t: Throwable) {
+            Sentry.captureException(t)
             Result.retry()
         }
     }

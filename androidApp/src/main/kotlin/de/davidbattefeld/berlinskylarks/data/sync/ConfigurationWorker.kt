@@ -8,6 +8,7 @@ import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import de.berlinskylarks.shared.data.service.ConfigurationSyncService
+import io.sentry.kotlin.multiplatform.Sentry
 
 private const val TAG = "ConfigurationWorker"
 
@@ -16,14 +17,14 @@ class ConfigurationWorker @AssistedInject constructor(
     @Assisted cts: Context,
     @Assisted params: WorkerParameters,
     private val configurationSyncService: ConfigurationSyncService,
-): CoroutineWorker(cts, params) {
+) : CoroutineWorker(cts, params) {
     override suspend fun doWork(): Result {
         return try {
             val count = configurationSyncService.syncConfiguration()
             Log.i(TAG, "Synced configuration with $count items")
             Result.success()
         } catch (t: Throwable) {
-            Log.e(TAG, "Error in config data worker", t)
+            Sentry.captureException(t)
             Result.retry()
         }
     }

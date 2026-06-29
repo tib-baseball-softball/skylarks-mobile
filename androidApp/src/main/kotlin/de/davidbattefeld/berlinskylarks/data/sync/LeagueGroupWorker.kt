@@ -9,6 +9,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import de.berlinskylarks.shared.data.api.BSMAPIClient.Companion.DEFAULT_SEASON
 import de.berlinskylarks.shared.data.service.LeagueGroupSyncService
+import io.sentry.kotlin.multiplatform.Sentry
 
 private const val TAG = "LeagueGroupWorker"
 
@@ -26,13 +27,8 @@ class LeagueGroupWorker @AssistedInject constructor(
             Log.d(TAG, "Synced $count league groups")
 
             Result.success()
-        } catch (throwable: Throwable) {
-            Log.e(
-                TAG,
-                "Error in game data worker",
-                throwable
-            )
-
+        } catch (t: Throwable) {
+            Sentry.captureException(t)
             Result.retry()
         }
     }

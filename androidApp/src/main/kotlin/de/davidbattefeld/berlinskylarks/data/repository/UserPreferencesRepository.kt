@@ -9,6 +9,7 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import de.berlinskylarks.shared.data.api.BSMAPIClient
 import de.berlinskylarks.shared.utility.BSMUtility
 import de.davidbattefeld.berlinskylarks.data.preferences.UserPreferences
+import io.sentry.kotlin.multiplatform.Sentry
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -33,6 +34,7 @@ class UserPreferencesRepository(private val dataStore: DataStore<Preferences>) {
             } else {
                 throw exception
             }
+            Sentry.captureException(exception)
         }.map { preferences ->
             mapUserPreferences(preferences)
         }

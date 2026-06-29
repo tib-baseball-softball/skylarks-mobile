@@ -35,6 +35,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import de.berlinskylarks.shared.data.model.Functionary
+import io.sentry.kotlin.multiplatform.Sentry
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -46,6 +47,7 @@ fun formatDate(dateString: String): String {
         date?.let { formatter.format(it) } ?: dateString
     } catch (e: Exception) {
         Log.e("FunctionaryDetailCard", "Error formatting date: $e")
+        Sentry.captureException(e)
         dateString
     }
 }

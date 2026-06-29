@@ -9,6 +9,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import de.berlinskylarks.shared.data.api.BSMAPIClient.Companion.DEFAULT_SEASON
 import de.berlinskylarks.shared.data.service.GameSyncService
+import io.sentry.kotlin.multiplatform.Sentry
 
 private const val TAG = "GameDataWorker"
 
@@ -27,12 +28,8 @@ class GameDataWorker @AssistedInject constructor(
             Log.d(TAG, "Synced $total games for season $season")
 
             Result.success()
-        } catch (throwable: Throwable) {
-            Log.e(
-                TAG,
-                "Error in game data worker",
-                throwable
-            )
+        } catch (t: Throwable) {
+            Sentry.captureException(t)
 
             Result.retry()
         }

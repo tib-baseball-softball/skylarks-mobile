@@ -8,6 +8,7 @@ import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import de.berlinskylarks.shared.data.service.GameReportSyncService
+import io.sentry.kotlin.multiplatform.Sentry
 
 private const val TAG = "GameDataWorker"
 
@@ -24,12 +25,8 @@ class GameReportWorker @AssistedInject constructor(
             Log.i(TAG, "Synced $count game reports")
 
             Result.success()
-        } catch (throwable: Throwable) {
-            Log.e(
-                TAG,
-                "Error in game data worker",
-                throwable
-            )
+        } catch (t: Throwable) {
+            Sentry.captureException(t)
 
             Result.retry()
         }
